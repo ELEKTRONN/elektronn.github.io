@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+	{% include head.html %}
+
+	<body>
+		<div class="gradient-bar -absolute -at-top -z-middle"></div>
+		<div class="top-links -absolute -at-top -at-right -z-middle">
+			<a class="top-link" href="{{ site.documentation-url }}">
+				<i class="fa fa-book"></i>
+			</a>
+			<a class="top-link" href="{{ site.github-url }}">
+				<i class="fa fa-github"></i>
+			</a>
+		</div>
+
+		{% include header.html %}
+		{{ content }}
+
+		<script src="{{ "js/main.js" | prepend: site.baseurl }}"></script>
+
+	</body>
+
+</html>

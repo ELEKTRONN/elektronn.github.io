@@ -1,0 +1,86 @@
+.. _net:
+
+net package
+===========
+
+net.convnet module
+------------------
+
+.. automodule:: net.convnet
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.perceptronlayer module
+--------------------------
+
+.. automodule:: net.perceptronlayer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.convlayer2d module
+----------------------
+
+.. automodule:: net.convlayer2d
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.convlayer3d module
+----------------------
+
+.. automodule:: net.convlayer3d
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.netcreation module
+----------------------
+
+.. automodule:: net.netcreation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.netutils module
+-------------------
+
+.. automodule:: net.netutils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.optimizer module
+--------------------
+
+.. automodule:: net.optimizer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+
+net.gaborfilters module
+-----------------------
+
+.. automodule:: net.gaborfilters
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.introspection module
+------------------------
+
+.. automodule:: net.introspection
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+net.pooling module
+--------------------------
+
+.. automodule:: net.pooling
+    :members:
+    :undoc-members:
+    :show-inheritance:

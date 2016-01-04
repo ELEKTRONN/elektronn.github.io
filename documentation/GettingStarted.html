@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Getting Started &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="index.html" />
+    <link rel="next" title="Installation" href="Installation.html" />
+    <link rel="prev" title="Welcome to the ELEKTRONN documentation!" href="index.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Installation.html" title="Installation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the ELEKTRONN documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started</a><ul>
+<li><a class="reference internal" href="#installation-requirements">Installation &amp; Requirements</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#basic-recipe-for-cnn-training-with-images">Basic Recipe for CNN Training with Images</a></li>
+<li><a class="reference internal" href="#literature-tutorials-background">Literature, Tutorials, Background</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to the ELEKTRONN documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Installation.html"
+                        title="next chapter">Installation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/GettingStarted.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation-requirements">
+<h2>Installation &amp; Requirements<a class="headerlink" href="#installation-requirements" title="Permalink to this headline">¶</a></h2>
+<p>Provided you have already an environment with scientific python packages (e.g. the <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda distribution by Continuum</a>) and a recent, working theano, you can simply clone the git repo, unpack the files, add the path pointing to the unpacked directory to your <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt> and run the scripts in the folders <tt class="docutils literal"><span class="pre">scripts</span></tt> and <tt class="docutils literal"><span class="pre">examples</span></tt>. This way you can also edit the scripts directly. If you use Anaconda you need the <tt class="docutils literal"><span class="pre">h5py</span></tt>-package additionally.</p>
+<p>For step by step instructions, installation as a <em>package</em> and dependencies see <a class="reference internal" href="Installation.html#installation"><em>installation</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Theano uses CUDA hence only Nvidia-GPUs will work (alternatively it can use the CPU, but this might be too slow for large nets and CNNs).</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The whole toolkit was designed and tested on Linux systems (in particular Debian, Ubuntu, CentOS).</p>
+</div>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>ELEKTRONN is structured into two subpackages which contain most importantly:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="_Net.html#net"><em>net package</em></a> package: NN-layers, a <a class="reference internal" href="_Net.html#net.convnet.MixedConvNN" title="net.convnet.MixedConvNN"><tt class="xref py py-class docutils literal"><span class="pre">net.convnet.MixedConvNN</span></tt></a> class that manages the layers and their training/output functions and optimizers for training</li>
+<li><a class="reference internal" href="_Training.html#training-pack"><em>training package</em></a> package: Data-Pipelines, <a class="reference internal" href="_Training.html#training.trainer.Trainer" title="training.trainer.Trainer"><tt class="xref py py-class docutils literal"><span class="pre">training.trainer.Trainer</span></tt></a> class that manages training initialisation and iterations, creates plots and log files</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="basic-recipe-for-cnn-training-with-images">
+<span id="basic-recipe"></span><h2>Basic Recipe for CNN Training with Images<a class="headerlink" href="#basic-recipe-for-cnn-training-with-images" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This section is addressed to people interested into large scale image processing tasks (such as encountered in connectomics). For smaller toy examples and processing of non-image data have a look at the:ref:<cite>examples &lt;examples&gt;</cite>.</p>
+</div>
+<ul>
+<li><p class="first">CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and <em>labels</em> (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Transform your data arrays to h5 data sets in separate files for images and labels.</dt>
+<dd><ul class="first last simple">
+<li>images: shape (x,y,z)  or (ch,x,y,z)</li>
+<li>labels: shape (x,y,z)</li>
+<li>for classification: labels contain integer numbers, ranging from 0 to (#classes-1)</li>
+<li>for regression: labels contain float numbers</li>
+<li>for 2d images the dimension <tt class="docutils literal"><span class="pre">z</span></tt> can be viewed as the axis along which the instances of the training set are stacked</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Find a valid CNN architecture by by using <a class="reference internal" href="_Net.html#net.netutils.CNNCalculator" title="net.netutils.CNNCalculator"><tt class="xref py py-func docutils literal"><span class="pre">net.netutils.CNNCalculator()</span></tt></a>.</p>
+</li>
+<li><p class="first">Edit <tt class="docutils literal"><span class="pre">config_template.py</span></tt> as a new file to specify your <a class="reference internal" href="Pipeline.html#configuration"><em>training scenario</em></a>.</p>
+</li>
+<li><p class="first">Run the script <tt class="docutils literal"><span class="pre">TrainCNN.py</span></tt> from command line (or from an IDE like spyder):</p>
+<div class="highlight-python"><div class="highlight"><pre>TrainCNN.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]
+</pre></div>
+</div>
+</li>
+<li><p class="first">Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is hard work and needs time. For a better understanding of how they should be trained refer to the sources in the next section.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="literature-tutorials-background">
+<span id="literature"></span><h2>Literature, Tutorials, Background<a class="headerlink" href="#literature-tutorials-background" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://deeplearning.net/software/theano/index.html">Theano home page</a></p>
+<p><a class="reference external" href="http://deeplearning.net/tutorial/contents.html">Theano tutorials</a></p>
+<p><a class="reference external" href="http://deeplearning.net/reading-list/">Extensive reading list from the deeplearning website</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Installation.html" title="Installation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to the ELEKTRONN documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

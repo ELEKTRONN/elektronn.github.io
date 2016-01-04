@@ -1,0 +1,25 @@
+.-text-center { text-align: center }
+
+.-huge {
+	font-size: 1.5em;
+	line-height: 1.5;
+}
+
+.-text-uppercase { 
+	text-transform: uppercase;
+	letter-spacing: -0.2px;
+}
+
+.-ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.-icon {
+	border-bottom: 0;
+
+	.fa {
+		padding-right: .5rem;
+	}
+}

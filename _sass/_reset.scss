@@ -1,0 +1,5 @@
+html { box-sizing: border-box; }
+*, *:before, *:after { box-sizing: inherit; }
+* { text-rendering: optimizelegibility; }
+* { margin: 0; padding: 0; }
+img, svg { max-width: 100%; }

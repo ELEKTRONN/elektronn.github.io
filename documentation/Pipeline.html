@@ -1,0 +1,994 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Using the Training Pipeline &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="index.html" />
+    <link rel="next" title="Lazy Labels" href="Lazy.html" />
+    <link rel="prev" title="Practical Introduction to Neural Networks" href="IntroNN.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Lazy.html" title="Lazy Labels"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IntroNN.html" title="Practical Introduction to Neural Networks"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using the Training Pipeline</a><ul>
+<li><a class="reference internal" href="#principle-of-working">Principle of Working</a></li>
+<li><a class="reference internal" href="#data-format">Data Format</a><ul>
+<li><a class="reference internal" href="#offsets-for-img-img-training">Offsets for <em>img-img</em> Training</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration-of-parameters">Configuration of Parameters</a><ul>
+<li><a class="reference internal" href="#general-setup">General Setup</a></li>
+<li><a class="reference internal" href="#paths-and-general">Paths and General</a></li>
+<li><a class="reference internal" href="#network-architecture">Network Architecture</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#convolutional">Convolutional</a></li>
+<li><a class="reference internal" href="#multi-layer-perceptron-mlp-and-others">Multi Layer Perceptron (MLP) and Others</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-options">Data Options</a><ul>
+<li><a class="reference internal" href="#id2">General</a></li>
+<li><a class="reference internal" href="#images-cnn">Images/CNN</a></li>
+<li><a class="reference internal" href="#alternative-vect-scalar-data-options">Alternative / <em>vect-scalar</em> Data Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optimisation-options">Optimisation Options</a></li>
+<li><a class="reference internal" href="#optimizer-hyperparameters">Optimizer Hyperparameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-traincnn">Running TrainCNN</a></li>
+<li><a class="reference internal" href="#cnn-command-line">CNN Command Line</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="IntroNN.html"
+                        title="previous chapter">Practical Introduction to Neural Networks</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Lazy.html"
+                        title="next chapter">Lazy Labels</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Pipeline.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-the-training-pipeline">
+<span id="pipeline"></span><h1>Using the Training Pipeline<a class="headerlink" href="#using-the-training-pipeline" title="Permalink to this headline">¶</a></h1>
+<p>This page gives further details about the steps described in <a class="reference internal" href="GettingStarted.html#basic-recipe"><em>the basic recipe</em></a> and describes the all configurable options for the pipeline of the <tt class="docutils literal"><span class="pre">training</span></tt> package.</p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#principle-of-working" id="id3">Principle of Working</a></li>
+<li><a class="reference internal" href="#data-format" id="id4">Data Format</a></li>
+<li><a class="reference internal" href="#configuration-of-parameters" id="id5">Configuration of Parameters</a></li>
+<li><a class="reference internal" href="#running-traincnn" id="id6">Running TrainCNN</a></li>
+<li><a class="reference internal" href="#cnn-command-line" id="id7">CNN Command Line</a></li>
+</ul>
+</div>
+<div class="section" id="principle-of-working">
+<h2><a class="toc-backref" href="#id3">Principle of Working</a><a class="headerlink" href="#principle-of-working" title="Permalink to this headline">¶</a></h2>
+<p>What happens after the configuration was set up and <tt class="docutils literal"><span class="pre">TrainCNN.py</span></tt> has been started:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">The configuration file is parsed and some consistency checks are made (but not every possible combination of anything...). From the architecture parameters a <a class="reference internal" href="_Net.html#net.netutils.CNNCalculator" title="net.netutils.CNNCalculator"><tt class="xref py py-func docutils literal"><span class="pre">net.netutils.CNNCalculator()</span></tt></a> object is created (this checks the architecture and gives a list of valid input sizes, from which the closest is chosen automatically).</p>
+</li>
+<li><p class="first">A save directory is created, the <tt class="docutils literal"><span class="pre">cwd</span></tt> is set to this directory, the configuration file is copied to a <tt class="docutils literal"><span class="pre">Backup</span></tt> sub-directory in the save directory.</p>
+</li>
+<li><p class="first">A <a class="reference internal" href="_Training.html#training.CNNData.CNNData" title="training.CNNData.CNNData"><tt class="xref py py-class docutils literal"><span class="pre">training.CNNData.CNNData</span></tt></a> object is created. All CNN relevant architecture parameters (input size, offsets, strides etc.) are passed over, such that suitable patches for training can be created. The data is read from disk into RAM.</p>
+</li>
+<li><p class="first">The CNN is created and the training functions are compiled. Compilation of the gradient can take up to several minutes the first time. For subsequent runs, parts of the binaries are cached and compilation becomes significantly faster.</p>
+</li>
+<li><dl class="first docutils">
+<dt>The training loop starts. In each iteration:</dt>
+<dd><ul class="first last simple">
+<li>From the whole training data set a batch is created by sampling random locations in the image arrays and &#8220;cutting&#8221; patches from these locations. The patches are augmented randomly according to the configuration.</li>
+<li>The CNN makes one update step on the batch (or several steps for CG and l-BFGS)</li>
+<li>Every <tt class="docutils literal"><span class="pre">history_freq</span></tt> steps: the current performance is estimated on a larger number of <em>monitor patches</em>. Some numbers are printed, plots are made, and a log file is dumped into <tt class="docutils literal"><span class="pre">Backup</span></tt>.</li>
+<li>A backup of the current parameters is overwritten every <tt class="docutils literal"><span class="pre">history_freq</span></tt> steps</li>
+<li>Every hour a persistent snapshot of the CNN parameters/weights is saved</li>
+<li>Every 3 hours a sample image is predicted (firstly after 1 hour)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">During this iteration you can use the <a class="reference internal" href="#console"><em>CNN console</em></a> accessible via <tt class="docutils literal"><span class="pre">ctrl+c</span></tt>.</p>
+</li>
+<li><p class="first">After the maximal steps or maximal runtime are reached, everything is shutdown and the latest parameters are written to disk.</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="data-format">
+<span id="id1"></span><h2><a class="toc-backref" href="#id4">Data Format</a><a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Transform your data arrays to h5 data sets in separate files for images and labels.</dt>
+<dd><ul class="first last simple">
+<li>images: shape (x,y,z)  or (channel,x,y,z), either <tt class="docutils literal"><span class="pre">float</span></tt> (0,1) or <tt class="docutils literal"><span class="pre">uint8</span></tt> (0,255)</li>
+<li>labels: shape (x,y,z)</li>
+<li>for classification: labels contains an integer numbers encoding the class membership, starting from 0, consecutively to (#classes-1)</li>
+<li>for regression: labels contain float numbers</li>
+</ul>
+</dd>
+</dl>
+<p>The z-axis is the the axis which has different units than x and y (e.g. different spatial resolution, or time).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For classification tasks you must think of a suitable way to present the training images to the CNN. E.g. if you want to do neurite segmentation in EM images and you have ground truth images in which each pixel carries the ID of the neurite it belongs to, this will not work by using this ground truth as labels directly: the IDs are arbitrary (they could also be permuted) and there may be thousands of distinct IDs, a CNN cannot learn this representation. The task must be formulated in such a way that there are just a few <em>general</em> classes - in this case membrane boundaries and background (or other objects such as mitochondria). The conversion of ground truth is a step that must be carried out by yourself depending on your particular problem that you want to solve.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For 2d data you can stack the set of 2d images (and likewise the labels) to a cube and train by iterating over the z-slices (then the option <tt class="docutils literal"><span class="pre">anisotropic_data</span></tt> must be set to <tt class="docutils literal"><span class="pre">True</span></tt>).</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For <em>img-scalar</em> training the labels that correspond to a 3d cube are just a single number, and labels for a stack of 2d images (see note above) are a vector with an entry for every image.</p>
+</div>
+<p>In the configuration file <strong>two</strong> lists must be specified consisting of tuples of the form <em>(&lt;file name&gt;, &lt;h5 data set name/key in that file&gt;)</em>. One list for the images and one for the labels, both must have the <strong>same</strong> order.</p>
+<p>The data types are preferably <tt class="docutils literal"><span class="pre">uint8</span></tt> which makes files small and loading fast (255 gray values for images). For the labels it pays off to use the compression option of h5 (they might be compressible by a great factor). Note that in <a class="reference internal" href="_Training.html#training.CNNData.CNNData" title="training.CNNData.CNNData"><tt class="xref py py-class docutils literal"><span class="pre">training.CNNData.CNNData</span></tt></a> the image data is internally converted to <tt class="docutils literal"><span class="pre">float32</span></tt> and normalised to [0,1]; the labels to <tt class="docutils literal"><span class="pre">int16</span></tt> for classification or <tt class="docutils literal"><span class="pre">float32</span></tt> for regression.</p>
+<div class="section" id="offsets-for-img-img-training">
+<h3>Offsets for <em>img-img</em> Training<a class="headerlink" href="#offsets-for-img-img-training" title="Permalink to this headline">¶</a></h3>
+<p>CNNs can only make predictions with offsets from the image border (see the image <em class="xref std std-ref">below</em> &lt;batch&gt;`. The offset is cause by convolutions with boundary mode &#8220;valid&#8221; (the size of the offset can be calculated using <a class="reference internal" href="_Net.html#net.netutils.CNNCalculator" title="net.netutils.CNNCalculator"><tt class="xref py py-func docutils literal"><span class="pre">net.netutils.CNNCalculator()</span></tt></a>). This implies that for a given labelled image area the raw image area required is larger. So if possible, provide images that are larger than the labels by at least the offset, to make <em>full use</em> of you labelled data. Or conversely never label your data in the offset stripes!
+The only important condition is that the labels and images must be symmetrically registered to their center. Then the images are cropped or the labels are 0-padded depending on the offset automatically. A 1d example: label.shape=(5) and image.shape=(7) &#8212;&gt; the offset is 1 (on either side) and image[i+1] corresponds to label[i]; in particular image[3] corresponds to label[2], the centers of both arrays.</p>
+</div>
+</div>
+<div class="section" id="configuration-of-parameters">
+<span id="configuration"></span><h2><a class="toc-backref" href="#id5">Configuration of Parameters</a><a class="headerlink" href="#configuration-of-parameters" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>There are three levels of parameter configuration, <strong>higher levels override previous levels</strong>:</dt>
+<dd><ol class="first last arabic simple">
+<li>The master <em>default</em> values are hardcoded into <a class="reference internal" href="_Training.html#training.config.MasterConfig" title="training.config.MasterConfig"><tt class="xref py py-class docutils literal"><span class="pre">training.config.MasterConfig</span></tt></a>.</li>
+<li>Users can set their custom <em>default</em> values by editing the file <tt class="docutils literal"><span class="pre">config_template.py</span></tt> (which is just a template and otherwise <strong>ignored</strong>). The user file should be put into the home directory as <tt class="docutils literal"><span class="pre">~/.elektronn.conf</span></tt>. <em>Default</em> values are intended to provide guidance on some meta-parameters (e.g. learning rate, momentum) and to define certain behaviour of the pipeline (e.g. default save path, save intervals), see section <a class="reference internal" href="#setup"><em>Pipeline Setup</em></a>.</li>
+<li><em>Specific</em> values for training a particular CNN/NN configuration should be set in a new file (by editing <tt class="docutils literal"><span class="pre">config_template.py</span></tt> as new file again). The path of this file is given as the <tt class="docutils literal"><span class="pre">config</span></tt> argument to the <tt class="docutils literal"><span class="pre">TrainCNN</span></tt>-script. <em>Specific</em> values can override any default values and are mainly used to specify the CNN architecture and the training data options. Some values are mandatory to be provided specifically for each training (e.g. network architecture, data files, save name) - if such a value is not provided by a warning is shown.</li>
+</ol>
+</dd>
+</dl>
+<p>The configuration file is basically a python file that contains assignments of values to variables. You can use even use list comprehensions to create lists of file names, but then you must <tt class="docutils literal"><span class="pre">del</span></tt> the iteration variable (because this variable would also be read in but is not a valid config value) e.g:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;imgs_padd_</span><span class="si">%i</span><span class="s">.h5&#39;</span> <span class="o">%</span> <span class="n">ii</span><span class="p">,</span> <span class="s">&#39;raw&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span>
+<span class="n">l_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;mem_z_</span><span class="si">%i</span><span class="s">.h5&#39;</span> <span class="o">%</span> <span class="n">ii</span><span class="p">,</span> <span class="s">&#39;labels&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span>
+<span class="k">del</span> <span class="n">ii</span>
+</pre></div>
+</div>
+<p>This page only describes what the values do, for advice on how to find good settings refer to the section <a class="reference internal" href="IntroNN.html#training"><em>Practical Introduction to Neural Networks</em></a>.</p>
+<p>The &#8220;mode&#8221; coloumn indicates whether a parameter should be set by the user (!) or if this parameters is only needed in special cases and need not be configured normally ($). No indication means it can be left at default initially, but tweaking might improve results. Default <tt class="docutils literal"><span class="pre">undefined</span></tt> means that there might be some value as default, but you should not assume that the default value is sufficient for your situation.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These configurations do not configure theano (except for the option to set a default device). Theano must be configured via <a class="reference external" href="http://deeplearning.net/software/theano/library/config.html#libdoc-config">.theanorc</a>, also see <a class="reference internal" href="Installation.html#installation"><em>Installation</em></a>.</p>
+</div>
+<div class="section" id="general-setup">
+<span id="setup"></span><h3>General Setup<a class="headerlink" href="#general-setup" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="3%" />
+<col width="11%" />
+<col width="6%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>save_path</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt> (trailing &#8216;/&#8217;!)</td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>At this location a <strong>new</strong> directory with the name <tt class="docutils literal"><span class="pre">save_name</span></tt> created. If this directory not exists it is created.</td>
+</tr>
+<tr class="row-odd"><td>plot_on</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">True</span></tt></td>
+<td>If <tt class="docutils literal"><span class="pre">True</span></tt> frequently plots of the training progress are created and saved to the save directory. As plotting is done in a sub-process this does not slow down training.</td>
+</tr>
+<tr class="row-even"><td>print_status</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">True</span></tt></td>
+<td>If <tt class="docutils literal"><span class="pre">True</span></tt> frequently several values (loss, training error, validation error if available etc.) are printed to the console</td>
+</tr>
+<tr class="row-odd"><td>device</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">False</span></tt>/<tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td>False</td>
+<td>Default device to initialise, if not given as commandline arg. False &#8211;&gt; use .theanorc value or int &#8211;&gt; use gpu&lt;i&gt;</td>
+</tr>
+<tr class="row-even"><td>no_X</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td>False</td>
+<td>Whether to import matplotlib in X-server free mode (for ssh without -X option)</td>
+</tr>
+<tr class="row-odd"><td>no_X_hosts</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">list``of</span> <span class="pre">``str</span></tt></td>
+<td>[]</td>
+<td>List of host names which always import matplotlib in X-server free mode</td>
+</tr>
+<tr class="row-even"><td>param_save_h</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td>1.0</td>
+<td>hours: frequency to save a permanent parameter snapshot</td>
+</tr>
+<tr class="row-odd"><td>initial_prev_h</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td>1.0</td>
+<td>hours: time after which first preview is made</td>
+</tr>
+<tr class="row-even"><td>prev_save_h</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td>3.0</td>
+<td>hours: frequency to create previews</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="paths-and-general">
+<h3>Paths and General<a class="headerlink" href="#paths-and-general" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="3%" />
+<col width="12%" />
+<col width="7%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>save_name</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>The name of the save directory and the prefix for all created files</td>
+</tr>
+<tr class="row-odd"><td>overwrite</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">True</span></tt></td>
+<td>If set to <tt class="docutils literal"><span class="pre">False</span></tt> and the Training script finds an existing directory of same name, it terminates before overwriting any files. Use as a safeguard.</td>
+</tr>
+<tr class="row-even"><td>param_file</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>Full path of parameter file. A new network can be initialised with parameters of another already trained network.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="network-architecture">
+<h3>Network Architecture<a class="headerlink" href="#network-architecture" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The output layer is added automatically (with <tt class="docutils literal"><span class="pre">n_lab</span></tt> outputs). I.e. the total number of layers is <tt class="docutils literal"><span class="pre">len(nof_filters)+</span> <span class="pre">len(MLP_layers)</span> <span class="pre">+</span> <span class="pre">1</span></tt>.</p>
+</div>
+<div class="section" id="general">
+<h4>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="3%" />
+<col width="11%" />
+<col width="6%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>activation_func</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt> or list therof</td>
+<td>&#8216;relu&#8217;</td>
+<td>Global value or entry per layer. Possible values are: tanh, abs, linear, sig, relu. If list, length must equal  number of specified layers (conv+mlp).</td>
+</tr>
+<tr class="row-odd"><td>batch_size</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td>1</td>
+<td>Number of patches (i.e. training examples sliced from different locations in the training data) to use for an update step.</td>
+</tr>
+<tr class="row-even"><td>dropout_rates</td>
+<td>&nbsp;</td>
+<td>list of <tt class="docutils literal"><span class="pre">float</span></tt> (0,1)</td>
+<td><tt class="docutils literal"><span class="pre">[]</span></tt></td>
+<td>The &#8220;fail&#8221;-rates per layer or globally. Empty list disables dropout. The last layer has always no dropout. If list, length must equal  number of specified layers (conv+mlp).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="convolutional">
+<h4>Convolutional<a class="headerlink" href="#convolutional" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="2%" />
+<col width="6%" />
+<col width="3%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>n_dim</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td>2</td>
+<td>Spatial dimensionality of CNN (2 or 3). Channels of multi-channels input images (e.g. RGB) are not counted as a dimension as they are not spatial.</td>
+</tr>
+<tr class="row-odd"><td>desired_input</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">int</span></tt> or 2/3-tuple</td>
+<td>200</td>
+<td>Desired input size. This must be smaller than the size of the training images. If this is a scalar the size is used in all dimensions, if a tuple is uses each dimension has another size (only the z-dimension should be smaller for &#8220;flat&#8221; CNNs or anisotropic data). These sizes are not directly used but the next size that gives a valid architectures is automatically selected.</td>
+</tr>
+<tr class="row-even"><td>filters</td>
+<td>!</td>
+<td>see note 2</td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>List of filter size in each layer</td>
+</tr>
+<tr class="row-odd"><td>pool</td>
+<td>!</td>
+<td>see note 2</td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>List of maxpooling factor for each layer</td>
+</tr>
+<tr class="row-even"><td>nof_filters</td>
+<td>!</td>
+<td>list of <tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>List of number of filters for each layer</td>
+</tr>
+<tr class="row-odd"><td>pooling_mode</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt> or list thereof</td>
+<td>&#8216;max&#8217;</td>
+<td>Select pooling function (globally or per layer). Available: &#8216;max&#8217;, &#8216;maxabs&#8217;. Maxabs takes maximum over absolute values, but then adds sign again to the value.</td>
+</tr>
+<tr class="row-even"><td>MFP</td>
+<td>!</td>
+<td>list of <tt class="docutils literal"><span class="pre">bool</span></tt> or 0/1</td>
+<td><tt class="docutils literal"><span class="pre">[]</span></tt></td>
+<td>List whether to apply max fragment pooling for each layer. MFP is only intended for prediction, so for training the emtpy list disables MFP.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The parameters <tt class="docutils literal"><span class="pre">filters</span></tt> and  <tt class="docutils literal"><span class="pre">pool</span></tt> can either be lists of ints or lists of 2/3-tuples of ints (scalar). For simple lists of ints the scalar values are used in all 2/3 CNN dimensions, for tuples each dimension has its own value. E.g. <tt class="docutils literal"><span class="pre">[[2,2,2],</span> <span class="pre">[3,3,3],</span> <span class="pre">[2,2,2],...]</span></tt> is identical to <tt class="docutils literal"><span class="pre">[2,3,2,...]</span></tt>, in contrast anisotropic filters are declared like <tt class="docutils literal"><span class="pre">[[2,2,1],[3,3,2],...]</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="multi-layer-perceptron-mlp-and-others">
+<h4>Multi Layer Perceptron (MLP) and Others<a class="headerlink" href="#multi-layer-perceptron-mlp-and-others" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="3%" />
+<col width="10%" />
+<col width="6%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>rnn_layer_kwargs</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">dict</span></tt>/<tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>This can install a recurrent layer before MLP-layers, the kwargs are passed to <tt class="xref py py-meth docutils literal"><span class="pre">net.MixedConvNN.addRecurrentLayer()</span></tt>. It does not together with conv-layers.</td>
+</tr>
+<tr class="row-odd"><td>MLP_layers</td>
+<td>!</td>
+<td>list of <tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">[]</span></tt></td>
+<td>Numbers of neurons for fully connected layers after conv layers. Empty for img-img training and required for img-scalar training</td>
+</tr>
+<tr class="row-even"><td>target</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td>&#8216;nll&#8217;</td>
+<td>Loss function, &#8216;nll&#8217; or &#8216;regression&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="data-options">
+<h3>Data Options<a class="headerlink" href="#data-options" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h4>General<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="2%" />
+<col width="10%" />
+<col width="5%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>mode</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td>&#8220;img-img&#8221;</td>
+<td>Mode of data and label types: <tt class="docutils literal"><span class="pre">img-img</span></tt>, <tt class="docutils literal"><span class="pre">img-scalar</span></tt>, <tt class="docutils literal"><span class="pre">vect-scalar</span></tt>, see <a class="reference internal" href="IntroNN.html#modes"><em>Modes</em></a>.</td>
+</tr>
+<tr class="row-odd"><td>background_processes</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt>/<tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">False</span></tt></td>
+<td>Whether to &#8220;pre-fetch&#8221; batches in separate background process. This is advisable set to <tt class="docutils literal"><span class="pre">True</span></tt> or specify a number of cores in order to speed up training, especially when warping is used.  &lt;Bool&gt; or number of processes (True&#8211;&gt;2).</td>
+</tr>
+<tr class="row-even"><td>n_lab</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">int</span></tt> or <tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>Number of distinct labels i.e. different classes. If <tt class="docutils literal"><span class="pre">None</span></tt> this is detected automatically, but that is very slow.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When using background processes, the main process should not be killed from outside, but aborted using the CNN console via <tt class="docutils literal"><span class="pre">ctrl+c</span></tt> and <tt class="docutils literal"><span class="pre">kill</span></tt> or <tt class="docutils literal"><span class="pre">abort</span></tt>, otherwise the sub-processes become zombies and clutter the RAM.</p>
+</div>
+</div>
+<div class="section" id="images-cnn">
+<h4>Images/CNN<a class="headerlink" href="#images-cnn" title="Permalink to this headline">¶</a></h4>
+<p>This block is ignored for mode <tt class="docutils literal"><span class="pre">vect-scalar</span></tt></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="2%" />
+<col width="7%" />
+<col width="3%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>data_path</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt> (trailing &#8216;/&#8217;!)</td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>Path to directory of training data files (raw images)</td>
+</tr>
+<tr class="row-odd"><td>label_path</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt> (trailing &#8216;/&#8217;!)</td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>Path to directory of training label files</td>
+</tr>
+<tr class="row-even"><td>d_files</td>
+<td>!</td>
+<td>list of tuples</td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>The data files to use from the directory. Tuples contain (&lt;file name&gt;(<tt class="docutils literal"><span class="pre">string</span></tt>), &lt;h5 data set name/key in that file&gt;(<tt class="docutils literal"><span class="pre">string</span></tt>)). E.g. <tt class="docutils literal"><span class="pre">[('img1.h5',</span> <span class="pre">'raw'),('img2.h5',</span> <span class="pre">'raw')]</span></tt></td>
+</tr>
+<tr class="row-odd"><td>l_files</td>
+<td>!</td>
+<td>list of tuples</td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>The label files to use from the directory. As above and in the same order!</td>
+</tr>
+<tr class="row-even"><td>cube_prios</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt> or list of <tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>List of SGD-sampling priorities for cubes (it must be in the same order as <tt class="docutils literal"><span class="pre">d_files</span></tt>! ). The priorities are relative and need not be normalised. If <tt class="docutils literal"><span class="pre">None</span></tt> sampling probability ~ cube size</td>
+</tr>
+<tr class="row-odd"><td>valid_cubes</td>
+<td>&nbsp;</td>
+<td>list of <tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td>[]</td>
+<td>List of cube indices (corresponding to <tt class="docutils literal"><span class="pre">d_files</span></tt>) to use as validation data. May be empty, then validation performances are shown as <tt class="docutils literal"><span class="pre">nan</span></tt>.</td>
+</tr>
+<tr class="row-even"><td>example_ignore_threshold</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td>0.0</td>
+<td>If the fraction of negative (this denotes unlabelled pixels) in an example patch exceeds this value, the patch is discarded and a new patch is fetched. Only needed if there are negative / unlabelled labels at all.</td>
+</tr>
+<tr class="row-odd"><td>grey_augment_channels</td>
+<td>!</td>
+<td>list of <tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td>[0]</td>
+<td>Channel-indices to apply random grey value augmentation (GA) to. Use <tt class="docutils literal"><span class="pre">[]</span></tt> to disable. GA distorts the histogramme of the raw images (darker, lighter, more/less contrast).</td>
+</tr>
+<tr class="row-even"><td>use_example_weights</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">Bool</span></tt></td>
+<td>False</td>
+<td>Whether to use weights for the examples (e.g. for Boosting-like training). Not documented atm</td>
+</tr>
+<tr class="row-odd"><td>flip_data</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">True</span></tt></td>
+<td>Whether to randomly flip/rotate/mirror data for augmentation.</td>
+</tr>
+<tr class="row-even"><td>anisotropic_data</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">True</span></tt></td>
+<td>If <tt class="docutils literal"><span class="pre">True</span></tt> 2D slices are only cut in z-direction, otherwise all 3 alignments are used. This can be use to train on 2d images stored as 3d arrays.</td>
+</tr>
+<tr class="row-odd"><td>lazy_labels</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">False</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">True</span></tt> activates special Training with lazy annotations (see <a class="reference internal" href="Lazy.html#lazy-labels"><em>lazy labels</em></a>).</td>
+</tr>
+<tr class="row-even"><td>warp_on</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt> / <tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">False</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">True</span></tt> activates random warping deformations of training examples for augmentation. Alternatively a <tt class="docutils literal"><span class="pre">float</span></tt> (0,1) can be used to warp only a fraction of examples randomly. If this options is used, background processes should be used at the same time.</td>
+</tr>
+<tr class="row-odd"><td>pre_process</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>/<tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>None</td>
+<td>Currently implemented: &#8220;standardise&#8221; &#8211;&gt; 0-mean, 1-std (over all pixels)</td>
+</tr>
+<tr class="row-even"><td>zchxy_order</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">False</span></tt></td>
+<td>Set to <tt class="docutils literal"><span class="pre">True</span></tt> if data is in (z, (ch,) x, y) order, otherwise (ch, x, y, z) is assumed. z as first axis is slightly faster when loading data but for the actual training it is indifferent.</td>
+</tr>
+<tr class="row-odd"><td>border_mode</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td>&#8220;crop&#8221;</td>
+<td>Only applicable for <em>img-scalar</em>. If the CNN does not allow the original size of the images the following options are available: &#8220;crop&#8221;: cut the images to the next smaller valid input size, &#8220;0-pad&#8221; pad to the next bigger valid input with zeros, &#8220;c-pad&#8221; pad to the next bigger input with the average value of the border, &#8220;mirror&#8221; and &#8220;reject&#8221; which throws an exception.</td>
+</tr>
+<tr class="row-even"><td>upright_x</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">Bool</span></tt></td>
+<td>False</td>
+<td>If true, mirroring is only applied horizontally (e.g. for outdoor images or handwriting)</td>
+</tr>
+<tr class="row-odd"><td>downsample_xy</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">Bool</span></tt>/<tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td>False</td>
+<td>Down-sample training data in x/y direction by this factor (or not at all if False)</td>
+</tr>
+<tr class="row-even"><td>preview_data_path</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt>/<tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>None</td>
+<td>Path to a h5-file that contains data to make preview prediction images. The h5 data set must contain a one or more image cubes (normalised between 0 and 255) in the shape ((ch,) x,y,z). If <tt class="docutils literal"><span class="pre">None</span></tt> no previews are made.</td>
+</tr>
+<tr class="row-odd"><td>preview_kwargs</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">dict</span></tt></td>
+<td>&nbsp;</td>
+<td>Specification of preview to create, see <a class="reference internal" href="_Training.html#training.trainer.Trainer.previewSlice" title="training.trainer.Trainer.previewSlice"><tt class="xref py py-meth docutils literal"><span class="pre">training.trainer.Trainer.previewSlice()</span></tt></a>, only specify <tt class="docutils literal"><span class="pre">export_class</span></tt> and <tt class="docutils literal"><span class="pre">max_z_pred</span></tt>, the <tt class="docutils literal"><span class="pre">number</span></tt> is generated automatically.</td>
+</tr>
+</tbody>
+</table>
+<div class="figure align-center">
+<img alt="_images/Preview.png" src="_images/Preview.png" />
+<p class="caption">A series of 3 preview predictions and the corresponding raw image.</p>
+</div>
+</div>
+<div class="section" id="alternative-vect-scalar-data-options">
+<h4>Alternative / <em>vect-scalar</em> Data Options<a class="headerlink" href="#alternative-vect-scalar-data-options" title="Permalink to this headline">¶</a></h4>
+<p>These replace the options from the image section, and import a data class from <tt class="xref py py-mod docutils literal"><span class="pre">training.TrainData</span></tt>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="3%" />
+<col width="12%" />
+<col width="7%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>data_class_name</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>Name of data class in <tt class="xref py py-mod docutils literal"><span class="pre">training.TrainData</span></tt></td>
+</tr>
+<tr class="row-odd"><td>data_load_kwargs</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">dict</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">dict()</span></tt></td>
+<td>Arguments to init data class</td>
+</tr>
+<tr class="row-even"><td>data_batch_kwargs</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">dict</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">dict()</span></tt></td>
+<td>Arguments for <tt class="docutils literal"><span class="pre">getbach</span></tt> method of data class (e.g. special augmentations). The batch_size argument is added automatically and needn&#8217;t be specified here</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="optimisation-options">
+<h3>Optimisation Options<a class="headerlink" href="#optimisation-options" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="2%" />
+<col width="7%" />
+<col width="3%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>n_steps</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>Number of maximal update steps</td>
+</tr>
+<tr class="row-odd"><td>max_runtime</td>
+<td>!</td>
+<td><tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">undefined</span></tt></td>
+<td>Maximal training time in seconds, may lead to termination before <tt class="docutils literal"><span class="pre">n_steps</span></tt>. Measured is the total time including batch creation and performance estimates</td>
+</tr>
+<tr class="row-even"><td>history_freq</td>
+<td>!</td>
+<td>list of  1 <tt class="docutils literal"><span class="pre">int</span></tt> (!)</td>
+<td>[2000]</td>
+<td>Every <tt class="docutils literal"><span class="pre">history_freq</span></tt> training steps several values (NLL, training error, validation error if available etc.) are calculated and stored in an internal hisotry file. If the corresponding options are activated these values are also printed and plots are created.</td>
+</tr>
+<tr class="row-odd"><td>monitor_batch_size</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">int</span></tt></td>
+<td>10</td>
+<td>Number of patches to test model for online performance estimation (on training set and if available on validation set)</td>
+</tr>
+<tr class="row-even"><td>weight_decay</td>
+<td>$</td>
+<td><tt class="docutils literal"><span class="pre">bool</span></tt> or <tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">False</span></tt></td>
+<td>L2-penalty on weights with this weight relative to the gradient of the loss. <tt class="docutils literal"><span class="pre">False</span></tt> is equal to 0.0</td>
+</tr>
+<tr class="row-odd"><td>class_weights</td>
+<td>&nbsp;</td>
+<td>list of <tt class="docutils literal"><span class="pre">float</span></tt>/<tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>Importance weights for the classes (must have length <tt class="docutils literal"><span class="pre">n_lab</span></tt>), will be normalised internally. Weighting disabled by <tt class="docutils literal"><span class="pre">None</span></tt>.</td>
+</tr>
+<tr class="row-even"><td>label_prop_thresh</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt> or <tt class="docutils literal"><span class="pre">float</span></tt> (0.5,1)</td>
+<td><tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).If the predictive probability of the most likely class exceeds the threshold, this class is assumed to be the correct label and the training is pushed in this direction. Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled. <tt class="docutils literal"><span class="pre">None</span></tt> disables this option.</td>
+</tr>
+<tr class="row-odd"><td>optimizer</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">string</span></tt></td>
+<td>&#8216;SGD&#8217;</td>
+<td>Select &#8216;SGD&#8217;/&#8217;CG&#8217;/&#8217;RPORP&#8217;/&#8217;LBFGS&#8217; as optimizer method for training</td>
+</tr>
+<tr class="row-even"><td>LR_decay</td>
+<td>&nbsp;</td>
+<td><tt class="docutils literal"><span class="pre">float</span></tt></td>
+<td>0.993</td>
+<td>Decay multiplier for SGD learning rate w.r.t to an interval of 1000 update steps</td>
+</tr>
+<tr class="row-odd"><td>LR_schedule</td>
+<td>&nbsp;</td>
+<td>List of tuples /<tt class="docutils literal"><span class="pre">None</span></tt></td>
+<td>None</td>
+<td>At the specified iteration steps the LR is set to the specified value. This is independent of the decay. Each entry in the list is of format (#iteration, new_LR) e.g. <tt class="docutils literal"><span class="pre">[(80000,</span> <span class="pre">0.04),</span>&nbsp; <span class="pre">(50000,</span> <span class="pre">0.001)]</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Regarding <tt class="docutils literal"><span class="pre">history_freq</span></tt>:
+If the training or validation errors are estimated on many examples (<tt class="docutils literal"><span class="pre">monitor_batch_size</span></tt>) this might take a while, therefore if you plan to train for 24 hours you should not create an output every 10 seconds but rather every 30 minutes (values 2000 to 5000). But for debugging and checking if a new training case works, it might be usefull to get several plots per minute (values 20 to 200) and use fewer monitor examples. If you know it works, you can raise the value online using the CNN console via <tt class="docutils literal"><span class="pre">ctrl+c</span></tt>. Although this parameter is scalar it is a list for internal reasons.</p>
+</div>
+</div>
+<div class="section" id="optimizer-hyperparameters">
+<h3>Optimizer Hyperparameters<a class="headerlink" href="#optimizer-hyperparameters" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="7%" />
+<col width="2%" />
+<col width="7%" />
+<col width="5%" />
+<col width="79%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Mode</th>
+<th class="head">Type</th>
+<th class="head">Default</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>SGD_params</td>
+<td>!</td>
+<td>dict</td>
+<td>see file</td>
+<td>Initial learning rate and momentum for SGD</td>
+</tr>
+<tr class="row-odd"><td>RPROP_params</td>
+<td>$</td>
+<td>dict</td>
+<td>see file</td>
+<td>see code</td>
+</tr>
+<tr class="row-even"><td>CG_params</td>
+<td>$</td>
+<td>dict</td>
+<td>see file</td>
+<td>Keys: &#8216;n_steps&#8217;: update steps per same batch 3 &lt;&#8211;&gt; 6, &#8216;alpha&#8217;: termination criterion of line search, must be &lt;= 0.35, &#8216;beta&#8217;: precision of line search, imprecise 0.5 &lt;&#8211;&gt; 0.9 precise, &#8216;max_step&#8217;/&#8217;min_step&#8217;: similar to learning rate in SGD 0.1 &lt;&#8211;&gt; 0.001.</td>
+</tr>
+<tr class="row-odd"><td>LBFGS_params</td>
+<td>$</td>
+<td>dict</td>
+<td>see file</td>
+<td>see code and <a class="reference external" href="http://docs.scipy.org/doc/scipy-0.15.1/reference/generated/scipy.optimize.fmin_l_bfgs_b.html">here</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="running-traincnn">
+<h2><a class="toc-backref" href="#id6">Running TrainCNN</a><a class="headerlink" href="#running-traincnn" title="Permalink to this headline">¶</a></h2>
+<p>Once the parameter file is set up, the training script can be started. Run the script <tt class="docutils literal"><span class="pre">TrainCNN.py</span></tt> from command line:</p>
+<div class="highlight-python"><div class="highlight"><pre>TrainCNN.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]
+</pre></div>
+</div>
+<p>or from an existing python interpreter (e.g. within spyder).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using <tt class="docutils literal"><span class="pre">False</span></tt> as <tt class="docutils literal"><span class="pre">gpu</span></tt> arguments means a fallback to the configured device in <tt class="docutils literal"><span class="pre">.theanorc</span></tt> (which might be CPU). Otherwise it is advisable give the number of of the target GPU directly as the automatic selection of a free GPU might not work for all drivers (it looks up the power state using nvidia-smi). If the system has only one GPU its number is 0.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When logging into a cluster via ssh an X-server for plotting might not be available. Matplotlib by default imports the interactive backend which would crash in this case. The option <tt class="docutils literal"><span class="pre">no_X</span></tt> can suppress this import by importing a backend at the very beginning that does not require an x-server.</p>
+</div>
+</div>
+<div class="section" id="cnn-command-line">
+<span id="console"></span><h2><a class="toc-backref" href="#id7">CNN Command Line</a><a class="headerlink" href="#cnn-command-line" title="Permalink to this headline">¶</a></h2>
+<p>During training various changes to the setup can be made using the console which is accessible via <tt class="docutils literal"><span class="pre">ctrl+c</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>ELEKTRONN MENU
+==============
+
+    &gt;&gt; MNIST &lt;&lt;
+    Shortcuts:
+    &#39;q&#39; (leave menu),               &#39;abort&#39; (saving params),
+    &#39;kill&#39;(no saving),              &#39;save&#39;/&#39;load&#39; (opt:filename),
+    &#39;sf&#39;/&#39; (show filters)&#39;,         &#39;smooth&#39; (smooth filters),
+    &#39;sethist &lt;int&gt;&#39;,                &#39;setlr &lt;float&gt;&#39;,
+    &#39;setmom &lt;float&gt;&#39; ,              &#39;params&#39; print info,
+    Change Training Optimizer :(&#39;SGD&#39;,&#39;CG&#39;, &#39;RPROP&#39;, &#39;LBFGS&#39;)
+    For everything else enter a command in the command line
+
+mfk@ELEKTRONN:
+</pre></div>
+</div>
+<dl class="docutils">
+<dt>The following manipulations are possible:</dt>
+<dd><ul class="first simple">
+<li>Typing any of the above keywords (with optional arguments) and press <cite>Enter</cite></li>
+<li>&#8220;Free&#8221; input without parenthesis is translated to printing the value of the variable by that name, e.g.:</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mfk</span><span class="nd">@ELEKTRONN</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">input_shape</span>
+<span class="go">(50, 1, 26, 26)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>&#8220;Free&#8221; input with parenthesis is translated to executing that command literally e.g.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mfk</span><span class="nd">@ELEKTRONN</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">setDropoutRates</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>If the return value of a function/method is to be printed, <tt class="docutils literal"><span class="pre">print</span></tt> must be added explicitly (otherwise it is just executed):</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mfk</span><span class="nd">@ELEKTRONN</span><span class="p">:</span> <span class="k">print</span> <span class="n">cnn</span><span class="o">.</span><span class="n">SGD_LR</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mf">0.00995</span>
+</pre></div>
+</div>
+<ul class="last">
+<li><p class="first">Value assignments and variable instantiation are possible, too</p>
+</li>
+<li><dl class="first docutils">
+<dt>The command line resides within the scope of the training loop (<tt class="docutils literal"><span class="pre">run</span></tt> method) of <a class="reference internal" href="_Training.html#training.trainer.Trainer" title="training.trainer.Trainer"><tt class="xref py py-class docutils literal"><span class="pre">training.trainer.Trainer</span></tt></a> the and has access to:</dt>
+<dd><ul class="first last simple">
+<li>The trainer object by <tt class="docutils literal"><span class="pre">self</span></tt></li>
+<li>An instance of <a class="reference internal" href="_Net.html#net.convnet.MixedConvNN" title="net.convnet.MixedConvNN"><tt class="xref py py-func docutils literal"><span class="pre">net.convnet.MixedConvNN()</span></tt></a> by <tt class="docutils literal"><span class="pre">cnn</span></tt></li>
+<li>An instance of <tt class="xref py py-func docutils literal"><span class="pre">training.trainutils.Config()</span></tt> by <tt class="docutils literal"><span class="pre">config</span></tt></li>
+<li>An instance of <a class="reference internal" href="_Training.html#training.CNNData.CNNData" title="training.CNNData.CNNData"><tt class="xref py py-func docutils literal"><span class="pre">training.CNNData.CNNData()</span></tt></a> by <tt class="docutils literal"><span class="pre">data</span></tt></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p>The purpose of the command line is to allow the change of meta-parameters during training and to allow the inspection of the state of variables/parameters.</p>
+<p id="batch">A particular useful function for debugging gives a visual output of the training examples presented to the CNN:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">info1</span><span class="p">,</span> <span class="n">info2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">debugGetCNNBatch</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This fetches a in exactly the same way as is done for every training iteration. The <tt class="docutils literal"><span class="pre">info</span></tt> variables are for internal use when lazy labels are active, and not of interest here. Besides returning the data and label array this function also prints an image into the save directory name <tt class="docutils literal"><span class="pre">debugGetCNNBatch.png</span></tt>:</p>
+<blockquote>
+<div><div class="figure align-center">
+<img alt="_images/Batch.png" src="_images/Batch.png" />
+</div>
+<p>Left: the input data. Middle the labels, note the large offset, this CNN has a very larger field of view it needs 63 pixels on either side to make a prediction for the central pixel. Right: overlay of data with labels, here you can check whether they are properly registered.</p>
+</div></blockquote>
+<p>For 3d CNNs the image shows a slice along the z-axis of the data.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some parameters cannot be changed or their change has no effect. This is mainly true for all properties that are hard-compiled into the theano functions like the network architecture (e.g. number of neurons per layer).</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Lazy.html" title="Lazy Labels"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="IntroNN.html" title="Practical Introduction to Neural Networks"
+             >previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

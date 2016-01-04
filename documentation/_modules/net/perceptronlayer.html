@@ -1,0 +1,594 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>net.perceptronlayer &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for net.perceptronlayer</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
+
+<span class="sd">Copyright (c) 2014 - now</span>
+<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">theano</span>
+<span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="kn">as</span> <span class="nn">T</span>
+<span class="kn">from</span> <span class="nn">theano.tensor.shared_randomstreams</span> <span class="kn">import</span> <span class="n">RandomStreams</span>
+
+<span class="kn">import</span> <span class="nn">pooling</span>
+<span class="kn">from</span> <span class="nn">netutils</span> <span class="kn">import</span> <span class="n">initWeights</span>
+
+<div class="viewcode-block" id="PerceptronLayer"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer">[docs]</a><span class="k">class</span> <span class="nc">PerceptronLayer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Typical hidden layer of a MLP: units are fully-connected.</span>
+<span class="sd">  Weight matrix W is of shape (n_in,n_out), the bias vector b is of shape (n_out,).</span>
+
+<span class="sd">  :type input: theano.tensor.dmatrix</span>
+<span class="sd">  :param input: a symbolic tensor of shape (n_examples, n_in)</span>
+
+<span class="sd">  :type n_in: int</span>
+<span class="sd">  :param n_in: dimensionality of input</span>
+
+<span class="sd">  :type n_out: int</span>
+<span class="sd">  :param n_out: number of hidden units</span>
+
+<span class="sd">  :type batch_size: int</span>
+<span class="sd">  :param batch_size: batch_size</span>
+
+<span class="sd">  :type enable_dropout: Bool</span>
+<span class="sd">  :param pool: whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with</span>
+<span class="sd">               self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</span>
+
+<span class="sd">  :type activation_func: string</span>
+<span class="sd">  :param activation_func: {&#39;relu&#39;,&#39;sigmoid&#39;,&#39;tanh&#39;,&#39;abs&#39;, &#39;maxout &lt;i&gt;&#39;}</span>
+<span class="sd">  </span>
+<span class="sd">  :type input_noise: theano.shared float32</span>
+<span class="sd">  :param input_noise: std of gaussian (centered) input noise. 0 or None --&gt; no noise</span>
+
+<span class="sd">  :type input_layer: layer object</span>
+<span class="sd">  :param input_layer: just for keeping track of un-usual input layers</span>
+
+<span class="sd">  :type W: np.ndarray or T.TensorVariable</span>
+<span class="sd">  :param W: weight matrix. If array, the values are used to initialise a shared variable for this layer.</span>
+<span class="sd">                           If TensorVariable, than this variable is directly used (weight sharing with the</span>
+<span class="sd">                           layer from which this variable comes from)</span>
+
+<span class="sd">  :type b: np.ndarray or T.TensorVariable</span>
+<span class="sd">  :param b: bias vector. If array, the values are used to initialise a shared variable for this layer.</span>
+<span class="sd">                           If TensorVariable, than this variable is directly used (weight sharing with the</span>
+<span class="sd">                           layer from which this variable comes from)</span>
+<span class="sd">  &quot;&quot;&quot;</span>  
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">n_in</span><span class="p">,</span> <span class="n">n_out</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span>
+              <span class="n">input_noise</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">input_layer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">input_layer</span>     <span class="o">=</span> <span class="n">input_layer</span> <span class="c"># only for autoencoder</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span> <span class="o">=</span> <span class="n">activation_func</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span>    <span class="o">=</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span><span class="n">n_out</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_in</span>            <span class="o">=</span> <span class="n">n_in</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lin_output</span>      <span class="o">=</span> <span class="bp">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output</span>          <span class="o">=</span> <span class="bp">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span>      <span class="o">=</span> <span class="p">[]</span> <span class="c"># only for autoencoder</span>
+
+    <span class="k">print</span> <span class="s">&quot;PerceptronLayer( #Inputs =&quot;</span><span class="p">,</span><span class="n">n_in</span><span class="p">,</span><span class="s">&quot;#Outputs =&quot;</span><span class="p">,</span><span class="n">n_out</span><span class="p">,</span><span class="s">&quot;)&quot;</span>
+    <span class="k">if</span> <span class="n">input_noise</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">input_noise</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">input_noise</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Input Noise&#39;</span><span class="p">)</span>
+      <span class="k">print</span> <span class="s">&quot;Input_noise active, p=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_noise</span><span class="o">.</span><span class="n">get_value</span><span class="p">())</span>
+      <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+      <span class="n">theano_rng</span> <span class="o">=</span> <span class="n">RandomStreams</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="mi">30</span><span class="p">))</span>
+      <span class="c"># apply multiplicative noise to input</span>
+      <span class="c">#self.input = theano_rng.binomial(size=input.shape, n=1, p=1-self.input_noise,</span>
+      <span class="c">#                                                                dtype=theano.config.floatX) * input</span>
+      <span class="c"># apply additive noise to input</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="nb">input</span> <span class="o">+</span> <span class="n">theano_rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="nb">input</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">avg</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">input_noise</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c"># no input noise</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="nb">input</span>
+
+
+    <span class="k">if</span> <span class="n">W</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">W_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_out</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>                    
+      <span class="bp">self</span><span class="o">.</span><span class="n">W</span>   <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">W_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;W_perceptron&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_in</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;.&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_out</span><span class="p">),</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">print</span> <span class="s">&quot;Directly using fixed/shared W (&quot;</span><span class="p">,</span><span class="n">W</span><span class="p">,</span><span class="s">&quot;), no Training on it in this layer!&quot;</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">W</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;W_perceptron&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_in</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;.&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_out</span><span class="p">),</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorVariable</span><span class="p">),</span> <span class="s">&quot;W must be either np.ndarray or theano var&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span>
+
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="c">#b_values = np.asarray(np.random.uniform(-1e-8,1e-8,(n_out,)), dtype=theano.config.floatX)</span>
+      <span class="k">if</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;relu&#39;</span> <span class="ow">or</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;ReLU&#39;</span><span class="p">:</span>
+        <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;const&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;sigmoid&#39;</span><span class="p">:</span>
+        <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;const&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span> <span class="c"># activation_func==&#39;tanh&#39;:</span>
+        <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;fix-uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span> 
+        
+      <span class="bp">self</span><span class="o">.</span><span class="n">b</span>   <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">b_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;b_perceptron&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_in</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;.&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_out</span><span class="p">),</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">print</span> <span class="s">&quot;Directly using fixed given b (&quot;</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="s">&quot;), no Training on it in this layer!&quot;</span>
+      <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;b_perceptron&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_in</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;.&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n_out</span><span class="p">),</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorVariable</span><span class="p">),</span> <span class="s">&quot;b must be either np.ndarray or theano var&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+
+    <span class="n">lin_output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">enable_dropout</span><span class="p">:</span>
+      <span class="k">print</span> <span class="s">&quot;Dropout ON&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">activation_noise</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Dropout Rate&#39;</span><span class="p">)</span>
+      <span class="n">rng</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">shared_randomstreams</span><span class="o">.</span><span class="n">RandomStreams</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
+      <span class="n">p</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">activation_noise</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">dropout_gate</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">p</span><span class="o">*</span><span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span><span class="mi">1</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+      <span class="n">lin_output</span> <span class="o">=</span>  <span class="n">lin_output</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout_gate</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">lin_output</span> <span class="o">=</span>  <span class="n">lin_output</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+
+    <span class="c"># Apply non-linearities and ggf. change bias-initialisations</span>
+    <span class="k">if</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;tanh&#39;</span><span class="p">:</span> <span class="c"># range = [-1,1]     </span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">lin_output</span><span class="p">)</span> <span class="c"># shape: (batch_size, num_outputs)</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;relu&#39;</span> <span class="ow">or</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;ReLU&#39;</span><span class="p">:</span> <span class="c"># rectified linear unit ,range = [0,inf]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span> <span class="o">=</span> <span class="s">&#39;relu&#39;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">lin_output</span><span class="o">*</span><span class="p">(</span><span class="n">lin_output</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="c">#T.maximum(lin_output,T.zeros_like(lin_output))</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;abs&#39;</span><span class="p">:</span> <span class="c"># abs unit ,range = [0,inf]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">abs_</span><span class="p">(</span><span class="n">lin_output</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;sigmoid&#39;</span><span class="p">:</span> <span class="c"># range = [0,1]</span>
+      <span class="c">#print &quot;WARNING: consider using tanh(.) or relu(.) instead! Sigmoid is BAD! (relu &gt; tanh &gt;&gt; sigmoid)&quot;</span>
+      <span class="n">lin_output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">lin_output</span><span class="p">)</span> <span class="c">#1/(1 + T.exp(-lin_output))</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;linear&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="p">(</span><span class="n">lin_output</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;maxout&quot;</span><span class="p">):</span>
+      <span class="n">r</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">activation_func</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="k">assert</span> <span class="n">r</span><span class="o">&gt;=</span><span class="mi">2</span>
+      <span class="n">n_out</span> <span class="o">=</span> <span class="n">n_out</span><span class="o">/</span><span class="n">r</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">pooling</span><span class="o">.</span><span class="n">maxout</span><span class="p">(</span><span class="n">lin_output</span><span class="p">,</span><span class="n">factor</span><span class="o">=</span><span class="n">r</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Options are: activation_func=(&#39;relu&#39;|&#39;sigmoid&#39;|&#39;tanh&#39;|&#39;abs&#39;)&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lin_output</span><span class="o">=</span><span class="n">lin_output</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="p">[]]</span> <span class="o">+</span> <span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">]</span> <span class="k">if</span> <span class="n">W</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="p">[])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">lin_output</span><span class="p">)</span> <span class="c"># shape: (batch_size, num_outputs)</span>
+    <span class="c">#self.class_probabilities = T.exp(lin_output) / T.sum(T.exp(lin_output), axis=1, keepdims=True) # For Hessian</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c"># shape: (batch_size,)</span>
+
+
+  <span class="c">#############################################################################################</span>
+
+<div class="viewcode-block" id="PerceptronLayer.randomizeWeights"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">):</span>
+    <span class="n">n_in</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_in</span>
+    <span class="n">n_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>      
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;relu&#39;</span><span class="p">:</span>
+       <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;const&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;sigmoid&#39;</span><span class="p">:</span>
+       <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;const&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>    
+    <span class="k">else</span><span class="p">:</span> <span class="c">#self.activation_func==&#39;tanh&#39;:</span>
+       <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;fix-uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+       
+    <span class="n">W_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_out</span><span class="p">),</span> <span class="n">scale</span><span class="p">,</span> <span class="n">mode</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span> 
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">W_values</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">b_values</span><span class="p">)</span>
+    
+</div>
+<div class="viewcode-block" id="PerceptronLayer.NLL"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.NLL">[docs]</a>  <span class="k">def</span> <span class="nf">NLL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the symbolic mean and instance-wise negative log-likelihood of the prediction</span>
+<span class="sd">    of this model under a given target distribution.</span>
+
+<span class="sd">    y: theano.tensor.TensorType</span>
+<span class="sd">      corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can</span>
+<span class="sd">      be used for label propagation)</span>
+<span class="sd">              </span>
+<span class="sd">    class_weights: theano.tensor.TensorType</span>
+<span class="sd">      weight vector of float32 of length  ``n_lab``. Values: ``1.0`` (default), ``w &lt; 1.0`` (less important),</span>
+<span class="sd">      ``w &gt; 1.0`` (more important class) </span>
+<span class="sd">      </span>
+<span class="sd">    label_prop_thresh: float (0.5,1)</span>
+<span class="sd">      This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).</span>
+<span class="sd">      If the predictive probability of the most likely class exceeds the threshold, this class is assumed to</span>
+<span class="sd">      be the correct label and the training is pushed in this direction.</span>
+<span class="sd">      Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># NOTE: This whole function has a ugly problem with NaN. They arise for pred values close to 0 or 1</span>
+    <span class="c"># (i.e. for NNs that make very confident and usually also correct predictions) because initially the log of</span>
+    <span class="c"># all the whole pred tensor is taken. Later we want to use only some indices of the tensor (mask) but</span>
+    <span class="c"># that is not so easy done. There are two ways:</span>
+    <span class="c"># 1. advanced indexing: T.log(pred)[mask.nonzero()] --&gt; fails if mask is all zero, cannot be fixed</span>
+    <span class="c"># 2. mutiplying with 0-1-mask: T.log(pred) * mask.nonzero --&gt; but NaN * 0 = NaN, but we require 0!</span>
+    <span class="c"># For the second option, in principle, the NaNs could be replaced by 0 using T.switch, but then the gradient</span>
+    <span class="c"># fails because the replaced value is disconnected from the parameters and gives NaN (mathematically</span>
+    <span class="c"># the gradient should correctly be 0 then; there is a Theano ticket open to request a fix).</span>
+    <span class="c"># So finally the best practice is to add a stabilisation to the log: T.log(pred) --&gt; T.log(pred+eps)</span>
+    <span class="c"># This looks ugly, but does the task and the introduced error is completely negligible</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-6</span>     
+    <span class="n">pred</span>            <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span>    <span class="c"># predictive (bs, cl)</span>
+    <span class="n">y</span>               <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>  <span class="c"># the labels (bs, 1)</span>
+    <span class="n">cls</span>             <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># available classes </span>
+    <span class="n">label_selection</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c"># selects correct labels</span>
+   
+    <span class="k">if</span> <span class="n">class_weights</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="n">class_weights</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      
+    <span class="c"># Up vote block     </span>
+    <span class="n">nll_inst_up</span> <span class="o">=</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">label_selection</span> <span class="o">*</span> <span class="n">class_weights</span>
+    <span class="n">N_up</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">label_selection</span><span class="p">)</span> <span class="c"># number of labelled examples   </span>
+
+    <span class="k">if</span> <span class="n">label_prop_thresh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span> <span class="c"># Label propagation block       </span>
+      <span class="n">above_thresh</span>     <span class="o">=</span> <span class="n">pred</span> <span class="o">&gt;</span> <span class="n">label_prop_thresh</span> <span class="c"># this is one for the class with highes prob  </span>
+      <span class="n">prop_mask</span>        <span class="o">=</span> <span class="n">above_thresh</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">label_selection</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="c"># don&#39;t do where training labels are available</span>
+      <span class="n">nll_inst_up_prop</span> <span class="o">=</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span><span class="o">+</span><span class="n">pred</span><span class="p">)</span> <span class="o">*</span> <span class="n">prop_mask</span>  <span class="o">*</span> <span class="n">class_weights</span> 
+      <span class="n">N_up_prop</span>        <span class="o">=</span> <span class="n">prop_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> 
+      
+      <span class="n">nll_inst_up</span> <span class="o">+=</span> <span class="n">nll_inst_up_prop</span>
+      <span class="n">N_up</span>        <span class="o">+=</span> <span class="n">N_up_prop</span>          
+      
+    <span class="n">nll_inst</span> <span class="o">=</span> <span class="n">nll_inst_up</span>
+    <span class="n">N_up</span>     <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">N_up</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N_up</span><span class="p">)</span> <span class="c"># patch N to be not 0, when this is the case the sum is 0 anyway!    </span>
+    <span class="n">nll</span>      <span class="o">=</span> <span class="n">nll_inst</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">N_up</span>
+    
+    <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll_inst</span>
+
+
+</div>
+<div class="viewcode-block" id="PerceptronLayer.NLL_weak"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.NLL_weak">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_weak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the symbolic mean and instance-wise negative log-likelihood of the prediction</span>
+<span class="sd">    of this model under a given target distribution.</span>
+
+<span class="sd">    y: theano.tensor.TensorType</span>
+<span class="sd">      corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can</span>
+<span class="sd">      be used for label propagation)</span>
+
+<span class="sd">    class_weights: theano.tensor.TensorType</span>
+<span class="sd">      weight vector of float32 of length  ``n_lab``. Values: ``1.0`` (default), ``w &lt; 1.0`` (less important),</span>
+<span class="sd">      ``w &gt; 1.0`` (more important class)</span>
+
+<span class="sd">    label_prop_thresh: float (0.5,1)</span>
+<span class="sd">      This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).</span>
+<span class="sd">      If the predictive probability of the most likely class exceeds the threshold, this class is assumed to</span>
+<span class="sd">      be the correct label and the training is pushed in this direction.</span>
+<span class="sd">      Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># NOTE: This whole function has a ugly problem with NaN. They arise for pred values close to 0 or 1</span>
+    <span class="c"># (i.e. for NNs that make very confident and usually also correct predictions) because initially the log of</span>
+    <span class="c"># all the whole pred tensor is taken. Later we want to use only some indices of the tensor (mask) but</span>
+    <span class="c"># that is not so easy done. There are two ways:</span>
+    <span class="c"># 1. advanced indexing: T.log(pred)[mask.nonzero()] --&gt; fails if mask is all zero, cannot be fixed</span>
+    <span class="c"># 2. mutiplying with 0-1-mask: T.log(pred) * mask.nonzero --&gt; but NaN * 0 = NaN, but we require 0!</span>
+    <span class="c"># For the second option, in principle, the NaNs could be replaced by 0 using T.switch, but then the gradient</span>
+    <span class="c"># fails because the replaced value is disconnected from the parameters and gives NaN (mathematically</span>
+    <span class="c"># the gradient should correctly be 0 then; there is a Theano ticket open to request a fix).</span>
+    <span class="c"># So finally the best practice is to add a stabilisation to the log: T.log(pred) --&gt; T.log(pred+eps)</span>
+    <span class="c"># This looks ugly, but does the task and the introduced error is completely negligible</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-6</span>
+    <span class="n">pred</span>            <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span>    <span class="c"># predictive (bs, cl)</span>
+    <span class="n">y</span>               <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>  <span class="c"># the labels (bs, 1)</span>
+    <span class="n">cls</span>             <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c"># available classes</span>
+    <span class="n">hard_labels</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c"># selects correct labels</span>
+
+    <span class="k">if</span> <span class="n">class_weights</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="n">class_weights</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">soft_labels</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">hard_labels</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">pred</span>
+
+    <span class="c"># Up vote block</span>
+    <span class="n">nll_inst_up</span> <span class="o">=</span> <span class="o">-</span> <span class="p">(</span><span class="n">soft_labels</span> <span class="o">*</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span> <span class="o">*</span> <span class="n">class_weights</span>
+    <span class="n">N_up</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">hard_labels</span><span class="p">)</span> <span class="c"># number of labelled examples</span>
+
+    <span class="n">nll_inst</span> <span class="o">=</span> <span class="n">nll_inst_up</span>
+    <span class="n">N_up</span>     <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">N_up</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N_up</span><span class="p">)</span> <span class="c"># patch N to be not 0, when this is the case the sum is 0 anyway!</span>
+    <span class="n">nll</span>      <span class="o">=</span> <span class="n">nll_inst</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">N_up</span>
+
+    <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll_inst</span>
+</div>
+<div class="viewcode-block" id="PerceptronLayer.nll_mutiple_binary"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.nll_mutiple_binary">[docs]</a>  <span class="k">def</span> <span class="nf">nll_mutiple_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the mean and instance-wise negative log-likelihood of the prediction</span>
+<span class="sd">    of this model under a given target distribution.</span>
+
+<span class="sd">    :type y: theano.tensor.TensorType</span>
+<span class="sd">    :param y: corresponds to a vector that gives for each example the</span>
+<span class="sd">              correct label</span>
+
+<span class="sd">    Note: we use the mean instead of the sum so that</span>
+<span class="sd">          the learning rate is less dependent on the batch size</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># y (bs, n_lab)</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-6</span> 
+    <span class="n">act</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lin_output</span> <span class="c"># (bs, n_lab)</span>
+    <span class="n">prob_0</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">act</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">act</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">prob_1</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">prob_0</span>
+    
+    <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">prob_0</span><span class="p">,</span> <span class="n">prob_1</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c"># (bs, n_lab, 2)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span>    <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">class_weights</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="n">class_weights</span>
+    
+    <span class="n">nll_inst</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob_0</span><span class="o">+</span><span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">class_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">prob_1</span><span class="o">+</span><span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">class_weights</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">nll</span>      <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">nll_inst</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll_inst</span>    
+
+    </div>
+<div class="viewcode-block" id="PerceptronLayer.squared_distance"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.squared_distance">[docs]</a>  <span class="k">def</span> <span class="nf">squared_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">return_instancewise</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, n_target)</span>
+<span class="sd">    output: scalar float32</span>
+<span class="sd">    mask: vectorized, 1==hole, 0==no_hole (== DOES NOT TRAIN ON NON-HOLES)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">Mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">batch</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">Target</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
+      <span class="n">inst</span>  <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">Target</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">print</span> <span class="s">&quot;squared_distance::Masked&quot;</span>
+      <span class="c">#batch = T.mean(((self.output - Target)*T.concatenate( (Mask,Mask,Mask),axis=1 )  )**2 ) #assuming RBG input</span>
+      <span class="n">batch</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(((</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">Target</span><span class="p">)</span><span class="o">*</span><span class="n">Mask</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
+      <span class="n">inst</span>  <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">Target</span><span class="p">)</span><span class="o">*</span><span class="n">Mask</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">if</span> <span class="n">return_instancewise</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">batch</span><span class="p">,</span> <span class="n">inst</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="n">batch</span>
+
+</div>
+<div class="viewcode-block" id="PerceptronLayer.errors"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.errors">[docs]</a>  <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns classification accuracy</span>
+
+<span class="sd">    :type y: theano.tensor.TensorType</span>
+<span class="sd">    :param y: corresponds to a vector that gives for each example the</span>
+<span class="sd">              correct label</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># check if y has same dimension of class_prediction</span>
+    <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;y should have the same shape as self.class_prediction&#39;</span><span class="p">,</span>
+            <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s">&#39;class_prediction&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+    <span class="c"># check if y is of the correct datatype</span>
+    <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;int&#39;</span><span class="p">):</span>
+        <span class="c"># the T.neq operator returns a vector of 0s and 1s, where 1</span>
+        <span class="c"># represents a mistake in prediction</span>
+        <span class="k">return</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">neq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="PerceptronLayer.errors_no_tn"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.errors_no_tn">[docs]</a>  <span class="k">def</span> <span class="nf">errors_no_tn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span>
+    <span class="n">tp</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">*</span><span class="n">pred</span><span class="p">))</span>
+    <span class="c">#tn = T.sum((1-y)*(1-pred))</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="n">pred</span><span class="p">)</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pred</span><span class="p">))</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">tp</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float32&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">acc</span>
+
+        
+        </div>
+  <span class="k">def</span> <span class="nf">_make_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;window is on 32x32, fixed sigma, assuming RGB.&quot;</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="mf">29.8</span>
+    <span class="n">x0</span><span class="o">=</span> <span class="mi">16</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="mi">19</span>
+    <span class="n">fun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">z</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="mi">32</span><span class="o">/</span><span class="n">denom</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x0</span><span class="p">))</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sig</span><span class="o">**</span><span class="mi">3</span><span class="p">)))</span><span class="o">*</span><span class="p">(</span><span class="mi">32</span><span class="o">/</span><span class="n">denom</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">x0</span><span class="p">))</span><span class="o">**</span><span class="mi">3</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sig</span><span class="o">**</span><span class="mi">3</span><span class="p">)))</span><span class="c">#, {x, 0, 32}, {y, 0, 32}</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfunction</span><span class="p">(</span><span class="n">fun</span><span class="p">,(</span><span class="mi">3</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="PerceptronLayer.cross_entropy_array"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.cross_entropy_array">[docs]</a>  <span class="k">def</span> <span class="nf">cross_entropy_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">GaussianWindow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, imgsize**2)</span>
+<span class="sd">    the output is of length: &lt;batchsize&gt;, Use cross_entropy() to get a scalar output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">GaussianWindow</span><span class="p">:</span>
+      <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__make_window</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="c">#XX = window#T.TensorConstant(T.TensorType(theano.config.floatX,[True,False])(),data=window)</span>
+      <span class="k">return</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="p">(</span><span class="mf">1.</span> <span class="k">if</span> <span class="n">GaussianWindow</span><span class="o">==</span><span class="bp">False</span> <span class="k">else</span> <span class="n">window</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="p">)</span><span class="o">*</span><span class="n">Target</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">Target</span><span class="p">))</span> <span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="p">)</span><span class="o">*</span><span class="n">Target</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">Target</span><span class="p">)</span> <span class="p">)</span><span class="o">*</span><span class="n">T</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span> <span class="p">(</span><span class="n">Mask</span><span class="p">,</span><span class="n">Mask</span><span class="p">,</span><span class="n">Mask</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span> <span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c">#assuming RBG input</span>
+
+</div>
+<div class="viewcode-block" id="PerceptronLayer.cross_entropy"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.cross_entropy">[docs]</a>  <span class="k">def</span> <span class="nf">cross_entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">GaussianWindow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, imgsize**2) output: scalar float32</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">GaussianWindow</span><span class="p">:</span>
+      <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_window</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">Mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="c">#XX = window#T.TensorConstant(T.TensorType(theano.config.floatX,[True,False])(),data=window)</span>
+      <span class="k">return</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="p">(</span><span class="mf">1.</span> <span class="k">if</span> <span class="n">GaussianWindow</span><span class="o">==</span><span class="bp">False</span> <span class="k">else</span> <span class="n">window</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="p">)</span><span class="o">*</span><span class="n">Target</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">Target</span><span class="p">))</span> <span class="p">)</span><span class="c"># #.reshape(new_shape)[index[0]:index[2],index[1]:index[3]]</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">print</span> <span class="s">&quot;cross_entropy::Masked, no window&quot;</span>
+      <span class="k">return</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="p">)</span><span class="o">*</span><span class="n">Target</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">Target</span><span class="p">))</span><span class="o">*</span><span class="n">T</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span> <span class="p">(</span><span class="n">Mask</span><span class="p">,</span><span class="n">Mask</span><span class="p">,</span><span class="n">Mask</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span> <span class="p">)</span> <span class="p">)</span><span class="c"># #.reshape(new_shape)[index[0]:index[2],index[1]:index[3]]#assuming RBG input</span>
+
+
+
+</div></div>
+<div class="viewcode-block" id="RecurrentLayer"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.RecurrentLayer">[docs]</a><span class="k">class</span> <span class="nc">RecurrentLayer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  :type input: symbolic input carrying [time, batch, feat]</span>
+<span class="sd">  :param input: theano.tensor.ftensor3</span>
+
+<span class="sd">  :type n_in: int</span>
+<span class="sd">  :param n_in: dimensionality of input</span>
+
+<span class="sd">  :type n_hid: int</span>
+<span class="sd">  :param n_hid: number of hidden units</span>
+
+<span class="sd">  :type activation_func: string</span>
+<span class="sd">  :param activation_func: {&#39;relu&#39;,&#39;sigmoid&#39;,&#39;tanh&#39;,&#39;abs&#39;}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">n_in</span><span class="p">,</span> <span class="n">n_hid</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">input</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">3</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="nb">input</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c"># exchange batch and time</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_in</span>            <span class="o">=</span> <span class="n">n_in</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">n_hid</span>           <span class="o">=</span> <span class="n">n_hid</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span> <span class="o">=</span> <span class="n">activation_func</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span>    <span class="o">=</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span><span class="n">n_hid</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hid_lin</span>         <span class="o">=</span> <span class="bp">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output</span>          <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">print</span> <span class="s">&quot;RecurrentLayer( #Inputs =&quot;</span><span class="p">,</span><span class="n">n_in</span><span class="p">,</span><span class="s">&quot;#Hidden = &quot;</span><span class="p">,</span><span class="n">n_hid</span><span class="p">,</span><span class="s">&quot;)&quot;</span>
+
+    <span class="n">W_in_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_hid</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">W_in</span>  <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">W_in_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;W_in&#39;</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  
+    <span class="n">W_hid_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_hid</span><span class="p">,</span> <span class="n">n_hid</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rnn&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>                                 
+    <span class="bp">self</span><span class="o">.</span><span class="n">W_hid</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">W_hid_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;W_hid&#39;</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">b_hid_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_hid</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;fix-uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>                                 
+    <span class="bp">self</span><span class="o">.</span><span class="n">b_hid</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">b_hid_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;b_hid&#39;</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">hid_0_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_hid</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hid_0</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">hid_0_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;hid_0&#39;</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">W_in</span><span class="p">,</span> <span class="n">W_hid</span><span class="p">,</span> <span class="n">b_hid</span><span class="p">,</span> <span class="n">hid_0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">W_hid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_hid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hid_0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">W_in</span><span class="p">,</span> <span class="n">W_hid</span><span class="p">,</span> <span class="n">b_hid</span><span class="p">,</span> <span class="n">hid_0</span><span class="p">]</span>
+
+
+    <span class="c"># Select non-linearities</span>
+    <span class="k">if</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;tanh&#39;</span><span class="p">:</span> <span class="c"># range = [-1,1]</span>
+       <span class="n">act</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">tanh</span> <span class="c"># shape: (batch_size, num_outputs)</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;relu&#39;</span><span class="p">:</span> <span class="c"># rectified linear unit ,range = [0,inf]</span>
+      <span class="n">act</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>  <span class="c">#T.maximum(lin_output,T.zeros_like(lin_output))</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;abs&#39;</span><span class="p">:</span> <span class="c"># abs unit ,range = [0,inf]</span>
+      <span class="n">act</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">abs_</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;sigmoid&#39;</span><span class="p">:</span> <span class="c"># range = [0,1]</span>
+      <span class="k">print</span> <span class="s">&quot;WARNING: sig() used!&quot;</span>
+      <span class="c">#print &quot;WARNING: consider using tanh(.) or relu(.) instead! Sigmoid is really BAD! (relu &gt; tanh &gt;&gt; sigmoid)&quot;</span>
+      <span class="n">act</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">sigmoid</span> <span class="c">#1/(1 + T.exp(-lin_output))</span>
+    <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;linear&#39;</span><span class="p">:</span>
+      <span class="k">print</span> <span class="s">&quot;Warning: linear activation in recurrent layer with fanout-</span><span class="si">%i</span><span class="s">! Is this the output layer?&quot;</span> <span class="o">%</span><span class="n">n_hid</span>
+      <span class="n">act</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;options are: activation_func=(&#39;relu&#39;|&#39;sigmoid&#39;|&#39;tanh&#39;|&#39;abs&#39;)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">recurrence</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">hid_prev</span><span class="p">):</span>
+      <span class="n">hid_lin_t</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">W_in</span><span class="p">)</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">hid_prev</span><span class="p">,</span> <span class="n">W_hid</span><span class="p">)</span> <span class="o">+</span> <span class="n">b_hid</span>
+      <span class="n">hid_t</span> <span class="o">=</span> <span class="n">act</span><span class="p">(</span><span class="n">hid_lin_t</span><span class="p">)</span>
+      <span class="k">return</span> <span class="p">[</span><span class="n">hid_t</span><span class="p">,</span> <span class="n">hid_lin_t</span><span class="p">]</span>
+
+    <span class="n">outputs_info</span><span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">initial</span><span class="o">=</span><span class="n">T</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="n">hid_0</span><span class="p">,</span> <span class="nb">input</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">n_hid</span><span class="p">),</span> <span class="n">taps</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">dict</span><span class="p">()]</span>
+    <span class="c"># shapes are [time, batch, feat]</span>
+    <span class="p">([</span><span class="n">hid</span><span class="p">,</span> <span class="n">hid_lin</span><span class="p">],</span> <span class="n">updates</span><span class="p">)</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">recurrence</span><span class="p">,</span> <span class="n">sequences</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">outputs_info</span><span class="o">=</span><span class="n">outputs_info</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Recurrence&#39;</span><span class="p">)</span>
+    <span class="n">hid_lin</span> <span class="o">=</span> <span class="n">hid_lin</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c"># exchange batch and time  again --&gt; [batch, time, hid/feat]</span>
+    <span class="n">hid</span> <span class="o">=</span> <span class="n">act</span><span class="p">(</span><span class="n">hid_lin</span><span class="p">)</span> <span class="c"># I think this is needed for structural damping (calculating grad wrt hid_lin)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">output</span>  <span class="o">=</span> <span class="n">hid</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c"># [batch, hid/feat]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hid</span>     <span class="o">=</span> <span class="n">hid</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hid_lin</span> <span class="o">=</span> <span class="n">hid_lin</span>
+
+
+<div class="viewcode-block" id="RecurrentLayer.randomizeWeights"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.RecurrentLayer.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_w</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+    <span class="n">n_in</span><span class="p">,</span> <span class="n">n_hid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_hid</span>
+    <span class="n">W_in_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_hid</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">W_in</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">W_in_values</span><span class="p">)</span> 
+    <span class="n">W_hid_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_hid</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;rnn&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>                                 
+    <span class="bp">self</span><span class="o">.</span><span class="n">W_hid</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">W_hid_values</span><span class="p">)</span>
+    <span class="n">b_hid_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_hid</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;fix-uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>                                 
+    <span class="bp">self</span><span class="o">.</span><span class="n">b_hid</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">b_hid_values</span><span class="p">)</span>
+    <span class="n">hid_0_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_hid</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hid_0</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">hid_0_values</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

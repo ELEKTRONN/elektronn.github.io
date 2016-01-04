@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>training.predictor &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for training.predictor</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
+
+<span class="sd">Copyright (c) 2014 - now</span>
+<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">elektronn.training.config</span> <span class="kn">import</span> <span class="n">default_config</span><span class="p">,</span> <span class="n">Config</span> <span class="c"># the global user-set config</span>
+
+<span class="c"># prevent Qt-backend on remote machines early! (other modules may import mpl)</span>
+<span class="n">no_X</span> <span class="o">=</span> <span class="n">default_config</span><span class="o">.</span><span class="n">no_X</span>
+<span class="n">hostname</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>    
+<span class="k">if</span> <span class="n">hostname</span> <span class="ow">in</span> <span class="n">default_config</span><span class="o">.</span><span class="n">no_X_hosts</span> <span class="ow">or</span> <span class="n">no_X</span><span class="p">:</span>
+  <span class="k">print</span> <span class="s">&quot;Importing Matplotlib without interactive backend, plots can only be saved to files in this session!&quot;</span>
+  <span class="kn">import</span> <span class="nn">matplotlib</span>
+  <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;AGG&#39;</span><span class="p">)</span>
+
+
+
+<div class="viewcode-block" id="create_predncnn"><a class="viewcode-back" href="../../_Training.html#training.predictor.create_predncnn">[docs]</a><span class="k">def</span> <span class="nf">create_predncnn</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">n_ch</span><span class="p">,</span> <span class="n">n_lab</span><span class="p">,</span> <span class="n">gpu</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>  <span class="n">override_MFP_to_active</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">imposed_input_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">param_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Creates and compiles a CNN/NN as specified in a config file (used for training).</span>
+<span class="sd">  Loads the last parameters fromthe training directory.</span>
+
+<span class="sd">  The CNN/NN object is returned</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+
+<span class="sd">  config_file: string</span>
+<span class="sd">    Path to a CNN config file</span>
+<span class="sd">  n_ch: int</span>
+<span class="sd">    Number of input channels, for a MLP this is the dimensionality of the input vectors, for CNNs this is the</span>
+<span class="sd">    number of channels in an image/volume (e.g. 1 for plain gray value images)</span>
+<span class="sd">  n_lab: int</span>
+<span class="sd">    Number of distinct labels/classes</span>
+<span class="sd">  gpu: int</span>
+<span class="sd">    Specifying id of GPU to initialise for usage. E.g. 1 --&gt; &quot;gpu1&quot;, None will initialise gpu0,\</span>
+<span class="sd">    False will not initialise any GPU. This only works if &quot;device&quot; is not set in ``.theanorc`` or if theano</span>
+<span class="sd">    has not been imported up to now. If the initialisation fails an error will be printed but the script</span>
+<span class="sd">    will not crash.</span>
+<span class="sd">  override_MFP_to_active: Bool</span>
+<span class="sd">    If true, activates MFP in all layers where possible, ignoring the configuration in the config file.</span>
+<span class="sd">    This is useful for prediction using a config file from training. (only for CNN)</span>
+<span class="sd">  override_input_size_with: tuple or None</span>
+<span class="sd">    Similar as above, this can be used to impose another input size than specified in the config file. (only for CNN)</span>
+<span class="sd">  param_file: string/None</span>
+<span class="sd">    If other parameters than &quot;*-Last.param&quot; should be loaded, this can specify the param file.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">config_file</span> <span class="o">=</span>  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">gpu</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+    <span class="n">gpu</span>              <span class="o">=</span> <span class="n">default_config</span><span class="o">.</span><span class="n">device</span>
+
+  <span class="n">config</span>           <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">gpu</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">use_existing_dir</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">override_MFP_to_active</span><span class="o">=</span><span class="n">override_MFP_to_active</span><span class="p">,</span>
+                            <span class="n">imposed_input_size</span><span class="o">=</span><span class="n">imposed_input_size</span><span class="p">)</span> <span class="c"># inits gpu</span>
+
+  <span class="kn">from</span> <span class="nn">elektronn.net.netcreation</span> <span class="kn">import</span> <span class="n">createNet</span> <span class="c"># import after gpu init</span>
+
+  <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span> <span class="c"># The trainer works directly in the save dir</span>
+  <span class="n">cnn</span> <span class="o">=</span> <span class="n">createNet</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">n_ch</span><span class="p">,</span> <span class="n">n_lab</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">dimensions</span><span class="p">)</span> <span class="c"># 1 ch 2 label</span>
+  <span class="k">if</span> <span class="n">param_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">-LAST.param&quot;</span><span class="o">%</span><span class="n">config</span><span class="o">.</span><span class="n">save_name</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">path</span> <span class="o">=</span>  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">param_file</span><span class="p">)</span>
+    
+  <span class="n">cnn</span><span class="o">.</span><span class="n">loadParameters</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">cnn</span>
+  
+  </div>
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+  <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;~/CNN_Training/3D/NewDeep/Backup/config.py&#39;</span>
+  <span class="n">cnn</span>  <span class="o">=</span>  <span class="n">create_predncnn</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">gpu</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="n">override_MFP_to_active</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">imposed_input_size</span><span class="o">=</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span><span class="mi">190</span><span class="p">,</span><span class="mi">190</span><span class="p">))</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">300</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="n">cnn</span><span class="o">.</span><span class="n">predictDense</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

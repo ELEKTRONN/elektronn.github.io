@@ -1,0 +1,46 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+title: ELEKTRONN
+email: your-email@domain.com
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "http://elektronn.org" # the base hostname & protocol for your site
+github_username: ELEKTRONN
+
+github-url: https://github.com/ELEKTRONN/ELEKTRONN
+documentation-url:
+
+# Build settings
+markdown: kramdown
+
+sass:
+  style: :compressed
+
+
+navigation:
+ - text: Home
+   url: /
+   icon: fa-home
+ - text: Getting Started
+   url: /getting-started/
+   icon: fa-rocket
+# - text: Use Cases
+#   url: /use-cases/
+ - text: Development
+   url: /development/
+   icon: fa-cubes
+ - text: About
+   url: /about/
+   icon: fa-users
+# - text: Links
+#   url: /links/
+#   icon: fa-bookmark

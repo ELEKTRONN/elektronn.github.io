@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lazy Labels &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="index.html" />
+    <link rel="next" title="Making Predictions" href="Prediction.html" />
+    <link rel="prev" title="Using the Training Pipeline" href="Pipeline.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Prediction.html" title="Making Predictions"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Pipeline.html" title="Using the Training Pipeline"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Lazy Labels</a><ul>
+<li><a class="reference internal" href="#motivation">Motivation</a></li>
+<li><a class="reference internal" href="#solution">Solution</a></li>
+<li><a class="reference internal" href="#application">Application</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Pipeline.html"
+                        title="previous chapter">Using the Training Pipeline</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Prediction.html"
+                        title="next chapter">Making Predictions</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Lazy.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="lazy-labels">
+<span id="id1"></span><h1>Lazy Labels<a class="headerlink" href="#lazy-labels" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
+<p>For <em>img-img</em> training tasks (e.g. segmentation or pixel-wise object detection) one factor limiting the quality of CNN predictions is the demand for large expensive ground truth: a volume equally large as the raw image has to be annotated pixel-wise by human expert. Naturally, this can only be done for a small number of image cubes and is therefore not likely to cover the full variety of possible input data. Many benchmarks are performed with respect to such data sets but for actual applications this might not be sufficient to solve the task. For example EM images of large brain sections, as encountered in connectomics, exhibit a diversity of distinct regions, some of which are so large and rather &#8220;monotonic&#8221; that they are usually not considered for training data, because labelling them would be expensive. Such areas are e.g. myelinated axons or cell nuclei. But it may happen that CNN predictions go wrong in particular those areas, because they were never presented to the CNN during training and certain structures resemble target objects (e.g. vesicle clouds) and give rise to false positives. Therefore, in real applications, it is important to include those &#8220;monotonic&#8221; areas into the training set and make sure the CNNs is familiar with them.</p>
+</div>
+<div class="section" id="solution">
+<h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
+<p>Lazy Labels refers to ground truth that can be generated with very little effort and gives the possibility to include monotonic image examples into the training set.</p>
+<p>An example use case is a EM volume of a cell nucleus (say background class <tt class="docutils literal"><span class="pre">0</span></tt>), but the patch contains also mitochondria (class <tt class="docutils literal"><span class="pre">1</span></tt>), or more categories of other objects. But <strong>certainly no</strong> vesicle clouds(class <tt class="docutils literal"><span class="pre">2</span></tt>). The cheapest option is to label nothing at all in this cube and instead specify a <em>mask</em> that indicates all classes that have not been labelled and <em>another mask</em> that indicates that there are no instances of class <tt class="docutils literal"><span class="pre">2</span></tt> in this whole patch. During training this patch can act to drive the predicted probability of class <tt class="docutils literal"><span class="pre">2</span></tt> on this patch towards zero, i.e. the CNN gets &#8220;punished&#8221; for predicting <tt class="docutils literal"><span class="pre">2</span></tt> on this patch, but predictions for other classes are ignored because we don&#8217;t know them.</p>
+<p>This provides of course much less training information and therefore it would be sensible give this patch less weigh by presenting it fewer times than other patches during training. We can give it a lower value in the <tt class="docutils literal"><span class="pre">cube_prios</span></tt> list than the densely labelled cubes.
+The other option is to label the cell nucleus manually as background (because it is a large contiguous object that is relatively cheap to label) and set a mask that the background was labelled (but no other classes). For the remaining pixels around the nucleus the labels are all set to <tt class="docutils literal"><span class="pre">-1</span></tt> to be <strong>ignored</strong> (this area would be more expensive to label because there might be many small objects of different classes e.g. mitochondria). Thus the information content is slightly higher than for the first option, but it&#8217;s also more work.</p>
+<p>Lazy labelled training images should only be used to supplement densely labelled data.</p>
+</div>
+<div class="section" id="application">
+<h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
+<p>The exact effect of the masks is precisely described in the API documentation of the loss function (<a class="reference internal" href="_Net.html#net.convlayer2d.ConvLayer2d.NLL" title="net.convlayer2d.ConvLayer2d.NLL"><tt class="xref py py-meth docutils literal"><span class="pre">net.convlayer2d.ConvLayer2d.NLL()</span></tt></a> or <a class="reference internal" href="_Net.html#net.convlayer3d.ConvLayer3d.NLL" title="net.convlayer3d.ConvLayer3d.NLL"><tt class="xref py py-meth docutils literal"><span class="pre">net.convlayer3d.ConvLayer3d.NLL()</span></tt></a>).</p>
+<dl class="docutils">
+<dt>To use lazy labels 2 things must be done:</dt>
+<dd><ol class="first last arabic simple">
+<li>Turn the option <tt class="docutils literal"><span class="pre">lazy_labels</span></tt> in the configuration</li>
+<li>For every image/label cube pair: add another h5 dataset in the <strong>same</strong> h5 file of the labels by the data set name &#8220;info&#8221;. This data set must be a tuple containing two arrays of length <tt class="docutils literal"><span class="pre">n_lab</span></tt> with entries 0 or 1. The first array gives <tt class="docutils literal"><span class="pre">mask_class_labeled</span></tt> corresponding to this volume, the second <tt class="docutils literal"><span class="pre">mask_class_not_present</span></tt>.</li>
+<li>(optionally) set lower <tt class="docutils literal"><span class="pre">cube_prios</span></tt> for the cubes with less label information content.</li>
+</ol>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Prediction.html" title="Making Predictions"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Pipeline.html" title="Using the Training Pipeline"
+             >previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

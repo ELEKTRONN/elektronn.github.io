@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+	{% include head.html %}
+
+	<body>
+		{% include header.html %}
+
+		{{ content }}
+
+		<script src="{{ "js/main.js" | prepend: site.baseurl }}"></script>
+
+	</body>
+
+</html>

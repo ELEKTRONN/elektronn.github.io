@@ -1,0 +1,68 @@
+.. _training_pack:
+
+training package
+================
+
+training.CNNData module
+-----------------------
+
+.. automodule:: training.CNNData
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+training.traindata module
+-------------------------
+
+.. automodule:: training.traindata
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+training.trainer module
+-----------------------
+
+.. automodule:: training.trainer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+training.trainutils module
+--------------------------
+
+.. automodule:: training.trainutils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+training.config module
+----------------------
+
+.. automodule:: training.config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+training.predictor module
+-------------------------
+
+.. automodule:: training.predictor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+training.warping module
+-----------------------
+
+.. automodule:: training.warping
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+training.parallelisation module
+-------------------------------
+
+.. automodule:: training.parallelisation
+    :members:
+    :undoc-members:
+    :show-inheritance:

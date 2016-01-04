@@ -1,0 +1,45 @@
+.tag {
+	background-color: #34495e;
+	border-bottom: 0 !important;
+	border-radius: 3px 0 0 3px;
+	color: #fff;
+	display: inline-block;
+	font-size: .85em;
+	line-height: 34px;
+	padding: 0 10px;
+	position: relative;
+	text-decoration: none;
+	margin-right: 10px;
+
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+
+	&:hover { background-color: #46637f; }
+	&:hover:before { border-left: 10px solid #46637f; }
+
+	&:before {
+		top: 0;
+		right: -10px;
+		width: 0;
+		height: 0;
+		border-top: 17px solid transparent;
+		border-bottom: 17px solid transparent;
+		border-left: 10px solid #34495e;
+	}
+
+	&:after {
+		top: 14px;
+		right: -3px;
+		float: left;
+		width: 5px;
+		height: 5px;
+		border-radius: 6px;
+		background: #2c3e50;
+	}
+
+	&:before, &:after {
+		position: absolute;
+		content: '';
+	}
+}

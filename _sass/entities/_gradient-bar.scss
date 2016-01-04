@@ -1,0 +1,40 @@
+.gradient-bar {
+	height: 12px;
+	//background: linear-gradient(to right, #28A6E9, #12AC87);
+	background: #12ac87;
+	width: 100%;
+	border-bottom: 4px solid darken(#12ac87, 10);
+	content: "";
+}
+
+.top-link {
+	display: inline-block;
+	width: 48px;
+	height: 48px;
+	background: #12ac87;
+	padding: 8px;
+	text-align: center;
+	font-size: 1.25rem;
+	border-bottom: 4px solid darken(#12ac87, 10);
+	position: relative;
+	z-index: 12;
+
+	color: #202a36 !important;
+
+	&:after {
+		content: '';
+		z-index: -1;
+		border-radius: 50%;
+		position: absolute;
+		left: calc(50% - 15px);
+		top: calc(50% - 13px);
+		width: 30px;
+		height: 30px;
+		background: darken(#12ac87, 10);
+		transform: scale(0);
+		transition: all .1s linear;
+	}
+
+	&:hover { border-bottom: 4px solid darken(#12ac87, 10); }
+	&:hover:after { transform: scale(1); }
+}

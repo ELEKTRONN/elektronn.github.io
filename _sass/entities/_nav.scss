@@ -1,0 +1,66 @@
+.logo { max-width: 8rem; }
+
+.nav-wrapper {
+	width: 100%;
+}
+
+.nav {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	transform: translateY(100%);
+	transition: all .3s ease-in;
+
+	@include breakpoint($on-notebook) {
+		transform: translateY(0);
+		flex-direction: row;
+	}
+
+	&.visible { transform: translateY(0); }
+}
+
+
+.nav-link {
+	color: #bbb;
+	border-top: 1px solid #546878;
+	background: #414F5D;
+	color: #84ACC0;
+	padding: .5rem;
+	transition: all .1s linear;
+	border-bottom: 4px solid #414f5d;
+
+	i { margin-right: .5rem; }
+
+	@include breakpoint($on-notebook) {
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		border-right: 1px solid #2D3942;
+		border-bottom: 1px solid #414f5d;
+	}
+
+	&:last-of-type { border-right: 0; }
+
+
+	&.active, &.active:hover {
+		border-bottom: 4px solid darken(#414f5d, 15);
+		background: #36404E;
+		color: #02C093;
+	}
+
+	&:hover {
+		border-bottom: 4px solid #414f5d;
+		color: #02c093;
+	}
+}
+
+.nav-toggle {
+	width: 100%;
+	display: block;
+	position: relative;
+	bottom: 0;
+
+	@include breakpoint($on-notebook) {
+		display: none;
+	}
+}

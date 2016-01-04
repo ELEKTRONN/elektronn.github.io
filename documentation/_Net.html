@@ -1,0 +1,1651 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>net package &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="index.html" />
+    <link rel="up" title="ELEKTRONN API Documentation" href="_modules.html" />
+    <link rel="next" title="training package" href="_Training.html" />
+    <link rel="prev" title="ELEKTRONN API Documentation" href="_modules.html" /> 
+  </head>
+  <body>
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="_Training.html" title="training package"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="_modules.html" title="ELEKTRONN API Documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li>
+          <li><a href="_modules.html" accesskey="U">ELEKTRONN API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">net package</a><ul>
+<li><a class="reference internal" href="#module-net.convnet">net.convnet module</a></li>
+<li><a class="reference internal" href="#module-net.perceptronlayer">net.perceptronlayer module</a></li>
+<li><a class="reference internal" href="#module-net.convlayer2d">net.convlayer2d module</a></li>
+<li><a class="reference internal" href="#module-net.convlayer3d">net.convlayer3d module</a></li>
+<li><a class="reference internal" href="#module-net.netcreation">net.netcreation module</a></li>
+<li><a class="reference internal" href="#module-net.netutils">net.netutils module</a></li>
+<li><a class="reference internal" href="#module-net.optimizer">net.optimizer module</a></li>
+<li><a class="reference internal" href="#module-net.gaborfilters">net.gaborfilters module</a></li>
+<li><a class="reference internal" href="#module-net.introspection">net.introspection module</a></li>
+<li><a class="reference internal" href="#module-net.pooling">net.pooling module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="_modules.html"
+                        title="previous chapter">ELEKTRONN API Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="_Training.html"
+                        title="next chapter">training package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/_Net.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="net-package">
+<span id="net"></span><h1>net package<a class="headerlink" href="#net-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-net.convnet">
+<span id="net-convnet-module"></span><h2>net.convnet module<a class="headerlink" href="#module-net.convnet" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="class">
+<dt id="net.convnet.MixedConvNN">
+<em class="property">class </em><tt class="descclassname">net.convnet.</tt><tt class="descname">MixedConvNN</tt><big>(</big><em>input_size=None</em>, <em>input_depth=None</em>, <em>batch_size=None</em>, <em>enable_dropout=False</em>, <em>recurrent=False</em>, <em>dimension_calc=None</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>input_size: tuple</strong> :</p>
+<blockquote>
+<div><p>Data shapes, excluding batch and channel (used to infer the dimensionality)</p>
+</div></blockquote>
+<p><strong>input_depth: int/None</strong> :</p>
+<blockquote>
+<div><p>Is None by default this means non-image data (no convLayers allowed). Change to 1 for b/w, 3 for RGB and    4 for RGB-D images etc. For RNN this is the length of the time series.</p>
+</div></blockquote>
+<p><strong>batch_size: int/None</strong> :</p>
+<blockquote>
+<div><p>For variable batchsize (slower!)</p>
+</div></blockquote>
+<p><strong>enable_dropout:  Bool</strong> :</p>
+<blockquote>
+<div><p>Turn on or off dropout</p>
+</div></blockquote>
+<p><strong>recurrent:       Bool</strong> :</p>
+<blockquote>
+<div><p>Support recurrent iterations along input depth/time</p>
+</div></blockquote>
+<p class="last"><strong>dimension_calc: dimension calculator object</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Note that image data must have at least 1 channel, e.g. a 2d image (1,x,y). 3d requires data in the
+format (z,ch,x,y). E.g. to create an isotropic 3d CNN with 5 channels (total input shape is (1,30,5,30,30)):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span> <span class="n">input_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A non-convolutional MLP can be created as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">100</span><span class="p">,),</span> <span class="n">input_depth</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.addPerceptronLayer">
+<tt class="descname">addPerceptronLayer</tt><big>(</big><em>n_outputs=10</em>, <em>activation_func='tanh'</em>, <em>enable_input_noise=False</em>, <em>add_in_output_layers=False</em>, <em>force_no_dropout=False</em>, <em>W=None</em>, <em>b=None</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.addPerceptronLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.addPerceptronLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a Perceptron layer to the CNN.</p>
+<p>Normally the each layer creates its own set of randomly initialised neuron weights. To reuse the weights
+of another layer (weight sharing) use the arguments <tt class="docutils literal"><span class="pre">W</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> an pass <tt class="docutils literal"><span class="pre">T.TensorVariable</span></tt>.
+If <tt class="docutils literal"><span class="pre">W</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are numpy arrays own weights are initialised with these values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_outputs: int</strong> :</p>
+<blockquote>
+<div><p>The size of this layer</p>
+</div></blockquote>
+<p><strong>activation_func: string</strong> :</p>
+<blockquote>
+<div><p>{tanh, relu, sigmoid, abs, linear, maxout &lt;i&gt;}
+Activation function</p>
+</div></blockquote>
+<p><strong>enable_input_noise: Bool</strong> :</p>
+<blockquote>
+<div><p>If True set 20% of input to 0 randomly (similar to dropout)</p>
+</div></blockquote>
+<p><strong>force_no_dropout:   Bool</strong> :</p>
+<blockquote class="last">
+<div><p>Set True for last/output layer</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.addConvLayer">
+<tt class="descname">addConvLayer</tt><big>(</big><em>nof_filters=None</em>, <em>filter_size=None</em>, <em>pool_shape=2</em>, <em>activation_func='tanh'</em>, <em>add_in_output_layers=False</em>, <em>force_no_dropout=False</em>, <em>use_fragment_pooling=False</em>, <em>reshape=False</em>, <em>is_last_layer=False</em>, <em>layer_input_shape=None</em>, <em>layer_input=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.addConvLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.addConvLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a convolutional layer to the CNN. The dimensionality is <em>automatically</em> inferred.</p>
+<p>Normally the inputs are automatically connected the the outputs of the last added layer. To connect to a
+different layer use <tt class="docutils literal"><span class="pre">layer_input_shape</span></tt> and <tt class="docutils literal"><span class="pre">layer_input</span></tt> arguments.</p>
+<p>Normally the each layer creates its own set of randomly initialised neuron weights. To reuse the weights
+of another layer (weight sharing) use the arguments <tt class="docutils literal"><span class="pre">W</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> an pass <tt class="docutils literal"><span class="pre">T.TensorVariable</span></tt>.
+If <tt class="docutils literal"><span class="pre">W</span></tt> and <tt class="docutils literal"><span class="pre">b</span></tt> are numpy arrays own weights are initialised with these values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>nof_filters:          int</strong> :</p>
+<blockquote>
+<div><p>Number of feature maps</p>
+</div></blockquote>
+<p><strong>filter_size:          int/tuple</strong> :</p>
+<blockquote>
+<div><p>Size/shape of convolutional filters, xy/zxy, (scalars are automatically extended to the 2d or 3d)</p>
+</div></blockquote>
+<p><strong>pool_shape:   int/tuple</strong> :</p>
+<blockquote>
+<div><p>Size/shape of pool, xy/zxy, (scalars are automatically extended to the 2d or 3d)</p>
+</div></blockquote>
+<p><strong>activation_func:      string</strong> :</p>
+<blockquote>
+<div><p>{tanh, relu, sigmoid, abs, linear, maxout &lt;i&gt;}
+Activation function</p>
+</div></blockquote>
+<p><strong>force_no_dropout:     Bool</strong> :</p>
+<blockquote>
+<div><p>Set True for last/output layer</p>
+</div></blockquote>
+<p><strong>use_fragment_pooling: Bool</strong> :</p>
+<blockquote>
+<div><p>Set to True for predicting dense images efficiently. Requires batch_size==1.</p>
+</div></blockquote>
+<p><strong>reshape:              Bool</strong> :</p>
+<blockquote>
+<div><p>Set to True to get 2d/3d output instead of flattened class_probabilities in the last layer</p>
+</div></blockquote>
+<p><strong>is_last_layer:        Bool</strong> :</p>
+<blockquote>
+<div><p>Shorthand for reshape=True, force_no_dropout=True and reconstruction of pooling fragments (if mfp was active)</p>
+</div></blockquote>
+<p><strong>layer_input_shape: tuple of int</strong> :</p>
+<blockquote>
+<div><p>Only needed if layer_input is not not None</p>
+</div></blockquote>
+<p><strong>layer_input: T.TensorVariable</strong> :</p>
+<blockquote>
+<div><p>Symbolic input if you do <em>not</em> want to use the previous layer of the cnn. This requires specification of
+the shape of that input with <tt class="docutils literal"><span class="pre">layer_input_shape</span></tt>.</p>
+</div></blockquote>
+<p><strong>W: np.ndarray</strong> :</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>weight matrix. If array, the values are used to initialise a shared variable for this layer.</dt>
+<dd><p class="first last">If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>b: np.ndarray or T.TensorVariable</strong> :</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>bias vector. If array, the values are used to initialise a shared variable for this layer.</dt>
+<dd><p class="first last">If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>pooling_mode: str</strong> :</p>
+<blockquote class="last">
+<div><p>&#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains sign of large negative values</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.addRecurrentLayer">
+<tt class="descname">addRecurrentLayer</tt><big>(</big><em>n_hid=None</em>, <em>activation_func='tanh'</em>, <em>iterations=None</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.addRecurrentLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.addRecurrentLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a recurrent layer (only possible for non-image input of format (batch, time, features))</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_hid: int</strong> :</p>
+<blockquote>
+<div><p>Number of hidden units</p>
+</div></blockquote>
+<p><strong>activation_func: string</strong> :</p>
+<blockquote>
+<div><p>{tanh, relu, sigmoid, abs, linear}</p>
+</div></blockquote>
+<p><strong>iterations: int</strong> :</p>
+<blockquote class="last">
+<div><p>If layer input is not time-like (iterable on axis 1) it can be broadcasted and
+iterated over for a fixed number of iterations</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.addTiedAutoencoderChain">
+<tt class="descname">addTiedAutoencoderChain</tt><big>(</big><em>n_layers=None</em>, <em>force_no_dropout=False</em>, <em>activation_func='tanh'</em>, <em>input_noise=0.3</em>, <em>tie_W=True</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.addTiedAutoencoderChain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.addTiedAutoencoderChain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates connected layers to invert Perceptron layers. Input is assumed to come from the first layer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_layers: int</strong> :</p>
+<blockquote>
+<div><p>Number of layers that will be added/inverted, (input &lt; 0 means all)</p>
+</div></blockquote>
+<p><strong>activation_func:      string</strong> :</p>
+<blockquote>
+<div><p>{tanh, relu, sigmoid, abs, linear}
+Activation function</p>
+</div></blockquote>
+<p><strong>force_no_dropout:     Bool</strong> :</p>
+<blockquote>
+<div><p>set True for last/output layer</p>
+</div></blockquote>
+<p><strong>input_noise:         Bool</strong> :</p>
+<blockquote>
+<div><p>Noise rate that will be applied to the input of the first reconstructor</p>
+</div></blockquote>
+<p><strong>tie_W:                Bool</strong> :</p>
+<blockquote class="last">
+<div><p>Whether to share weight of dual layer pairs</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.compileDebugFunctions">
+<tt class="descname">compileDebugFunctions</tt><big>(</big><em>gradients=False</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.compileDebugFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.compileDebugFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compiles the debug_functions which return the network activations / output. To use them compile them with 
+this function. They by accessible as cnn.debug_functions (normal output), cnn.debug_conv_output,
+cnn.debug_gradients_function (if True).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.compileOutputFunctions">
+<tt class="descname">compileOutputFunctions</tt><big>(</big><em>target='nll'</em>, <em>use_class_weights=False</em>, <em>use_example_weights=False</em>, <em>use_lazy_labels=False</em>, <em>use_label_prop=False</em>, <em>only_forward=False</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.compileOutputFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.compileOutputFunctions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compiles the output functions <tt class="docutils literal"><span class="pre">get_loss</span></tt>, <tt class="docutils literal"><span class="pre">get_error</span></tt>, <tt class="docutils literal"><span class="pre">class_probabilities</span></tt> and defines the
+gradient (which is not compiled)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>target: string</strong> :</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8216;nll&#8217;/&#8217;regression&#8217;, regression has squared error and nll_masked allows training with</dt>
+<dd><p class="first last">lazy labels; this requires the auxiliary (<a href="#id1"><span class="problematic" id="id2">*</span></a>aux) masks.</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>use_class_weights: Bool</strong> :</p>
+<blockquote>
+<div><p>whether to use class weights for the error</p>
+</div></blockquote>
+<p><strong>use_example_weights: Bool</strong> :</p>
+<blockquote>
+<div><p>whether to use example weights for the error</p>
+</div></blockquote>
+<p><strong>use_lazy_labels: Bool</strong> :</p>
+<blockquote>
+<div><p>whether to use lazy labels; this requires the auxiliary (<a href="#id3"><span class="problematic" id="id4">*</span></a>aux) masks</p>
+</div></blockquote>
+<p><strong>use_label_prop: Bool</strong> :</p>
+<blockquote>
+<div><p>whether to activate label propagation on unlabelled (-1) examples</p>
+</div></blockquote>
+<p><strong>only_forwad: Bool</strong> :</p>
+<blockquote>
+<div><p>This exlcudes the building of the gradient (faster)</p>
+</div></blockquote>
+<p><strong>Defined functions:</strong> :</p>
+<p><strong>(They are accessible as methods of ``MixedConvNN``)</strong> :</p>
+<p><strong>get_loss: theano-function</strong> :</p>
+<blockquote>
+<div><p>[data, labels(, <a href="#id5"><span class="problematic" id="id6">*</span></a>aux)] &#8211;&gt; [loss, loss_instance]</p>
+</div></blockquote>
+<p><strong>get_error: theano-function</strong> :</p>
+<blockquote>
+<div><p>[data, labels(, <a href="#id7"><span class="problematic" id="id8">*</span></a>aux)] &#8211;&gt; [loss, (error,) prediction] no error for regression</p>
+</div></blockquote>
+<p><strong>class_probabilities: theano-function</strong> :</p>
+<blockquote class="last">
+<div><p>[data] &#8211;&gt; [prediction]</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.resetMomenta">
+<tt class="descname">resetMomenta</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.resetMomenta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.resetMomenta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the trailing average of the gradient to sole current gradient</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.randomizeWeights">
+<tt class="descname">randomizeWeights</tt><big>(</big><em>reset_momenta=True</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.randomizeWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.randomizeWeights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets weights to random values (calls randomize_weights() on each layer)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.trainingStep">
+<tt class="descname">trainingStep</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.trainingStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.trainingStep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform one optimiser iteration.
+Optimizers can be chosen by the kwarg <tt class="docutils literal"><span class="pre">mode</span></tt>. They are complied on demand (which may take a while) and cached</p>
+<p><strong>Signature</strong>: cnn.trainingStep(data, label(, <a href="#id9"><span class="problematic" id="id10">*</span></a>aux)(,**kwargs))</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: float32 array</strong> :</p>
+<blockquote>
+<div><p>input [bs, ch (, x, y)] or [bs, z, ch, x, y]</p>
+</div></blockquote>
+<p><strong>labels: int16 array</strong> :</p>
+<blockquote>
+<div><p>[bs,((z,)y,x)] if output is not flattened</p>
+</div></blockquote>
+<p><strong>aux: int16 arrays</strong> :</p>
+<blockquote>
+<div><p>(optional) auxiliary weights/masks/etc. Should be unpacked list</p>
+</div></blockquote>
+<p><strong>kwargs:</strong> :</p>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>mode: string</dt>
+<dd><p class="first">[&#8216;SGD&#8217;]: (default) Good if data set is big and redundant</p>
+<p>&#8216;RPROP&#8217;: which does neither uses a fix learning rate nor the momentum-value.
+It is faster than SGD if you do full-batch Training and use NO dropout.
+Any source of noise leads to failure of convergence (at all).</p>
+<p>&#8216;CG&#8217;: Good generalisation but requires large batches. Returns current loss always</p>
+<p class="last">&#8216;LBFGS&#8217;: <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html">http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html</a></p>
+</dd>
+</dl>
+</li>
+</ul>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>update_loss: Bool</dt>
+<dd><p class="first last">determine current loss <em>after</em> update step (e.g. needed for queue, but <tt class="docutils literal"><span class="pre">get_loss</span></tt> can also be           called explicitly)</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>loss: float32</strong> :</p>
+<blockquote>
+<div><p>loss (nll or squared error)</p>
+</div></blockquote>
+<p><strong>loss_instance: float32 array</strong> :</p>
+<blockquote>
+<div><p>loss for individual batch examples/pixels</p>
+</div></blockquote>
+<p><strong>time_per_step: float</strong> :</p>
+<blockquote class="last">
+<div><p>Time spent on the GPU per step</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.setOptimizerParams">
+<tt class="descname">setOptimizerParams</tt><big>(</big><em>SGD={}</em>, <em>CG={}</em>, <em>RPROP={}</em>, <em>LBFGS={}</em>, <em>SSGD={}</em>, <em>weight_decay=0.0</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.setOptimizerParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.setOptimizerParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise optimiser hyper-parameters prior to compilation. SGD, CG and LBFGS this can also be done during
+Training.</p>
+<p><tt class="docutils literal"><span class="pre">weight_decay</span></tt> is global to all optimisers and
+is identical to a L2-penalty on the weights with the coefficient given by <tt class="docutils literal"><span class="pre">weight_decay</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.setSGDLR">
+<tt class="descname">setSGDLR</tt><big>(</big><em>value=0.09</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.setSGDLR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.setSGDLR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.setSGDMomentum">
+<tt class="descname">setSGDMomentum</tt><big>(</big><em>value=0.9</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.setSGDMomentum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.setSGDMomentum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.setWeightDecay">
+<tt class="descname">setWeightDecay</tt><big>(</big><em>value=0.0005</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.setWeightDecay"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.setWeightDecay" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.setDropoutRates">
+<tt class="descname">setDropoutRates</tt><big>(</big><em>rates</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.setDropoutRates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.setDropoutRates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assumes a vector/list/array as input, first entry &lt;&#8211;&gt; first layer (etc.)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.getDropoutRates">
+<tt class="descname">getDropoutRates</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.getDropoutRates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.getDropoutRates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns list of dropout rates</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.predictDense">
+<tt class="descname">predictDense</tt><big>(</big><em>raw_img</em>, <em>show_progress=True</em>, <em>offset=None</em>, <em>as_uint8=False</em>, <em>pad_raw=False</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.predictDense"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.predictDense" title="Permalink to this definition">¶</a></dt>
+<dd><p>Core function that performs the inference</p>
+<dl class="docutils">
+<dt>raw_img <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd>raw data in the format (ch, x, y(, z))</dd>
+<dt>show_progress: Bool</dt>
+<dd>Whether to print progress state</dd>
+<dt>offset: 2/3-tuple</dt>
+<dd>If the cnn has no dimension calculator object, this specifies the cnn offset.</dd>
+<dt>as_uint8: Bool</dt>
+<dd>Return class proabilites as uint8 image (scaled between 0 and 255!)</dd>
+<dt>pad_raw: Bool</dt>
+<dd>Whether to apply padding (by mirroring) to the raw input image
+in order to get predictions on the full imge domain.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.get_activities">
+<tt class="descname">get_activities</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.get_activities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.get_activities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.get_nonpooled_activities">
+<tt class="descname">get_nonpooled_activities</tt><big>(</big><em>data</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.get_nonpooled_activities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.get_nonpooled_activities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.saveParameters">
+<tt class="descname">saveParameters</tt><big>(</big><em>path='CNN.save'</em>, <em>layers=None</em>, <em>show=True</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.saveParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.saveParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves parameters to file, that can be loaded by <tt class="docutils literal"><span class="pre">loadParameters</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convnet.MixedConvNN.loadParameters">
+<tt class="descname">loadParameters</tt><big>(</big><em>myfile='CNN.save'</em>, <em>strict=False</em>, <em>n_layers_to_load=-1</em><big>)</big><a class="reference internal" href="_modules/net/convnet.html#MixedConvNN.loadParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convnet.MixedConvNN.loadParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads parameters from file created by <tt class="docutils literal"><span class="pre">saveParameters</span></tt>. The parameter shapes do not need to fit the CNN
+architecture, they &#8220;squeezed&#8221; or &#8220;padded&#8221; to fit.</p>
+<p>Additionally the momenta of the gradients are reset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>myfile: string</strong> :</p>
+<blockquote>
+<div><p>Path to file</p>
+</div></blockquote>
+<p><strong>strict: bool</strong> :</p>
+<blockquote>
+<div><p>If true, parameter shapes must fit exactly, this the only way to load RNN parameters</p>
+</div></blockquote>
+<p><strong>n_layers_to_load: int</strong> :</p>
+<blockquote class="last">
+<div><p>Only the first x layers are initialised if this is not at its default value (-1)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.perceptronlayer">
+<span id="net-perceptronlayer-module"></span><h2>net.perceptronlayer module<a class="headerlink" href="#module-net.perceptronlayer" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="class">
+<dt id="net.perceptronlayer.PerceptronLayer">
+<em class="property">class </em><tt class="descclassname">net.perceptronlayer.</tt><tt class="descname">PerceptronLayer</tt><big>(</big><em>input</em>, <em>n_in</em>, <em>n_out</em>, <em>batch_size</em>, <em>enable_dropout</em>, <em>activation_func='tanh'</em>, <em>input_noise=None</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Typical hidden layer of a MLP: units are fully-connected.
+Weight matrix W is of shape (n_in,n_out), the bias vector b is of shape (n_out,).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input</strong> (<em>theano.tensor.dmatrix</em>) &#8211; a symbolic tensor of shape (n_examples, n_in)</li>
+<li><strong>n_in</strong> (<em>int</em>) &#8211; dimensionality of input</li>
+<li><strong>n_out</strong> (<em>int</em>) &#8211; number of hidden units</li>
+<li><strong>batch_size</strong> (<em>int</em>) &#8211; batch_size</li>
+<li><strong>pool</strong> &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
+self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</li>
+<li><strong>activation_func</strong> (<em>string</em>) &#8211; {&#8216;relu&#8217;,&#8217;sigmoid&#8217;,&#8217;tanh&#8217;,&#8217;abs&#8217;, &#8216;maxout &lt;i&gt;&#8217;}</li>
+<li><strong>input_noise</strong> (<em>theano.shared float32</em>) &#8211; std of gaussian (centered) input noise. 0 or None &#8211;&gt; no noise</li>
+<li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
+<li><strong>W</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</li>
+<li><strong>b</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.randomizeWeights">
+<tt class="descname">randomizeWeights</tt><big>(</big><em>scale='glorot'</em>, <em>mode='uni'</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.randomizeWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.randomizeWeights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.NLL">
+<tt class="descname">NLL</tt><big>(</big><em>y</em>, <em>class_weights=None</em>, <em>example_weights=None</em>, <em>label_prop_thresh=None</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.NLL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.NLL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
+of this model under a given target distribution.</p>
+<dl class="docutils">
+<dt>y: theano.tensor.TensorType</dt>
+<dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
+be used for label propagation)</dd>
+<dt>class_weights: theano.tensor.TensorType</dt>
+<dd>weight vector of float32 of length  <tt class="docutils literal"><span class="pre">n_lab</span></tt>. Values: <tt class="docutils literal"><span class="pre">1.0</span></tt> (default), <tt class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></tt> (less important),
+<tt class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></tt> (more important class)</dd>
+<dt>label_prop_thresh: float (0.5,1)</dt>
+<dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
+If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
+be the correct label and the training is pushed in this direction.
+Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.NLL_weak">
+<tt class="descname">NLL_weak</tt><big>(</big><em>y</em>, <em>class_weights=None</em>, <em>example_weights=None</em>, <em>label_prop_thresh=None</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.NLL_weak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.NLL_weak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
+of this model under a given target distribution.</p>
+<dl class="docutils">
+<dt>y: theano.tensor.TensorType</dt>
+<dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
+be used for label propagation)</dd>
+<dt>class_weights: theano.tensor.TensorType</dt>
+<dd>weight vector of float32 of length  <tt class="docutils literal"><span class="pre">n_lab</span></tt>. Values: <tt class="docutils literal"><span class="pre">1.0</span></tt> (default), <tt class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></tt> (less important),
+<tt class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></tt> (more important class)</dd>
+<dt>label_prop_thresh: float (0.5,1)</dt>
+<dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
+If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
+be the correct label and the training is pushed in this direction.
+Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.nll_mutiple_binary">
+<tt class="descname">nll_mutiple_binary</tt><big>(</big><em>y</em>, <em>class_weights=None</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.nll_mutiple_binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.nll_mutiple_binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the mean and instance-wise negative log-likelihood of the prediction
+of this model under a given target distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+correct label</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Note: we use the mean instead of the sum so that</dt>
+<dd>the learning rate is less dependent on the batch size</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.squared_distance">
+<tt class="descname">squared_distance</tt><big>(</big><em>Target</em>, <em>Mask=None</em>, <em>return_instancewise=True</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.squared_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.squared_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, n_target)
+output: scalar float32
+mask: vectorized, 1==hole, 0==no_hole (== DOES NOT TRAIN ON NON-HOLES)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.errors">
+<tt class="descname">errors</tt><big>(</big><em>y</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns classification accuracy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+correct label</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.errors_no_tn">
+<tt class="descname">errors_no_tn</tt><big>(</big><em>y</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.errors_no_tn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.errors_no_tn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.cross_entropy_array">
+<tt class="descname">cross_entropy_array</tt><big>(</big><em>Target</em>, <em>Mask=None</em>, <em>GaussianWindow=False</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.cross_entropy_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.cross_entropy_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, imgsize**2)
+the output is of length: &lt;batchsize&gt;, Use cross_entropy() to get a scalar output.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.perceptronlayer.PerceptronLayer.cross_entropy">
+<tt class="descname">cross_entropy</tt><big>(</big><em>Target</em>, <em>Mask=None</em>, <em>GaussianWindow=False</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#PerceptronLayer.cross_entropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.PerceptronLayer.cross_entropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, imgsize**2) output: scalar float32</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="net.perceptronlayer.RecurrentLayer">
+<em class="property">class </em><tt class="descclassname">net.perceptronlayer.</tt><tt class="descname">RecurrentLayer</tt><big>(</big><em>input</em>, <em>n_in</em>, <em>n_hid</em>, <em>batch_size</em>, <em>activation_func='tanh'</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#RecurrentLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.RecurrentLayer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input</strong> (<em>symbolic input carrying [time, batch, feat]</em>) &#8211; theano.tensor.ftensor3</li>
+<li><strong>n_in</strong> (<em>int</em>) &#8211; dimensionality of input</li>
+<li><strong>n_hid</strong> (<em>int</em>) &#8211; number of hidden units</li>
+<li><strong>activation_func</strong> (<em>string</em>) &#8211; {&#8216;relu&#8217;,&#8217;sigmoid&#8217;,&#8217;tanh&#8217;,&#8217;abs&#8217;}</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="net.perceptronlayer.RecurrentLayer.randomizeWeights">
+<tt class="descname">randomizeWeights</tt><big>(</big><em>scale_w=1.0</em><big>)</big><a class="reference internal" href="_modules/net/perceptronlayer.html#RecurrentLayer.randomizeWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.perceptronlayer.RecurrentLayer.randomizeWeights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.convlayer2d">
+<span id="net-convlayer2d-module"></span><h2>net.convlayer2d module<a class="headerlink" href="#module-net.convlayer2d" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="function">
+<dt id="net.convlayer2d.getOutputShape">
+<tt class="descclassname">net.convlayer2d.</tt><tt class="descname">getOutputShape</tt><big>(</big><em>insh</em>, <em>fsh</em>, <em>pool</em>, <em>mfp</em>, <em>r=1</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#getOutputShape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.getOutputShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shape of convolution result from (bs, ch, x, y) * (nof, ch, xf, yf)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.convlayer2d.getProbShape">
+<tt class="descclassname">net.convlayer2d.</tt><tt class="descname">getProbShape</tt><big>(</big><em>output_shape</em>, <em>mfp_strides</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#getProbShape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.getProbShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given outputshape (bs, ch, x, y) and mfp_stride (sx, sy) returns shape of Class Prob output</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="net.convlayer2d.ConvLayer2d">
+<em class="property">class </em><tt class="descclassname">net.convlayer2d.</tt><tt class="descname">ConvLayer2d</tt><big>(</big><em>input</em>, <em>input_shape</em>, <em>filter_shape</em>, <em>pool</em>, <em>activation_func</em>, <em>enable_dropout</em>, <em>use_fragment_pooling</em>, <em>reshape_output</em>, <em>mfp_offsets</em>, <em>mfp_strides</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Conv-Pool Layer of a CNN</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input</strong> (<em>theano.tensor.dtensor4 (&#8216;batch&#8217;, &#8216;channel&#8217;, x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
+<li><strong>input_shape</strong> (<em>tuple or list of length 4</em>) &#8211; (batch size, num input feature maps, image height, image width)</li>
+<li><strong>filter_shape</strong> (<em>tuple or list of length 4</em>) &#8211; (number of filters, input_channels, filter height,filter width)</li>
+<li><strong>pool</strong> (<em>int 2-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
+<li><strong>activation_func</strong> (<em>string</em>) &#8211; Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
+<li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
+self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</li>
+<li><strong>use_fragment_pooling</strong> (<em>Bool</em>) &#8211; whether to use max fragment pooling in this layer (MFP)</li>
+<li><strong>reshape_output</strong> (<em>Bool</em>) &#8211; whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments
+to dense images if MFP was enabled. Use this in for the last layer.</li>
+<li><strong>mfp_offsets</strong> (<em>list of list of ints</em>) &#8211; this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.
+Only needed if MFP is enabled.</li>
+<li><strong>mfp_strides</strong> (<em>list of int</em>) &#8211; the strides of the output in each dimension</li>
+<li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
+<li><strong>W</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</li>
+<li><strong>b</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</li>
+<li><strong>pooling_mode</strong> (<em>str</em>) &#8211; &#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>sign of large negative values</p>
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.fragmentpool">
+<tt class="descname">fragmentpool</tt><big>(</big><em>conv_out</em>, <em>pool</em>, <em>offsets</em>, <em>strides</em>, <em>pool_func</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.fragmentpool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.fragmentpool" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.reshapeoutput">
+<tt class="descname">reshapeoutput</tt><big>(</big><em>sh</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.reshapeoutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.reshapeoutput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.fragmentstodense">
+<tt class="descname">fragmentstodense</tt><big>(</big><em>sh</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.fragmentstodense"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.fragmentstodense" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.randomizeWeights">
+<tt class="descname">randomizeWeights</tt><big>(</big><em>scale='glorot'</em>, <em>mode='uni'</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.randomizeWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.randomizeWeights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.gaborInitialisation">
+<tt class="descname">gaborInitialisation</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.gaborInitialisation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.gaborInitialisation" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.NLL">
+<tt class="descname">NLL</tt><big>(</big><em>y</em>, <em>class_weights=None</em>, <em>mask_class_labeled=None</em>, <em>mask_class_not_present=None</em>, <em>label_prop_thresh=None</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.NLL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.NLL" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
+of this model under a given target distribution.</p>
+<dl class="docutils">
+<dt>y: theano.tensor.TensorType</dt>
+<dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
+be used for label propagation)</dd>
+<dt>class_weights: theano.tensor.TensorType</dt>
+<dd>weight vector of float32 of length  <tt class="docutils literal"><span class="pre">n_lab</span></tt>. Values: <tt class="docutils literal"><span class="pre">1.0</span></tt> (default), <tt class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></tt> (less important),
+<tt class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></tt> (more important class)</dd>
+</dl>
+<p>The following refers to lazy labels, the masks are always on a per patch basis, depending on the
+origin cube of the patch. The masks are properties of the individual image cubes and must be loaded
+into CNNData.</p>
+<dl class="docutils">
+<dt>mask_class_labeled: theano.tensor.TensorType</dt>
+<dd>shape = (batchsize, num_classes).
+Binary masks indicating whether a class is properly labeled in <tt class="docutils literal"><span class="pre">y</span></tt>. If a class <tt class="docutils literal"><span class="pre">k</span></tt>
+is (in general) present in the image patches <strong>and</strong> <tt class="docutils literal"><span class="pre">mask_class_labeled[k]==1</span></tt>, then
+the labels  <strong>must</strong> obey <tt class="docutils literal"><span class="pre">y==k</span></tt> for all pixels where the class is present.
+If a class <tt class="docutils literal"><span class="pre">k</span></tt> is present in the image, but was not labeled (-&gt; cheaper labels), set
+<tt class="docutils literal"><span class="pre">mask_class_labeled[k]=0</span></tt>. Then all pixels for which the <tt class="docutils literal"><span class="pre">y==k</span></tt> will be ignored.
+Alternative: set <tt class="docutils literal"><span class="pre">y=-1</span></tt> to ignore those pixels.
+Limit case: <tt class="docutils literal"><span class="pre">mask_class_labeled[:]==1</span></tt> will result in the ordinary NLL.</dd>
+<dt>mask_class_not_present: theano.tensor.TensorType</dt>
+<dd>shape = (batchsize, num_classes).
+Binary mask indicating whether a class is present in the image patches.
+<tt class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></tt> means that the image does <strong>not</strong> contain examples of class <tt class="docutils literal"><span class="pre">k</span></tt>.
+Then for all pixels in the patch, class <tt class="docutils literal"><span class="pre">k</span></tt> predictive probabilities are trained towards <tt class="docutils literal"><span class="pre">0</span></tt>.
+Limit case: <tt class="docutils literal"><span class="pre">mask_class_not_present[:]==0</span></tt> will result in the ordinary NLL.</dd>
+<dt>label_prop_thresh: float (0.5,1)</dt>
+<dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
+If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
+be the correct label and the training is pushed in this direction.
+Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</dd>
+</dl>
+<p>Examples:</p>
+<ul class="simple">
+<li>A cube contains no class <tt class="docutils literal"><span class="pre">k</span></tt>. Instead of labelling the remaining classes they can be
+marked as unlabelled by the first mask (<tt class="docutils literal"><span class="pre">mask_class_labeled[:]==0</span></tt>, whether <tt class="docutils literal"><span class="pre">mask_class_labeled[k]</span></tt>
+is <tt class="docutils literal"><span class="pre">0</span></tt> or <tt class="docutils literal"><span class="pre">1</span></tt> is actually indifferent because the labels should not be <tt class="docutils literal"><span class="pre">y==k</span></tt> anyway in this case).
+Additionally <tt class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></tt> (otherwise <tt class="docutils literal"><span class="pre">0</span></tt>) to suppress predictions of <tt class="docutils literal"><span class="pre">k</span></tt> in
+in this patch. The actual value of the labels is indifferent, it can either be <tt class="docutils literal"><span class="pre">-1</span></tt> or it could be the
+background class, if the background is marked as unlabelled (i.e. then those labels are ignored).</li>
+<li>Only part of the cube is densely labelled. Set <tt class="docutils literal"><span class="pre">mask_class_labeled[:]=1</span></tt> for all classes, but set the
+label values in the unlablleled part to <tt class="docutils literal"><span class="pre">-1</span></tt> to ignore this part.</li>
+<li>Only a particular class <tt class="docutils literal"><span class="pre">k</span></tt> is labelled in the cube. Either set all other label pixels to <tt class="docutils literal"><span class="pre">-1</span></tt> or the
+corresponding flags in <tt class="docutils literal"><span class="pre">mask_class_labeled</span></tt> for the unlabelled classes.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using <tt class="docutils literal"><span class="pre">-1</span></tt> labels or telling that a class is not labelled, is somewhat redundant and just
+supported for convenience.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.squared_distance">
+<tt class="descname">squared_distance</tt><big>(</big><em>y</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.squared_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.squared_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns squared distance between prediction and <tt class="docutils literal"><span class="pre">y</span></tt></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+correct label</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer2d.ConvLayer2d.errors">
+<tt class="descname">errors</tt><big>(</big><em>y</em><big>)</big><a class="reference internal" href="_modules/net/convlayer2d.html#ConvLayer2d.errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer2d.ConvLayer2d.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns classification accuracy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+correct label</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.convlayer3d">
+<span id="net-convlayer3d-module"></span><h2>net.convlayer3d module<a class="headerlink" href="#module-net.convlayer3d" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="function">
+<dt id="net.convlayer3d.getOutputShape">
+<tt class="descclassname">net.convlayer3d.</tt><tt class="descname">getOutputShape</tt><big>(</big><em>insh</em>, <em>fsh</em>, <em>pool</em>, <em>mfp</em>, <em>r=1</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#getOutputShape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.getOutputShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns shape of convolution result from (bs, z, ch, x, y) * (nof, z, ch, xf, yf)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.convlayer3d.getProbShape">
+<tt class="descclassname">net.convlayer3d.</tt><tt class="descname">getProbShape</tt><big>(</big><em>output_shape</em>, <em>mfp_strides</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#getProbShape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.getProbShape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given outputshape (bs, z, ch, x, y) and mfp_stride (sx, sy) returns shape of Class Prob output</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="net.convlayer3d.ConvLayer3d">
+<em class="property">class </em><tt class="descclassname">net.convlayer3d.</tt><tt class="descname">ConvLayer3d</tt><big>(</big><em>input</em>, <em>input_shape</em>, <em>filter_shape</em>, <em>pool</em>, <em>activation_func</em>, <em>enable_dropout</em>, <em>use_fragment_pooling</em>, <em>reshape_output</em>, <em>mfp_offsets</em>, <em>mfp_strides</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Conv-Pool Layer of a CNN</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input</strong> (<em>theano.tensor.dtensor5 (&#8216;batch&#8217;, z, &#8216;channel&#8217;, x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
+<li><strong>input_shape</strong> (<em>tuple or list of length 5</em>) &#8211; (batch size, z, num input feature maps,  y, x)</li>
+<li><strong>filter_shape</strong> (<em>tuple or list of length 5</em>) &#8211; (number of filters, filter z, num input feature maps, filter y,filter x)</li>
+<li><strong>pool</strong> (<em>int 3-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
+<li><strong>activation_func</strong> (<em>string</em>) &#8211; Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
+<li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
+self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</li>
+<li><strong>use_fragment_pooling</strong> (<em>Bool</em>) &#8211; whether to use max fragment pooling in this layer (MFP)</li>
+<li><strong>reshape_output</strong> (<em>Bool</em>) &#8211; whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments
+to dense images if MFP was enabled. Use this in for the last layer.</li>
+<li><strong>mfp_offsets</strong> (<em>list of list of ints</em>) &#8211; this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.
+Only needed if MFP is enabled.</li>
+<li><strong>mfp_strides</strong> (<em>list of int</em>) &#8211; the strides of the output in each dimension</li>
+<li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
+<li><strong>W</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</li>
+<li><strong>b</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+If TensorVariable, than this variable is directly used (weight sharing with the
+layer from which this variable comes from)</li>
+<li><strong>pooling_mode</strong> (<em>str</em>) &#8211; &#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>sign of large negative values</p>
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.fragmentpool">
+<tt class="descname">fragmentpool</tt><big>(</big><em>conv_out</em>, <em>pool</em>, <em>offsets</em>, <em>strides</em>, <em>pool_func</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.fragmentpool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.fragmentpool" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.fragmentstodense">
+<tt class="descname">fragmentstodense</tt><big>(</big><em>sh</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.fragmentstodense"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.fragmentstodense" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.reshapeoutput">
+<tt class="descname">reshapeoutput</tt><big>(</big><em>sh</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.reshapeoutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.reshapeoutput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.randomizeWeights">
+<tt class="descname">randomizeWeights</tt><big>(</big><em>scale='glorot'</em>, <em>mode='uni'</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.randomizeWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.randomizeWeights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.NLL">
+<tt class="descname">NLL</tt><big>(</big><em>y</em>, <em>class_weights=None</em>, <em>example_weights=None</em>, <em>mask_class_labeled=None</em>, <em>mask_class_not_present=None</em>, <em>label_prop_thresh=None</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.NLL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.NLL" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
+of this model under a given target distribution.</p>
+<dl class="docutils">
+<dt>y: theano.tensor.TensorType</dt>
+<dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
+be used for label propagation)</dd>
+<dt>class_weights: theano.tensor.TensorType</dt>
+<dd>weight vector of float32 of length  <tt class="docutils literal"><span class="pre">n_lab</span></tt>. Values: <tt class="docutils literal"><span class="pre">1.0</span></tt> (default), <tt class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></tt> (less important),
+<tt class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></tt> (more important class)</dd>
+<dt>example_weights: theano.tensor.TensorType</dt>
+<dd>weight vector of float32 of shape <tt class="docutils literal"><span class="pre">(bs,</span> <span class="pre">z,</span> <span class="pre">x,</span> <span class="pre">y)</span> <span class="pre">that</span> <span class="pre">can</span> <span class="pre">give</span> <span class="pre">the</span> <span class="pre">indvidual</span> <span class="pre">examples</span> <span class="pre">(i.e.</span> <span class="pre">labels</span> <span class="pre">for</span>
+<span class="pre">output</span> <span class="pre">pixels)</span> <span class="pre">different</span> <span class="pre">weights.</span> <span class="pre">Values:</span> <span class="pre">``1.0</span></tt> (default), <tt class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></tt> (less important),
+<tt class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></tt> (more important example). Note: if this is not normalised/bounded it may result in a
+effectively modified learning rate!</dd>
+</dl>
+<p>The following refers to lazy labels, the masks are always on a per patch basis, depending on the
+origin cube of the patch. The masks are properties of the individual image cubes and must be loaded
+into CNNData.</p>
+<dl class="docutils">
+<dt>mask_class_labeled: theano.tensor.TensorType</dt>
+<dd>shape = (batchsize, num_classes).
+Binary masks indicating whether a class is properly labeled in <tt class="docutils literal"><span class="pre">y</span></tt>. If a class <tt class="docutils literal"><span class="pre">k</span></tt>
+is (in general) present in the image patches <strong>and</strong> <tt class="docutils literal"><span class="pre">mask_class_labeled[k]==1</span></tt>, then
+the labels  <strong>must</strong> obey <tt class="docutils literal"><span class="pre">y==k</span></tt> for all pixels where the class is present.
+If a class <tt class="docutils literal"><span class="pre">k</span></tt> is present in the image, but was not labeled (-&gt; cheaper labels), set
+<tt class="docutils literal"><span class="pre">mask_class_labeled[k]=0</span></tt>. Then all pixels for which the <tt class="docutils literal"><span class="pre">y==k</span></tt> will be ignored.
+Alternative: set <tt class="docutils literal"><span class="pre">y=-1</span></tt> to ignore those pixels.
+Limit case: <tt class="docutils literal"><span class="pre">mask_class_labeled[:]==1</span></tt> will result in the ordinary NLL.</dd>
+<dt>mask_class_not_present: theano.tensor.TensorType</dt>
+<dd>shape = (batchsize, num_classes).
+Binary mask indicating whether a class is present in the image patches.
+<tt class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></tt> means that the image does <strong>not</strong> contain examples of class <tt class="docutils literal"><span class="pre">k</span></tt>.
+Then for all pixels in the patch, class <tt class="docutils literal"><span class="pre">k</span></tt> predictive probabilities are trained towards <tt class="docutils literal"><span class="pre">0</span></tt>.
+Limit case: <tt class="docutils literal"><span class="pre">mask_class_not_present[:]==0</span></tt> will result in the ordinary NLL.</dd>
+<dt>label_prop_thresh: float (0.5,1)</dt>
+<dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
+If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
+be the correct label and the training is pushed in this direction.
+Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</dd>
+</dl>
+<p>Examples:</p>
+<ul class="simple">
+<li>A cube contains no class <tt class="docutils literal"><span class="pre">k</span></tt>. Instead of labelling the remaining classes they can be
+marked as unlabelled by the first mask (<tt class="docutils literal"><span class="pre">mask_class_labeled[:]==0</span></tt>, whether <tt class="docutils literal"><span class="pre">mask_class_labeled[k]</span></tt>
+is <tt class="docutils literal"><span class="pre">0</span></tt> or <tt class="docutils literal"><span class="pre">1</span></tt> is actually indifferent because the labels should not be <tt class="docutils literal"><span class="pre">y==k</span></tt> anyway in this case).
+Additionally <tt class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></tt> (otherwise <tt class="docutils literal"><span class="pre">0</span></tt>) to suppress predictions of <tt class="docutils literal"><span class="pre">k</span></tt> in
+in this patch. The actual value of the labels is indifferent, it can either be <tt class="docutils literal"><span class="pre">-1</span></tt> or it could be the
+background class, if the background is marked as unlabelled (i.e. then those labels are ignored).</li>
+<li>Only part of the cube is densely labelled. Set <tt class="docutils literal"><span class="pre">mask_class_labeled[:]=1</span></tt> for all classes, but set the
+label values in the unlablleled part to <tt class="docutils literal"><span class="pre">-1</span></tt> to ignore this part.</li>
+<li>Only a particular class <tt class="docutils literal"><span class="pre">k</span></tt> is labelled in the cube. Either set all other label pixels to <tt class="docutils literal"><span class="pre">-1</span></tt> or the
+corresponding flags in <tt class="docutils literal"><span class="pre">mask_class_labeled</span></tt> for the unlabelled classes.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Using <tt class="docutils literal"><span class="pre">-1</span></tt> labels or telling that a class is not labelled, is somewhat redundant and just
+supported for convenience.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.NLL_weak">
+<tt class="descname">NLL_weak</tt><big>(</big><em>y</em>, <em>class_weights=None</em>, <em>mask_class_labeled=None</em>, <em>mask_class_not_present=None</em>, <em>label_prop_thresh=None</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.NLL_weak"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.NLL_weak" title="Permalink to this definition">¶</a></dt>
+<dd><p>NLL that mixes the current cnn output and the hard labels as target</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.squared_distance">
+<tt class="descname">squared_distance</tt><big>(</big><em>y</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.squared_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.squared_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns squared distance between prediction and <tt class="docutils literal"><span class="pre">y</span></tt></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+correct label</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.convlayer3d.ConvLayer3d.errors">
+<tt class="descname">errors</tt><big>(</big><em>y</em><big>)</big><a class="reference internal" href="_modules/net/convlayer3d.html#ConvLayer3d.errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.convlayer3d.ConvLayer3d.errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns classification accuracy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+correct label</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.netcreation">
+<span id="net-netcreation-module"></span><h2>net.netcreation module<a class="headerlink" href="#module-net.netcreation" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="function">
+<dt id="net.netcreation.createNet">
+<tt class="descclassname">net.netcreation.</tt><tt class="descname">createNet</tt><big>(</big><em>config</em>, <em>input_size</em>, <em>n_ch</em>, <em>n_lab</em>, <em>dimension_calc</em><big>)</big><a class="reference internal" href="_modules/net/netcreation.html#createNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.netcreation.createNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates CNN according to config</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_ch: int</strong> :</p>
+<blockquote>
+<div><p>Number of input channels in data</p>
+</div></blockquote>
+<p><strong>n_lab: int</strong> :</p>
+<blockquote>
+<div><p>Number of labels/classes/output_neurons</p>
+</div></blockquote>
+<p><strong>param_file: string/path</strong> :</p>
+<blockquote>
+<div><p>Optional file to initialise parameters of CNN from</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>CNN-Object</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.netcreation.createNetfromParams">
+<tt class="descclassname">net.netcreation.</tt><tt class="descname">createNetfromParams</tt><big>(</big><em>param_file</em>, <em>patch_size</em>, <em>batch_size=1</em>, <em>activation_func='tanh'</em>, <em>poolings=None</em>, <em>MFP=None</em>, <em>only_prediction=False</em><big>)</big><a class="reference internal" href="_modules/net/netcreation.html#createNetfromParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.netcreation.createNetfromParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to create CNN without <tt class="docutils literal"><span class="pre">config</span></tt> directly from a saved parameter file.
+Therefore this function only allows restricted configuration and does not initialise the training optimisers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>param_file: string/path</strong> :</p>
+<blockquote>
+<div><p>File to initialise parameters of CNN from. The file must contain a list of shapes of the W-parameters as
+first entry and should ideally contain a list of pooling factors as last entry, alternatively the can be
+given as optinal argument</p>
+</div></blockquote>
+<p><strong>patch_size: tuple of int</strong> :</p>
+<blockquote>
+<div><p>Patch size for input data</p>
+</div></blockquote>
+<p><strong>batch_size: int</strong> :</p>
+<blockquote>
+<div><p>Number of input patches</p>
+</div></blockquote>
+<p><strong>activation_func: string</strong> :</p>
+<blockquote>
+<div><p>Activation function to use for all layers</p>
+</div></blockquote>
+<p><strong>poolings: list of int</strong> :</p>
+<blockquote>
+<div><p>Pooling factors per layer (if not included in the parameter file)</p>
+</div></blockquote>
+<p><strong>MFP: list of bool/{0,1}</strong> :</p>
+<blockquote>
+<div><p>Whether to use MFP in the respective layers</p>
+</div></blockquote>
+<p><strong>only_prediction: Bool</strong> :</p>
+<blockquote>
+<div><p>This exlcudes the building of the gradient (faster)</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>CNN-Object</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.netutils">
+<span id="net-netutils-module"></span><h2>net.netutils module<a class="headerlink" href="#module-net.netutils" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="function">
+<dt id="net.netutils.CNNCalculator">
+<tt class="descclassname">net.netutils.</tt><tt class="descname">CNNCalculator</tt><big>(</big><em>filters</em>, <em>poolings</em>, <em>desired_input=None</em>, <em>MFP=False</em>, <em>force_center=False</em>, <em>desired_output=None</em>, <em>n_dim=1</em><big>)</big><a class="reference internal" href="_modules/net/netutils.html#CNNCalculator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.netutils.CNNCalculator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper to calculate CNN architectures</p>
+<p>This is a <em>function</em>, but it returns an <em>object</em> that has various architecture values as attributes.
+Usefull is also to simply print &#8216;d&#8217; as in the example.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filters: list</strong> :</p>
+<blockquote>
+<div><p>Filter shapes (for anisotropic filters the shapes are again a list)</p>
+</div></blockquote>
+<p><strong>poolings: list</strong> :</p>
+<blockquote>
+<div><p>Pooling factors</p>
+</div></blockquote>
+<p><strong>desired_input: int or list of int</strong> :</p>
+<blockquote>
+<div><p>Desired input size(s). If <tt class="docutils literal"><span class="pre">None</span></tt> a range of suggestions can be found in the attribute <tt class="docutils literal"><span class="pre">valid_inputs</span></tt></p>
+</div></blockquote>
+<p><strong>MFP: list of int/{0,1}</strong> :</p>
+<blockquote>
+<div><p>Whether to apply Max-Fragment-Pooling in this layer and check compliance with max-fragment-pooling
+(requires other input sizes than normal pooling)</p>
+</div></blockquote>
+<p><strong>force_center: Bool</strong> :</p>
+<blockquote>
+<div><p>Check if output neurons/pixel lie at center of input neurons/pixel (and not in between)</p>
+</div></blockquote>
+<p><strong>desired_output: int or list of int</strong> :</p>
+<blockquote>
+<div><p>Alternative to <tt class="docutils literal"><span class="pre">desired_input</span></tt></p>
+</div></blockquote>
+<p><strong>n_dim: int</strong> :</p>
+<blockquote class="last">
+<div><p>Dimensionality of CNN</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Calculation for anisotropic &#8220;flat&#8221; 3d CNN with MFP in the first layers only:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span>         <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pool</span>            <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">MFP</span>             <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>   <span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_dim</span><span class="o">=</span><span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">CNNCalculator</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">desired_input</span><span class="p">,</span> <span class="n">MFP</span><span class="o">=</span><span class="n">MFP</span><span class="p">,</span> <span class="n">force_center</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">desired_output</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">n_dim</span><span class="o">=</span><span class="n">n_dim</span><span class="p">)</span>
+<span class="go">Info: input (211) changed to (210) (size not possible)</span>
+<span class="go">Info: input (211) changed to (210) (size not possible)</span>
+<span class="go">Info: input (20) changed to (22) (size too small)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span> 
+<span class="go">Input: [210, 210, 22]</span>
+<span class="go">Layer/Fragment sizes:       [[102, 49, 24, 24], [102, 49, 24, 24], [22, 9, 4, 4]]</span>
+<span class="go">Unpooled Layer sizes:       [[205, 99, 48, 24], [205, 99, 48, 24], [22, 19, 8, 4]]</span>
+<span class="go">Receptive fields:   [[7, 15, 23, 23], [7, 15, 23, 23], [1, 5, 9, 9]]</span>
+<span class="go">Strides:            [[2, 4, 8, 8], [2, 4, 8, 8], [1, 2, 4, 4]]</span>
+<span class="go">Overlap:            [[5, 11, 15, 15], [5, 11, 15, 15], [0, 3, 5, 5]]</span>
+<span class="go">Offset:             [11.5, 11.5, 4.5].</span>
+<span class="go">    If offset is non-int: floor(offset).</span>
+<span class="go">    Select labels from within img[offset-x:offset+x]</span>
+<span class="go">    (non-int means, outputneurons lie centered on input neurons,</span>
+<span class="go">    i.e. they have an odd field of view)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.netutils.initWeights">
+<tt class="descclassname">net.netutils.</tt><tt class="descname">initWeights</tt><big>(</big><em>shape</em>, <em>scale='glorot'</em>, <em>mode='normal'</em>, <em>pool=None</em><big>)</big><a class="reference internal" href="_modules/net/netutils.html#initWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.netutils.initWeights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-net.optimizer">
+<span id="net-optimizer-module"></span><h2>net.optimizer module<a class="headerlink" href="#module-net.optimizer" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="class">
+<dt id="net.optimizer.Optimizer">
+<em class="property">class </em><tt class="descclassname">net.optimizer.</tt><tt class="descname">Optimizer</tt><big>(</big><em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#Optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.Optimizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Optimizer Base Object, initialises generic optimizer variables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>model_obj: cnn-object</strong> :</p>
+<blockquote>
+<div><p>Encapsulation of theano model (instead of giving X,Y etc. manually), all other arguments are
+retrieved from this object if they are <tt class="docutils literal"><span class="pre">None</span></tt>. If an argument is not <tt class="docutils literal"><span class="pre">None</span></tt> it will override the
+value from the model</p>
+</div></blockquote>
+<p><strong>X:         symbolic input variable</strong> :</p>
+<blockquote>
+<div><p>Data</p>
+</div></blockquote>
+<p><strong>Y:         symbolic output variable</strong> :</p>
+<blockquote>
+<div><p>Target</p>
+</div></blockquote>
+<p><strong>Y_aux:     symbolic output variable</strong> :</p>
+<blockquote>
+<div><p>Auxiliary masks/weights/etc. for the loss, type: list!</p>
+</div></blockquote>
+<p><strong>top_loss:  symbolic loss function:</strong> :</p>
+<blockquote>
+<div><p>Requires (X, Y (,*Y_aux)) for compilation</p>
+</div></blockquote>
+<p><strong>params:    list of shared variables</strong> :</p>
+<blockquote>
+<div><p>List of parameter arrays against which the loss is optimised</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>Callable optimizer object: loss = Optimizer(X, Y (,*Y_aux)) performs one iteration</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="net.optimizer.Optimizer.updateOptimizerParams">
+<tt class="descname">updateOptimizerParams</tt><big>(</big><em>optimizer_params</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#Optimizer.updateOptimizerParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.Optimizer.updateOptimizerParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the hyper-parameter dictionary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.optimizer.Optimizer.get_loss">
+<tt class="descname">get_loss</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#Optimizer.get_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.Optimizer.get_loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>[data, labels(, <a href="#id11"><span class="problematic" id="id12">*</span></a>aux)] &#8211;&gt; [loss, nloss_instance]
+loss_instance is the loss per instance (e.g. batch-item or pixel)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="net.optimizer.Optimizer.compileGradients">
+<tt class="descname">compileGradients</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#Optimizer.compileGradients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.Optimizer.compileGradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compile and return a function that returns list of gradients</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="net.optimizer.compileSGD">
+<em class="property">class </em><tt class="descclassname">net.optimizer.</tt><tt class="descname">compileSGD</tt><big>(</big><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileSGD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileSGD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#net.optimizer.Optimizer" title="net.optimizer.Optimizer"><tt class="xref py py-class docutils literal"><span class="pre">net.optimizer.Optimizer</span></tt></a></p>
+<p>Stochastic Gradient Descent</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="net.optimizer.compileSSGD">
+<em class="property">class </em><tt class="descclassname">net.optimizer.</tt><tt class="descname">compileSSGD</tt><big>(</big><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileSSGD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileSSGD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#net.optimizer.Optimizer" title="net.optimizer.Optimizer"><tt class="xref py py-class docutils literal"><span class="pre">net.optimizer.Optimizer</span></tt></a></p>
+<p>Stochastic Gradient Descent</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="net.optimizer.compileRPROP">
+<em class="property">class </em><tt class="descclassname">net.optimizer.</tt><tt class="descname">compileRPROP</tt><big>(</big><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileRPROP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileRPROP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#net.optimizer.Optimizer" title="net.optimizer.Optimizer"><tt class="xref py py-class docutils literal"><span class="pre">net.optimizer.Optimizer</span></tt></a></p>
+<p>Resilient backPROPagation</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="net.optimizer.compileCG">
+<em class="property">class </em><tt class="descclassname">net.optimizer.</tt><tt class="descname">compileCG</tt><big>(</big><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileCG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileCG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#net.optimizer.Optimizer" title="net.optimizer.Optimizer"><tt class="xref py py-class docutils literal"><span class="pre">net.optimizer.Optimizer</span></tt></a></p>
+<p>Conjugate Gradient</p>
+<dl class="method">
+<dt id="net.optimizer.compileCG.lineSearch">
+<tt class="descname">lineSearch</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileCG.lineSearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileCG.lineSearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Needed for CG</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="net.optimizer.compileLBFGS">
+<em class="property">class </em><tt class="descclassname">net.optimizer.</tt><tt class="descname">compileLBFGS</tt><big>(</big><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em>, <em>debug=False</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileLBFGS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileLBFGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#net.optimizer.Optimizer" title="net.optimizer.Optimizer"><tt class="xref py py-class docutils literal"><span class="pre">net.optimizer.Optimizer</span></tt></a></p>
+<p>L-BFGS (fast, full-batch method)</p>
+<dl class="docutils">
+<dt>References (cite one):</dt>
+<dd><p class="first">R. H. Byrd, P. Lu and J. Nocedal. A Limited Memory Algorithm for Bound Constrained Optimization,
+(1995), SIAM Journal on Scientific and Statistical Computing, 16, 5, pp. 1190-1208.</p>
+<p>C. Zhu, R. H. Byrd and J. Nocedal. L-BFGS-B: Algorithm 778: L-BFGS-B, FORTRAN routines for large scale
+bound constrained optimization (1997), ACM Transactions on Mathematical Software, 23, 4, pp. 550 - 560.</p>
+<p class="last">J.L. Morales and J. Nocedal. L-BFGS-B: Remark on Algorithm 778: L-BFGS-B, FORTRAN routines for large
+scale bound constrained optimization (2011), ACM Transactions on Mathematical Software, 38, 1.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="net.optimizer.compileLBFGS.vec2list">
+<tt class="descname">vec2list</tt><big>(</big><em>vec</em>, <em>target_list</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileLBFGS.vec2list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileLBFGS.vec2list" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.optimizer.compileLBFGS.list2vect">
+<tt class="descname">list2vect</tt><big>(</big><em>src_list</em>, <em>target_vec</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileLBFGS.list2vect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileLBFGS.list2vect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="net.optimizer.compileLBFGS.loss_and_grad">
+<tt class="descname">loss_and_grad</tt><big>(</big><em>params_vect_new</em>, <em>*args</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileLBFGS.loss_and_grad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileLBFGS.loss_and_grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>internal use, updates self.params</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="net.optimizer.compileGCD">
+<em class="property">class </em><tt class="descclassname">net.optimizer.</tt><tt class="descname">compileGCD</tt><big>(</big><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileGCD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileGCD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#net.optimizer.Optimizer" title="net.optimizer.Optimizer"><tt class="xref py py-class docutils literal"><span class="pre">net.optimizer.Optimizer</span></tt></a></p>
+<p>GradientConsensusDescent</p>
+<dl class="method">
+<dt id="net.optimizer.compileGCD.consensusGrad">
+<tt class="descname">consensusGrad</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/net/optimizer.html#compileGCD.consensusGrad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.optimizer.compileGCD.consensusGrad" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.gaborfilters">
+<span id="net-gaborfilters-module"></span><h2>net.gaborfilters module<a class="headerlink" href="#module-net.gaborfilters" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="function">
+<dt id="net.gaborfilters.makeGabor">
+<tt class="descclassname">net.gaborfilters.</tt><tt class="descname">makeGabor</tt><big>(</big><em>filter_angle</em>, <em>n_modes</em>, <em>size</em>, <em>offset</em><big>)</big><a class="reference internal" href="_modules/net/gaborfilters.html#makeGabor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.gaborfilters.makeGabor" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filter_angle: in degree: 0 to 180</strong> :</p>
+<p><strong>n_modes = 1,2,3 etc.</strong> :</p>
+<p><strong>size: filter size</strong> :</p>
+<p class="last"><strong>offset: 0 to 180</strong> :</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.gaborfilters.makeGaborFilters">
+<tt class="descclassname">net.gaborfilters.</tt><tt class="descname">makeGaborFilters</tt><big>(</big><em>size</em>, <em>number</em><big>)</big><a class="reference internal" href="_modules/net/gaborfilters.html#makeGaborFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.gaborfilters.makeGaborFilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this to generate <tt class="docutils literal"><span class="pre">number</span></tt> first order
+and <tt class="docutils literal"><span class="pre">number</span></tt> second order filters</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.gaborfilters.blob">
+<tt class="descclassname">net.gaborfilters.</tt><tt class="descname">blob</tt><big>(</big><em>size</em><big>)</big><a class="reference internal" href="_modules/net/gaborfilters.html#blob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.gaborfilters.blob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return Gaussian blob filter</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.introspection">
+<span id="net-introspection-module"></span><h2>net.introspection module<a class="headerlink" href="#module-net.introspection" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="function">
+<dt id="net.introspection.plotFilters">
+<tt class="descclassname">net.introspection.</tt><tt class="descname">plotFilters</tt><big>(</big><em>cnn</em>, <em>layer=0</em>, <em>channel=None</em>, <em>normalize=False</em>, <em>savename='filters_layer0.png'</em><big>)</big><a class="reference internal" href="_modules/net/introspection.html#plotFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.introspection.plotFilters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="net.introspection.showActivations">
+<tt class="descclassname">net.introspection.</tt><tt class="descname">showActivations</tt><big>(</big><em>cnn</em>, <em>data</em>, <em>show_first_class_prob=False</em>, <em>no_show=False</em><big>)</big><a class="reference internal" href="_modules/net/introspection.html#showActivations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.introspection.showActivations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots activation maps given data. It requires that cnn.debug_functions contains a list of functions
+that return the activations (i.e. cnn.compileDebugFunctions must have been called</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cnn:</strong> :</p>
+<blockquote>
+<div><p>instance of MixedConvNN</p>
+</div></blockquote>
+<p><strong>data:</strong> :</p>
+<blockquote>
+<div><p>input to cnn for which activations should be shown</p>
+</div></blockquote>
+<p><strong>show_first_class_prob:</strong> :</p>
+<blockquote>
+<div><p>True/False whether to additionally show the probability map for the first class</p>
+</div></blockquote>
+<p><strong>no_show:</strong> :</p>
+<blockquote class="last">
+<div><p>True/False whether to pop up plots or silently return a list of image arrays</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.introspection.showParamHistogram">
+<tt class="descclassname">net.introspection.</tt><tt class="descname">showParamHistogram</tt><big>(</big><em>cnn</em>, <em>no_show=False</em>, <em>onlyW=True</em><big>)</big><a class="reference internal" href="_modules/net/introspection.html#showParamHistogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.introspection.showParamHistogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots histograms of parameter/weight values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>:type no_show: object</strong> :</p>
+<p><strong>cnn:</strong> :</p>
+<blockquote>
+<div><p>instance of MixedConvNN</p>
+</div></blockquote>
+<p><strong>onlyW:</strong> :</p>
+<blockquote>
+<div><p>True/False whether to ignore the biases b</p>
+</div></blockquote>
+<p><strong>no_show:</strong> :</p>
+<blockquote class="last">
+<div><p>True/False whether to pop up plots or silently return a list of image arrays</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.introspection.showActivityHistogram">
+<tt class="descclassname">net.introspection.</tt><tt class="descname">showActivityHistogram</tt><big>(</big><em>cnn</em>, <em>data</em>, <em>no_show=False</em><big>)</big><a class="reference internal" href="_modules/net/introspection.html#showActivityHistogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.introspection.showActivityHistogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots histograms of activation maps given data. It requires that cnn.debug_functions contains a list
+of functions that return the activations (i.e. cnn.compileDebugFunctions must have been called</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cnn:</strong> :</p>
+<blockquote>
+<div><p>instance of MixedConvNN</p>
+</div></blockquote>
+<p><strong>data:</strong> :</p>
+<blockquote>
+<div><p>input to cnn for which activations should be shown</p>
+</div></blockquote>
+<p><strong>no_show:</strong> :</p>
+<blockquote class="last">
+<div><p>True/False whether to pop up plots or silently return a list of image arrays</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.introspection.embedMatricesInGray">
+<tt class="descclassname">net.introspection.</tt><tt class="descname">embedMatricesInGray</tt><big>(</big><em>mat</em>, <em>border_width=1</em>, <em>normalize=False</em>, <em>output_ratio=1.7</em>, <em>fixed_n_horizontal=0</em><big>)</big><a class="reference internal" href="_modules/net/introspection.html#embedMatricesInGray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.introspection.embedMatricesInGray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a big matrix out of smaller ones (mat) assumed format of mat:(index, ch, i_vert,i_horiz)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.introspection.showMultipleFiguresAdd">
+<tt class="descclassname">net.introspection.</tt><tt class="descname">showMultipleFiguresAdd</tt><big>(</big><em>fig</em>, <em>n</em>, <em>i</em>, <em>image</em>, <em>title</em>, <em>isGray=True</em><big>)</big><a class="reference internal" href="_modules/net/introspection.html#showMultipleFiguresAdd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.introspection.showMultipleFiguresAdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add &lt;i&gt;th (of n, start: 0) image to figure &lt;fig&gt; as subplot (GRAY)</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-net.pooling">
+<span id="net-pooling-module"></span><h2>net.pooling module<a class="headerlink" href="#module-net.pooling" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN - Neural Network Toolkit</p>
+<p>Copyright (c) 2014 - now
+Max-Planck-Institute for Medical Research, Heidelberg, Germany
+Authors: Marius Killinger, Gregor Urban</p>
+<dl class="function">
+<dt id="net.pooling.maxabs">
+<tt class="descclassname">net.pooling.</tt><tt class="descname">maxabs</tt><big>(</big><em>t1</em>, <em>t2</em><big>)</big><a class="reference internal" href="_modules/net/pooling.html#maxabs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.pooling.maxabs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="net.pooling.my_max_pool_3d">
+<tt class="descclassname">net.pooling.</tt><tt class="descname">my_max_pool_3d</tt><big>(</big><em>sym_input</em>, <em>pool_shape=(2</em>, <em>2</em>, <em>2)</em><big>)</big><a class="reference internal" href="_modules/net/pooling.html#my_max_pool_3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.pooling.my_max_pool_3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>this one is pure theano. Hence all gradient-related stuff is working! No dimshuffling</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.pooling.maxout">
+<tt class="descclassname">net.pooling.</tt><tt class="descname">maxout</tt><big>(</big><em>conv_out</em>, <em>factor=2</em>, <em>mode='max'</em>, <em>axis=1</em><big>)</big><a class="reference internal" href="_modules/net/pooling.html#maxout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.pooling.maxout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pools axis 1 (the channels) of <tt class="docutils literal"><span class="pre">conv_out</span></tt> by <tt class="docutils literal"><span class="pre">factor</span></tt>.
+I.e. the number of channels is decreased by this factor.
+The pooling can either be done as <tt class="docutils literal"><span class="pre">max</span></tt> or <tt class="docutils literal"><span class="pre">maxabs</span></tt>.
+Spatial dimensions are unchanged</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.pooling.pooling2d">
+<tt class="descclassname">net.pooling.</tt><tt class="descname">pooling2d</tt><big>(</big><em>conv_out</em>, <em>pool_shape=(2</em>, <em>2)</em>, <em>mode='max'</em><big>)</big><a class="reference internal" href="_modules/net/pooling.html#pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.pooling.pooling2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pools axis 2,3 (x,y) of <tt class="docutils literal"><span class="pre">conv_out</span></tt> by respective <tt class="docutils literal"><span class="pre">pool_shape</span></tt>.
+I.e. the spatial extent is decreased by this factor.
+The pooling can either be done as <tt class="docutils literal"><span class="pre">max</span></tt> or <tt class="docutils literal"><span class="pre">maxabs</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="net.pooling.pooling3d">
+<tt class="descclassname">net.pooling.</tt><tt class="descname">pooling3d</tt><big>(</big><em>conv_out</em>, <em>pool_shape=(2</em>, <em>2</em>, <em>2)</em>, <em>mode='max'</em><big>)</big><a class="reference internal" href="_modules/net/pooling.html#pooling3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#net.pooling.pooling3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pools axis 2,3 (x,y) of <tt class="docutils literal"><span class="pre">conv_out</span></tt> by respective <tt class="docutils literal"><span class="pre">pool_shape</span></tt>.
+I.e. the spatial extent is decreased by this factor.
+The pooling can either be done as <tt class="docutils literal"><span class="pre">max</span></tt> or <tt class="docutils literal"><span class="pre">maxabs</span></tt>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="_Training.html" title="training package"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="_modules.html" title="ELEKTRONN API Documentation"
+             >previous</a> |</li>
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li>
+          <li><a href="_modules.html" >ELEKTRONN API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

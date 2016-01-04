@@ -1,0 +1,162 @@
+---
+layout: page
+permalink: /getting-started/
+---
+
+<section class="content style3 -diagonal-border">
+	<div class="container row -pt-xl">
+		<div class="col">
+			<header class="major">
+				<i class="fa fa-download fa-2x"></i>
+				<br>
+				<h3 class="-mt-z">Installation</h3>
+			</header>
+			<p><strong>ELEKTRONN</strong> is a Python package that can be installed
+			with <code>pip</code>. <a href="#Installation">Installation
+				instructions.</a></p>
+			<p><a class="tag -icon" href="#"><i class="fa fa-github"></i>Source Code</a></p>
+		</div>
+
+		<div class="col">
+			<header class="major">
+				<i class="fa fa-rocket fa-2x"></i>
+				<br>
+				<h3 class="-mt-z">Getting started</h3>
+			</header>
+			<p>Learn how to use <strong>ELEKTRONN</strong> with our example task <a href="#BasicRecipe">below</a>.
+		</div>
+
+		<div class="col">
+			<header class="major">
+				<i class="fa fa-book fa-2x"></i>
+				<br>
+				<h3 class="-mt-z">Documentation</h3>
+			</header>
+			<p><strong>ELEKTRONN’s</strong> full documentation can be found here:</p>
+			<p> <a class="tag -icon" href="#"><i class="fa fa-book"></i>Documentation</a></p>
+		</div>
+
+		<div class="col">
+			<header class="major">
+				<i class="fa fa-puzzle-piece fa-2x"></i>
+				<br>
+				<h3 class="-mt-z">Use Cases</h3>
+			</header>
+			<p><strong>ELEKTRONN</strong> can be used for ...</p>
+		</div>
+	</div>
+</section>
+
+<section class="content style4 -diagonal-border">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<header class="major">
+					<h2 id="Installation">Installation</h2>
+				</header>
+
+				<ul>
+					<li>Install below dependencies in advance (<em>theano</em> is optional)</li> 
+					<li>
+						<p>Install <strong>ELEKTRONN</strong> from the repository using
+						<code>pip</code> (options can specify target locations, editable
+						installs etc., see <code>man pip</code>):</p>
+
+						<p><pre><code>pip install https://github.com/???.zip [options]</code></pre></p> 
+
+						<p>This will install <strong>ELEKTRONN</strong> as a python
+						package. Alternatively you can download the files, add the folder
+						to <code>PYTHONPATH</code> and directly use the code.</p>
+					</li>
+					<li>Configure <em>theano</em> as explained below</li> 
+					<li>You can optionally create a user configuration file by editing the file <code>examples/config_template.py</code> and put it into your home directory as <code>elektronn.config</code> (see Configuration of Parameters)</li> 
+					<li>Try out one of the examples to confirm everything works</li>
+				</ul>
+
+				<header class="major">
+					<h3>Dependencies</h3>
+				</header>
+
+				<p><strong>ELEKTRONN</strong> has dependencies which are sometimes
+				difficult to install using <code>pip</code> (e.g. because
+				<code>pip</code> does not install system-level dependencies). You can
+				try:</p>
+
+				<p><pre><code>pip install -r requirements.txt</code></pre></p>
+
+				<p>But that will most likely fail. Instead we recommend that you install those packages by your system package manager e.g.:</p>
+
+				<p><code>apt-get install python-numpy python-scipy python-matplotlib python-h5py</code></p>
+
+				<p>The dependencies are also listed in the file <code>requirements.txt</code></p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="content style3">
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<header class="major">
+					<h2>Get started with <strong>ELEKTRONN</strong></h2>
+				</header>
+
+				<p>For people new to Neural Networsk and CNNs we recommend reading the <a href="http://elektronn.org/documentation/">Introduction section</a> in our documentation.</p>
+				<p>An even more detailed introduction, including formulae can be found here (+link).</p>
+			</div>
+
+			<div class="col">
+				<div class="box -float-right">
+					<header class="major">
+						<h4>Links</h4>
+					</header>
+					<ul>
+						<li><a href="http://deeplearning.net/software/theano/index.html">Theano homepage</a></li>
+
+						<li><a href="http://deeplearning.net/tutorial/contents.html">Theano tutorials</a></li>
+
+						<li><a href="http://deeplearning.net/reading-list/">Extensive reading list from the deeplearning website</a></li>
+					</ul>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<header class="major">
+					<h3 id="BasicRecipe">Basic recipe for CNN training with images</h3>
+				</header>
+
+				<ul>
+					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets.</li>
+
+					<li>
+						<p>Transform your data arrays to h5 data sets in separate files for images and labels.</p>
+
+						<ul>
+							<li>images: shape (x,y,z) or (ch,x,y,z)</li>
+							<li>labels: shape (x,y,z)</li>
+							<li>for classification: labels contain integer numbers, ranging from 0 to (#classes-1)</li>
+							<li>for regression: labels contain float numbers</li>
+							<li>for 2d images the dimension z can be viewed as the axis along which the instances of the training set are stacked</li>
+						</ul>
+					</li>
+
+					<li>Find a valid CNN architecture by by using <a href="{{ site.documentation-url }}/_Net.html#net.netutils.CNNCalculator">net.netutils.CNNCalculator()</a>.</li>
+
+					<li>Edit <code>config_template.py</code> as a new file to specify your training scenario.</li>
+
+					<li>
+						<p>Run the script <code>TrainCNN.py</code> from command line (or from an IDE like spyder):</p>
+						<p><code>TrainCNN.py [config=</path/to_config_file>] [ gpu={Auto|False|<int>}] [no_X={True|False}]</code></p>
+					</li>
+
+					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is hard work and needs time. For a better understanding of how they should be trained refer to the sources in the next section.</li>
+				</ul>		
+
+			</div>
+		</div>
+	</div>
+</section>
