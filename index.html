@@ -115,7 +115,7 @@ layout: default
 	</div>
 </section>
 
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="{{ "js/jquery-1.11.3.min.js" | prepend: site.baseurl }}"></script>
 <script>
 jQuery(document).ready(function($){
 	//check if the .cd-image-container is in the viewport 
@@ -203,5 +203,4 @@ function updateLabel(label, resizeElement, position) {
 		( label.offset().left > resizeElement.offset().left + resizeElement.outerWidth() ) ? label.removeClass('is-hidden') : label.addClass('is-hidden') ;
 	}
 }
-
 </script>
