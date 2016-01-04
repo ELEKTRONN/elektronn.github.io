@@ -14,22 +14,26 @@
 }
 
 .content {
-	position: relative;
-	z-index: 10;
-	padding-top: 50px;
-	padding-bottom: 100px;
+	@extend .-relative;
+	@extend .-z-back;
+	@extend .-pt;
+	@extend .-pb-xxl;
 
-	&.-pb-z { padding-bottom: 0; }
+	&.-diagonal-border {
+		@extend .-pb-xl;
 
-	//@include breakpoint($on-notebook) {
-	.col {
-		padding-left: 1.65em;
-		padding-right: 1.65em;
+		@include breakpoint($on-desktop) {
+			padding-bottom: 0;
+		}
 	}
-	//}
+
+	.col {
+		@extend .-pl;
+		@extend .-pr;
+	}
 
 	.row + .row {
-		margin-top: 1.65em;
+		@extend .-mt;
 	}
 }
 
@@ -93,30 +97,21 @@
 }
 
 .banner {
+	@extend .-pt-xl;
+	@extend .-pb-xxl;
 	background: url("/images/background.svg");
 	background-size: cover;
 	background-position: 50% 50%;
 	color: #fff;
-	padding: 50px 0 100px 0;
 	//background: #272e3a;
 
 	@include breakpoint($on-notebook) {
 		height: 800px;
 		max-height: 800px;
-		padding: 0 0 0 0;
+		padding: 0;
 	}
 
-	.container {
-		position: relative;
-		z-index: 20;
-	}
-
-	&.-diagonal-border:after {
-		background: #fff;
-		//background: #202a36;
-		border-top: 4px solid lighten(#272e3a, 60);
-		//border-top: 1px solid #38495e;
-	}
+	&.-diagonal-border:after { background: #202a36; }
 }
 
 //.style1 { background: #202A36; }
@@ -130,9 +125,8 @@
 .style4 { background: #242F3B; }
 
 .-diagonal-border {
-	position: relative;
+	@extend .-relative;
 
-	//&.style2 { &:after { background: #202a36 } }
 	&.style1 { &:after {
 			background: #f1f4f7;
 			border-top: 4px solid #ecf0f4;

@@ -1,15 +1,13 @@
-.-right {
-	margin-left: auto;
-	margin-right: 0;
-}
+.MPI-Logo {
+	max-width: 256px;
 
-.-left {
-	margin-left: 0;
-	margin-right: auto;
+	@include breakpoint($on-notebook) {
+		max-width: 80%;
+	}
 }
 
 .member-gallery {
-	overflow: hidden;
+	//overflow: hidden;
 }
 
 .member-gallery .col {
@@ -17,23 +15,33 @@
 	margin: 0;
 }
 
+.members {
+	flex-direction: column;
+
+	@include breakpoint($on-notebook) {
+		flex-direction: row;
+	}
+}
+
 .member {
 	h4 { 
-		margin: 0 0 1rem 0;
-		text-align: center
+		@extend .-m-z;
+		@extend .-mb;
+		@extend .-text-center;
 	}
 }
 
 .member-image {
-	margin: 0 auto;
+	@extend .-center;
 	border-radius: 50%;
-	width: 150px;
-	height: 150px;
+	width: 100%;
+	width: 120px;
+	height: 120px;
 	overflow: hidden;
 
-	@include breakpoint($on-notebook) {
-		width: 200px;
-		height: 200px;
+	@include breakpoint($on-desktop) {
+		width: 170px;
+		height: 170px;
 	}
 
 	&.-green { border: 1px solid #12AC87 }
