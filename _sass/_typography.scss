@@ -44,19 +44,19 @@ h4 {
 header.-underlined {
 	> * {
 		display: inline-block;
-		border-bottom: 2px solid #12ac87;
+		@extend .-bdr-green-light;
 		margin-bottom: .5em;
 	}
 }
 
 header.major {
-	margin-bottom: 2rem;
-	position: relative;
-	text-align: center;
+	@extend .-relative;
+	@extend .-text-center;
+	@extend .-mb-l;
 	color: #fff;
 
 	&:after {
-		border-bottom: 2px solid #12ac87;
+		@extend .-bdr-green-light;
 		bottom: -.5em;
 		content: '';
 		left: calc(50% - 2em);
@@ -77,7 +77,7 @@ a {
 	text-decoration: none;
 	border-bottom: 2px solid lighten(#12ac87, 10);
 
-	&:hover { border-bottom: 2px solid #12ac87; }
+	&:hover { @extend .-bdr-green-light }
 }
 
 code {
