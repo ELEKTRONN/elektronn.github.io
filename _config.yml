@@ -17,7 +17,7 @@ url: "http://elektronn.org" # the base hostname & protocol for your site
 github_username: ELEKTRONN
 
 github-url: https://github.com/ELEKTRONN/ELEKTRONN
-documentation-url: /documentation/
+documentation-url: /documentation
 
 # Build settings
 markdown: kramdown
