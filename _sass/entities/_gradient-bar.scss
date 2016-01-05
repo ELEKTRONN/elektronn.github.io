@@ -1,13 +1,13 @@
 .gradient-bar {
+	@extend .-bdr-green-dark;
 	height: 12px;
-	//background: linear-gradient(to right, #28A6E9, #12AC87);
 	background: #12ac87;
 	width: 100%;
-	border-bottom: 4px solid darken(#12ac87, 10);
 	content: "";
 }
 
 .top-link {
+	@extend .-bdr-green-dark;
 	display: inline-block;
 	width: 48px;
 	height: 48px;
@@ -15,7 +15,6 @@
 	padding: 8px;
 	text-align: center;
 	font-size: 1.25rem;
-	border-bottom: 4px solid darken(#12ac87, 10);
 	position: relative;
 	z-index: 12;
 
@@ -35,6 +34,7 @@
 		transition: all .1s linear;
 	}
 
-	&:hover { border-bottom: 4px solid darken(#12ac87, 10); }
+
+	&:hover { @extend .-bdr-green-dark; }
 	&:hover:after { transform: scale(1); }
 }
