@@ -1,4 +1,4 @@
-.. 3dCNN documentation master file, created by
+.. 3DCNN documentation master file, created by
    sphinx-quickstart on Thu Mar 19 11:42:24 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
@@ -7,52 +7,54 @@
 Welcome to the ELEKTRONN documentation!
 =======================================
 
-ELEKTRONN a is highly configurable toolkit for training 3d/2d CNNs and general Neural Networks. It is based on `theano <http://deeplearning.net/software/theano>`_ and therefore benefits from fast GPU implementations.
+ELEKTRONN is a highly configurable toolkit for training 3D/2D CNNs and general Neural Networks. It is written in python and based on `theano <http://deeplearning.net/software/theano>`_ and therefore benefits from fast GPU implementations.
 This toolkit was created by Marius Killinger and Gregor Urban at the `Max Planck Institute For Medical Research <http://www.mpimf-heidelberg.mpg.de/en>`_ to solve connectomics tasks (see the `paper <???>`_).
 
-The included training pipeline is designed for classification/localisation tasks on 3d/2d images. Besides this main use case, the toolkit offers solutions to various tasks on image and non-image data.
+The package includes a sophisticated training pipeline designed for classification/localisation tasks on 3D/2D images. Additionally the toolkit offers training routines for tasks on non-image data.
 
 The design goals of ELEKTRONN are twofold:
 
- * We want to provide a modular toolkit that makes the configuration of fast CNNs, featuring the latest tweaks, accessible to researchers outside the world of machine learning. The ready-made training pipeline is an entry point on this *high-level* - users just need to pre-process their data in the right format.
- * At the same time we want give people the opportunity to reuse the building blocks of the pipeline in a free manner to create their own customised Neural Networks. This *low-level* entry point is given by the strong OOP structure that allows flexible combinations of modules and easy code adaptations by subclassing or addition of new methods. In contrast, the built-in pipeline makes assumptions about useful configurations and thereby also restrictions. To leverage the full flexibility of ELEKTRONN modifying the pipeline is encouraged.
+ * We want to provide an entry point for researchers new to machine learning. Users just need to pre-process their data in the right format, and they can use our ready-made modular pipeline to configure fast CNNs featuring the latest techniques. There is no need for diving into any actual code.
+ * At the same time we want give people the flexibility to create their own Neural Networks by reusing and customising the building blocks of our implementation. To leverage the full flexibility of ELEKTRONN modifying the pipeline is encouraged.
 
+.. TODO put some nice pictures etc. here
 
 Main Features
 =============
 
-* Architecture:
+* Neural Network:
 
-  - 2d & 3d Convolution/Maxpooling layers (anisotropy supported)
+  - 2D & 3D Convolution/Maxpooling layers (anisotropy supported)
   - Fully-connected Perceptron layers
   - Basic recurrent layer
   - Auto encoder
   - Classification or regression outputs
-  - Max Fragment Pooling for rapid predictions
-  - Included helper function to design valid architectures
-
-* Meta-Parameters:
-
-  - Common activations functions (relu, tanh, sigmoid, abs, linear, maxout)
+  - Common activation functions (relu, tanh, sigmoid, abs, linear, maxout)
   - Dropout
-  - Input Noise
+  - Max Fragment Pooling for rapid predictions
+  - Helper function to design valid architectures
 
 * Optimisation:
 
   - SGD+momentum, RPROP, Conjugate Gradient, l-BFGS
   - Weight decay (L2-regularisation)
   - Relative class weights for classification training
-  - generic optimiser API that allows easy integration of custom or scipy optimisation routines
+  - Generic optimiser API that allows easy integration of custom optimisation routines (e.g. from scipy)
 
 * Training Pipeline:
 
   - Fully automated pipeline
-  - Warp deformations and grey value augmentation (online augmentation in parallel processes)
-  - Training with (partially) lazy labelled data
-  - Command line during training and visualisation of training progress
-  - Many training parameters can be changed without need to abort training (e.g. optimizer meta-parameters)
-  - Functions for introspection (plotting of filters, histogramme of gradients etc.)
-  - Automatic preview predictions on images during training
+  - The whole lot of data augmentation:
+      - Translation
+      - Flipping, transposing
+      - Continuous rotation
+      - Elastic deformations
+      - Histogram distortions
+      - *All done online in background processes*
+
+  - Training with lazy labelled data (partially labelled)
+  - Console interaction during training (allows e.g. to change optimiser meta-parameters)
+  - Visualisation of training progress (graphs and images of preview prediction)
 
 
 Contents
@@ -70,7 +72,7 @@ Contents
    Prediction
    NetCore
 
-   _modules
+   modules
 
 
 

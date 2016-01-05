@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,17 +68,15 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for net.perceptronlayer</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
-
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -92,7 +87,7 @@
 <span class="kn">import</span> <span class="nn">pooling</span>
 <span class="kn">from</span> <span class="nn">netutils</span> <span class="kn">import</span> <span class="n">initWeights</span>
 
-<div class="viewcode-block" id="PerceptronLayer"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer">[docs]</a><span class="k">class</span> <span class="nc">PerceptronLayer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer">[docs]</a><span class="k">class</span> <span class="nc">PerceptronLayer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Typical hidden layer of a MLP: units are fully-connected.</span>
 <span class="sd">  Weight matrix W is of shape (n_in,n_out), the bias vector b is of shape (n_out,).</span>
@@ -230,7 +225,7 @@
 
   <span class="c">#############################################################################################</span>
 
-<div class="viewcode-block" id="PerceptronLayer.randomizeWeights"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.randomizeWeights"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">):</span>
     <span class="n">n_in</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_in</span>
     <span class="n">n_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>      
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;relu&#39;</span><span class="p">:</span>
@@ -246,7 +241,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">b_values</span><span class="p">)</span>
     
 </div>
-<div class="viewcode-block" id="PerceptronLayer.NLL"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.NLL">[docs]</a>  <span class="k">def</span> <span class="nf">NLL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.NLL"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.NLL">[docs]</a>  <span class="k">def</span> <span class="nf">NLL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the symbolic mean and instance-wise negative log-likelihood of the prediction</span>
 <span class="sd">    of this model under a given target distribution.</span>
@@ -270,7 +265,7 @@
     <span class="c"># all the whole pred tensor is taken. Later we want to use only some indices of the tensor (mask) but</span>
     <span class="c"># that is not so easy done. There are two ways:</span>
     <span class="c"># 1. advanced indexing: T.log(pred)[mask.nonzero()] --&gt; fails if mask is all zero, cannot be fixed</span>
-    <span class="c"># 2. mutiplying with 0-1-mask: T.log(pred) * mask.nonzero --&gt; but NaN * 0 = NaN, but we require 0!</span>
+    <span class="c"># 2. multiplying with 0-1-mask: T.log(pred) * mask.nonzero --&gt; but NaN * 0 = NaN, but we require 0!</span>
     <span class="c"># For the second option, in principle, the NaNs could be replaced by 0 using T.switch, but then the gradient</span>
     <span class="c"># fails because the replaced value is disconnected from the parameters and gives NaN (mathematically</span>
     <span class="c"># the gradient should correctly be 0 then; there is a Theano ticket open to request a fix).</span>
@@ -308,7 +303,7 @@
 
 
 </div>
-<div class="viewcode-block" id="PerceptronLayer.NLL_weak"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.NLL_weak">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_weak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.NLL_weak"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.NLL_weak">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_weak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the symbolic mean and instance-wise negative log-likelihood of the prediction</span>
 <span class="sd">    of this model under a given target distribution.</span>
@@ -361,7 +356,7 @@
 
     <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll_inst</span>
 </div>
-<div class="viewcode-block" id="PerceptronLayer.nll_mutiple_binary"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.nll_mutiple_binary">[docs]</a>  <span class="k">def</span> <span class="nf">nll_mutiple_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.nll_mutiple_binary"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.nll_mutiple_binary">[docs]</a>  <span class="k">def</span> <span class="nf">nll_mutiple_binary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the mean and instance-wise negative log-likelihood of the prediction</span>
 <span class="sd">    of this model under a given target distribution.</span>
@@ -391,7 +386,7 @@
     <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll_inst</span>    
 
     </div>
-<div class="viewcode-block" id="PerceptronLayer.squared_distance"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.squared_distance">[docs]</a>  <span class="k">def</span> <span class="nf">squared_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">return_instancewise</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.squared_distance"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.squared_distance">[docs]</a>  <span class="k">def</span> <span class="nf">squared_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">return_instancewise</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, n_target)</span>
 <span class="sd">    output: scalar float32</span>
@@ -411,7 +406,7 @@
       <span class="k">return</span> <span class="n">batch</span>
 
 </div>
-<div class="viewcode-block" id="PerceptronLayer.errors"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.errors">[docs]</a>  <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.errors"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.errors">[docs]</a>  <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns classification accuracy</span>
 
@@ -431,7 +426,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="PerceptronLayer.errors_no_tn"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.errors_no_tn">[docs]</a>  <span class="k">def</span> <span class="nf">errors_no_tn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.errors_no_tn"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.errors_no_tn">[docs]</a>  <span class="k">def</span> <span class="nf">errors_no_tn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span>
     <span class="n">tp</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">*</span><span class="n">pred</span><span class="p">))</span>
     <span class="c">#tn = T.sum((1-y)*(1-pred))</span>
@@ -451,7 +446,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fromfunction</span><span class="p">(</span><span class="n">fun</span><span class="p">,(</span><span class="mi">3</span><span class="p">,</span><span class="mi">32</span><span class="p">,</span><span class="mi">32</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="PerceptronLayer.cross_entropy_array"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.cross_entropy_array">[docs]</a>  <span class="k">def</span> <span class="nf">cross_entropy_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">GaussianWindow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.cross_entropy_array"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.cross_entropy_array">[docs]</a>  <span class="k">def</span> <span class="nf">cross_entropy_array</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">GaussianWindow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, imgsize**2)</span>
 <span class="sd">    the output is of length: &lt;batchsize&gt;, Use cross_entropy() to get a scalar output.</span>
@@ -465,7 +460,7 @@
       <span class="k">return</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="p">)</span><span class="o">*</span><span class="n">Target</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span><span class="o">-</span><span class="n">Target</span><span class="p">)</span> <span class="p">)</span><span class="o">*</span><span class="n">T</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span> <span class="p">(</span><span class="n">Mask</span><span class="p">,</span><span class="n">Mask</span><span class="p">,</span><span class="n">Mask</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span> <span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c">#assuming RBG input</span>
 
 </div>
-<div class="viewcode-block" id="PerceptronLayer.cross_entropy"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.PerceptronLayer.cross_entropy">[docs]</a>  <span class="k">def</span> <span class="nf">cross_entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">GaussianWindow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="PerceptronLayer.cross_entropy"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.PerceptronLayer.cross_entropy">[docs]</a>  <span class="k">def</span> <span class="nf">cross_entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Mask</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">GaussianWindow</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Target is the TARGET image (vectorized), -&gt; shape(x) = (batchsize, imgsize**2) output: scalar float32</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -481,7 +476,7 @@
 
 
 </div></div>
-<div class="viewcode-block" id="RecurrentLayer"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.RecurrentLayer">[docs]</a><span class="k">class</span> <span class="nc">RecurrentLayer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="RecurrentLayer"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.RecurrentLayer">[docs]</a><span class="k">class</span> <span class="nc">RecurrentLayer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  :type input: symbolic input carrying [time, batch, feat]</span>
 <span class="sd">  :param input: theano.tensor.ftensor3</span>
@@ -553,7 +548,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">hid_lin</span> <span class="o">=</span> <span class="n">hid_lin</span>
 
 
-<div class="viewcode-block" id="RecurrentLayer.randomizeWeights"><a class="viewcode-back" href="../../_Net.html#net.perceptronlayer.RecurrentLayer.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_w</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
+<div class="viewcode-block" id="RecurrentLayer.randomizeWeights"><a class="viewcode-back" href="../../out2/Net.html#net.perceptronlayer.RecurrentLayer.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale_w</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">):</span>
     <span class="n">n_in</span><span class="p">,</span> <span class="n">n_hid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_hid</span>
     <span class="n">W_in_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_in</span><span class="p">,</span> <span class="n">n_hid</span><span class="p">),</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">W_in</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">W_in_values</span><span class="p">)</span> 
@@ -570,7 +565,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -579,16 +574,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

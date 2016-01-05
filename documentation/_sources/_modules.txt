@@ -1,7 +1,0 @@
-ELEKTRONN API Documentation
-===========================
-
-.. toctree::
- 
-   _Net
-   _Training

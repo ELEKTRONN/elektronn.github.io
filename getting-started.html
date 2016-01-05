@@ -23,7 +23,8 @@ permalink: /getting-started/
 				<br>
 				<h3 class="-mt-z">Getting started</h3>
 			</header>
-			<p>Learn how to use <strong>ELEKTRONN</strong> with our example task <a href="#BasicRecipe">below</a>.
+			<p>Learn how to use <strong>ELEKTRONN</strong> for your data from our basic recipe <a href="#BasicRecipe">below</a>
+			or try out the <a href="{{ site.documentation-url }}/Examples.html">examples</a>.
 		</div>
 
 		<div class="col">
@@ -42,7 +43,14 @@ permalink: /getting-started/
 				<br>
 				<h3 class="-mt-z">Use Cases</h3>
 			</header>
-			<p><strong>ELEKTRONN</strong> can be used for ...</p>
+			<p><strong>ELEKTRONN</strong> can be used for...</p>
+			<ul>
+				<li>... predicting the income from demographic features</li>
+				<li>... optical character recognitions of handwriting</li>
+				<li>... telling cats from dogs in images</li>
+				<li>... detecting/segmention objects in images</li>
+				<li>...</li>
+			</ul>
 		</div>
 	</div>
 </section>
@@ -56,21 +64,22 @@ permalink: /getting-started/
 				</header>
 
 				<ul>
-					<li>Install below dependencies in advance (<em>theano</em> is optional)</li> 
+					<li>Install below dependencies in advance (manual installation of <em>theano</em> is optional, the setup will install it otherwise)</li> 
 					<li>
 						<p>Install <strong>ELEKTRONN</strong> from the repository using
 						<code>pip</code> (options can specify target locations, editable
 						installs etc., see <code>man pip</code>):</p>
 
-						<p><pre><code>pip install https://github.com/???.zip [options]</code></pre></p> 
+						<p><pre><code>pip install https://github.com/ELEKTRONN/ELEKTRONN [options]</code></pre></p> 
 
 						<p>This will install <strong>ELEKTRONN</strong> as a python
 						package. Alternatively you can download the files, add the folder
-						to <code>PYTHONPATH</code> and directly use the code.</p>
+						to <code>PYTHONPATH</code> and directly use the code. If you plan to adapt the scripts and data processing methods
+						a developer install using the pip option <code>-e</code> might be advisable.</p>
 					</li>
 					<li>Configure <em>theano</em> as explained below</li> 
-					<li>You can optionally create a user configuration file by editing the file <code>examples/config_template.py</code> and put it into your home directory as <code>elektronn.config</code> (see Configuration of Parameters)</li> 
-					<li>Try out one of the examples to confirm everything works</li>
+					<li>You can optionally create a user configuration file by editing the file <code>examples/config_template.py</code> and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#id7">configuration</a>)</li> 
+					<li> Optionally try out one of the examples to confirm everything works</li>
 				</ul>
 
 				<header class="major">
@@ -88,7 +97,7 @@ permalink: /getting-started/
 
 				<p><code>apt-get install python-numpy python-scipy python-matplotlib python-h5py</code></p>
 
-				<p>The dependencies are also listed in the file <code>requirements.txt</code></p>
+				<p>The dependencies are listed in the file <code>requirements.txt</code></p>
 			</div>
 		</div>
 	</div>
@@ -102,8 +111,8 @@ permalink: /getting-started/
 					<h2>Get started with <strong>ELEKTRONN</strong></h2>
 				</header>
 
-				<p>For people new to Neural Networsk and CNNs we recommend reading the <a href="http://elektronn.org/documentation/">Introduction section</a> in our documentation.</p>
-				<p>An even more detailed introduction, including formulae can be found here (+link).</p>
+				<p>For people new to Neural Networsk and CNNs we recommend reading the <a href="{{ site.documentation-url }}/IntroNN.html">introduction</a> in our documentation.</p>
+				<p>An even more detailed introduction, including formulae can be found <a href="downloads/Intro-ANN.pdf">here</a>.</p>
 			</div>
 
 			<div class="col">
@@ -150,7 +159,7 @@ permalink: /getting-started/
 
 					<li>
 						<p>Run the script <code>TrainCNN.py</code> from command line (or from an IDE like spyder):</p>
-						<p><code>TrainCNN.py [config=</path/to_config_file>] [ gpu={Auto|False|<int>}] [no_X={True|False}]</code></p>
+						<p><code>TrainCNN.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
 					</li>
 
 					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is hard work and needs time. For a better understanding of how they should be trained refer to the sources in the next section.</li>

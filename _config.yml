@@ -27,17 +27,12 @@ sass:
 
 
 include:
- - _downloads
- - _images
- - _modules
- - _modules.html
- - _Net.html
- - _sources
- - _sources/_modules.txt
- - _sources/_Net.txt
- - _sources/_Training.txt
- - _static
- - _Training.html
+ - documentation/_downloads
+ - documentation/_images
+ - documentation/_modules
+ - documentation/_sources
+ - documentation/_static
+
 
 navigation:
  - text: Home

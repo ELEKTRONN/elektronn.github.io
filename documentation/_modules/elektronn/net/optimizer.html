@@ -1,0 +1,613 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>elektronn.net.optimizer &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../../_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for elektronn.net.optimizer</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
+
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">theano</span>
+<span class="kn">import</span> <span class="nn">theano.tensor</span> <span class="kn">as</span> <span class="nn">T</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fmin_l_bfgs_b</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<div class="viewcode-block" id="Optimizer"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.Optimizer">[docs]</a><span class="k">class</span> <span class="nc">Optimizer</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Optimizer Base Object, initialises generic optimizer variables</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+
+<span class="sd">  model_obj: cnn-object</span>
+<span class="sd">    Encapsulation of theano model (instead of giving X,Y etc. manually), all other arguments are</span>
+<span class="sd">    retrieved from this object if they are ``None``. If an argument is not ``None`` it will override the</span>
+<span class="sd">    value from the model</span>
+<span class="sd">  X:         symbolic input variable</span>
+<span class="sd">    Data</span>
+<span class="sd">  Y:         symbolic output variable</span>
+<span class="sd">    Target</span>
+<span class="sd">  Y_aux:     symbolic output variable</span>
+<span class="sd">    Auxiliary masks/weights/etc. for the loss, type: list!</span>
+<span class="sd">  top_loss:  symbolic loss function:</span>
+<span class="sd">    Requires (X, Y (,*Y_aux)) for compilation</span>
+<span class="sd">  params:    list of shared variables</span>
+<span class="sd">    List of parameter arrays against which the loss is optimised</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  Callable optimizer object: loss = Optimizer(X, Y (,*Y_aux)) performs one iteration</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y_aux</span><span class="o">=</span><span class="p">[],</span> <span class="n">top_loss</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">t_init</span>           <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">step</span>             <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">model_obj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="k">assert</span> <span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">Y</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">top_loss</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">params</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">,</span> <span class="s">&quot;Missing arguments!&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">top_loss</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">disconnected_inputs</span><span class="o">=</span><span class="s">&quot;warn&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_x</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span>
+      <span class="k">if</span> <span class="n">Y</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_y</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y</span> <span class="o">=</span> <span class="n">Y</span>
+      <span class="k">if</span> <span class="n">Y_aux</span><span class="o">==</span><span class="p">[]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_y_aux</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span> <span class="o">=</span> <span class="n">Y_aux</span>
+      <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">params</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+
+      <span class="k">if</span> <span class="n">top_loss</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="c"># no loss means, loss&amp;grad must already be defined in the model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_gradients</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top_loss</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_loss</span>
+
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">top_loss</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">disconnected_inputs</span><span class="o">=</span><span class="s">&quot;warn&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">,</span><span class="s">&quot;no params, call compileOutputFunctions() before calling compileOptimizer()!&quot;</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="s">&#39;_last_grads&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_last_grads</span><span class="o">!=</span><span class="p">[]</span> <span class="ow">and</span>  <span class="n">model_obj</span><span class="o">.</span><span class="n">_last_grads</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_last_grads</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:</span><span class="n">i</span><span class="p">]:</span>
+          <span class="k">print</span> <span class="s">&quot;Detected shared param: param[</span><span class="si">%i</span><span class="s">]&quot;</span> <span class="o">%</span><span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">),</span>
+                                          <span class="n">name</span><span class="o">=</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="s">&#39;_LG&#39;</span><span class="p">),</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="s">&#39;global_weightdecay&#39;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">weightdecay</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">global_weightdecay</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">weightdecay</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="s">&#39;_loss_instance&#39;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">loss_instance</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_loss_instance</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">loss_instance</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="s">&#39;_get_loss&#39;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">get_loss</span> <span class="o">=</span> <span class="n">model_obj</span><span class="o">.</span><span class="n">_get_loss</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_get_loss</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">top_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_instance</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">model_obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">model_obj</span><span class="o">.</span><span class="n">_last_grads</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span> <span class="c"># share last grads in model</span>
+        <span class="n">model_obj</span><span class="o">.</span><span class="n">get_loss</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_loss</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_obj</span> <span class="o">=</span> <span class="n">model_obj</span>
+
+<div class="viewcode-block" id="Optimizer.updateOptimizerParams"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.Optimizer.updateOptimizerParams">[docs]</a>  <span class="k">def</span> <span class="nf">updateOptimizerParams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer_params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update the hyper-parameter dictionary</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">optimizer_params</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Optimizer.get_loss"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.Optimizer.get_loss">[docs]</a>  <span class="k">def</span> <span class="nf">get_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    [data, labels(, *aux)] --&gt; [loss, loss_instance]</span>
+<span class="sd">    loss_instance is the loss per instance (e.g. batch-item or pixel)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">loss</span><span class="p">,</span> <span class="n">nloss_instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_loss</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">loss</span><span class="p">),</span> <span class="n">nloss_instance</span>
+
+</div>
+  <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform an update step</span>
+
+<span class="sd">    [data, labels(, *aux)] --&gt; [loss, loss_instance]</span>
+<span class="sd">    loss_instance is the loss per instance (e.g. batch-item or pixel)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span>
+    <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c"># the scalar nll</span>
+    <span class="k">return</span> <span class="n">ret</span>
+
+<div class="viewcode-block" id="Optimizer.compileGradients"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.Optimizer.compileGradients">[docs]</a>  <span class="k">def</span> <span class="nf">compileGradients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compile and return a function that returns list of gradients</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;Compiling getGradients&quot;</span>
+    <span class="n">getGradients</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="n">on_unused_input</span><span class="o">=</span><span class="s">&#39;warn&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">getGradients</span>
+
+
+<span class="c">##############################################################################################################</span>
+<span class="c">#######################################       Stochastic Gradient Descent     ################################</span>
+<span class="c">##############################################################################################################</span>
+</div></div>
+<div class="viewcode-block" id="compileSGD"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileSGD">[docs]</a><span class="k">class</span> <span class="nc">compileSGD</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Stochastic Gradient Descent</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer_params</span><span class="p">,</span> <span class="n">model_obj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y_aux</span><span class="o">=</span><span class="p">[],</span> <span class="n">top_loss</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Compiling SGD&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">compileSGD</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Y_aux</span><span class="p">,</span> <span class="n">top_loss</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">LR</span> <span class="o">=</span> <span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;LR&#39;</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span> <span class="o">=</span> <span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;momentum&#39;</span><span class="p">]</span>
+
+    <span class="n">grad_updates</span><span class="o">=</span><span class="p">[]</span>
+    <span class="n">param_updates</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">param_i</span><span class="p">,</span> <span class="n">grad_i</span><span class="p">,</span> <span class="n">last_grad_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span><span class="p">):</span>
+      <span class="n">new_grad_i</span> <span class="o">=</span> <span class="n">grad_i</span> <span class="o">+</span> <span class="n">last_grad_i</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">momentum</span>
+      <span class="n">grad_updates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">last_grad_i</span><span class="p">,</span> <span class="n">new_grad_i</span><span class="p">))</span> <span class="c"># use this if you want to use the gradient magnitude</span>
+      <span class="c"># For no weight decay weightdecay is just 0</span>
+      <span class="n">param_updates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">param_i</span><span class="p">,</span> <span class="n">param_i</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">LR</span> <span class="p">)</span> <span class="o">*</span> <span class="n">new_grad_i</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">LR</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">weightdecay</span> <span class="o">*</span> <span class="n">param_i</span><span class="p">))</span>
+
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">grad_updates</span><span class="p">)</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="n">param_updates</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grad_updates</span><span class="p">))</span><span class="o">+</span><span class="s">&quot; != &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">param_updates</span><span class="p">))</span>
+    <span class="c"># This updates last_grads with the current grad and returns the loss before any parameter change</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">top_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_instance</span><span class="p">],</span>
+                                  <span class="n">updates</span><span class="o">=</span><span class="n">param_updates</span><span class="o">+</span><span class="n">grad_updates</span><span class="p">,</span> <span class="n">on_unused_input</span><span class="o">=</span><span class="s">&#39;warn&#39;</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&quot; Compiling done  - in </span><span class="si">%.3f</span><span class="s"> s!&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_init</span><span class="p">)</span>
+
+
+<span class="c">##############################################################################################################</span>
+<span class="c">#######################################                Ada Grad               ################################</span>
+<span class="c">##############################################################################################################</span>
+</div>
+<div class="viewcode-block" id="compileAdam"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileAdam">[docs]</a><span class="k">class</span> <span class="nc">compileAdam</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Stochastic Gradient Descent</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer_params</span><span class="p">,</span> <span class="n">model_obj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y_aux</span><span class="o">=</span><span class="p">[],</span> <span class="n">top_loss</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Compiling Adam&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">compileAdam</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Y_aux</span><span class="p">,</span> <span class="n">top_loss</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">LR</span> <span class="o">=</span> <span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;LR&#39;</span><span class="p">]</span>
+    <span class="n">beta1</span>   <span class="o">=</span> <span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;beta1&#39;</span><span class="p">]</span>
+    <span class="n">beta2</span>   <span class="o">=</span> <span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;beta2&#39;</span><span class="p">]</span>
+    <span class="n">epsilon</span>   <span class="o">=</span> <span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;epsilon&#39;</span><span class="p">]</span>
+    
+    <span class="n">updates</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">t_prev</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mf">0.0</span><span class="p">))</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t_prev</span> <span class="o">+</span> <span class="mf">1.0</span>
+    <span class="n">a_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LR</span> <span class="o">*</span> <span class="n">T</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">beta2</span><span class="o">**</span><span class="n">t</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">beta1</span><span class="o">**</span><span class="n">t</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">g_t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">m_prev</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                               <span class="n">broadcastable</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">broadcastable</span><span class="p">)</span>
+        <span class="n">v_prev</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">value</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span>
+                               <span class="n">broadcastable</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">broadcastable</span><span class="p">)</span>
+
+        <span class="n">m_t</span> <span class="o">=</span> <span class="n">beta1</span><span class="o">*</span><span class="n">m_prev</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">beta1</span><span class="p">)</span><span class="o">*</span><span class="n">g_t</span>
+        <span class="n">v_t</span> <span class="o">=</span> <span class="n">beta2</span><span class="o">*</span><span class="n">v_prev</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">beta2</span><span class="p">)</span><span class="o">*</span><span class="n">g_t</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">a_t</span><span class="o">*</span><span class="n">m_t</span><span class="o">/</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_t</span><span class="p">)</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">)</span>
+
+        <span class="n">updates</span><span class="p">[</span><span class="n">m_prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">m_t</span>
+        <span class="n">updates</span><span class="p">[</span><span class="n">v_prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">v_t</span>
+        <span class="n">updates</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span> <span class="o">-</span> <span class="n">step</span>
+
+    <span class="n">updates</span><span class="p">[</span><span class="n">t_prev</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">top_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_instance</span><span class="p">],</span>
+                                  <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">,</span> <span class="n">on_unused_input</span><span class="o">=</span><span class="s">&#39;warn&#39;</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&quot; Compiling done  - in </span><span class="si">%.3f</span><span class="s"> s!&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_init</span><span class="p">)</span>
+
+
+<span class="c">##############################################################################################################</span>
+<span class="c">#######################################       Resilient backPROPagation      #################################</span>
+<span class="c">##############################################################################################################</span>
+</div>
+<div class="viewcode-block" id="compileRPROP"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileRPROP">[docs]</a><span class="k">class</span> <span class="nc">compileRPROP</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot; Resilient backPROPagation &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer_params</span><span class="p">,</span> <span class="n">model_obj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y_aux</span><span class="o">=</span><span class="p">[],</span> <span class="n">top_loss</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Compiling RPROP...&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">compileRPROP</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Y_aux</span><span class="p">,</span> <span class="n">top_loss</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">LRs</span>     <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">RPROP_updates</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c"># Initialise shared variables for the Training algos</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">para</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">para</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[:</span><span class="n">i</span><span class="p">]:</span>
+        <span class="k">print</span> <span class="s">&quot;Detected RNN or shared param @index =&quot;</span><span class="p">,</span><span class="n">i</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LRs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;initial_update_size&#39;</span><span class="p">])</span> <span class="o">*</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">para</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span> <span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">para</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="s">&#39;_RPROP&#39;</span><span class="p">)</span> <span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">print</span> <span class="s">&quot;RPROP: missing backtracking handling &quot;</span> <span class="c">###TODO ???</span>
+    <span class="k">for</span> <span class="n">param_i</span><span class="p">,</span> <span class="n">grad_i</span><span class="p">,</span> <span class="n">last_grad_i</span><span class="p">,</span> <span class="n">pLR_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LRs</span><span class="p">):</span>
+      <span class="c"># Commented code on next 4 lines is theano-incapable and just illustration!!!</span>
+      <span class="c"># if   ((last_grad_i*grad_i) &lt; -1e-9): # sign-change &amp; significant magnitude of last two gradients</span>
+      <span class="c">#   pLR_i_new = pLR_i * (1 - np.float32(RPROP_penalty)) # decrease this LR</span>
+      <span class="c"># elif ((last_grad_i*grad_i) &gt; 1e-11): # no sign-change &amp; and last two gradients were sufficiently big</span>
+      <span class="c">#   pLR_i_new = pLR_i * (1 + np.float32(RPORP_gain))    # increase this LR</span>
+
+      <span class="c"># capping RPROP-LR inside [1e-7,2e-3]</span>
+      <span class="n">RPROP_updates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">pLR_i</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span> <span class="n">T</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span>
+      <span class="n">pLR_i</span> <span class="o">*</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;penalty&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="p">((</span><span class="n">last_grad_i</span><span class="o">*</span><span class="n">grad_i</span><span class="p">)</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">1e-9</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;gain&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="p">((</span><span class="n">last_grad_i</span><span class="o">*</span><span class="n">grad_i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-11</span><span class="p">)),</span>
+                                                        <span class="mf">1e-7</span> <span class="o">*</span> <span class="n">T</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">pLR_i</span><span class="p">)</span> <span class="p">),</span><span class="mf">2e-3</span> <span class="o">*</span> <span class="n">T</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">pLR_i</span><span class="p">))</span> <span class="p">))</span>
+      <span class="n">RPROP_updates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">param_i</span><span class="p">,</span> <span class="n">param_i</span>  <span class="o">-</span> <span class="n">pLR_i</span> <span class="o">*</span> <span class="n">grad_i</span><span class="o">/</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">abs_</span><span class="p">(</span><span class="n">grad_i</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weightdecay</span><span class="o">*</span><span class="n">param_i</span><span class="p">)</span> <span class="p">))</span>
+      <span class="n">RPROP_updates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">last_grad_i</span><span class="p">,</span> <span class="n">grad_i</span> <span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">step</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">top_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_instance</span><span class="p">],</span>
+                                  <span class="n">updates</span><span class="o">=</span><span class="n">RPROP_updates</span><span class="p">,</span> <span class="n">on_unused_input</span><span class="o">=</span><span class="s">&#39;warn&#39;</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot; Compiling done  - in </span><span class="si">%.3f</span><span class="s"> s!&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_init</span><span class="p">)</span>
+
+
+<span class="c">##############################################################################################################</span>
+<span class="c">###########################################       Conjugate Gradient      ####################################</span>
+<span class="c">##############################################################################################################</span>
+</div>
+<div class="viewcode-block" id="compileCG"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileCG">[docs]</a><span class="k">class</span> <span class="nc">compileCG</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot; Conjugate Gradient &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer_params</span><span class="p">,</span> <span class="n">model_obj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y_aux</span><span class="o">=</span><span class="p">[],</span> <span class="n">top_loss</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Compiling CG&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">compileCG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Y_aux</span><span class="p">,</span> <span class="n">top_loss</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span> <span class="o">=</span> <span class="n">optimizer_params</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">direc</span>         <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">CG_updates_direc</span>   <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">CG_updates_grads</span>   <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">CG_updates</span>         <span class="o">=</span> <span class="p">[]</span> <span class="c"># params</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">model_obj</span>     <span class="o">=</span> <span class="n">model_obj</span>
+
+    <span class="c"># Initialise shared variables for the Training algos</span>
+    <span class="k">for</span> <span class="n">para</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+      <span class="n">para_shape</span> <span class="o">=</span> <span class="n">para</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">direc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">para_shape</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">),</span>
+                                      <span class="n">name</span><span class="o">=</span><span class="n">para</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s">&#39;_CG_direc&#39;</span><span class="p">,</span><span class="n">borrow</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
+
+    <span class="c">### Kickstart of CG, initialise first direction to current gradient ###</span>
+    <span class="k">for</span> <span class="n">grad_i</span><span class="p">,</span> <span class="n">last_grad_i</span><span class="p">,</span> <span class="n">direc_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">direc</span><span class="p">):</span>
+      <span class="n">CG_updates_grads</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">last_grad_i</span><span class="p">,</span> <span class="n">grad_i</span><span class="p">))</span>
+      <span class="n">CG_updates_direc</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">direc_i</span><span class="p">,</span>    <span class="o">-</span><span class="n">grad_i</span><span class="p">))</span>
+
+    <span class="c"># update direc &amp; last-grad</span>
+    <span class="n">updates</span> <span class="o">=</span> <span class="n">CG_updates_grads</span> <span class="o">+</span> <span class="n">CG_updates_direc</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CG_kickstart</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span>
+                                          <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">,</span> <span class="n">on_unused_input</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+
+
+    <span class="c">### Regular CG-step ###</span>
+    <span class="n">CG_updates_direc</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># clear update-list</span>
+    <span class="n">CG_updates_grads</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># clear update-list</span>
+
+    <span class="c"># Compute Polak-Ribiere coefficient b for updating search direction</span>
+    <span class="n">denom</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">num</span>   <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">grad_i</span><span class="p">,</span> <span class="n">last_grad_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span><span class="p">):</span>
+      <span class="n">num</span>   <span class="o">=</span> <span class="n">num</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">grad_i</span> <span class="o">*</span> <span class="p">(</span><span class="o">-</span><span class="n">grad_i</span><span class="o">+</span><span class="n">last_grad_i</span><span class="p">))</span>
+      <span class="n">denom</span> <span class="o">=</span> <span class="n">denom</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">last_grad_i</span> <span class="o">*</span> <span class="n">last_grad_i</span><span class="p">)</span>
+    <span class="n">coeff</span> <span class="o">=</span> <span class="n">num</span> <span class="o">/</span> <span class="n">denom</span>
+    <span class="n">coeff</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">coeff</span><span class="p">,</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">))]))</span> <span class="c"># select</span>
+
+    <span class="c"># Search-direction and last-grad update</span>
+    <span class="k">for</span> <span class="n">grad_i</span><span class="p">,</span> <span class="n">last_grad_i</span><span class="p">,</span> <span class="n">direc_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">direc</span><span class="p">):</span>
+      <span class="n">CG_updates_grads</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">last_grad_i</span><span class="p">,</span>  <span class="n">grad_i</span><span class="p">))</span>
+      <span class="n">CG_updates_direc</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">direc_i</span><span class="p">,</span> <span class="o">-</span><span class="n">grad_i</span> <span class="o">+</span> <span class="n">direc_i</span> <span class="o">*</span> <span class="n">coeff</span><span class="p">))</span>
+
+    <span class="n">updates</span> <span class="o">=</span> <span class="n">CG_updates_grads</span> <span class="o">+</span> <span class="n">CG_updates_direc</span>
+<span class="c">#    if self.Y_aux is None:</span>
+<span class="c">#      self.CG_step = theano.function([self.X, self.Y],</span>
+<span class="c">#                                     coeff, updates=updates, on_unused_input=&#39;ignore&#39;)</span>
+<span class="c">#    else:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CG_step</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span>
+                                     <span class="n">coeff</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="n">updates</span><span class="p">,</span> <span class="n">on_unused_input</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">)</span>
+
+    <span class="c"># Weights update (Line search), no input needed, as only params are changed</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">fscalar</span><span class="p">(</span><span class="s">&#39;delta&#39;</span><span class="p">)</span> <span class="c"># used to parametrise the ray along we search (=0 at current params)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="c"># Internal update step indicator</span>
+    <span class="k">for</span> <span class="n">param_i</span><span class="p">,</span> <span class="n">search_direc_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">direc</span><span class="p">):</span>
+      <span class="n">CG_updates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">param_i</span><span class="p">,</span> <span class="n">param_i</span> <span class="o">+</span> <span class="n">search_direc_i</span> <span class="o">*</span> <span class="n">delta</span><span class="p">))</span>
+
+    <span class="n">CG_updates</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">+</span><span class="n">delta</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CG_update_params</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="n">delta</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">+</span><span class="n">delta</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="n">CG_updates</span><span class="p">)</span>
+
+
+    <span class="c"># Linear-Approximation (from shared last_(grad|direc))</span>
+    <span class="n">linear_approx</span>   <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">grad_i</span><span class="p">,</span> <span class="n">last_direc_i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_grads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">direc</span><span class="p">):</span>
+      <span class="n">linear_approx</span>   <span class="o">=</span> <span class="n">linear_approx</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">grad_i</span> <span class="o">*</span> <span class="n">last_direc_i</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">CG_linear_approx</span>  <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([],</span> <span class="n">linear_approx</span><span class="p">,</span> <span class="n">updates</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s">&quot; Compiling done  - in </span><span class="si">%.3f</span><span class="s"> s!&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_init</span><span class="p">)</span>
+
+
+  <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span> <span class="c"># i.e. trainingStepCG</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform an update step</span>
+
+<span class="sd">    [data, labels(, *aux)] --&gt; [loss, loss_instance]</span>
+<span class="sd">    loss_instance is the loss per instance (e.g. batch-item or pixel)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CG_kickstart</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">timeline</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineSearch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">timeline</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">loss</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">count</span><span class="p">])</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="c"># DBG: reset internal update-magnitude</span>
+    <span class="n">n_steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;n_steps&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n_steps</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;only_descent&#39;</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CG_kickstart</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">coeff</span> <span class="o">=</span> <span class="mi">0</span>
+      <span class="k">else</span><span class="p">:</span> <span class="c"># use actual CG</span>
+        <span class="n">coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CG_step</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+      <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lineSearch</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+      <span class="n">timeline</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">loss</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">coeff</span><span class="p">,</span> <span class="n">count</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_obj</span><span class="p">,</span> <span class="s">&#39;CG_timeline&#39;</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">model_obj</span><span class="o">.</span><span class="n">CG_timeline</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">timeline</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span>
+
+
+<div class="viewcode-block" id="compileCG.lineSearch"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileCG.lineSearch">[docs]</a>  <span class="k">def</span> <span class="nf">lineSearch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Needed for CG &quot;&quot;&quot;</span>
+    <span class="n">loss_0</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_loss</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">loss_0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">loss_0</span><span class="p">)</span>
+    <span class="n">linear_approx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CG_linear_approx</span><span class="p">()</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">linear_approx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span> <span class="c"># if algorithm gets stuck, reset</span>
+      <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_loss</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+      <span class="k">return</span> <span class="n">loss_0</span><span class="p">,</span> <span class="n">loss_instance</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">counter</span>
+    <span class="n">max_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;max_step&#39;</span><span class="p">]</span>
+    <span class="n">min_step</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;min_step&#39;</span><span class="p">]</span>
+    <span class="n">beta</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;beta&#39;</span><span class="p">]</span>
+
+    <span class="n">max_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">min_step</span> <span class="o">/</span> <span class="p">(</span><span class="n">max_step</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">beta</span><span class="p">))</span> <span class="c"># limit iterations to lower bound</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span> <span class="c">### For Plotting</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">max_step</span>
+    <span class="c"># The next search points DEcrement the search ray by the decaying negative factor delta</span>
+    <span class="c"># Thus parameters needn&#39;t to be reset before updating, we directly change</span>
+    <span class="c"># the parameters by the desired amount</span>
+    <span class="c"># The first search point: max_step along the current search direction</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">CG_update_params</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">max_step</span><span class="p">))</span>
+    <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_loss</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">max_step</span> <span class="o">*</span> <span class="p">(</span><span class="n">beta</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">last_loss</span> <span class="o">=</span> <span class="mi">1000000</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">max_count</span><span class="p">):</span>
+      <span class="n">chord</span> <span class="o">=</span> <span class="n">loss_0</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">linear_approx</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;alpha&#39;</span><span class="p">]</span>
+      <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">t</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">chord</span><span class="p">])</span>
+      <span class="c"># The second condition is a deviation from regular BT-LineSearch</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">loss</span> <span class="o">&lt;=</span> <span class="n">chord</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">loss</span> <span class="o">&gt;</span> <span class="n">last_loss</span><span class="p">):</span>
+        <span class="k">break</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">CG_update_params</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">delta</span><span class="p">))</span>
+      <span class="n">last_loss</span> <span class="o">=</span> <span class="n">loss</span>
+      <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_loss</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+      <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+      <span class="n">delta</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">beta</span>
+      <span class="n">t</span>     <span class="o">=</span>     <span class="n">t</span> <span class="o">*</span> <span class="n">beta</span>
+      <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">[</span><span class="s">&#39;show&#39;</span><span class="p">]:</span>
+      <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">loss_0</span><span class="p">,</span> <span class="n">loss_0</span><span class="p">])</span>
+      <span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+      <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+      <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:])</span>
+      <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">points</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+      <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="s">&#39;fu&#39;</span><span class="p">,</span> <span class="s">&#39;chord&#39;</span><span class="p">))</span>
+      <span class="n">plt</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+      <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">0.0001</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">eval</span><span class="p">()),</span> <span class="n">counter</span>
+
+<span class="c">##############################################################################################################</span>
+<span class="c">###########################################             L-BFGS            ####################################</span>
+<span class="c">##############################################################################################################</span>
+</div></div>
+<div class="viewcode-block" id="compileLBFGS"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileLBFGS">[docs]</a><span class="k">class</span> <span class="nc">compileLBFGS</span><span class="p">(</span><span class="n">Optimizer</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  L-BFGS (fast, full-batch method)</span>
+
+<span class="sd">  References (cite one):</span>
+<span class="sd">    R. H. Byrd, P. Lu and J. Nocedal. A Limited Memory Algorithm for Bound Constrained Optimization,</span>
+<span class="sd">    (1995), SIAM Journal on Scientific and Statistical Computing, 16, 5, pp. 1190-1208.</span>
+
+<span class="sd">    C. Zhu, R. H. Byrd and J. Nocedal. L-BFGS-B: Algorithm 778: L-BFGS-B, FORTRAN routines for large scale</span>
+<span class="sd">    bound constrained optimization (1997), ACM Transactions on Mathematical Software, 23, 4, pp. 550 - 560.</span>
+
+<span class="sd">    J.L. Morales and J. Nocedal. L-BFGS-B: Remark on Algorithm 778: L-BFGS-B, FORTRAN routines for large</span>
+<span class="sd">    scale bound constrained optimization (2011), ACM Transactions on Mathematical Software, 38, 1.</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer_params</span><span class="p">,</span> <span class="n">model_obj</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">Y_aux</span><span class="o">=</span><span class="p">[],</span> <span class="n">top_loss</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                                                                    <span class="n">params</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;Compiling lBFGS&quot;</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">compileLBFGS</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Y_aux</span><span class="p">,</span> <span class="n">top_loss</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span> <span class="o">=</span> <span class="n">optimizer_params</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">top_loss</span><span class="p">]</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_loss_and_grad</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Y_aux</span><span class="p">,</span> <span class="n">ret</span><span class="p">,</span> <span class="n">on_unused_input</span><span class="o">=</span><span class="s">&#39;warn&#39;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span>        <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">shape</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_values</span><span class="p">]</span> <span class="c"># list of param-shapes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sizes</span>         <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="p">)</span>             <span class="c"># list of param-sizes</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">total_size</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sizes</span><span class="p">)</span>                    <span class="c"># length of vectorized parameters</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">params_vec</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">,</span><span class="s">&quot;float32&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gradients_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_size</span><span class="p">,</span><span class="s">&quot;float32&quot;</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+    <span class="k">print</span> <span class="s">&quot; Compiling done  - in </span><span class="si">%.3f</span><span class="s"> s!&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">t_init</span><span class="p">)</span>
+
+<div class="viewcode-block" id="compileLBFGS.vec2list"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileLBFGS.vec2list">[docs]</a>  <span class="k">def</span> <span class="nf">vec2list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vec</span><span class="p">,</span> <span class="n">target_list</span><span class="p">):</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">target_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sizes</span><span class="p">):</span>
+      <span class="n">a</span><span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="n">pos</span><span class="p">:</span><span class="n">pos</span> <span class="o">+</span> <span class="n">size</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+      <span class="n">pos</span> <span class="o">+=</span> <span class="n">size</span>
+</div>
+<div class="viewcode-block" id="compileLBFGS.list2vect"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileLBFGS.list2vect">[docs]</a>  <span class="k">def</span> <span class="nf">list2vect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_list</span><span class="p">,</span> <span class="n">target_vec</span><span class="p">):</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">src_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sizes</span><span class="p">):</span>
+      <span class="n">target_vec</span><span class="p">[</span><span class="n">pos</span><span class="p">:</span><span class="n">pos</span> <span class="o">+</span> <span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+      <span class="n">pos</span> <span class="o">+=</span> <span class="n">size</span>
+</div>
+<div class="viewcode-block" id="compileLBFGS.loss_and_grad"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.optimizer.compileLBFGS.loss_and_grad">[docs]</a>  <span class="k">def</span> <span class="nf">loss_and_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_vect_new</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+      <span class="sd">&quot;&quot;&quot; internal use, updates self.params&quot;&quot;&quot;</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">vec2list</span><span class="p">(</span><span class="n">params_vect_new</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_values</span><span class="p">)</span> <span class="c"># Update param values in list and then on GPU</span>
+      <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_values</span><span class="p">):</span>
+          <span class="n">p</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+      <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_and_grad</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+      <span class="n">loss</span><span class="p">,</span> <span class="n">grads</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">ret</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grads</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+          <span class="n">grads</span> <span class="o">=</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+      <span class="bp">self</span><span class="o">.</span><span class="n">list2vect</span><span class="p">(</span><span class="n">grads</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gradients_vec</span><span class="p">)</span>
+      <span class="n">grad_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gradients_vec</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&quot;float64&quot;</span><span class="p">)</span>
+
+      <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+          <span class="k">print</span> <span class="s">&quot;loss_and_grad:: x_min,max =&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>\
+          <span class="s">&quot;y_min,max =&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+          <span class="k">print</span> <span class="s">&quot;loss_and_grad (av(g) =&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">grad_vec</span><span class="p">),</span><span class="s">&quot;, av(abs(g)) =&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">grad_vec</span><span class="p">)),</span><span class="s">&quot;)&quot;</span>
+
+      <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">grad_vec</span>
+
+</div>
+  <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform an update step</span>
+
+<span class="sd">    [data, labels(, *aux)] --&gt; [loss, loss_instance]</span>
+<span class="sd">    loss_instance is the loss per instance (e.g. batch-item or pixel)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">lbfgs-&gt;optimize::&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;__optimize:: x_min,max =&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="s">&quot;y_min,max =&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">list2vect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params_values</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_vec</span><span class="p">)</span>
+
+    <span class="n">params</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">info_dict</span> <span class="o">=</span> <span class="n">fmin_l_bfgs_b</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss_and_grad</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params_vec</span><span class="p">,</span>
+                                             <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer_params</span><span class="p">)</span>
+    <span class="n">aborted</span> <span class="o">=</span> <span class="n">info_dict</span><span class="p">[</span><span class="s">&quot;warnflag&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">aborted</span><span class="p">:</span>
+      <span class="k">print</span> <span class="n">info_dict</span>
+      <span class="k">print</span> <span class="s">&quot;L-BFGS aborted!&quot;</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

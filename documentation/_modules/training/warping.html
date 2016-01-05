@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,17 +68,15 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for training.warping</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
-
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -109,7 +104,7 @@
      <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">cwd</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="timeit"><a class="viewcode-back" href="../../_Training.html#training.warping.timeit">[docs]</a><span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="timeit"><a class="viewcode-back" href="../../out2/Training.html#training.warping.timeit">[docs]</a><span class="k">def</span> <span class="nf">timeit</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">decorated</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">n</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
@@ -126,7 +121,7 @@
   
   
 <span class="c">#@timeit  </span></div>
-<div class="viewcode-block" id="warp2dFast"><a class="viewcode-back" href="../../_Training.html#training.warping.warp2dFast">[docs]</a><span class="k">def</span> <span class="nf">warp2dFast</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>  
+<div class="viewcode-block" id="warp2dFast"><a class="viewcode-back" href="../../out2/Training.html#training.warping.warp2dFast">[docs]</a><span class="k">def</span> <span class="nf">warp2dFast</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">)):</span>  
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Create warped mapping for a spatial 2D input image.</span>
 <span class="sd">  The transformation is done w.r.t to the *center* of the image.</span>
@@ -214,7 +209,7 @@
   <span class="k">return</span> <span class="n">out_arr</span>
 
 
-<div class="viewcode-block" id="warp2dJoint"><a class="viewcode-back" href="../../_Training.html#training.warping.warp2dJoint">[docs]</a><span class="k">def</span> <span class="nf">warp2dJoint</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">):</span>
+<div class="viewcode-block" id="warp2dJoint"><a class="viewcode-back" href="../../out2/Training.html#training.warping.warp2dJoint">[docs]</a><span class="k">def</span> <span class="nf">warp2dJoint</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</span>
 <span class="sd">  </span>
@@ -222,7 +217,7 @@
 <span class="sd">  ----------</span>
 <span class="sd">  </span>
 <span class="sd">  img: array</span>
-<span class="sd">    Imgage data</span>
+<span class="sd">    Image data</span>
 <span class="sd">    The array must be 3-dimensional (ch,x,y) and larger/equal the patch size</span>
 <span class="sd">  lab: array</span>
 <span class="sd">    Label data (with offsets subtracted)</span>
@@ -260,7 +255,7 @@
   
 
 <span class="c">#@timeit  </span></div>
-<div class="viewcode-block" id="warp3dFast"><a class="viewcode-back" href="../../_Training.html#training.warping.warp3dFast">[docs]</a><span class="k">def</span> <span class="nf">warp3dFast</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="warp3dFast"><a class="viewcode-back" href="../../out2/Training.html#training.warping.warp3dFast">[docs]</a><span class="k">def</span> <span class="nf">warp3dFast</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Create warped mapping for a spatial 3D input image.</span>
 <span class="sd">  The transformation is done w.r.t to the *center* of the image.</span>
@@ -357,7 +352,7 @@
   <span class="k">return</span> <span class="n">out_arr</span>
 
 
-<div class="viewcode-block" id="warp3dJoint"><a class="viewcode-back" href="../../_Training.html#training.warping.warp3dJoint">[docs]</a><span class="k">def</span> <span class="nf">warp3dJoint</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="warp3dJoint"><a class="viewcode-back" href="../../out2/Training.html#training.warping.warp3dJoint">[docs]</a><span class="k">def</span> <span class="nf">warp3dJoint</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</span>
 <span class="sd">  </span>
@@ -388,7 +383,7 @@
 <span class="sd">    - Y stretching depending on Z</span>
 <span class="sd">    </span>
 <span class="sd">  twist: float</span>
-<span class="sd">    Dependence of the roation angle on z in deg from center to outer border  </span>
+<span class="sd">    Dependence of the rotation angle on z in deg from center to outer border</span>
 <span class="sd">  </span>
 <span class="sd">  Returns</span>
 <span class="sd">  -------</span>
@@ -438,7 +433,7 @@
   
 <span class="c">##############################################################################################################  </span>
 </div>
-<div class="viewcode-block" id="getCornerIx"><a class="viewcode-back" href="../../_Training.html#training.warping.getCornerIx">[docs]</a><span class="k">def</span> <span class="nf">getCornerIx</span><span class="p">(</span><span class="n">sh</span><span class="p">):</span>
+<div class="viewcode-block" id="getCornerIx"><a class="viewcode-back" href="../../out2/Training.html#training.warping.getCornerIx">[docs]</a><span class="k">def</span> <span class="nf">getCornerIx</span><span class="p">(</span><span class="n">sh</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;Returns array-indices of corner elements for n-dim shape&quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="nf">getGrayCode</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n_dim</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">n</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
@@ -531,9 +526,9 @@
   
   <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
   
-<div class="viewcode-block" id="getRequiredPatchSize"><a class="viewcode-back" href="../../_Training.html#training.warping.getRequiredPatchSize">[docs]</a><span class="k">def</span> <span class="nf">getRequiredPatchSize</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="getRequiredPatchSize"><a class="viewcode-back" href="../../out2/Training.html#training.warping.getRequiredPatchSize">[docs]</a><span class="k">def</span> <span class="nf">getRequiredPatchSize</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Given desired patchsize and warping parameters:</span>
+<span class="sd">  Given desired patch size and warping parameters:</span>
 <span class="sd">  return required size for warping input patch</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="n">patch_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">patch_size</span><span class="p">)</span>
@@ -552,7 +547,7 @@
   
   <span class="k">return</span> <span class="n">req_size</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">eff_size</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">left_exc</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
   </div>
-<div class="viewcode-block" id="getWarpParams"><a class="viewcode-back" href="../../_Training.html#training.warping.getWarpParams">[docs]</a><span class="k">def</span> <span class="nf">getWarpParams</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<div class="viewcode-block" id="getWarpParams"><a class="viewcode-back" href="../../out2/Training.html#training.warping.getWarpParams">[docs]</a><span class="k">def</span> <span class="nf">getWarpParams</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  To be called from CNNData. Get warping parameters + required warping input patch size.</span>
 <span class="sd">  &quot;&quot;&quot;</span>
@@ -581,7 +576,7 @@
   <span class="k">return</span> <span class="n">req_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span>
 
 </div>
-<div class="viewcode-block" id="test"><a class="viewcode-back" href="../../_Training.html#training.warping.test">[docs]</a><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
+<div class="viewcode-block" id="test"><a class="viewcode-back" href="../../out2/Training.html#training.warping.test">[docs]</a><span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
   <span class="k">try</span><span class="p">:</span>
     <span class="n">img_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span>
     <span class="n">img_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">img_s</span><span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">img_s</span><span class="p">[</span><span class="bp">None</span><span class="p">])),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -739,7 +734,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -748,16 +743,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

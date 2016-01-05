@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,17 +68,15 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for net.convlayer3d</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
-
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -91,9 +86,13 @@
 
 <span class="kn">import</span> <span class="nn">pooling</span>
 <span class="kn">from</span> <span class="nn">netutils</span> <span class="kn">import</span> <span class="n">initWeights</span>
+<span class="k">try</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">malis.malisop</span> <span class="kn">import</span> <span class="n">malis_weights</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="n">malis_weights</span> <span class="o">=</span> <span class="bp">None</span>
 
 
-<div class="viewcode-block" id="getOutputShape"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.getOutputShape">[docs]</a><span class="k">def</span> <span class="nf">getOutputShape</span><span class="p">(</span><span class="n">insh</span><span class="p">,</span> <span class="n">fsh</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">mfp</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="getOutputShape"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.getOutputShape">[docs]</a><span class="k">def</span> <span class="nf">getOutputShape</span><span class="p">(</span><span class="n">insh</span><span class="p">,</span> <span class="n">fsh</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">mfp</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Returns shape of convolution result from (bs, z, ch, x, y) * (nof, z, ch, xf, yf)</span>
 <span class="sd">  &quot;&quot;&quot;</span>
@@ -108,7 +107,7 @@
   <span class="k">return</span> <span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">ch</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="getProbShape"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.getProbShape">[docs]</a><span class="k">def</span> <span class="nf">getProbShape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">):</span>
+<div class="viewcode-block" id="getProbShape"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.getProbShape">[docs]</a><span class="k">def</span> <span class="nf">getProbShape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Given outputshape (bs, z, ch, x, y) and mfp_stride (sx, sy) returns shape of Class Prob output</span>
 <span class="sd">  &quot;&quot;&quot;</span>
@@ -125,7 +124,7 @@
             <span class="n">output_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">*</span><span class="n">mfp_strides</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> 
 
 </div>
-<div class="viewcode-block" id="ConvLayer3d"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d">[docs]</a><span class="k">class</span> <span class="nc">ConvLayer3d</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ConvLayer3d"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d">[docs]</a><span class="k">class</span> <span class="nc">ConvLayer3d</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Conv-Pool Layer of a CNN</span>
 
@@ -178,12 +177,12 @@
 <span class="sd">  </span>
 <span class="sd">  :type pooling_mode: str</span>
 <span class="sd">  :param pooling_mode: &#39;max&#39; or &#39;maxabs&#39; where the first is normal maxpooling and the second also retains</span>
-<span class="sd">  sign of large negative values</span>
+<span class="sd">                       sign of large negative values</span>
 
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span>
                <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">reshape_output</span><span class="p">,</span> <span class="n">mfp_offsets</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">,</span>
-               <span class="n">input_layer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pooling_mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">):</span>
+               <span class="n">input_layer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pooling_mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
 
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">)</span><span class="o">==</span><span class="mi">5</span>
     <span class="k">assert</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -241,7 +240,7 @@
     <span class="c"># convolve input feature maps with filters</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">compile</span><span class="o">.</span><span class="n">get_default_mode</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">conv_out</span> <span class="o">=</span> <span class="n">conv3d</span><span class="p">(</span><span class="n">signals</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span> <span class="n">filters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="n">border_mode</span> <span class="o">=</span> <span class="s">&#39;valid&#39;</span><span class="p">,</span>
-        <span class="n">filters_shape</span><span class="o">=</span><span class="n">filter_shape</span><span class="p">,</span> <span class="n">signals_shape</span><span class="o">=</span><span class="n">input_shape</span> <span class="k">if</span> <span class="n">input_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">filters_shape</span><span class="o">=</span><span class="n">filter_shape</span><span class="p">)</span> <span class="c">#, signals_shape=input_shape if input_shape[0] is not None else None)</span>
 
     <span class="c"># down-sample each feature map individually, using maxpooling</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">pool</span><span class="o">!=</span><span class="mi">1</span><span class="p">):</span>
@@ -294,22 +293,35 @@
     <span class="k">print</span> <span class="s">&quot;Output=&quot;</span><span class="p">,</span><span class="n">output_shape</span><span class="p">,</span> <span class="s">&quot;Dropout&quot;</span><span class="p">,(</span><span class="s">&quot;ON,&quot;</span> <span class="k">if</span> <span class="n">enable_dropout</span> <span class="k">else</span> <span class="s">&quot;OFF,&quot;</span><span class="p">),</span><span class="s">&quot;Act:&quot;</span><span class="p">,</span><span class="n">activation_func</span><span class="p">,</span><span class="s">&quot;pool:&quot;</span><span class="p">,</span><span class="n">pooling_mode</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">=</span> <span class="n">output_shape</span> <span class="c"># e.g. (None, 16, 100, 100)</span>
 
-    <span class="n">sh</span> <span class="o">=</span> <span class="n">lin_output</span><span class="o">.</span><span class="n">shape</span> <span class="c">#(bs,x,ch,y,z)  # use this shape to reshape the output to image-shape after softmax</span>
-    <span class="n">sh</span> <span class="o">=</span> <span class="p">(</span><span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="c">#(ch, x, y, bs)</span>
-    <span class="c">#  put spatial, at back --&gt; (ch,bs,x,y,z), flatten this --&gt; (ch, bs*x*y*z), swap labels --&gt; (bs*x*y*z, ch)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span> <span class="n">lin_output</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="p">)</span>
-    <span class="k">if</span> <span class="n">reshape_output</span><span class="p">:</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">reshapeoutput</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
-      <span class="k">if</span> <span class="n">use_fragment_pooling</span><span class="p">:</span>     
-        <span class="bp">self</span><span class="o">.</span><span class="n">fragmentstodense</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">affinity</span><span class="p">:</span>
+      <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Dont use this code&quot;</span><span class="p">)</span>
+<span class="c">#      self.class_probabilities = T.nnet.sigmoid(lin_output) # (bs, z, 3, x, y)</span>
+<span class="c">#      self.class_probabilities = self.class_probabilities.dimshuffle((0,2,1,3,4))</span>
+<span class="c">#      sh = lin_output.shape</span>
+<span class="c">#      if use_fragment_pooling:     </span>
+<span class="c">#        self.fragmentstodense(sh) # works on</span>
+<span class="c">#</span>
+<span class="c">#      self.prob_shape = getProbShape(output_shape, self.mfp_strides)</span>
+<span class="c">#      self.class_prediction = T.gt(self.class_probabilities, 0.5)</span>
+<span class="c">#      # self.class_probabilities = (bs,3,z,x,y)</span>
+      
+    <span class="k">else</span><span class="p">:</span> 
+      <span class="n">sh</span> <span class="o">=</span> <span class="n">lin_output</span><span class="o">.</span><span class="n">shape</span> <span class="c">#(bs,x,ch,y,z)  # use this shape to reshape the output to image-shape after softmax</span>
+      <span class="n">sh</span> <span class="o">=</span> <span class="p">(</span><span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span> <span class="c">#(ch, x, y, bs)</span>
+      <span class="c">#  put spatial, at back --&gt; (ch,bs,x,y,z), flatten this --&gt; (ch, bs*x*y*z), swap labels --&gt; (bs*x*y*z, ch)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span> <span class="n">lin_output</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span> <span class="p">)</span>
+      <span class="k">if</span> <span class="n">reshape_output</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reshapeoutput</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">use_fragment_pooling</span><span class="p">:</span>     
+          <span class="bp">self</span><span class="o">.</span><span class="n">fragmentstodense</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
+  
+        <span class="bp">self</span><span class="o">.</span><span class="n">prob_shape</span> <span class="o">=</span> <span class="n">getProbShape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mfp_strides</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Class Prob Output =&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">prob_shape</span>
+      <span class="c"># compute prediction as class whose &quot;probability&quot; is maximal in symbolic form</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-      <span class="bp">self</span><span class="o">.</span><span class="n">prob_shape</span> <span class="o">=</span> <span class="n">getProbShape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mfp_strides</span><span class="p">)</span>
-      <span class="k">print</span> <span class="s">&quot;Class Prob Output =&quot;</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">prob_shape</span>
-    <span class="c"># compute prediction as class whose &quot;probability&quot; is maximal in symbolic form</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="ConvLayer3d.fragmentpool"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.fragmentpool">[docs]</a>  <span class="k">def</span> <span class="nf">fragmentpool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conv_out</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">offsets</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">pool_func</span><span class="p">):</span>
+<div class="viewcode-block" id="ConvLayer3d.fragmentpool"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.fragmentpool">[docs]</a>  <span class="k">def</span> <span class="nf">fragmentpool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conv_out</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">offsets</span><span class="p">,</span> <span class="n">strides</span><span class="p">,</span> <span class="n">pool_func</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">offsets_new</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">offsets</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -343,7 +355,7 @@
     <span class="k">return</span> <span class="n">result</span><span class="p">,</span> <span class="n">offsets_new</span><span class="p">,</span> <span class="n">strides</span>
 
 </div>
-<div class="viewcode-block" id="ConvLayer3d.fragmentstodense"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.fragmentstodense">[docs]</a>  <span class="k">def</span> <span class="nf">fragmentstodense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">):</span>
+<div class="viewcode-block" id="ConvLayer3d.fragmentstodense"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.fragmentstodense">[docs]</a>  <span class="k">def</span> <span class="nf">fragmentstodense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">):</span>
     <span class="n">mfp_strides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mfp_strides</span>
     <span class="n">example_stride</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">mfp_strides</span><span class="p">)</span> <span class="c"># This stride is conceptually unneeded but theano-grad fails otherwise</span>
     <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
@@ -355,13 +367,13 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">embedding</span>
 
 </div>
-<div class="viewcode-block" id="ConvLayer3d.reshapeoutput"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.reshapeoutput">[docs]</a>  <span class="k">def</span> <span class="nf">reshapeoutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">):</span>
+<div class="viewcode-block" id="ConvLayer3d.reshapeoutput"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.reshapeoutput">[docs]</a>  <span class="k">def</span> <span class="nf">reshapeoutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">):</span>
     <span class="c"># same shape as result, no significant time cost</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 
 </div>
-<div class="viewcode-block" id="ConvLayer3d.randomizeWeights"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">):</span>    
+<div class="viewcode-block" id="ConvLayer3d.randomizeWeights"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;uni&#39;</span><span class="p">):</span>    
     <span class="n">n_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;relu&#39;</span><span class="p">:</span>
       <span class="n">norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
@@ -377,7 +389,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">b_values</span><span class="p">)</span>
     
 </div>
-<div class="viewcode-block" id="ConvLayer3d.NLL"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.NLL">[docs]</a>  <span class="k">def</span> <span class="nf">NLL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+<div class="viewcode-block" id="ConvLayer3d.NLL"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.NLL">[docs]</a>  <span class="k">def</span> <span class="nf">NLL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
           <span class="n">mask_class_not_present</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns the symbolic mean and instance-wise negative log-likelihood of the prediction</span>
@@ -392,7 +404,7 @@
 <span class="sd">      ``w &gt; 1.0`` (more important class)</span>
 
 <span class="sd">    example_weights: theano.tensor.TensorType</span>
-<span class="sd">      weight vector of float32 of shape ``(bs, z, x, y) that can give the indvidual examples (i.e. labels for</span>
+<span class="sd">      weight vector of float32 of shape ``(bs, z, x, y) that can give the individual examples (i.e. labels for</span>
 <span class="sd">      output pixels) different weights. Values: ``1.0`` (default), ``w &lt; 1.0`` (less important),</span>
 <span class="sd">      ``w &gt; 1.0`` (more important example). Note: if this is not normalised/bounded it may result in a</span>
 <span class="sd">      effectively modified learning rate!</span>
@@ -434,7 +446,7 @@
 <span class="sd">      background class, if the background is marked as unlabelled (i.e. then those labels are ignored).</span>
 <span class="sd">    </span>
 <span class="sd">    - Only part of the cube is densely labelled. Set ``mask_class_labeled[:]=1`` for all classes, but set the</span>
-<span class="sd">      label values in the unlablleled part to ``-1`` to ignore this part.</span>
+<span class="sd">      label values in the unlabelled part to ``-1`` to ignore this part.</span>
 <span class="sd">    </span>
 <span class="sd">    - Only a particular class ``k`` is labelled in the cube. Either set all other label pixels to ``-1`` or the</span>
 <span class="sd">      corresponding flags in ``mask_class_labeled`` for the unlabelled classes.</span>
@@ -504,7 +516,7 @@
     <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll</span>
 
 </div>
-<div class="viewcode-block" id="ConvLayer3d.NLL_weak"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.NLL_weak">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_weak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_not_present</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+<div class="viewcode-block" id="ConvLayer3d.NLL_weak"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.NLL_weak">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_weak</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_not_present</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
           <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    NLL that mixes the current cnn output and the hard labels as target</span>
@@ -535,9 +547,29 @@
     <span class="n">nll</span>      <span class="o">=</span> <span class="p">(</span><span class="n">nll_inst_up</span> <span class="o">+</span> <span class="n">nll_inst_dn</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">N_total</span>
 
     <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll</span>
+</div>
+<div class="viewcode-block" id="ConvLayer3d.NLL_affinity"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.NLL_affinity">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_affinity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_not_present</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+          <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pred</span>            <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span>    <span class="c"># predictive (bs,3,z,x,y)</span>
+    <span class="n">y</span>               <span class="o">=</span> <span class="n">y</span>  <span class="c"># the labels  (bs, 3, z, x, y) </span>
+  
+    <span class="k">if</span> <span class="n">class_weights</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">class_weights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+
+    <span class="c">#nll = -(y * T.log(pred) * class_weights[1] + (1.0 - y) * T.log(1.0 - pred)) * class_weights[0]</span>
+    <span class="n">nll</span> <span class="o">=</span> <span class="o">-</span> <span class="n">T</span><span class="o">.</span><span class="n">xlogx</span><span class="o">.</span><span class="n">xlogy0</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">pred</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span> <span class="o">*</span> <span class="n">class_weights</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">T</span><span class="o">.</span><span class="n">xlogx</span><span class="o">.</span><span class="n">xlogy0</span><span class="p">((</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">y</span><span class="p">),(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">pred</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">))</span> <span class="o">*</span> <span class="n">class_weights</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">nll_inst</span> <span class="o">=</span> <span class="n">nll</span>
+    <span class="n">nll</span> <span class="o">=</span> <span class="n">nll</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll_inst</span>
+
 
 </div>
-<div class="viewcode-block" id="ConvLayer3d.squared_distance"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.squared_distance">[docs]</a>  <span class="k">def</span> <span class="nf">squared_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="ConvLayer3d.squared_distance"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.squared_distance">[docs]</a>  <span class="k">def</span> <span class="nf">squared_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns squared distance between prediction and ``y``</span>
 
@@ -548,7 +580,7 @@
     <span class="k">return</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="ConvLayer3d.errors"><a class="viewcode-back" href="../../_Net.html#net.convlayer3d.ConvLayer3d.errors">[docs]</a>  <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<div class="viewcode-block" id="ConvLayer3d.errors"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.ConvLayer3d.errors">[docs]</a>  <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns classification accuracy</span>
 
@@ -567,7 +599,155 @@
         <span class="k">print</span> <span class="s">&quot;something went wrong&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 
-</div></div>
+
+    
+    </div></div>
+<div class="viewcode-block" id="AffinityLayer3d"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.AffinityLayer3d">[docs]</a><span class="k">class</span> <span class="nc">AffinityLayer3d</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span>
+               <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">reshape_output</span><span class="p">,</span> <span class="n">mfp_offsets</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">,</span>
+               <span class="n">input_layer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pooling_mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">):</span>
+                 
+    <span class="n">W_values1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;normal&#39;</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">),</span>
+                                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="n">W_values2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;normal&#39;</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">),</span>
+                                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+    <span class="n">W_values3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">(</span><span class="n">filter_shape</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;glorot&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;normal&#39;</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">),</span>
+                                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                                
+    <span class="n">W_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">W_values1</span><span class="p">,</span> <span class="n">W_values2</span><span class="p">,</span> <span class="n">W_values3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>                           
+    <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">W_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;W_conv&#39;</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    
+
+    <span class="c"># the bias is a 1D tensor -- one bias per output feature map</span>
+    <span class="k">if</span> <span class="n">activation_func</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;ReLU&#39;</span><span class="p">,</span> <span class="s">&#39;relu&#39;</span><span class="p">]:</span>
+      <span class="n">norm</span> <span class="o">=</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span><span class="n">filter_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="c"># </span>
+      <span class="n">b_values</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">filter_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span> <span class="o">/</span> <span class="n">norm</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+      <span class="n">n_out</span> <span class="o">=</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="k">if</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;relu&#39;</span> <span class="ow">or</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;ReLU&#39;</span><span class="p">:</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="o">/</span><span class="n">norm</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;const&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+      <span class="k">elif</span> <span class="n">activation_func</span><span class="o">==</span><span class="s">&#39;sigmoid&#39;</span><span class="p">:</span>
+        <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;const&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span> <span class="c"># activation_func==&#39;tanh&#39;:</span>
+        <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">initWeights</span><span class="p">((</span><span class="n">n_out</span><span class="p">,),</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;fix-uni&#39;</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span> 
+      
+      <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">b_values</span><span class="p">,</span> <span class="n">b_values</span><span class="p">,</span> <span class="n">b_values</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">b_values</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;b_conv&#39;</span><span class="p">)</span> 
+                
+    <span class="n">N</span> <span class="o">=</span> <span class="n">filter_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>     
+            
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">ConvLayer3d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span>
+                 <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">reshape_output</span><span class="p">,</span> <span class="n">mfp_offsets</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">,</span>
+                 <span class="n">affinity</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">])</span>             
+    <span class="n">l2</span> <span class="o">=</span> <span class="n">ConvLayer3d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span>
+                 <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">reshape_output</span><span class="p">,</span> <span class="n">mfp_offsets</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">,</span>
+                 <span class="n">affinity</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">N</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="n">N</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">])</span>
+    <span class="n">l3</span> <span class="o">=</span> <span class="n">ConvLayer3d</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span>
+                 <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">reshape_output</span><span class="p">,</span> <span class="n">mfp_offsets</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">,</span>
+                 <span class="n">affinity</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">:</span><span class="mi">3</span><span class="o">*</span><span class="n">N</span><span class="p">],</span> <span class="n">b</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">N</span><span class="p">:</span><span class="mi">3</span><span class="o">*</span><span class="n">N</span><span class="p">])</span>
+                 
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mfp_strides</span>       <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">mfp_strides</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">mfp_offsets</span>       <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">mfp_offsets</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">pool</span>              <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">pool</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span>      <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">l1</span><span class="o">.</span><span class="n">output_shape</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prob_shape</span>        <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">l1</span><span class="o">.</span><span class="n">prob_shape</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">prob_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>     <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span>          <span class="o">=</span> <span class="n">l1</span><span class="o">.</span><span class="n">activation_func</span>
+    
+    
+    <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">l1</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">,</span> <span class="n">l2</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">,</span> <span class="n">l3</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">l1</span><span class="o">.</span><span class="n">class_prediction</span><span class="p">,</span> <span class="n">l2</span><span class="o">.</span><span class="n">class_prediction</span><span class="p">,</span> <span class="n">l3</span><span class="o">.</span><span class="n">class_prediction</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="bp">self</span><span class="o">.</span><span class="n">l1</span> <span class="o">=</span> <span class="n">l1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l2</span> <span class="o">=</span> <span class="n">l2</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">l3</span> <span class="o">=</span> <span class="n">l3</span>
+    
+<div class="viewcode-block" id="AffinityLayer3d.NLL_affinity"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.AffinityLayer3d.NLL_affinity">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_affinity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">class_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">example_weights</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+          <span class="n">mask_class_not_present</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            
+    <span class="n">nll1</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span><span class="o">.</span><span class="n">NLL</span><span class="p">(</span><span class="n">y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">class_weights</span><span class="p">,</span> <span class="n">example_weights</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="p">,</span>
+          <span class="n">mask_class_not_present</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="p">)</span>
+    <span class="n">nll2</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span><span class="o">.</span><span class="n">NLL</span><span class="p">(</span><span class="n">y</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">class_weights</span><span class="p">,</span> <span class="n">example_weights</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="p">,</span>
+          <span class="n">mask_class_not_present</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="p">)</span>
+    <span class="n">nll3</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l3</span><span class="o">.</span><span class="n">NLL</span><span class="p">(</span><span class="n">y</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span> <span class="n">class_weights</span><span class="p">,</span> <span class="n">example_weights</span><span class="p">,</span> <span class="n">mask_class_labeled</span><span class="p">,</span>
+          <span class="n">mask_class_not_present</span><span class="p">,</span> <span class="n">label_prop_thresh</span><span class="p">)</span>
+          
+    <span class="n">nll</span> <span class="o">=</span>  <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">nll1</span><span class="p">,</span> <span class="n">nll2</span><span class="p">,</span> <span class="n">nll3</span><span class="p">]))</span>
+    
+    <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll</span>
+    </div>
+<div class="viewcode-block" id="AffinityLayer3d.errors"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.AffinityLayer3d.errors">[docs]</a>  <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">err1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span><span class="o">.</span><span class="n">errors</span><span class="p">(</span><span class="n">y</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">err2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span><span class="o">.</span><span class="n">errors</span><span class="p">(</span><span class="n">y</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">err3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l3</span><span class="o">.</span><span class="n">errors</span><span class="p">(</span><span class="n">y</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">err</span> <span class="o">=</span>  <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">err1</span><span class="p">,</span> <span class="n">err2</span><span class="p">,</span> <span class="n">err3</span><span class="p">]))</span>
+    
+    <span class="k">return</span> <span class="n">err</span>
+  </div></div>
+<div class="viewcode-block" id="MalisLayer"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.MalisLayer">[docs]</a><span class="k">class</span> <span class="nc">MalisLayer</span><span class="p">(</span><span class="n">AffinityLayer3d</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span>
+               <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">reshape_output</span><span class="p">,</span> <span class="n">mfp_offsets</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">,</span>
+               <span class="n">input_layer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pooling_mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">):</span>             
+                 
+     <span class="nb">super</span><span class="p">(</span><span class="n">MalisLayer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span>
+               <span class="n">enable_dropout</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">reshape_output</span><span class="p">,</span> <span class="n">mfp_offsets</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">,</span>
+               <span class="n">input_layer</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">pooling_mode</span><span class="p">)</span>
+               
+<div class="viewcode-block" id="MalisLayer.NLL_Malis"><a class="viewcode-back" href="../../out2/Net.html#net.convlayer3d.MalisLayer.NLL_Malis">[docs]</a>  <span class="k">def</span> <span class="nf">NLL_Malis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aff_gt</span><span class="p">,</span> <span class="n">seg_gt</span><span class="p">,</span> <span class="n">unrestrict_neg</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    </span>
+<span class="sd">    aff_gt: 4d, (bs, #edges, x, y, z) int16</span>
+<span class="sd">    </span>
+<span class="sd">    seg_gt: (bs, x, y, z) int16</span>
+<span class="sd">    </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    </span>
+<span class="sd">    pos_count: for every edge number of pixel-pairs that should be connected by this edge</span>
+<span class="sd">               (excluding background/ECS pixels and only edges considered within the same object,</span>
+<span class="sd">               such that paths that go out from an object and back to the same object are irgnored)</span>
+<span class="sd">    neg_count: for every edge number of pixel-pairs that should be separated by this edge</span>
+<span class="sd">               (excluding background/ECS pixels and only edges considered between objects,</span>
+<span class="sd">               such that minimal edges inside an object are not consideres to play a role for separating objects)</span>
+<span class="sd">    unrestrict_neg: Bool</span>
+<span class="sd">                Use this to relax the restriction on neg_counts. The restriction</span>
+<span class="sd">                modifies the edge weights for before calculating the negative counts</span>
+<span class="sd">                as: ``edge_weights_neg = np.maximum(affinity_pred, affinity_gt)``</span>
+<span class="sd">                If unrestricted the predictions are used directly.              </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_class</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">affinity_pred</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">::</span><span class="n">n_class</span><span class="p">]</span> <span class="c"># prob.shape = (bs, 6, z,x,y) 6--&gt; edge1 neg, edge1 pos, edge2 neg...</span>
+    <span class="n">disconnect_pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">::</span><span class="n">n_class</span><span class="p">]</span>
+    <span class="n">neigh_pattern</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+    <span class="n">aff_gt</span> <span class="o">=</span> <span class="n">aff_gt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c"># strip batch dimension</span>
+    <span class="n">seg_gt</span> <span class="o">=</span> <span class="n">seg_gt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c"># strip batch dimension</span>
+    
+    <span class="n">pos_count</span><span class="p">,</span> <span class="n">neg_count</span> <span class="o">=</span> <span class="n">malis_weights</span><span class="p">(</span><span class="n">affinity_pred</span><span class="p">,</span> <span class="n">aff_gt</span><span class="p">,</span> <span class="n">seg_gt</span><span class="p">,</span> <span class="n">neigh_pattern</span><span class="p">,</span> <span class="n">unrestrict_neg</span><span class="p">)</span>
+   
+    <span class="n">n_pos</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pos_count</span><span class="p">)</span>
+    <span class="n">n_neg</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">neg_count</span><span class="p">)</span>
+    <span class="n">n_tot</span> <span class="o">=</span> <span class="n">n_pos</span> <span class="o">+</span> <span class="n">n_neg</span>    
+    
+    <span class="n">weighted_pos</span> <span class="o">=</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">xlogx</span><span class="o">.</span><span class="n">xlogy0</span><span class="p">(</span><span class="n">pos_count</span><span class="p">,</span> <span class="n">affinity_pred</span><span class="p">)</span> <span class="c"># drive up prediction for &quot;connected&quot; here</span>
+    <span class="n">weighted_neg</span> <span class="o">=</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">xlogx</span><span class="o">.</span><span class="n">xlogy0</span><span class="p">(</span><span class="n">neg_count</span><span class="p">,</span> <span class="n">disconnect_pred</span><span class="p">)</span> <span class="c"># drive up prediction for &quot;disconnected&quot; here    </span>
+    <span class="n">nll</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weighted_pos</span> <span class="o">+</span> <span class="n">weighted_neg</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_tot</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span>
+     
+    <span class="n">false_splits</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">(</span><span class="n">affinity_pred</span><span class="o">&lt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">pos_count</span><span class="p">)</span>
+    <span class="n">false_merges</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="p">(</span><span class="n">affinity_pred</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">neg_count</span><span class="p">)</span>
+    
+    <span class="n">rand_index</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">false_splits</span> <span class="o">+</span> <span class="n">false_merges</span><span class="p">,</span> <span class="s">&#39;float32&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_tot</span> <span class="o">+</span> <span class="mf">1e-6</span><span class="p">)</span>
+    
+    <span class="c"># eg 0.0   5187779 4578211 9765990 3439497477 7732598379 1143.9798583984375)</span>
+    <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">n_pos</span><span class="p">,</span> <span class="n">n_neg</span><span class="p">,</span> <span class="n">n_tot</span><span class="p">,</span> <span class="n">false_splits</span><span class="p">,</span> <span class="n">false_merges</span><span class="p">,</span> <span class="n">rand_index</span><span class="p">,</span> <span class="n">pos_count</span><span class="p">,</span> <span class="n">neg_count</span>  
+  
+  </div></div>
 <span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="k">pass</span>
     
@@ -578,7 +758,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -587,16 +767,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

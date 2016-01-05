@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,17 +68,15 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for training.traindata</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
-
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
@@ -95,20 +90,18 @@
 <span class="k">except</span><span class="p">:</span>
   <span class="n">sklearn_avail</span> <span class="o">=</span> <span class="bp">False</span>
 
-<span class="c">#if __package__ is None:</span>
-<span class="c">#  sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__) ) ) )</span>
   
 <span class="kn">import</span> <span class="nn">warping</span>
 <span class="kn">import</span> <span class="nn">trainutils</span> <span class="kn">as</span> <span class="nn">ut</span>
 
-<div class="viewcode-block" id="sort_human"><a class="viewcode-back" href="../../_Training.html#training.traindata.sort_human">[docs]</a><span class="k">def</span> <span class="nf">sort_human</span><span class="p">(</span><span class="n">file_names</span><span class="p">):</span>
+<div class="viewcode-block" id="sort_human"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.sort_human">[docs]</a><span class="k">def</span> <span class="nf">sort_human</span><span class="p">(</span><span class="n">file_names</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot; Sort the given list in the way that humans expect.&quot;&quot;&quot;</span>
   <span class="n">convert</span>      <span class="o">=</span> <span class="k">lambda</span> <span class="n">text</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()</span> <span class="k">else</span> <span class="n">text</span>
   <span class="n">alphanum_key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">key</span><span class="p">:</span> <span class="p">[</span> <span class="n">convert</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;([0-9]+)&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span> <span class="p">]</span>
   <span class="n">file_names</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">alphanum_key</span><span class="p">)</span>
    
 </div>
-<div class="viewcode-block" id="Data"><a class="viewcode-back" href="../../_Training.html#training.traindata.Data">[docs]</a><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Data"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.Data">[docs]</a><span class="k">class</span> <span class="nc">Data</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Load and prepare data, Base-Obj</span>
 <span class="sd">  &quot;&quot;&quot;</span>
@@ -151,7 +144,7 @@
     <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="Data.getbatch"><a class="viewcode-back" href="../../_Training.html#training.traindata.Data.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.getbatch"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.Data.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">source</span><span class="o">==</span><span class="s">&#39;train&#39;</span><span class="p">:</span>
       <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="o">+</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">+=</span> <span class="n">batch_size</span>
@@ -180,7 +173,7 @@
       <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="Data.createSplitPerm"><a class="viewcode-back" href="../../_Training.html#training.traindata.Data.createSplitPerm">[docs]</a>  <span class="k">def</span> <span class="nf">createSplitPerm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.createSplitPerm"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.Data.createSplitPerm">[docs]</a>  <span class="k">def</span> <span class="nf">createSplitPerm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())))</span>
     <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
       <span class="n">rng</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>   
@@ -188,7 +181,7 @@
     <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="n">subset_ratio</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">perm</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
     </div>
-<div class="viewcode-block" id="Data.createCVSplit"><a class="viewcode-back" href="../../_Training.html#training.traindata.Data.createCVSplit">[docs]</a>  <span class="k">def</span> <span class="nf">createCVSplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">use_fold</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.createCVSplit"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.Data.createCVSplit">[docs]</a>  <span class="k">def</span> <span class="nf">createCVSplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">use_fold</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">sklearn_avail</span><span class="p">:</span>
       <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Please install sklearn to create CV splits&quot;</span><span class="p">)</span>
       
@@ -200,7 +193,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">train_i</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="n">train_i</span><span class="p">]</span>
       </div>
-<div class="viewcode-block" id="Data.splitData"><a class="viewcode-back" href="../../_Training.html#training.traindata.Data.splitData">[docs]</a>  <span class="k">def</span> <span class="nf">splitData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">valid_size</span><span class="p">,</span> <span class="n">split_no</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.splitData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.Data.splitData">[docs]</a>  <span class="k">def</span> <span class="nf">splitData</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">valid_size</span><span class="p">,</span> <span class="n">split_no</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">rng</span>          <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">split_no</span><span class="p">)</span>
     <span class="n">perm</span>         <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">perm</span><span class="p">[:</span><span class="n">valid_size</span><span class="p">]]</span>
@@ -208,14 +201,14 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">valid_size</span><span class="p">:]]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">valid_size</span><span class="p">:]]</span>
     </div>
-<div class="viewcode-block" id="Data.makeExampleSubset"><a class="viewcode-back" href="../../_Training.html#training.traindata.Data.makeExampleSubset">[docs]</a>  <span class="k">def</span> <span class="nf">makeExampleSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.makeExampleSubset"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.Data.makeExampleSubset">[docs]</a>  <span class="k">def</span> <span class="nf">makeExampleSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">ix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createSplitPerm</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">),</span> <span class="n">subset_ratio</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_perm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
     </div>
-<div class="viewcode-block" id="Data.makeFeatureSubset"><a class="viewcode-back" href="../../_Training.html#training.traindata.Data.makeFeatureSubset">[docs]</a>  <span class="k">def</span> <span class="nf">makeFeatureSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.makeFeatureSubset"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.Data.makeFeatureSubset">[docs]</a>  <span class="k">def</span> <span class="nf">makeFeatureSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">ix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createSplitPerm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">subset_ratio</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">[:,</span><span class="n">ix</span><span class="p">]</span>  
     <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">[:,</span><span class="n">ix</span><span class="p">]</span>
@@ -225,12 +218,12 @@
 
 <span class="c">##############################################################################################################</span>
 </div></div>
-<div class="viewcode-block" id="BalancedData"><a class="viewcode-back" href="../../_Training.html#training.traindata.BalancedData">[docs]</a><span class="k">class</span> <span class="nc">BalancedData</span><span class="p">(</span><span class="n">Data</span><span class="p">)</span> <span class="p">:</span>
+<div class="viewcode-block" id="BalancedData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.BalancedData">[docs]</a><span class="k">class</span> <span class="nc">BalancedData</span><span class="p">(</span><span class="n">Data</span><span class="p">)</span> <span class="p">:</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
      <span class="nb">super</span><span class="p">(</span><span class="n">BalancedData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
      <span class="bp">self</span><span class="o">.</span><span class="n">_splitted</span> <span class="o">=</span> <span class="bp">False</span>
 
-<div class="viewcode-block" id="BalancedData.getbatch"><a class="viewcode-back" href="../../_Training.html#training.traindata.BalancedData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">,</span> <span class="n">balanced</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="BalancedData.getbatch"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.BalancedData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">,</span> <span class="n">balanced</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">balanced</span><span class="p">:</span>
       <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getbatch_balanced</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span> <span class="c"># only train</span>
     <span class="k">else</span><span class="p">:</span>
@@ -259,7 +252,7 @@
       <span class="nb">slice</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="nb">slice</span><span class="p">,</span> <span class="n">perm</span><span class="p">[:</span><span class="n">pos</span><span class="p">]))</span>
       <span class="k">return</span> <span class="nb">slice</span><span class="p">,</span> <span class="mi">0</span> <span class="c"># need to shuffle        </span>
 
-<div class="viewcode-block" id="BalancedData.getbatch_balanced"><a class="viewcode-back" href="../../_Training.html#training.traindata.BalancedData.getbatch_balanced">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch_balanced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+<div class="viewcode-block" id="BalancedData.getbatch_balanced"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.BalancedData.getbatch_balanced">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch_balanced</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_splitted</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_init_balanced</span><span class="p">()</span>
     <span class="n">data</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
@@ -282,7 +275,7 @@
       
 <span class="c">##############################################################################################################</span>
       </div></div>
-<div class="viewcode-block" id="QueueData"><a class="viewcode-back" href="../../_Training.html#training.traindata.QueueData">[docs]</a><span class="k">class</span> <span class="nc">QueueData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
+<div class="viewcode-block" id="QueueData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.QueueData">[docs]</a><span class="k">class</span> <span class="nc">QueueData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="nb">super</span><span class="p">(</span><span class="n">QueueData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
     <span class="c">### Queue stuff ###    </span>
@@ -292,7 +285,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">_queue_count</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span> <span class="c"># Initialise to one s.t. 1/count is possible</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span>   <span class="o">=</span> <span class="bp">None</span>    
     
-<div class="viewcode-block" id="QueueData.queueget"><a class="viewcode-back" href="../../_Training.html#training.traindata.QueueData.queueget">[docs]</a>  <span class="k">def</span> <span class="nf">queueget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="QueueData.queueget"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.QueueData.queueget">[docs]</a>  <span class="k">def</span> <span class="nf">queueget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">,</span> <span class="s">&quot;Update Priorities first before requesting new batch&quot;</span>
     <span class="nb">slice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue_ix</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="c"># indices of n highest elements</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="nb">slice</span>     <span class="c"># store for updates</span>
@@ -307,7 +300,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">_queue_count</span><span class="p">[</span><span class="nb">slice</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">ret</span>
 </div>
-<div class="viewcode-block" id="QueueData.queueupdate"><a class="viewcode-back" href="../../_Training.html#training.traindata.QueueData.queueupdate">[docs]</a>  <span class="k">def</span> <span class="nf">queueupdate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nlls</span><span class="p">,</span> <span class="n">iteration</span><span class="p">):</span>
+<div class="viewcode-block" id="QueueData.queueupdate"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.QueueData.queueupdate">[docs]</a>  <span class="k">def</span> <span class="nf">queueupdate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nlls</span><span class="p">,</span> <span class="n">iteration</span><span class="p">):</span>
     <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">nlls</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s">&quot;Cannot update, indices not known&quot;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_queue_prio</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">nlls</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mf">0.017</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_count</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span><span class="p">])</span> <span class="o">-</span> \
                                                           <span class="mf">0.004</span><span class="o">*</span><span class="p">(</span><span class="n">iteration</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue_last</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span><span class="p">])</span>
@@ -318,7 +311,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">_queue_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_prio</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c"># restore order, high prios first</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="bp">None</span>
 </div>
-<div class="viewcode-block" id="QueueData.queuereset"><a class="viewcode-back" href="../../_Training.html#training.traindata.QueueData.queuereset">[docs]</a>  <span class="k">def</span> <span class="nf">queuereset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="QueueData.queuereset"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.QueueData.queuereset">[docs]</a>  <span class="k">def</span> <span class="nf">queuereset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_queue_prio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_queue_ix</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_queue_count</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span> <span class="c"># Initialise to one s.t. 1/count is possible</span>
@@ -337,7 +330,7 @@
 <span class="c">#    self._queue_ix   = np.arange(self._training_count)</span>
 <span class="c">#    self._queue_count= np.ones(self._training_count) # Initialise to one s.t. 1/count is possible</span>
 
-<div class="viewcode-block" id="QueueData.save"><a class="viewcode-back" href="../../_Training.html#training.traindata.QueueData.save">[docs]</a>  <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&quot;data&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="QueueData.save"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.QueueData.save">[docs]</a>  <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&quot;data&quot;</span><span class="p">):</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
       <span class="n">cPickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_getdata</span><span class="p">(),</span> <span class="n">f</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -350,7 +343,7 @@
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="c">### Toy Data Sets ############################################################################################</span></div></div>
-<div class="viewcode-block" id="AdultData"><a class="viewcode-back" href="../../_Training.html#training.traindata.AdultData">[docs]</a><span class="k">class</span> <span class="nc">AdultData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
+<div class="viewcode-block" id="AdultData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.AdultData">[docs]</a><span class="k">class</span> <span class="nc">AdultData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;~/devel/data/adult.pkl&#39;</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">create</span><span class="p">:</span>
@@ -395,7 +388,7 @@
 
 <span class="c">##########################################################################################</span>
 </div>
-<div class="viewcode-block" id="MNISTData"><a class="viewcode-back" href="../../_Training.html#training.traindata.MNISTData">[docs]</a><span class="k">class</span> <span class="nc">MNISTData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
+<div class="viewcode-block" id="MNISTData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.MNISTData">[docs]</a><span class="k">class</span> <span class="nc">MNISTData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">convert2image</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">warp_on</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">shift_augment</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>  
     <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
       <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Path to MNIST data file must be given&quot;</span><span class="p">)</span>
@@ -426,7 +419,7 @@
       
     <span class="k">print</span> <span class="s">&quot;MNIST data is converted/augmented to shape&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span>
 
-<div class="viewcode-block" id="MNISTData.convert_to_image"><a class="viewcode-back" href="../../_Training.html#training.traindata.MNISTData.convert_to_image">[docs]</a>  <span class="k">def</span> <span class="nf">convert_to_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MNISTData.convert_to_image"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.MNISTData.convert_to_image">[docs]</a>  <span class="k">def</span> <span class="nf">convert_to_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;For MNIST / flattened 2d, single-layer, square images&quot;&quot;&quot;</span>
 
     <span class="n">valid_size</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_l</span><span class="o">.</span><span class="n">size</span>
@@ -441,7 +434,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">test_d</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">valid_size</span><span class="p">:</span><span class="n">valid_size</span><span class="o">+</span><span class="n">test_size</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">valid_size</span><span class="o">+</span><span class="n">test_size</span><span class="p">:]</span>
     </div>
-<div class="viewcode-block" id="MNISTData.getbatch"><a class="viewcode-back" href="../../_Training.html#training.traindata.MNISTData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="MNISTData.getbatch"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.MNISTData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">source</span><span class="o">==</span><span class="s">&#39;valid&#39;</span><span class="p">:</span>
       <span class="n">ret</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">MNISTData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="s">&#39;valid&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">source</span><span class="o">==</span><span class="s">&#39;test&#39;</span><span class="p">:</span>
@@ -499,7 +492,7 @@
     <span class="k">return</span> <span class="n">new_data</span><span class="p">,</span> <span class="n">new_label</span>
 
 </div>
-<div class="viewcode-block" id="BuzzData"><a class="viewcode-back" href="../../_Training.html#training.traindata.BuzzData">[docs]</a><span class="k">class</span> <span class="nc">BuzzData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
+<div class="viewcode-block" id="BuzzData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.BuzzData">[docs]</a><span class="k">class</span> <span class="nc">BuzzData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;~/devel/data/Buzz/Twitter/twitter.pkl&#39;</span><span class="p">,</span> <span class="n">norm_targets</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
                <span class="n">target_scale</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">fold_no</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>             
@@ -519,12 +512,12 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">n_taps</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="mi">1</span>
 
-<div class="viewcode-block" id="BuzzData.getbatch"><a class="viewcode-back" href="../../_Training.html#training.traindata.BuzzData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="BuzzData.getbatch"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.BuzzData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
       <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span>  <span class="nb">super</span><span class="p">(</span><span class="n">BuzzData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span>
       <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span><span class="bp">None</span><span class="p">]</span>
       <span class="k">return</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span>
 </div></div>
-<div class="viewcode-block" id="PianoData"><a class="viewcode-back" href="../../_Training.html#training.traindata.PianoData">[docs]</a><span class="k">class</span> <span class="nc">PianoData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
+<div class="viewcode-block" id="PianoData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.PianoData">[docs]</a><span class="k">class</span> <span class="nc">PianoData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;~/devel/data/PianoRoll/Nottingham_enc.pkl&#39;</span><span class="p">,</span> <span class="n">n_tap</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="mi">58</span><span class="p">):</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_d</span><span class="p">)</span>  <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">pickleLoad</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -534,7 +527,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="n">n_lab</span>
 
 
-<div class="viewcode-block" id="PianoData.getbatch"><a class="viewcode-back" href="../../_Training.html#training.traindata.PianoData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="PianoData.getbatch"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.PianoData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">source</span><span class="o">==</span><span class="s">&#39;train&#39;</span><span class="p">:</span>
       <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pos</span><span class="o">+</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">+=</span> <span class="n">batch_size</span>
@@ -558,7 +551,7 @@
     <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">d</span><span class="p">[</span><span class="n">t</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">n_taps</span><span class="p">]</span>                      <span class="k">for</span> <span class="n">d</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">start_t</span><span class="p">)])</span>
     <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
 </div></div>
-<div class="viewcode-block" id="GeneData"><a class="viewcode-back" href="../../_Training.html#training.traindata.GeneData">[docs]</a><span class="k">class</span> <span class="nc">GeneData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
+<div class="viewcode-block" id="GeneData"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.GeneData">[docs]</a><span class="k">class</span> <span class="nc">GeneData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;~/devel/data/GEMLeR_GeneExpression/Breast_Colon.pkl&#39;</span><span class="p">,</span> <span class="n">fold_no</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">pickleLoad</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>     
@@ -567,7 +560,7 @@
     <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="mi">1</span>
 
-<div class="viewcode-block" id="GeneData.getbatch"><a class="viewcode-back" href="../../_Training.html#training.traindata.GeneData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="GeneData.getbatch"><a class="viewcode-back" href="../../out2/Training.html#training.traindata.GeneData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">):</span>
       <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span>  <span class="nb">super</span><span class="p">(</span><span class="n">GeneData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span>
       <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span><span class="bp">None</span><span class="p">]</span>
       <span class="k">return</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span>
@@ -591,7 +584,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -600,16 +593,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

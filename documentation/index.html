@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="#" />
     <link rel="next" title="Getting Started" href="GettingStarted.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="#"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,16 +43,13 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="GettingStarted.html" title="Getting Started"
              accesskey="N">next</a> |</li>
-        <li><a href="#">ELEKTRONN</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">ELEKTRONN</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
@@ -65,12 +62,14 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="GettingStarted.html"
                         title="next chapter">Getting Started</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/index.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -89,55 +88,68 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="welcome-to-the-elektronn-documentation">
 <h1>Welcome to the ELEKTRONN documentation!<a class="headerlink" href="#welcome-to-the-elektronn-documentation" title="Permalink to this headline">¶</a></h1>
-<p>ELEKTRONN a is highly configurable toolkit for training 3d/2d CNNs and general Neural Networks. It is based on <a class="reference external" href="http://deeplearning.net/software/theano">theano</a> and therefore benefits from fast GPU implementations.
+<p>ELEKTRONN is a highly configurable toolkit for training 3D/2D CNNs and general Neural Networks. It is written in python and based on <a class="reference external" href="http://deeplearning.net/software/theano">theano</a> and therefore benefits from fast GPU implementations.
 This toolkit was created by Marius Killinger and Gregor Urban at the <a class="reference external" href="http://www.mpimf-heidelberg.mpg.de/en">Max Planck Institute For Medical Research</a> to solve connectomics tasks (see the <a class="reference external" href="???">paper</a>).</p>
-<p>The included training pipeline is designed for classification/localisation tasks on 3d/2d images. Besides this main use case, the toolkit offers solutions to various tasks on image and non-image data.</p>
+<p>The package includes a sophisticated training pipeline designed for classification/localisation tasks on 3D/2D images. Additionally the toolkit offers training routines for tasks on non-image data.</p>
 <p>The design goals of ELEKTRONN are twofold:</p>
 <blockquote>
 <div><ul class="simple">
-<li>We want to provide a modular toolkit that makes the configuration of fast CNNs, featuring the latest tweaks, accessible to researchers outside the world of machine learning. The ready-made training pipeline is an entry point on this <em>high-level</em> - users just need to pre-process their data in the right format.</li>
-<li>At the same time we want give people the opportunity to reuse the building blocks of the pipeline in a free manner to create their own customised Neural Networks. This <em>low-level</em> entry point is given by the strong OOP structure that allows flexible combinations of modules and easy code adaptations by subclassing or addition of new methods. In contrast, the built-in pipeline makes assumptions about useful configurations and thereby also restrictions. To leverage the full flexibility of ELEKTRONN modifying the pipeline is encouraged.</li>
+<li>We want to provide an entry point for researchers new to machine learning. Users just need to pre-process their data in the right format, and they can use our ready-made modular pipeline to configure fast CNNs featuring the latest techniques. There is no need for diving into any actual code.</li>
+<li>At the same time we want give people the flexibility to create their own Neural Networks by reusing and customising the building blocks of our implementation. To leverage the full flexibility of ELEKTRONN modifying the pipeline is encouraged.</li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="main-features">
 <h1>Main Features<a class="headerlink" href="#main-features" title="Permalink to this headline">¶</a></h1>
+<ul>
+<li><p class="first">Neural Network:</p>
 <ul class="simple">
-<li>Architecture:<ul>
-<li>2d &amp; 3d Convolution/Maxpooling layers (anisotropy supported)</li>
+<li>2D &amp; 3D Convolution/Maxpooling layers (anisotropy supported)</li>
 <li>Fully-connected Perceptron layers</li>
 <li>Basic recurrent layer</li>
 <li>Auto encoder</li>
 <li>Classification or regression outputs</li>
-<li>Max Fragment Pooling for rapid predictions</li>
-<li>Included helper function to design valid architectures</li>
-</ul>
-</li>
-<li>Meta-Parameters:<ul>
-<li>Common activations functions (relu, tanh, sigmoid, abs, linear, maxout)</li>
+<li>Common activation functions (relu, tanh, sigmoid, abs, linear, maxout)</li>
 <li>Dropout</li>
-<li>Input Noise</li>
+<li>Max Fragment Pooling for rapid predictions</li>
+<li>Helper function to design valid architectures</li>
 </ul>
 </li>
-<li>Optimisation:<ul>
+<li><p class="first">Optimisation:</p>
+<ul class="simple">
 <li>SGD+momentum, RPROP, Conjugate Gradient, l-BFGS</li>
 <li>Weight decay (L2-regularisation)</li>
 <li>Relative class weights for classification training</li>
-<li>generic optimiser API that allows easy integration of custom or scipy optimisation routines</li>
+<li>Generic optimiser API that allows easy integration of custom optimisation routines (e.g. from scipy)</li>
 </ul>
 </li>
-<li>Training Pipeline:<ul>
-<li>Fully automated pipeline</li>
-<li>Warp deformations and grey value augmentation (online augmentation in parallel processes)</li>
-<li>Training with (partially) lazy labelled data</li>
-<li>Command line during training and visualisation of training progress</li>
-<li>Many training parameters can be changed without need to abort training (e.g. optimizer meta-parameters)</li>
-<li>Functions for introspection (plotting of filters, histogramme of gradients etc.)</li>
-<li>Automatic preview predictions on images during training</li>
+<li><p class="first">Training Pipeline:</p>
+<ul>
+<li><p class="first">Fully automated pipeline</p>
+</li>
+<li><dl class="first docutils">
+<dt>The whole lot of data augmentation:</dt>
+<dd><ul class="first last simple">
+<li>Translation</li>
+<li>Flipping, transposing</li>
+<li>Continuous rotation</li>
+<li>Elastic deformations</li>
+<li>Histogram distortions</li>
+<li><em>All done online in background processes</em></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Training with lazy labelled data (partially labelled)</p>
+</li>
+<li><p class="first">Console interaction during training (allows e.g. to change optimiser meta-parameters)</p>
+</li>
+<li><p class="first">Visualisation of training progress (graphs and images of preview prediction)</p>
+</li>
 </ul>
 </li>
 </ul>
@@ -154,16 +166,16 @@ This toolkit was created by Marius Killinger and Gregor Urban at the <a class="r
 <li class="toctree-l1"><a class="reference internal" href="Lazy.html">Lazy Labels</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Prediction.html">Making Predictions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="NetCore.html">Tips for Adaptation and Extending</a></li>
-<li class="toctree-l1"><a class="reference internal" href="_modules.html">ELEKTRONN API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">ELEKTRONN API Documentation</a></li>
 </ul>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
 </ul>
 </div>
 
@@ -173,7 +185,7 @@ This toolkit was created by Marius Killinger and Gregor Urban at the <a class="r
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -183,17 +195,14 @@ This toolkit was created by Marius Killinger and Gregor Urban at the <a class="r
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="GettingStarted.html" title="Getting Started"
              >next</a> |</li>
-        <li><a href="#">ELEKTRONN</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">ELEKTRONN</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

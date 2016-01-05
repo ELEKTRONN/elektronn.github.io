@@ -1,0 +1,1551 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>elektronn.training package &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="index.html" />
+    <link rel="up" title="ELEKTRONN API Documentation" href="modules.html" />
+    <link rel="prev" title="elektronn.net package" href="elektronn.net.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="elektronn.net.html" title="elektronn.net package"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ELEKTRONN API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">elektronn.training package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.CNNData">elektronn.training.CNNData module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.config">elektronn.training.config module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.parallelisation">elektronn.training.parallelisation module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.predictor">elektronn.training.predictor module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.traindata">elektronn.training.traindata module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.trainer">elektronn.training.trainer module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.trainutils">elektronn.training.trainutils module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training.warping">elektronn.training.warping module</a></li>
+<li><a class="reference internal" href="#module-elektronn.training">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="elektronn.net.html"
+                        title="previous chapter">elektronn.net package</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/elektronn.training.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="elektronn-training-package">
+<span id="trainpack"></span><h1>elektronn.training package<a class="headerlink" href="#elektronn-training-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-elektronn.training.CNNData">
+<span id="elektronn-training-cnndata-module"></span><h2>elektronn.training.CNNData module<a class="headerlink" href="#module-elektronn.training.CNNData" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="elektronn.training.CNNData.plotTrainingTarget">
+<code class="descclassname">elektronn.training.CNNData.</code><code class="descname">plotTrainingTarget</code><span class="sig-paren">(</span><em>img</em>, <em>lab</em>, <em>stride=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/CNNData.html#plotTrainingTarget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.CNNData.plotTrainingTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots raw image vs label to check if valid batches are produced.
+Raw data is also shown overlaid with labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: 2d array</strong></p>
+<blockquote>
+<div><p>raw image from batch</p>
+</div></blockquote>
+<p><strong>lab: 2d array</strong></p>
+<blockquote>
+<div><p>labels</p>
+</div></blockquote>
+<p><strong>stride: int</strong></p>
+<blockquote class="last">
+<div><p>stride of labels</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.CNNData.CNNData">
+<em class="property">class </em><code class="descclassname">elektronn.training.CNNData.</code><code class="descname">CNNData</code><span class="sig-paren">(</span><em>patch_size=None</em>, <em>stride=None</em>, <em>offset=None</em>, <em>n_dim=2</em>, <em>n_lab=None</em>, <em>anistropic_data=False</em>, <em>mode='img-img'</em>, <em>zchxy_order=False</em>, <em>border_mode='crop'</em>, <em>pre_process=None</em>, <em>upright_x=False</em>, <em>float_label=False</em>, <em>affinity=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/CNNData.html#CNNData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.CNNData.CNNData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Patch creation and data handling interface for image like training data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>patch_size: 2/3-tuple</strong></p>
+<blockquote>
+<div><p>Specifying CNN input shape of a single example, <strong>without</strong> channels: (x,y)/(z,x,y)</p>
+</div></blockquote>
+<p><strong>stride: 2/3-tuple</strong></p>
+<blockquote>
+<div><p>Specifying CNN output stride. May be <code class="docutils literal"><span class="pre">None</span></code> for scalar labels</p>
+</div></blockquote>
+<p><strong>offset: 2/3-tuple</strong></p>
+<blockquote>
+<div><p>Specifying overall CNN convolution border. May be <code class="docutils literal"><span class="pre">None</span></code> for scalar labels</p>
+</div></blockquote>
+<p><strong>n_dim: int</strong></p>
+<blockquote>
+<div><p>2 or 3, CNN dimension</p>
+</div></blockquote>
+<p><strong>n_lab: int</strong></p>
+<blockquote>
+<div><p>Number of distinct classes/labels, if not provided (-&gt;None) this is automatically inferred (slow!)</p>
+</div></blockquote>
+<p><strong>anistropic_data: Bool</strong></p>
+<blockquote>
+<div><p>If True 2d slices are only cut and rotated along z-axis, otherwise all 3 alignments are used</p>
+</div></blockquote>
+<p><strong>mode: str</strong></p>
+<blockquote>
+<div><p>Mode that describes the kind of data and labels: img-img or img-scalar. If the labels are
+scalar but the data is a stack (along z-axis) of many examples, the many scalar labels should be
+stacked to a vector. For vect-scalar training use the <code class="docutils literal"><span class="pre">TrainData</span></code>-class instead.</p>
+</div></blockquote>
+<p><strong>zchxy_order: Bool</strong></p>
+<blockquote>
+<div><p>If the data files are already in memory layout (z,ch,x,y)/(z,x,y), this option must be set to True, 
+which makes data loading faster.</p>
+</div></blockquote>
+<p><strong>border_mode: string</strong></p>
+<blockquote>
+<div><p>For img-scalar training: specifies how to treat images that don&#8217;t match a valid CNN input size</p>
+</div></blockquote>
+<p><strong>upright_x: Bool</strong></p>
+<blockquote>
+<div><p>If <code class="docutils literal"><span class="pre">True</span></code>, image augmentation leaves the upright position of natural images intact, e.g. they are
+only mirrored horizontally, not vertically. Note: the horizontal direction corresponds to &#8216;y&#8217; (because the
+&#8216;x&#8217; comes before &#8216;y&#8217; and the vertical comes before horizontal in numpy)!</p>
+</div></blockquote>
+<p><strong>float_label: Bool</strong></p>
+<blockquote>
+<div><p>Whether to return labels as float32 (for regression) or int16 (for classification)</p>
+</div></blockquote>
+<p><strong>affinity: str/False</strong></p>
+<blockquote class="last">
+<div><p>False/&#8217;affinity&#8217;/&#8217;malis&#8217;: malis returs additionally the segmentation IDs</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="elektronn.training.CNNData.CNNData.addDataFromFile">
+<code class="descname">addDataFromFile</code><span class="sig-paren">(</span><em>d_path</em>, <em>l_path</em>, <em>d_files</em>, <em>l_files</em>, <em>cube_prios=None</em>, <em>valid_cubes=[]</em>, <em>downsample_xy=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/CNNData.html#CNNData.addDataFromFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.CNNData.CNNData.addDataFromFile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>d_path/l_path: string</strong></p>
+<blockquote>
+<div><p>Directories to load data from</p>
+</div></blockquote>
+<p><strong>d_files/l_files: list</strong></p>
+<blockquote>
+<div><p>List of data/label files in &lt;path&gt; directory (must be in the same order!). Each list</p>
+</div></blockquote>
+<p><strong>element is a tuple in the form **(&lt;Name of h5-file&gt;, &lt;Key of h5-dataset&gt;)**</strong></p>
+<p><strong>cube_prios: list</strong></p>
+<blockquote>
+<div><p>(not normalised) list of sampling weights to draw examples from the respective cubes.
+If None the cube sizes are taken as priorities.</p>
+</div></blockquote>
+<p><strong>valid_cubes: list</strong></p>
+<blockquote class="last">
+<div><p>List of indices for cubes (from the file-lists) to use as validation data and exclude from training,
+may be empty list to skip performance estimation on validation data.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.CNNData.CNNData.addDataFromNdarray">
+<code class="descname">addDataFromNdarray</code><span class="sig-paren">(</span><em>d_train</em>, <em>l_train</em>, <em>d_valid=[]</em>, <em>l_valid=[]</em>, <em>cube_prios=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/CNNData.html#CNNData.addDataFromNdarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.CNNData.CNNData.addDataFromNdarray" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>d_train: list of numpy arrays</strong></p>
+<blockquote>
+<div><p>the input data for Training</p>
+</div></blockquote>
+<p><strong>l_train: list of numpy arrays</strong></p>
+<blockquote>
+<div><p>the labels     for Training</p>
+</div></blockquote>
+<p><strong>d_valid: list of numpy arrays</strong></p>
+<blockquote>
+<div><p>the input data for validation [OPTIONAL]</p>
+</div></blockquote>
+<p><strong>l_valid: list of numpy arrays</strong></p>
+<blockquote>
+<div><p>the labels     for validation [OPTIONAL]</p>
+</div></blockquote>
+<p><strong>cube_prios: list of floats</strong></p>
+<blockquote class="last">
+<div><p>Default: None &#8211;&gt; probability of sampling Training data from a cube is proportional to its size</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.CNNData.CNNData.getbatch">
+<code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size=1</em>, <em>source='train'</em>, <em>strided=True</em>, <em>flip=True</em>, <em>grey_augment_channels=[]</em>, <em>ret_info=False</em>, <em>warp_on=False</em>, <em>ignore_thresh=0.0</em>, <em>ret_example_weights=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/CNNData.html#CNNData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.CNNData.CNNData.getbatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepares a batch by randomly sampling, shifting and augmenting patches from the data</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>batch_size: int</strong></p>
+<blockquote>
+<div><p>Number of examples in batch (for CNNs often just 1)</p>
+</div></blockquote>
+<p><strong>source: string</strong></p>
+<blockquote>
+<div><p>Data set to draw data from: &#8216;train&#8217;/&#8217;valid&#8217;</p>
+</div></blockquote>
+<p><strong>strided: Bool</strong></p>
+<blockquote>
+<div><p>If True the labels are sub-sampled according to the CNN output stride.
+Non-strided labels requires MFP in the CNN!</p>
+</div></blockquote>
+<p><strong>flip: Bool</strong></p>
+<blockquote>
+<div><p>If True examples are mirrored and rotated by 90 deg randomly</p>
+</div></blockquote>
+<p><strong>grey_augment_channels: list</strong></p>
+<blockquote>
+<div><p>List of channel indices to apply grey-value augmentation to</p>
+</div></blockquote>
+<p><strong>ret_info: Bool</strong></p>
+<blockquote>
+<div><p>If True additional information for reach batch example is returned. Currently implemented are two info
+arrays to indicate the labelling mode. The first dimension of those arrays is the batch_size!</p>
+</div></blockquote>
+<p><strong>warp_on: Bool/Float(0,1)</strong></p>
+<blockquote>
+<div><p>Whether warping/distortion augmentations are applied to examples (slow &#8211;&gt; use multiprocessing)
+If this is a float number, warping is applied to this fraction of examples e.g. 0.5 &#8211;&gt; every other example</p>
+</div></blockquote>
+<p><strong>ignore_thresh: float</strong></p>
+<blockquote>
+<div><p>If the fraction of negative labels in an example patch exceeds this threshold, this example is discarded
+(Negative labels are ignored for training [but could be used for unsupervised label propagation]).</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data:</p>
+<blockquote>
+<div><p>[bs, ch, x, y] or [bs, z, ch, x, y] for 2d and 3d CNNS</p>
+</div></blockquote>
+<p>label:</p>
+<blockquote>
+<div><p>[bs, x, y] or [bs, z, x, y]</p>
+</div></blockquote>
+<p>info1:</p>
+<blockquote>
+<div><p>(optional) [bs, n_lab]</p>
+</div></blockquote>
+<p>info2:</p>
+<blockquote class="last">
+<div><p>(optional) [bs, n_lab]</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.CNNData.CNNData.getExampleWeights">
+<code class="descname">getExampleWeights</code><span class="sig-paren">(</span><em>raw_rec</em>, <em>lab</em>, <em>gain=2.0</em>, <em>blurr=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/CNNData.html#CNNData.getExampleWeights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.CNNData.CNNData.getExampleWeights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training.config">
+<span id="elektronn-training-config-module"></span><h2>elektronn.training.config module<a class="headerlink" href="#module-elektronn.training.config" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="elektronn.training.config.MasterConfig">
+<em class="property">class </em><code class="descclassname">elektronn.training.config.</code><code class="descname">MasterConfig</code><a class="reference internal" href="_modules/elektronn/training/config.html#MasterConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.MasterConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.config.DefaultConfig">
+<em class="property">class </em><code class="descclassname">elektronn.training.config.</code><code class="descname">DefaultConfig</code><a class="reference internal" href="_modules/elektronn/training/config.html#DefaultConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.DefaultConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.config.MasterConfig" title="elektronn.training.config.MasterConfig"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.config.MasterConfig</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.config.Config">
+<em class="property">class </em><code class="descclassname">elektronn.training.config.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>config_file</em>, <em>gpu</em>, <em>trainer_file</em>, <em>use_existing_dir=False</em>, <em>override_MFP_to_active=False</em>, <em>imposed_input_size=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Configuration object to manage the parameters of <code class="docutils literal"><span class="pre">trainingInstance</span></code></p>
+<p>The <code class="docutils literal"><span class="pre">monitor_batch_size</span></code> is automatically fixed to a multiple of the <code class="docutils literal"><span class="pre">batch_size</span></code>.
+An attribute <code class="docutils literal"><span class="pre">dimensions</span></code> of type <code class="docutils literal"><span class="pre">Net.netutils.CNNCalcquotesulator</span></code> is created that checks if the CNN
+architecture (combination of filter sizes and poolings) is valid and determines the input shape closest
+to the <code class="docutils literal"><span class="pre">desired_input</span></code>
+The top level script (<code class="docutils literal"><span class="pre">trainer_file</span></code>), the config, the <code class="docutils literal"><span class="pre">Net</span></code> module and the <code class="docutils literal"><span class="pre">Training</span></code> module
+are backed up into the CNN directory automatically. The Backup is intended to contain all code to
+reproduce the CNN Training</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file: string</strong></p>
+<blockquote>
+<div><p>Path to a CNN config file</p>
+</div></blockquote>
+<p><strong>gpu: int</strong></p>
+<blockquote>
+<div><p>Specifying id of GPU to initialise for usage. E.g. 1 &#8211;&gt; &#8220;gpu1&#8221;, None will initialise gpu0,      False will not initialise any GPU. This only works if &#8220;device&#8221; is not set in <code class="docutils literal"><span class="pre">.theanorc</span></code> or if theano
+has not been imported up to now. If the initialisation fails an error will be printed but the script
+will not crash.</p>
+</div></blockquote>
+<p><strong>trainer_file: string</strong></p>
+<blockquote>
+<div><p>Path to the <code class="docutils literal"><span class="pre">NetTrainer</span></code>-script (or any other top level script that drives the Training).      The path is needed to backup the script in the CNN directory</p>
+</div></blockquote>
+<p><strong>use_existing_dir: Bool</strong></p>
+<blockquote>
+<div><p>Do not create a new directory for the CNN if True</p>
+</div></blockquote>
+<p><strong>override_MFP_to_active: Bool</strong></p>
+<blockquote>
+<div><p>If true, activates MFP in all layers where possible, ignoring the configuration in the config file.
+This is useful for prediction using a config file from training. (only for CNN)</p>
+</div></blockquote>
+<p><strong>override_input_size_with: tuple or None</strong></p>
+<blockquote class="last">
+<div><p>Similar as above, this can be used to impose another input size than specified in the config file. (only for CNN)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="elektronn.training.config.Config.mandatory_vars">
+<code class="descname">mandatory_vars</code><em class="property"> = ['SGD_params', 'batch_size', 'max_runtime', 'monitor_batch_size', 'n_steps', 'n_lab', 'save_name', 'mode']</em><a class="headerlink" href="#elektronn.training.config.Config.mandatory_vars" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="elektronn.training.config.Config.mandatory_data">
+<code class="descname">mandatory_data</code><em class="property"> = ['d_files', 'data_path', 'l_files', 'label_path']</em><a class="headerlink" href="#elektronn.training.config.Config.mandatory_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="elektronn.training.config.Config.mandatory_cnn">
+<code class="descname">mandatory_cnn</code><em class="property"> = ['desired_input', 'filters', 'n_dim', 'nof_filters', 'pool']</em><a class="headerlink" href="#elektronn.training.config.Config.mandatory_cnn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="elektronn.training.config.Config.mandatory_mlp">
+<code class="descname">mandatory_mlp</code><em class="property"> = ['MLP_layers']</em><a class="headerlink" href="#elektronn.training.config.Config.mandatory_mlp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.config.Config.parseConfig">
+<code class="descname">parseConfig</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.parseConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.parseConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.config.Config.fixValues">
+<code class="descname">fixValues</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.fixValues"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.fixValues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.config.Config.typeChecks">
+<code class="descname">typeChecks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.typeChecks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.typeChecks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.config.Config.checkConfig">
+<code class="descname">checkConfig</code><span class="sig-paren">(</span><em>custom_dict</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.checkConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.checkConfig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.config.Config.backupScripts">
+<code class="descname">backupScripts</code><span class="sig-paren">(</span><em>trainer_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.backupScripts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.backupScripts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves all python files into the folder specified by <code class="docutils literal"><span class="pre">self.save_path</span></code>
+Also changes working directory to the <code class="docutils literal"><span class="pre">save_path</span></code> directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.config.Config.levenshtein">
+<code class="descname">levenshtein</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.levenshtein"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.levenshtein" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes Levenshtein-distance between <code class="docutils literal"><span class="pre">s1</span></code> and <code class="docutils literal"><span class="pre">s2</span></code> strings
+Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python">http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python</a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training.parallelisation">
+<span id="elektronn-training-parallelisation-module"></span><h2>elektronn.training.parallelisation module<a class="headerlink" href="#module-elektronn.training.parallelisation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="elektronn.training.parallelisation.SharedMem">
+<em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">SharedMem</code><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedMem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedMem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Utilities to share np.arrays between processes</p>
+<dl class="staticmethod">
+<dt id="elektronn.training.parallelisation.SharedMem.shm2ndarray">
+<em class="property">static </em><code class="descname">shm2ndarray</code><span class="sig-paren">(</span><em>mp_array</em>, <em>shape=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedMem.shm2ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedMem.shm2ndarray" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mp_array: a mp.Array</strong></p>
+<p><strong>shape:    (optional) the returned np.ndarray is reshaped to this shape, flat otherwise</strong></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">array: np.ndarray</p>
+<blockquote>
+<div><p>That can be normally used but changes are reflected in shared mem</p>
+</div></blockquote>
+<p class="last">Note: the returned array is still pointing to the sharedmem, data might be changed by another process!</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="elektronn.training.parallelisation.SharedMem.ndarray2shm">
+<em class="property">static </em><code class="descname">ndarray2shm</code><span class="sig-paren">(</span><em>np_array</em>, <em>lock=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedMem.ndarray2shm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedMem.ndarray2shm" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>np_array: np.ndarray</strong></p>
+<blockquote>
+<div><p>array of arbitrary shape</p>
+</div></blockquote>
+<p><strong>lock: Bool</strong></p>
+<blockquote>
+<div><p>Whether to create a multiprocessing.Lock</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">handle: mp.Array:</p>
+<blockquote class="last">
+<div><p>flat with data from ndarray copied to it</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.parallelisation.SharedMem.puthandle">
+<code class="descname">puthandle</code><span class="sig-paren">(</span><em>dtype</em>, <em>shape</em>, <em>data=None</em>, <em>lock=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedMem.puthandle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedMem.puthandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates new shared memory and puts it on the queue. Other sub-processes can write to it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dtype: np.dtype</strong></p>
+<blockquote>
+<div><p>Type of data to store in array</p>
+</div></blockquote>
+<p><strong>shape: tuple</strong></p>
+<blockquote>
+<div><p>Properties of shared mem to be created</p>
+</div></blockquote>
+<p><strong>data: np.ndarray</strong></p>
+<blockquote>
+<div><p>(optional) values to fill shared array with</p>
+</div></blockquote>
+<p><strong>lock: Bool</strong></p>
+<blockquote>
+<div><p>Whether to create a multiprocessing.Lock on the shared variable</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">sharedmem handle: mp.array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.parallelisation.Proc">
+<em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">Proc</code><span class="sig-paren">(</span><em>mp_arrays</em>, <em>shapes</em>, <em>events</em>, <em>target</em>, <em>target_args</em>, <em>target_kwargs</em>, <em>profile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#Proc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.Proc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">multiprocessing.process.Process</span></code></p>
+<p>A <em>reusable</em> and <em>configurable</em> background process, that does the same job every time
+<code class="docutils literal"><span class="pre">events['new']</span></code> is set and signals that is has finished one iteration by setting <code class="docutils literal"><span class="pre">events['ready']</span></code></p>
+<dl class="method">
+<dt id="elektronn.training.parallelisation.Proc.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#Proc.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.Proc.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.parallelisation.BackgroundProc">
+<em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">BackgroundProc</code><span class="sig-paren">(</span><em>target</em>, <em>dtypes=None</em>, <em>shapes=None</em>, <em>n_proc=1</em>, <em>target_args=()</em>, <em>target_kwargs={}</em>, <em>profile=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#BackgroundProc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.BackgroundProc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
+<dl class="method">
+<dt id="elektronn.training.parallelisation.BackgroundProc.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#BackgroundProc.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.BackgroundProc.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>This gets the next result from a background process and blocks until the corresponding proc
+has finished.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.parallelisation.BackgroundProc.shutdown">
+<code class="descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#BackgroundProc.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.BackgroundProc.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Must be called to free memory</strong> if the background tasks are no longer needed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.parallelisation.BackgroundProc.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#BackgroundProc.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.BackgroundProc.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Should be called after an exception (e.g. by pressing ctrl+c) was raised.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.parallelisation.SharedQ">
+<em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">SharedQ</code><span class="sig-paren">(</span><em>n_proc=0</em>, <em>default_target=None</em>, <em>default_args=()</em>, <em>default_kwargs={}</em>, <em>profile=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
+<p>FIFO Queue to process np.ndarrays in the background (also pre-loading of data from disk)</p>
+<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,  for this the shapes are required as too. The target requires the signature:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Whereas mp_array and shape are <em>automatically</em> added internally</p>
+<p>All parameters are optional:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_proc: int</strong></p>
+<blockquote>
+<div><p>If larger than 0, a message is printed if to few processes are running</p>
+</div></blockquote>
+<p><strong>default_target: callable</strong></p>
+<blockquote>
+<div><p>Default background proc callable</p>
+</div></blockquote>
+<p><strong>default_args: tuple</strong></p>
+<blockquote>
+<div><p>Default background proc and their parameters</p>
+</div></blockquote>
+<p><strong>default_kwargs: dict</strong></p>
+<blockquote>
+<div><p>Default background proc kwargs</p>
+</div></blockquote>
+<p><strong>profile: Bool</strong></p>
+<blockquote class="last">
+<div><p>Whether to print timing results in terminal</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Automatic use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span> <span class="o">=</span> <span class="n">SharedQ</span><span class="p">(</span><span class="n">n_proc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">item</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="c"># starts as many new jobs as to maintain n_proc</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">dosomehtingelse</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="c"># processes work in background to pre-fetch data for next iteration</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="elektronn.training.parallelisation.SharedQ.startproc">
+<code class="descname">startproc</code><span class="sig-paren">(</span><em>dtypes</em>, <em>shapes</em>, <em>target=None</em>, <em>target_args=()</em>, <em>target_kwargs={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ.startproc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ.startproc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a new process</p>
+<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,    for this the shapes are required as too. The target requires the signature:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Whereas mp_array  and shape are <em>automatically</em> added internally</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.parallelisation.SharedQ.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>This gets the first results in the queue and blocks until the corresponding proc
+has finished. If a n_proc value is defined this then new procs must be started <em>before</em> to
+avoid a warning message.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training.predictor">
+<span id="elektronn-training-predictor-module"></span><h2>elektronn.training.predictor module<a class="headerlink" href="#module-elektronn.training.predictor" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="elektronn.training.predictor.create_predncnn">
+<code class="descclassname">elektronn.training.predictor.</code><code class="descname">create_predncnn</code><span class="sig-paren">(</span><em>config_file</em>, <em>n_ch</em>, <em>n_lab</em>, <em>gpu=None</em>, <em>override_MFP_to_active=False</em>, <em>imposed_input_size=None</em>, <em>param_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/predictor.html#create_predncnn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.predictor.create_predncnn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and compiles a CNN/NN as specified in a config file (used for training).
+Loads the last parameters from the training directory.</p>
+<p>The CNN/NN object is returned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file: string</strong></p>
+<blockquote>
+<div><p>Path to a CNN config file</p>
+</div></blockquote>
+<p><strong>n_ch: int</strong></p>
+<blockquote>
+<div><p>Number of input channels, for a MLP this is the dimensionality of the input vectors, for CNNs this is the
+number of channels in an image/volume (e.g. 1 for plain gray value images)</p>
+</div></blockquote>
+<p><strong>n_lab: int</strong></p>
+<blockquote>
+<div><p>Number of distinct labels/classes</p>
+</div></blockquote>
+<p><strong>gpu: int</strong></p>
+<blockquote>
+<div><p>Specifying id of GPU to initialise for usage. E.g. 1 &#8211;&gt; &#8220;gpu1&#8221;, None will initialise gpu0,    False will not initialise any GPU. This only works if &#8220;device&#8221; is not set in <code class="docutils literal"><span class="pre">.theanorc</span></code> or if theano
+has not been imported up to now. If the initialisation fails an error will be printed but the script
+will not crash.</p>
+</div></blockquote>
+<p><strong>override_MFP_to_active: Bool</strong></p>
+<blockquote>
+<div><p>If true, activates MFP in all layers where possible, ignoring the configuration in the config file.
+This is useful for prediction using a config file from training. (only for CNN)</p>
+</div></blockquote>
+<p><strong>imposed_input_size: tuple or None</strong></p>
+<blockquote>
+<div><p>Similar as above, this can be used to impose another input size than specified in the config file.
+(z,x,y)!!! (only for CNN)</p>
+</div></blockquote>
+<p><strong>param_file: string/None</strong></p>
+<blockquote class="last">
+<div><p>If other parameters than &#8220;<a href="#id1"><span class="problematic" id="id2">*</span></a>-Last.param&#8221; should be loaded, this can specify the param file.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training.traindata">
+<span id="elektronn-training-traindata-module"></span><h2>elektronn.training.traindata module<a class="headerlink" href="#module-elektronn.training.traindata" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="elektronn.training.traindata.sort_human">
+<code class="descclassname">elektronn.training.traindata.</code><code class="descname">sort_human</code><span class="sig-paren">(</span><em>file_names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#sort_human"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.sort_human" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sort the given list in the way that humans expect.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.Data">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">Data</code><span class="sig-paren">(</span><em>n_lab=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Load and prepare data, Base-Obj</p>
+<dl class="method">
+<dt id="elektronn.training.traindata.Data.getbatch">
+<code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data.getbatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.Data.createSplitPerm">
+<code class="descname">createSplitPerm</code><span class="sig-paren">(</span><em>size</em>, <em>subset_ratio=0.8</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data.createSplitPerm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data.createSplitPerm" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.Data.createCVSplit">
+<code class="descname">createCVSplit</code><span class="sig-paren">(</span><em>data</em>, <em>label</em>, <em>n_folds=3</em>, <em>use_fold=2</em>, <em>shuffle=False</em>, <em>random_state=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data.createCVSplit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data.createCVSplit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.Data.splitData">
+<code class="descname">splitData</code><span class="sig-paren">(</span><em>data</em>, <em>label</em>, <em>valid_size</em>, <em>split_no=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data.splitData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data.splitData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.Data.makeExampleSubset">
+<code class="descname">makeExampleSubset</code><span class="sig-paren">(</span><em>subset_ratio=0.8</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data.makeExampleSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data.makeExampleSubset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.Data.makeFeatureSubset">
+<code class="descname">makeFeatureSubset</code><span class="sig-paren">(</span><em>subset_ratio=0.8</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data.makeFeatureSubset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data.makeFeatureSubset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.BalancedData">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">BalancedData</code><a class="reference internal" href="_modules/elektronn/training/traindata.html#BalancedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BalancedData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dl class="method">
+<dt id="elektronn.training.traindata.BalancedData.getbatch">
+<code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em>, <em>balanced=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#BalancedData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BalancedData.getbatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.BalancedData.getbatch_balanced">
+<code class="descname">getbatch_balanced</code><span class="sig-paren">(</span><em>batch_size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#BalancedData.getbatch_balanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BalancedData.getbatch_balanced" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.QueueData">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">QueueData</code><a class="reference internal" href="_modules/elektronn/training/traindata.html#QueueData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.QueueData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dl class="method">
+<dt id="elektronn.training.traindata.QueueData.queueget">
+<code class="descname">queueget</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#QueueData.queueget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.QueueData.queueget" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.QueueData.queueupdate">
+<code class="descname">queueupdate</code><span class="sig-paren">(</span><em>nlls</em>, <em>iteration</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#QueueData.queueupdate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.QueueData.queueupdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.QueueData.queuereset">
+<code class="descname">queuereset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#QueueData.queuereset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.QueueData.queuereset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.QueueData.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path='data'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#QueueData.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.QueueData.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.AdultData">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">AdultData</code><span class="sig-paren">(</span><em>path='~/devel/data/adult.pkl'</em>, <em>create=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#AdultData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.AdultData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.MNISTData">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">MNISTData</code><span class="sig-paren">(</span><em>path=None</em>, <em>convert2image=True</em>, <em>warp_on=False</em>, <em>shift_augment=True</em>, <em>center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#MNISTData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.MNISTData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dl class="method">
+<dt id="elektronn.training.traindata.MNISTData.convert_to_image">
+<code class="descname">convert_to_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#MNISTData.convert_to_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.MNISTData.convert_to_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>For MNIST / flattened 2d, single-layer, square images</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.traindata.MNISTData.getbatch">
+<code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#MNISTData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.MNISTData.getbatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.BuzzData">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">BuzzData</code><span class="sig-paren">(</span><em>path='~/devel/data/Buzz/Twitter/twitter.pkl'</em>, <em>norm_targets=True</em>, <em>target_scale=9999</em>, <em>fold_no=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#BuzzData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BuzzData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dl class="method">
+<dt id="elektronn.training.traindata.BuzzData.getbatch">
+<code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#BuzzData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BuzzData.getbatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.PianoData">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">PianoData</code><span class="sig-paren">(</span><em>path='~/devel/data/PianoRoll/Nottingham_enc.pkl'</em>, <em>n_tap=20</em>, <em>n_lab=58</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#PianoData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.PianoData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dl class="method">
+<dt id="elektronn.training.traindata.PianoData.getbatch">
+<code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#PianoData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.PianoData.getbatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="elektronn.training.traindata.GeneData">
+<em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">GeneData</code><span class="sig-paren">(</span><em>path='~/devel/data/GEMLeR_GeneExpression/Breast_Colon.pkl'</em>, <em>fold_no=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#GeneData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.GeneData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dl class="method">
+<dt id="elektronn.training.traindata.GeneData.getbatch">
+<code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#GeneData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.GeneData.getbatch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training.trainer">
+<span id="elektronn-training-trainer-module"></span><h2>elektronn.training.trainer module<a class="headerlink" href="#module-elektronn.training.trainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="elektronn.training.trainer.Trainer">
+<em class="property">class </em><code class="descclassname">elektronn.training.trainer.</code><code class="descname">Trainer</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Object that manages Training of a CNN.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config: trainutils.ConfigObj</strong></p>
+<blockquote class="last">
+<div><p>Container for all configurations</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>All necessary configuration information is contained in cofig:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">loadData</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">createNet</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c"># The Training loop</span>
+</pre></div>
+</div>
+<p>If the config options <code class="docutils literal"><span class="pre">print_status</span></code> and <code class="docutils literal"><span class="pre">plot_on</span></code> are set the CNN progress can be supervised.</p>
+<p>Control during iteration can be exercised by ctrl+c which evokes a commandline.
+There are various shortcuts displayed but in principle all attributes of the CNN can be accessed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
+<span class="go">&gt;&gt; Debug_Run &lt;&lt;</span>
+<span class="go">Shortcuts:</span>
+<span class="go">&#39;q&#39; (leave interface),          &#39;abort&#39; (saving params),</span>
+<span class="go">&#39;kill&#39;(no saving),      &#39;save&#39;/&#39;load&#39; (opt:filename),</span>
+<span class="go">&#39;sf&#39;/&#39; (show filters)&#39;,         &#39;smooth&#39; (smooth filters),</span>
+<span class="go">&#39;sethist &lt;int&gt;&#39;,        &#39;setlr &lt;float&gt;&#39;,</span>
+<span class="go">&#39;setmom &lt;float&gt;&#39; ,      &#39;params&#39; print info,</span>
+<span class="go">Change Training mode :(&#39;SGD&#39;,&#39;CG&#39;, &#39;RPROP&#39;, &#39;LBFGS&#39;)</span>
+<span class="go">For EVERYTHING else enter your command in the command line</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">setlr</span> <span class="mf">0.01</span> <span class="c"># Change learning rate of SGD</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">CG</span> <span class="c"># Change Training mode CG (Optimizer will be compiled on demand)</span>
+<span class="go">Changing Training mode...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">savename</span> <span class="c"># Access an attribute of ``trainerInstance``.</span>
+<span class="go"># Inputs containing &#39;(&#39; or &#39;=&#39; will result in a print of the value</span>
+<span class="go">&#39;Debug_Run&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="k">print</span> <span class="n">cnn</span><span class="o">.</span><span class="n">getDropoutRates</span><span class="p">()</span> <span class="c"># To see the return of function add &#39;print&#39;</span>
+<span class="go">[0.5, 0.5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">setOptimizerParams</span><span class="p">(</span><span class="n">CG</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;max_step&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span> <span class="c"># change CG-&#39;max_step&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">q</span> <span class="c"># leave interface</span>
+<span class="go">Continuing Training</span>
+<span class="go">Compiling CG</span>
+<span class="go">  Compiling done - in 7.206 s!</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets all history of NLLs etc and randomizes CNN weights, optimiser hyper-parameters are set to initial
+values from config</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the Training loop until termination. Control during iteration can be exercised by ctrl+c which
+evokes a commandline. There are various shortcuts displayed but in principle all attributes of the
+CNN can be accessed:</p>
+<p class="rubric">Examples</p>
+<p>Using the command line</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
+<span class="go">&gt;&gt; Debug_Run &lt;&lt;</span>
+<span class="go">Shortcuts:</span>
+<span class="go">&#39;q&#39; (leave interface),        &#39;abort&#39; (saving params),</span>
+<span class="go">&#39;kill&#39;(no saving),            &#39;save&#39;/&#39;load&#39; (opt:filename),</span>
+<span class="go">&#39;sf&#39;/&#39; (show filters)&#39;,       &#39;smooth&#39; (smooth filters),</span>
+<span class="go">&#39;sethist &lt;int&gt;&#39;,      &#39;setlr &lt;float&gt;&#39;,</span>
+<span class="go">&#39;setmom &lt;float&gt;&#39; ,            &#39;params&#39; print info,</span>
+<span class="go">Change Training mode :(&#39;SGD&#39;,&#39;CG&#39;, &#39;RPROP&#39;, &#39;LBFGS&#39;)</span>
+<span class="go">For EVERYTHING else enter your command in the command line</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">setlr</span> <span class="mf">0.01</span> <span class="c"># Change learning rate of SGD</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">CG</span> <span class="c"># Change Training mode CG (Optimizer will be compiled on demand)</span>
+<span class="go">Changing Training mode...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">savename</span> <span class="c"># Access an attribute of ``trainerInstance``.</span>
+<span class="go"># Inputs containing &#39;(&#39; or &#39;=&#39; will result in a print of the value</span>
+<span class="go">&#39;Debug_Run&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="k">print</span> <span class="n">cnn</span><span class="o">.</span><span class="n">getDropoutRates</span><span class="p">()</span> <span class="c"># To see the return of function add &#39;print&#39;</span>
+<span class="go">[0.5, 0.5]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">setOptimizerParams</span><span class="p">(</span><span class="n">CG</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;max_step&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span> <span class="c"># change CG-&#39;max_step&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">q</span> <span class="c"># leave interface</span>
+<span class="go">Continuing Training</span>
+<span class="go">Compiling CG</span>
+<span class="go">  Compiling done - in 7.206 s!</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.loadData">
+<code class="descname">loadData</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.loadData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.loadData" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.createNet">
+<code class="descname">createNet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.createNet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.createNet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates CNN according to config</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.debugGetCNNBatch">
+<code class="descname">debugGetCNNBatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.debugGetCNNBatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.debugGetCNNBatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes <code class="docutils literal"><span class="pre">getbatch</span></code> but with un-strided labels and always returning info. The first batch example
+is plotted and the whole batch is returned for inspection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.testModel">
+<code class="descname">testModel</code><span class="sig-paren">(</span><em>data_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.testModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.testModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes NLL and error/accuracy on batch with <code class="docutils literal"><span class="pre">monitor_batch_size</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_source: string</strong></p>
+<blockquote>
+<div><p>&#8216;train&#8217; or &#8216;valid&#8217;</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">NLL, error:</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.predictAndWrite">
+<code class="descname">predictAndWrite</code><span class="sig-paren">(</span><em>raw_img</em>, <em>number=0</em>, <em>export_class='all'</em>, <em>block_name=''</em>, <em>z_thick=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.predictAndWrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.predictAndWrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict and and save a slice as preview image</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>raw_img</strong> : np.ndarray</p>
+<blockquote>
+<div><p>raw data in the format (ch, x, y, z)</p>
+</div></blockquote>
+<p><strong>number: int/float</strong></p>
+<blockquote>
+<div><p>consecutive number for the save name (i.e. hours, iterations etc.)</p>
+</div></blockquote>
+<p><strong>export_class: str or int</strong></p>
+<blockquote>
+<div><p>&#8216;all&#8217; writes images of all classes, otherwise only the class with index <code class="docutils literal"><span class="pre">export_class</span></code> (int) is saved.</p>
+</div></blockquote>
+<p><strong>block_name: str</strong></p>
+<blockquote class="last">
+<div><p>Name/number to distinguish different raw_imges</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.previewSliceFromTrainData">
+<code class="descname">previewSliceFromTrainData</code><span class="sig-paren">(</span><em>cube_i=0</em>, <em>off=(0</em>, <em>0</em>, <em>0)</em>, <em>sh=(10</em>, <em>400</em>, <em>400)</em>, <em>number=0</em>, <em>export_class='all'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.previewSliceFromTrainData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.previewSliceFromTrainData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict and and save a selected slice from the training data as preview</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cube_i: int</strong></p>
+<blockquote>
+<div><p>index of source cube in CNNData</p>
+</div></blockquote>
+<p><strong>off: 3-tuple of int</strong></p>
+<blockquote>
+<div><p>start index of slice to cut from cube (z,x,y)</p>
+</div></blockquote>
+<p><strong>sh: 3-tuple of int</strong></p>
+<blockquote>
+<div><p>shape of cube to cut (z,x,y)</p>
+</div></blockquote>
+<p><strong>number: int</strong></p>
+<blockquote>
+<div><p>consecutive number for the save name (i.e. hours, iterations etc.)</p>
+</div></blockquote>
+<p><strong>export_class: str or int</strong></p>
+<blockquote class="last">
+<div><p>&#8216;all&#8217; writes images of all classes, otherwise only the class with index <code class="docutils literal"><span class="pre">export_class</span></code> (int) is saved.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.previewSlice">
+<code class="descname">previewSlice</code><span class="sig-paren">(</span><em>number=0</em>, <em>export_class='all'</em>, <em>max_z_pred=5</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.previewSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.previewSlice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predict and and save a data from a separately loaded file as preview</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>number: int/float</strong></p>
+<blockquote>
+<div><p>consecutive number for the save name (i.e. hours, iterations etc.)</p>
+</div></blockquote>
+<p><strong>export_class: str or int</strong></p>
+<blockquote>
+<div><p>&#8216;all&#8217; writes images of all classes, otherwise only the class with index <code class="docutils literal"><span class="pre">export_class</span></code> (int) is saved.</p>
+</div></blockquote>
+<p><strong>max_z_pred: int</strong></p>
+<blockquote class="last">
+<div><p>approximate maximal number of z-slices to produce (depends on CNN architecture)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="elektronn.training.trainer.Trainer.malisPreviewSlice">
+<code class="descname">malisPreviewSlice</code><span class="sig-paren">(</span><em>batch</em>, <em>name='A'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.malisPreviewSlice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.malisPreviewSlice" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training.trainutils">
+<span id="elektronn-training-trainutils-module"></span><h2>elektronn.training.trainutils module<a class="headerlink" href="#module-elektronn.training.trainutils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="elektronn.training.trainutils.import_variable_from_file">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">import_variable_from_file</code><span class="sig-paren">(</span><em>file_path</em>, <em>class_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#import_variable_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.import_variable_from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.parseargs">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">parseargs</code><span class="sig-paren">(</span><em>args</em>, <em>config_file</em>, <em>gpu</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#parseargs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.parseargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parses the commandline arguments if <code class="docutils literal"><span class="pre">TrainCNN</span></code> is called as:</p>
+<p>&#8220;$ python TrainCNN.py [config=&lt;/path/to_file&gt;] [ gpu={Auto|False|&lt;int&gt;}]&#8221;</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.get_free_gpu">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">get_free_gpu</code><span class="sig-paren">(</span><em>wait=0</em>, <em>nb_gpus=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#get_free_gpu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.get_free_gpu" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.initGPU">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">initGPU</code><span class="sig-paren">(</span><em>gpu</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#initGPU"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.initGPU" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.xyz2zyx">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">xyz2zyx</code><span class="sig-paren">(</span><em>shapes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#xyz2zyx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.xyz2zyx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swaps dimension order for list of (filter) shapes.
+This is needed to allow users to specify 2d and 3d filters in the same order.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.plotInfoFromFiles">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">plotInfoFromFiles</code><span class="sig-paren">(</span><em>path</em>, <em>save_name</em>, <em>autoscale=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#plotInfoFromFiles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.plotInfoFromFiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create the plots from backup files in the CNN directory (e.g. if plotting was not on during training).
+The plots are generated as pngs in the current working directory and will not show up.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>path: string</strong></p>
+<blockquote>
+<div><p>Path to CNN-folder</p>
+</div></blockquote>
+<p><strong>save_name: string</strong></p>
+<blockquote>
+<div><p>name of cnn / file prefix</p>
+</div></blockquote>
+<p><strong>autoscale: Bool</strong></p>
+<blockquote class="last">
+<div><p>If true axis are optimised for value read-off, if false, mpl default scaling is used</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.saveHist">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">saveHist</code><span class="sig-paren">(</span><em>timeline</em>, <em>history</em>, <em>CG_timeline</em>, <em>errors</em>, <em>save_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#saveHist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.saveHist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.plotInfo">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">plotInfo</code><span class="sig-paren">(</span><em>timeline</em>, <em>history</em>, <em>CG_timeline</em>, <em>errors</em>, <em>save_name</em>, <em>autoscale=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#plotInfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.plotInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot graphical info during Training</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.previewDiffPlot">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">previewDiffPlot</code><span class="sig-paren">(</span><em>names</em>, <em>root_dir='~/CNN_Training/3D'</em>, <em>block_name=0</em>, <em>c=1</em>, <em>z=0</em>, <em>number=1</em>, <em>save=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#previewDiffPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.previewDiffPlot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualisation tool to compare the predictions of 2 or multiple CNNs
+It is assumed that</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>names: list of str</strong></p>
+<blockquote>
+<div><p>Folder/Save names of the CNNs</p>
+</div></blockquote>
+<p><strong>root_dir: str</strong></p>
+<blockquote>
+<div><p>path in which the CNN folders are located</p>
+</div></blockquote>
+<p><strong>block_name: int/str</strong></p>
+<blockquote class="last">
+<div><p>Number/Name of the prediction preview example (&#8221;...pred_&lt;i&gt;_c..&#8221;)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.pprintmenu">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">pprintmenu</code><span class="sig-paren">(</span><em>save_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#pprintmenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.pprintmenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>print menu string</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.userInput">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">userInput</code><span class="sig-paren">(</span><em>cnn</em>, <em>history_freq</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#userInput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.userInput" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.pickleSave">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">pickleSave</code><span class="sig-paren">(</span><em>data</em>, <em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#pickleSave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.pickleSave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes one or many objects to pickle file</p>
+<dl class="docutils">
+<dt>data:</dt>
+<dd>single objects to save or iterable of objects to save.
+For iterable, all objects are written in this order to the file.</dd>
+<dt>file_name: string</dt>
+<dd>path/name of destination file</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.pickleLoad">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">pickleLoad</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#pickleLoad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.pickleLoad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads all object that are saved in the pickle file.
+Multiple objects are returned as list.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.h5Save">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">h5Save</code><span class="sig-paren">(</span><em>data</em>, <em>file_name</em>, <em>keys='None'</em>, <em>compress=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#h5Save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.h5Save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes one or many arrays to h5 file</p>
+<dl class="docutils">
+<dt>data:</dt>
+<dd>single array to save or iterable of arrays to save.
+For iterable all arrays are written to the file.</dd>
+<dt>file_name: string</dt>
+<dd>path/name of destination file</dd>
+<dt>keys: string / list thereof</dt>
+<dd>For single arrays this is a single string which is used as a name for the data set.
+For multiple arrays each dataset is named by the corresponding key.
+If keys is <code class="docutils literal"><span class="pre">None</span></code>, the dataset names created by enumeration: <code class="docutils literal"><span class="pre">data%i</span></code></dd>
+<dt>compress: Bool</dt>
+<dd>Whether to use lzf compression, defaults to <code class="docutils literal"><span class="pre">True</span></code>. Most useful for label arrays.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.h5Load">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">h5Load</code><span class="sig-paren">(</span><em>file_name</em>, <em>keys=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#h5Load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.h5Load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads data sets from h5 file</p>
+<dl class="docutils">
+<dt>file_name: string</dt>
+<dd>destination file</dd>
+<dt>keys: string / list thereof</dt>
+<dd>Load only data sets specified in keys and return as list in the order of <code class="docutils literal"><span class="pre">keys</span></code>
+For a single key the data is returned directly - not as list
+If keys is <code class="docutils literal"><span class="pre">None</span></code> all datasets that are listed in the keys-attribute of the h5 file are loaded.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.trainutils.timeit">
+<code class="descclassname">elektronn.training.trainutils.</code><code class="descname">timeit</code><span class="sig-paren">(</span><em>foo</em>, <em>n=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#timeit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.timeit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator: decorates foo such that its execution time is printed upon call</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training.warping">
+<span id="elektronn-training-warping-module"></span><h2>elektronn.training.warping module<a class="headerlink" href="#module-elektronn.training.warping" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="elektronn.training.warping.timeit">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">timeit</code><span class="sig-paren">(</span><em>foo</em>, <em>n=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#timeit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.timeit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.warp2dFast">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">warp2dFast</code><span class="sig-paren">(</span><em>img</em>, <em>patch_size</em>, <em>rot=0</em>, <em>shear=0</em>, <em>scale=(1</em>, <em>1)</em>, <em>stretch=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp2dFast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp2dFast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create warped mapping for a spatial 2D input image.
+The transformation is done w.r.t to the <em>center</em> of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
+<blockquote>
+<div><p>The array must be 3-dimensional (ch,x,y) and larger/equal the patch size</p>
+</div></blockquote>
+<p><strong>patch_size: 2-tuple</strong></p>
+<blockquote>
+<div><p>Patch size <em>excluding</em> channel: (px, py).
+The warping result of the input image is cropped to this size</p>
+</div></blockquote>
+<p><strong>rot: float</strong></p>
+<blockquote>
+<div><p>Rotation angle in deg for rotation around z-axis</p>
+</div></blockquote>
+<p><strong>shear: float</strong></p>
+<blockquote>
+<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
+</div></blockquote>
+<p><strong>scale: 2-tuple of float</strong></p>
+<blockquote>
+<div><p>Scale per axis</p>
+</div></blockquote>
+<p><strong>stretch: 2-tuple of float</strong></p>
+<blockquote>
+<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
+to the outer border of image per axis. The 4 entry correspond to:</p>
+<ul class="simple">
+<li>X stretching depending on Y</li>
+<li>Y stretching depending on X</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img: np.ndarray</p>
+<blockquote class="last">
+<div><p>Warped image (cropped to patch_size)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.warp2dJoint">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">warp2dJoint</code><span class="sig-paren">(</span><em>img</em>, <em>lab</em>, <em>patch_size</em>, <em>rot</em>, <em>shear</em>, <em>scale</em>, <em>stretch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp2dJoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp2dJoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
+<blockquote>
+<div><p>Image data
+The array must be 3-dimensional (ch,x,y) and larger/equal the patch size</p>
+</div></blockquote>
+<p><strong>lab: array</strong></p>
+<blockquote>
+<div><p>Label data (with offsets subtracted)</p>
+</div></blockquote>
+<p><strong>patch_size: 2-tuple</strong></p>
+<blockquote>
+<div><p>Patch size <em>excluding</em> channel for the image: (px, py).
+The warping result of the input image is cropped to this size</p>
+</div></blockquote>
+<p><strong>rot: float</strong></p>
+<blockquote>
+<div><p>Rotation angle in deg for rotation around z-axis</p>
+</div></blockquote>
+<p><strong>shear: float</strong></p>
+<blockquote>
+<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
+</div></blockquote>
+<p><strong>scale: 3-tuple of float</strong></p>
+<blockquote>
+<div><p>Scale per axis</p>
+</div></blockquote>
+<p><strong>stretch: 4-tuple of float</strong></p>
+<blockquote>
+<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
+to the outer border of image per axis. The 4 entry correspond to:</p>
+<ul class="simple">
+<li>X stretching depending on Y</li>
+<li>Y stretching depending on X</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img, lab: np.ndarrays</p>
+<blockquote class="last">
+<div><p>Warped image and labels (cropped to patch_size)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.warp3dFast">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">warp3dFast</code><span class="sig-paren">(</span><em>img</em>, <em>patch_size</em>, <em>rot=0</em>, <em>shear=0</em>, <em>scale=(1</em>, <em>1</em>, <em>1)</em>, <em>stretch=(0</em>, <em>0</em>, <em>0</em>, <em>0)</em>, <em>twist=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp3dFast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp3dFast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create warped mapping for a spatial 3D input image.
+The transformation is done w.r.t to the <em>center</em> of the image.</p>
+<p>Note that some transformations are not applied to the z-axis. This makes this function simpler
+and it is also better for anisotropic data as the different scales are not mixed up then.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
+<blockquote>
+<div><p>The array must be 4-dimensional (z,ch,x,y) and larger/equal the patch size</p>
+</div></blockquote>
+<p><strong>patch_size: 3-tuple</strong></p>
+<blockquote>
+<div><p>Patch size <em>excluding</em> channel: (pz, px, py).
+The warping result of the input image is cropped to this size</p>
+</div></blockquote>
+<p><strong>rot: float</strong></p>
+<blockquote>
+<div><p>Rotation angle in deg for rotation around z-axis</p>
+</div></blockquote>
+<p><strong>shear: float</strong></p>
+<blockquote>
+<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
+</div></blockquote>
+<p><strong>scale: 3-tuple of float</strong></p>
+<blockquote>
+<div><p>Scale per axis</p>
+</div></blockquote>
+<p><strong>stretch: 4-tuple of float</strong></p>
+<blockquote>
+<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
+to the outer border of image per axis. The 4 entry correspond to:</p>
+<ul class="simple">
+<li>X stretching depending on Y</li>
+<li>Y stretching depending on X</li>
+<li>X stretching depending on Z</li>
+<li>Y stretching depending on Z</li>
+</ul>
+</div></blockquote>
+<p><strong>twist: float</strong></p>
+<blockquote>
+<div><p>Dependence of the rotation angle on z in deg from center to outer border</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img: np.ndarray</p>
+<blockquote class="last">
+<div><p>Warped array (cropped to patch_size)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.warp3dJoint">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">warp3dJoint</code><span class="sig-paren">(</span><em>img</em>, <em>lab</em>, <em>patch_size</em>, <em>rot=0</em>, <em>shear=0</em>, <em>scale=(1</em>, <em>1</em>, <em>1)</em>, <em>stretch=(0</em>, <em>0</em>, <em>0</em>, <em>0)</em>, <em>twist=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp3dJoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp3dJoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
+<blockquote>
+<div><p>Image data
+The array must be 4-dimensional (ch,z,x,y) and larger/equal the patch size</p>
+</div></blockquote>
+<p><strong>lab: array</strong></p>
+<blockquote>
+<div><p>Label data (with offsets subtracted)</p>
+</div></blockquote>
+<p><strong>patch_size: 3-tuple</strong></p>
+<blockquote>
+<div><p>Patch size <em>excluding</em> channel for the image: (pz, px, py).
+The warping result of the input image is cropped to this size</p>
+</div></blockquote>
+<p><strong>rot: float</strong></p>
+<blockquote>
+<div><p>Rotation angle in deg for rotation around z-axis</p>
+</div></blockquote>
+<p><strong>shear: float</strong></p>
+<blockquote>
+<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
+</div></blockquote>
+<p><strong>scale: 3-tuple of float</strong></p>
+<blockquote>
+<div><p>Scale per axis</p>
+</div></blockquote>
+<p><strong>stretch: 4-tuple of float</strong></p>
+<blockquote>
+<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
+to the outer border of image per axis. The 4 entry correspond to:</p>
+<ul class="simple">
+<li>X stretching depending on Y</li>
+<li>Y stretching depending on X</li>
+<li>X stretching depending on Z</li>
+<li>Y stretching depending on Z</li>
+</ul>
+</div></blockquote>
+<p><strong>twist: float</strong></p>
+<blockquote>
+<div><p>Dependence of the rotation angle on z in deg from center to outer border</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img, lab: np.ndarrays</p>
+<blockquote class="last">
+<div><p>Warped image and labels (cropped to patch_size)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.getCornerIx">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">getCornerIx</code><span class="sig-paren">(</span><em>sh</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#getCornerIx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.getCornerIx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns array-indices of corner elements for n-dim shape</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.getRequiredPatchSize">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">getRequiredPatchSize</code><span class="sig-paren">(</span><em>patch_size</em>, <em>rot</em>, <em>shear</em>, <em>scale</em>, <em>stretch</em>, <em>twist=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#getRequiredPatchSize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.getRequiredPatchSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given desired patch size and warping parameters:
+return required size for warping input patch</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.getWarpParams">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">getWarpParams</code><span class="sig-paren">(</span><em>patch_size</em>, <em>amount=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#getWarpParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.getWarpParams" title="Permalink to this definition">¶</a></dt>
+<dd><p>To be called from CNNData. Get warping parameters + required warping input patch size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.test">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-elektronn.training">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-elektronn.training" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="elektronn.net.html" title="elektronn.net package"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >ELEKTRONN API Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

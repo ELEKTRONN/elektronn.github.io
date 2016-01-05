@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -28,13 +28,13 @@
     <link rel="next" title="Examples" href="Examples.html" />
     <link rel="prev" title="Getting Started" href="GettingStarted.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,19 +44,16 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="Examples.html" title="Examples"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="GettingStarted.html" title="Getting Started"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -74,12 +71,14 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="Examples.html"
                         title="next chapter">Examples</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Installation.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Installation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -98,7 +97,7 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="installation">
 <span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
@@ -107,27 +106,27 @@
 <ul>
 <li><p class="first">Install below dependencies in advance (theano optional)</p>
 </li>
-<li><p class="first">Install ELEKTRONN from the repo using <tt class="docutils literal"><span class="pre">pip</span></tt> (options can specify target locations, editable installs etc., see <tt class="docutils literal"><span class="pre">man</span> <span class="pre">pip</span></tt>):</p>
+<li><p class="first">Install ELEKTRONN from the repo using python <code class="docutils literal"><span class="pre">pip</span></code> (options can specify target locations, editable installs etc., see <code class="docutils literal"><span class="pre">man</span> <span class="pre">pip</span></code>):</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install https://github.com/&lt;???&gt;.zip [options]
 </pre></div>
 </div>
-<p>This will install ELEKTRONN as a python package. Alternatively you can download the files, add the folder to <tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt> and directly use the code.</p>
+<p>This will install ELEKTRONN as a python package. Alternatively you can download the files, add the folder to <code class="docutils literal"><span class="pre">PYTHONPATH</span></code> and directly use the code.</p>
 </li>
 <li><p class="first">Configure theano as explained below</p>
 </li>
-<li><p class="first">You can optionally create a user configuration file by editing the file <tt class="docutils literal"><span class="pre">examples/config_template.py</span></tt> and put it into your home as <tt class="docutils literal"><span class="pre">elektronn.config</span></tt> (see <a class="reference internal" href="Pipeline.html#configuration"><em>Configuration of Parameters</em></a>)</p>
+<li><p class="first">You can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and putting it into your home as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span>Configuration of Parameters</span></a>)</p>
 </li>
-<li><p class="first">Try out one of the <a class="reference internal" href="Examples.html#examples"><em>examples</em></a> to confirm everything works</p>
+<li><p class="first">Try out one of the <a class="reference internal" href="Examples.html#examples"><span>examples</span></a> to confirm everything works</p>
 </li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Warping augmentations use a little shared library, written in plain C (not as a python extension). As python setuptools cannot compile C libs which are <strong>not</strong> python extensions, the current way to ship this is to include a pre-compiled binary as a &#8220;data&#8221; file in the package - but that might not be compatible to your system. Upon import it is tested whether this binary can be used; if not, an messages is printed. In this case you can manually compile the binary using <tt class="docutils literal"><span class="pre">gcc</span> <span class="pre">warping.c</span> <span class="pre">-shared</span> <span class="pre">-fPIC</span> <span class="pre">-o</span> <span class="pre">_warping.so</span> <span class="pre">-O3</span></tt> and put it into the training directory.</p>
+<p class="last">Warping augmentations use a little shared library, written in plain C (not as a python extension). Since python setuptools cannot compile C libs which are <strong>not</strong> python extensions, the current way to ship this is to include a pre-compiled binary as a &#8220;data&#8221; file in the package - but that might not be compatible to your system. Upon import it is tested whether this binary can be used; if not, an messages is printed. In this case you can manually compile the binary using <code class="docutils literal"><span class="pre">gcc</span> <span class="pre">warping.c</span> <span class="pre">-shared</span> <span class="pre">-fPIC</span> <span class="pre">-o</span> <span class="pre">_warping.so</span> <span class="pre">-O3</span></code> and put it into the training directory.</p>
 </div>
 </div>
 <div class="section" id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
-<p>ELEKTRONN has dependencies which are sometimes difficult to install using <tt class="docutils literal"><span class="pre">pip</span></tt> (e.g. because <tt class="docutils literal"><span class="pre">pip</span></tt> does not install system-level dependencies). You can try:</p>
+<p>ELEKTRONN has dependencies which are sometimes difficult to install using <code class="docutils literal"><span class="pre">pip</span></code> (e.g. because <code class="docutils literal"><span class="pre">pip</span></code> does not install system-level dependencies). You can try:</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install -r requirements.txt
 </pre></div>
 </div>
@@ -139,28 +138,28 @@
 <div class="highlight-python"><div class="highlight"><pre>apt-get install python-numpy python-scipy python-matplotlib python-h5py
 </pre></div>
 </div>
-<p>The dependencies are also listed in the file <tt class="docutils literal"><span class="pre">requirements.txt</span></tt></p>
+<p>The dependencies are listed in the file <code class="docutils literal"><span class="pre">requirements.txt</span></code></p>
+<p>An comfortable way to setup a python environment with common scientific python packages is e.g. the <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda distribution by Continuum</a>. If you use Anaconda you need the <code class="docutils literal"><span class="pre">h5py</span></code>-package additionally.</p>
 </div>
 <div class="section" id="theano">
 <h2>Theano<a class="headerlink" href="#theano" title="Permalink to this headline">¶</a></h2>
-<p>Unlike the above dependencies, theano will be installed by our setup script / <tt class="docutils literal"><span class="pre">pip</span></tt> (mainly in order to make sure the version is newer than <tt class="docutils literal"><span class="pre">0.7</span></tt>). But optionally you can install it manually prior to installing ELEKTRONN. If let our setup install theano, you still have to do configuration steps below and install CUDA to use the GPU (more details at <a class="reference external" href="http://www.deeplearning.net/software/theano/install.html#install">theano&#8217;s installation instructions</a>):</p>
+<p>Unlike the above dependencies, theano will be installed by our setup script / <code class="docutils literal"><span class="pre">pip</span></code> (mainly in order to make sure the version is newer than <code class="docutils literal"><span class="pre">0.7</span></code>). But optionally you can install it manually prior to installing ELEKTRONN.</p>
+<p>If you let our setup install theano, you nonetheless have to do the configuration steps below and install CUDA to use the GPU (more details at <a class="reference external" href="http://www.deeplearning.net/software/theano/install.html#install">theano&#8217;s installation instructions</a>):</p>
 <blockquote>
 <div><ul>
-<li><p class="first">Installation of  Nvidia&#8217;s CUDA toolkit: <tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">nvidia-cuda-toolkit</span></tt> or manually from the <a class="reference external" href="https://developer.nvidia.com/cuda-downloads">Nvidia website</a>. The next to points assume for illustration purpose that you have installed the toolkit in the path <tt class="docutils literal"><span class="pre">/usr/local/centos-cuda/cuda-6.5</span></tt>.</p>
+<li><p class="first">Install Nvidia&#8217;s CUDA toolkit: <code class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">nvidia-cuda-toolkit</span></code> or manually from the <a class="reference external" href="https://developer.nvidia.com/cuda-downloads">Nvidia website</a>. The next two points assume for illustration purpose that you have installed the toolkit in the path <code class="docutils literal"><span class="pre">/usr/local/centos-cuda/cuda-6.5</span></code>.</p>
 </li>
-<li><p class="first">Set the paths to the toolkit, e.g. by adding to you <tt class="docutils literal"><span class="pre">.bashrc</span></tt>-file:</p>
+<li><p class="first">Set the paths to the toolkit, e.g. by adding to you <code class="docutils literal"><span class="pre">.bashrc</span></code>-file:</p>
 <div class="highlight-python"><div class="highlight"><pre>export PATH=/usr/local/centos-cuda/cuda-6.5/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/centos-cuda/cuda-6.5/lib64:$LD_LIBRARY_PATH
 </pre></div>
 </div>
 </li>
-<li><p class="first">Configure some things in a <tt class="docutils literal"><span class="pre">.theanorc</span></tt>-file (in your user home):</p>
+<li><p class="first">Configure your <code class="docutils literal"><span class="pre">.theanorc</span></code>-file. E.g. create new file in your user home ad put the following into it:</p>
 <div class="highlight-python"><div class="highlight"><pre>[global]
-floatX = float32 # double is much slower and not needed for CNNs/NNs
+floatX = float32 # CNNs/NNs don&#39;t do double
 device = gpu # or gpu0, gpu1,...
 exception_verbosity=high
-linker = cvm_nogc
-allow_gc = False # gives better performance
 
 [nvcc]
 fastmath = True
@@ -183,7 +182,7 @@ root = /usr/local/centos-cuda/cuda-6.5/
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -193,20 +192,17 @@ root = /usr/local/centos-cuda/cuda-6.5/
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
           <a href="Examples.html" title="Examples"
              >next</a> |</li>
         <li class="right" >
           <a href="GettingStarted.html" title="Getting Started"
              >previous</a> |</li>
-        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

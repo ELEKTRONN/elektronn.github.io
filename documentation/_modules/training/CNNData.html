@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,17 +68,16 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for training.CNNData</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">gc</span>
@@ -99,9 +95,16 @@
 <span class="k">except</span><span class="p">:</span>
   <span class="n">fadvise_avail</span> <span class="o">=</span> <span class="bp">False</span>
 
+<span class="k">try</span><span class="p">:</span>
+  <span class="kn">import</span> <span class="nn">malis</span>
+  <span class="n">malis_avail</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="n">malis_avail</span> <span class="o">=</span> <span class="bp">False</span>
+
+
 <span class="c">###############################################################################################</span>
 
-<div class="viewcode-block" id="plotTrainingTarget"><a class="viewcode-back" href="../../_Training.html#training.CNNData.plotTrainingTarget">[docs]</a><span class="k">def</span> <span class="nf">plotTrainingTarget</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="plotTrainingTarget"><a class="viewcode-back" href="../../out2/Training.html#training.CNNData.plotTrainingTarget">[docs]</a><span class="k">def</span> <span class="nf">plotTrainingTarget</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Plots raw image vs label to check if valid batches are produced.</span>
 <span class="sd">  Raw data is also shown overlaid with labels</span>
@@ -148,7 +151,7 @@
 
   
 <span class="k">def</span> <span class="nf">_getValid3dTranspose</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ps</span><span class="p">):</span>
-  <span class="sd">&quot;&quot;&quot;For 3d ``arr`` and 2d patchsize ``ps`` returns list of valid transposes that cover the patchsize&quot;&quot;&quot;</span>
+  <span class="sd">&quot;&quot;&quot;For 3d ``arr`` and 2d patchsize ``ps`` returns list of valid transposes that cover the patch size&quot;&quot;&quot;</span>
   <span class="n">all_T</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)]</span>
   <span class="n">possible_T</span> <span class="o">=</span> <span class="p">[]</span>
   <span class="k">for</span> <span class="n">T</span> <span class="ow">in</span> <span class="n">all_T</span><span class="p">:</span>
@@ -194,8 +197,8 @@
 
 <span class="k">def</span> <span class="nf">_greyAugment</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">rng</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Performs grey value (historgramme) augmentations on ``d``. This is only applied to ``channels``</span>
-<span class="sd">  (list of channels indics), ``rng`` is a random number generator</span>
+<span class="sd">  Performs grey value (historgram) augmentations on ``d``. This is only applied to ``channels``</span>
+<span class="sd">  (list of channels indices), ``rng`` is a random number generator</span>
 <span class="sd">  &quot;&quot;&quot;</span>
   <span class="k">if</span> <span class="n">channels</span> <span class="o">==</span> <span class="p">[]:</span>
     <span class="k">return</span> <span class="n">d</span>
@@ -217,7 +220,7 @@
   <span class="k">return</span> <span class="n">d</span>
 
 
-<span class="k">def</span> <span class="nf">_stripCubes</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">off</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_stripCubes</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">ldtype</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Determine minimal trainable image data size (depending on the size of labels and CNN offset).</span>
 <span class="sd">  It is assumed that labels lie in the center of the corresponding raw image cube.</span>
@@ -249,7 +252,7 @@
   <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">l_cut</span><span class="p">):</span>
     <span class="k">print</span> <span class="s">&quot;Warning: the CNN offset is so large that labels are cut off!</span><span class="se">\n</span><span class="s">On each side of the cube </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">l_cut</span><span class="p">)</span>
   <span class="n">new_l_sh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span> <span class="c">#map(lambda x: x[0] - 2*x[1] , zip(np.array(d.shape)[[0,2,3]], off))</span>
-  <span class="n">new_l</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_l_sh</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+  <span class="n">new_l</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">new_l_sh</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">ldtype</span><span class="p">)</span>
   <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="n">l_cut</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">l_cut</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
         <span class="n">l_cut</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">l_cut</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
         <span class="n">l_cut</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">l_cut</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
@@ -299,8 +302,62 @@
         
   <span class="k">return</span> <span class="p">[</span><span class="n">treatArray</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data_list</span><span class="p">]</span>                              
   
+  
+<span class="k">def</span> <span class="nf">_make_affinities</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">nhood</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">size_thresh</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct an affinity graph from a segmentation (IDs) </span>
+<span class="sd">    </span>
+<span class="sd">    Segments with ID 0 are regarded as disconnected</span>
+<span class="sd">    The spatial shape of the affinity graph is the same as of seg_gt.</span>
+<span class="sd">    This means that some edges are are undefined and therefore treated as disconnected.</span>
+<span class="sd">    If the offsets in nhood are positive, the edges with largest spatial index are undefined.</span>
+<span class="sd">    </span>
+<span class="sd">    Connected components is run on the affgraph to relabel the IDs locally.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    </span>
+<span class="sd">    labels: 4d np.ndarray, int (any precision)</span>
+<span class="sd">        Volumes of segmentation IDs (bs, z, x, y)</span>
+<span class="sd">    nhood: 2d np.ndarray, int</span>
+<span class="sd">        Neighbourhood pattern specifying the edges in the affinity graph</span>
+<span class="sd">        Shape: (#edges, ndim)</span>
+<span class="sd">        nhood[i] contains the displacement coordinates of edge i</span>
+<span class="sd">        The number and order of edges is arbitrary</span>
+<span class="sd">    size_thresh: int</span>
+<span class="sd">        Size filters for connected compontens, smaller objects are mapped to BG</span>
+<span class="sd">        </span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    </span>
+<span class="sd">    aff: 5d np.ndarray int16</span>
+<span class="sd">        Affinity graph of shape (bs, #edges, x, y, z)</span>
+<span class="sd">        1: connected, 0: disconnected  </span>
+<span class="sd">    seg_gt:</span>
+<span class="sd">        4d np.ndarray int16</span>
+<span class="sd">        Affinity graph of shape (bs, x, y, z)</span>
+<span class="sd">        Relabelling of components     </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">malis_avail</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Please install malis to use affinities&quot;</span><span class="p">)</span>
+        
+    <span class="k">if</span> <span class="n">nhood</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">nhood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        
+    <span class="n">aff_sh</span> <span class="o">=</span> <span class="p">[</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nhood</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">out_aff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">aff_sh</span><span class="p">,</span>       <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+    <span class="n">out_seg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+        <span class="n">out_aff</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">malis</span><span class="o">.</span><span class="n">seg_to_affgraph</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">nhood</span><span class="p">)</span>
+        <span class="c"># we throw away the seg sizes</span>
+        <span class="n">out_seg</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">_</span> <span class="o">=</span> <span class="n">malis</span><span class="o">.</span><span class="n">affgraph_to_seg</span><span class="p">(</span><span class="n">out_aff</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">nhood</span><span class="p">,</span> <span class="n">size_thresh</span><span class="p">)</span>       
+    <span class="k">return</span> <span class="n">out_aff</span><span class="p">,</span> <span class="n">out_seg</span>
+  
+  
 
-<div class="viewcode-block" id="CNNData"><a class="viewcode-back" href="../../_Training.html#training.CNNData.CNNData">[docs]</a><span class="k">class</span> <span class="nc">CNNData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="CNNData"><a class="viewcode-back" href="../../out2/Training.html#training.CNNData.CNNData">[docs]</a><span class="k">class</span> <span class="nc">CNNData</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Patch creation and data handling interface for image like training data</span>
 
@@ -310,7 +367,7 @@
 <span class="sd">  patch_size: 2/3-tuple</span>
 <span class="sd">    Specifying CNN input shape of a single example, **without** channels: (x,y)/(z,x,y)</span>
 <span class="sd">  stride: 2/3-tuple</span>
-<span class="sd">    Specifying CNN ouptut stride. May be ``None`` for scalar labels</span>
+<span class="sd">    Specifying CNN output stride. May be ``None`` for scalar labels</span>
 <span class="sd">  offset: 2/3-tuple</span>
 <span class="sd">    Specifying overall CNN convolution border. May be ``None`` for scalar labels</span>
 <span class="sd">  n_dim: int</span>
@@ -322,19 +379,24 @@
 <span class="sd">  mode: str</span>
 <span class="sd">    Mode that describes the kind of data and labels: img-img or img-scalar. If the labels are</span>
 <span class="sd">    scalar but the data is a stack (along z-axis) of many examples, the many scalar labels should be</span>
-<span class="sd">    stacked to a vector. For vect-scalar training use the ``TrainData``-class insted.</span>
+<span class="sd">    stacked to a vector. For vect-scalar training use the ``TrainData``-class instead.</span>
 <span class="sd">  zchxy_order: Bool</span>
 <span class="sd">    If the data files are already in memory layout (z,ch,x,y)/(z,x,y), this option must be set to True, </span>
 <span class="sd">    which makes data loading faster.</span>
 <span class="sd">  border_mode: string</span>
 <span class="sd">    For img-scalar training: specifies how to treat images that don&#39;t match a valid CNN input size</span>
 <span class="sd">  upright_x: Bool</span>
-<span class="sd">    If ``True``, image augmentation leaves the upright position of natural images intatc, e.g. they are</span>
+<span class="sd">    If ``True``, image augmentation leaves the upright position of natural images intact, e.g. they are</span>
 <span class="sd">    only mirrored horizontally, not vertically. Note: the horizontal direction corresponds to &#39;y&#39; (because the</span>
 <span class="sd">    &#39;x&#39; comes before &#39;y&#39; and the vertical comes before horizontal in numpy)!</span>
+<span class="sd">  float_label: Bool</span>
+<span class="sd">     Whether to return labels as float32 (for regression) or int16 (for classification)</span>
+<span class="sd">  affinity: str/False</span>
+<span class="sd">     False/&#39;affinity&#39;/&#39;malis&#39;: malis returs additionally the segmentation IDs</span>
 <span class="sd">  &quot;&quot;&quot;</span>
-  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">n_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">anistropic_data</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-               <span class="n">mode</span><span class="o">=</span><span class="s">&#39;img-img&#39;</span><span class="p">,</span> <span class="n">zchxy_order</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">border_mode</span><span class="o">=</span><span class="s">&#39;crop&#39;</span><span class="p">,</span> <span class="n">pre_process</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">upright_x</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patch_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">n_dim</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">anistropic_data</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+               <span class="n">mode</span><span class="o">=</span><span class="s">&#39;img-img&#39;</span><span class="p">,</span> <span class="n">zchxy_order</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">border_mode</span><span class="o">=</span><span class="s">&#39;crop&#39;</span><span class="p">,</span> <span class="n">pre_process</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">upright_x</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+               <span class="n">float_label</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">=</span> <span class="n">n_dim</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="s">&#39;__len__&#39;</span><span class="p">):</span>
@@ -347,21 +409,25 @@
       <span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">offset</span><span class="p">,)</span> <span class="o">*</span> <span class="n">n_dim</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">stride</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stride</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span><span class="p">:</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">stride</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">stride</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+      
     <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span>      <span class="o">=</span> <span class="n">n_lab</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">aniso</span>      <span class="o">=</span> <span class="n">anistropic_data</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>       <span class="o">=</span> <span class="n">mode</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">zchxy_order</span> <span class="o">=</span> <span class="n">zchxy_order</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">border_mode</span> <span class="o">=</span> <span class="n">border_mode</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span> <span class="o">=</span> <span class="n">pre_process</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">upright_x</span>     <span class="o">=</span> <span class="n">upright_x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">upright_x</span>   <span class="o">=</span> <span class="n">upright_x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span>      <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span> <span class="k">if</span> <span class="n">float_label</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">affinity</span>    <span class="o">=</span> <span class="n">affinity</span>
     <span class="k">if</span> <span class="n">n_dim</span><span class="o">==</span><span class="mi">3</span> <span class="ow">and</span> <span class="n">upright_x</span><span class="p">:</span>
       <span class="k">print</span> <span class="s">&quot;Warning: the data is 3-dimensional and the &#39;upright_x&#39;-flag is active, but it works only for 2d!&quot;</span>
       
     <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mf">0.0001</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">*</span><span class="mf">0.0001</span><span class="p">))</span><span class="o">*</span><span class="mi">4294967295</span><span class="p">))</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">gc_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">gc_count</span> <span class="o">=</span> <span class="mi">1</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">_sampling_weight</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span>  <span class="o">=</span> <span class="bp">None</span>
@@ -387,7 +453,7 @@
             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_count</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="CNNData.addDataFromFile"><a class="viewcode-back" href="../../_Training.html#training.CNNData.CNNData.addDataFromFile">[docs]</a>  <span class="k">def</span> <span class="nf">addDataFromFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_path</span><span class="p">,</span> <span class="n">l_path</span><span class="p">,</span> <span class="n">d_files</span><span class="p">,</span> <span class="n">l_files</span><span class="p">,</span> <span class="n">cube_prios</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+<div class="viewcode-block" id="CNNData.addDataFromFile"><a class="viewcode-back" href="../../out2/Training.html#training.CNNData.CNNData.addDataFromFile">[docs]</a>  <span class="k">def</span> <span class="nf">addDataFromFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_path</span><span class="p">,</span> <span class="n">l_path</span><span class="p">,</span> <span class="n">d_files</span><span class="p">,</span> <span class="n">l_files</span><span class="p">,</span> <span class="n">cube_prios</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                       <span class="n">valid_cubes</span><span class="o">=</span><span class="p">[],</span> <span class="n">downsample_xy</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parameters</span>
@@ -465,7 +531,7 @@
     <span class="k">print</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
 
 </div>
-<div class="viewcode-block" id="CNNData.addDataFromNdarray"><a class="viewcode-back" href="../../_Training.html#training.CNNData.CNNData.addDataFromNdarray">[docs]</a>  <span class="k">def</span> <span class="nf">addDataFromNdarray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_train</span><span class="p">,</span> <span class="n">l_train</span><span class="p">,</span> <span class="n">d_valid</span><span class="o">=</span><span class="p">[],</span> <span class="n">l_valid</span><span class="o">=</span><span class="p">[],</span> <span class="n">cube_prios</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CNNData.addDataFromNdarray"><a class="viewcode-back" href="../../out2/Training.html#training.CNNData.CNNData.addDataFromNdarray">[docs]</a>  <span class="k">def</span> <span class="nf">addDataFromNdarray</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_train</span><span class="p">,</span> <span class="n">l_train</span><span class="p">,</span> <span class="n">d_valid</span><span class="o">=</span><span class="p">[],</span> <span class="n">l_valid</span><span class="o">=</span><span class="p">[],</span> <span class="n">cube_prios</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -479,7 +545,7 @@
 <span class="sd">    l_valid: list of numpy arrays</span>
 <span class="sd">      the labels     for validation [OPTIONAL]</span>
 <span class="sd">    cube_prios: list of floats</span>
-<span class="sd">      Default: Nonen--&gt; probability of sampling Training data from a cube is proportional to its size</span>
+<span class="sd">      Default: None --&gt; probability of sampling Training data from a cube is proportional to its size</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">d_train</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">([]):</span>
         <span class="n">d_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">d_train</span><span class="p">]</span>
@@ -525,28 +591,29 @@
 
 </div>
   <span class="k">def</span> <span class="nf">_allocBatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
-    <span class="n">off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
     <span class="n">patch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
       
       <span class="n">images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ch</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float32&#39;</span><span class="p">)</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span><span class="p">:</span>
+        <span class="n">off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
         <span class="n">label</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">off</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-                           <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;int16&#39;</span><span class="p">)</span>
+                           <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
       <span class="k">else</span><span class="p">:</span>
-        <span class="n">label</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;int16&#39;</span><span class="p">)</span>
+        <span class="n">label</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
 
     <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
       <span class="n">images</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_ch</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float32&#39;</span><span class="p">)</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span><span class="p">:</span>
+        <span class="n">off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
         <span class="n">label</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">patch_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">off</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                           <span class="n">patch_size</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">off</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;int16&#39;</span><span class="p">)</span>
+                           <span class="n">patch_size</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">off</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
       <span class="k">else</span><span class="p">:</span>
-        <span class="n">label</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;int16&#39;</span><span class="p">)</span>
+        <span class="n">label</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
                         
     <span class="k">return</span> <span class="n">images</span><span class="p">,</span> <span class="n">label</span>
     
-<div class="viewcode-block" id="CNNData.getbatch"><a class="viewcode-back" href="../../_Training.html#training.CNNData.CNNData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">,</span> <span class="n">strided</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">grey_augment_channels</span><span class="o">=</span><span class="p">[],</span>
+<div class="viewcode-block" id="CNNData.getbatch"><a class="viewcode-back" href="../../out2/Training.html#training.CNNData.CNNData.getbatch">[docs]</a>  <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s">&#39;train&#39;</span><span class="p">,</span> <span class="n">strided</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">grey_augment_channels</span><span class="o">=</span><span class="p">[],</span>
                <span class="n">ret_info</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">warp_on</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_thresh</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ret_example_weights</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Prepares a batch by randomly sampling, shifting and augmenting patches from the data</span>
@@ -622,12 +689,18 @@
       
     <span class="k">if</span> <span class="n">strided</span><span class="p">:</span>
       <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stridedLabels</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-    
-    <span class="bp">self</span><span class="o">.</span><span class="n">gc_count</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gc_count</span><span class="o">%</span><span class="mi">1000</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-     <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+ 
 
     <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">images</span><span class="p">,</span> <span class="n">label</span><span class="p">]</span>
+    
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">affinity</span><span class="o">==</span><span class="s">&#39;malis&#39;</span><span class="p">:</span>
+      <span class="n">aff</span><span class="p">,</span> <span class="n">seg</span> <span class="o">=</span> <span class="n">_make_affinities</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="c"># [bs, z, x, y, 3]</span>
+      <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">images</span><span class="p">,</span> <span class="n">aff</span><span class="p">,</span> <span class="n">seg</span><span class="p">]</span>
+      
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">affinity</span><span class="o">==</span><span class="s">&#39;affinity&#39;</span><span class="p">:</span>
+      <span class="n">aff</span><span class="p">,</span> <span class="n">seg</span> <span class="o">=</span> <span class="n">_make_affinities</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="c"># [bs, z, x, y, 3]</span>
+      <span class="n">ret</span> <span class="o">=</span> <span class="p">[</span><span class="n">images</span><span class="p">,</span> <span class="n">aff</span><span class="p">]</span>
+        
     <span class="k">if</span> <span class="n">ret_info</span><span class="p">:</span> <span class="c"># info is now a list(bs) of tuples(2)</span>
       <span class="n">infos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_3d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">infos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">))</span> <span class="c"># (bs, 2, 5)</span>
       <span class="n">info1</span> <span class="o">=</span> <span class="n">infos</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
@@ -637,13 +710,17 @@
     <span class="k">if</span> <span class="n">ret_example_weights</span><span class="p">:</span>
       <span class="n">ret</span> <span class="o">+=</span> <span class="p">[</span><span class="n">weights</span><span class="p">,]</span>
       
+    <span class="bp">self</span><span class="o">.</span><span class="n">gc_count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">gc_count</span><span class="o">%</span><span class="mi">1000</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+     <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
+      
     <span class="k">return</span> <span class="n">ret</span>
 
 </div>
   <span class="k">def</span> <span class="nf">_warpAugment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">warp_on</span><span class="p">,</span> <span class="n">ignore_thresh</span><span class="p">,</span> <span class="n">upright_x</span><span class="p">):</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">warp_on</span> <span class="ow">is</span> <span class="bp">True</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">warp_on</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span> <span class="c"># always warp</span>
       <span class="n">do_warp</span><span class="o">=</span><span class="bp">True</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">warp_on</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span> <span class="c"># warp only a fraction of excamples</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">warp_on</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span> <span class="c"># warp only a fraction of examples</span>
       <span class="n">do_warp</span><span class="o">=</span><span class="bp">True</span> <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">&lt;</span><span class="n">warp_on</span><span class="p">)</span> <span class="k">else</span> <span class="bp">False</span>
     <span class="k">else</span><span class="p">:</span> <span class="c"># never warp</span>
       <span class="n">do_warp</span><span class="o">=</span><span class="bp">False</span>
@@ -654,7 +731,7 @@
     <span class="k">elif</span> <span class="n">do_warp</span><span class="p">:</span>      
       <span class="n">ext_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span> <span class="o">=</span> <span class="n">getWarpParams</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span><span class="p">)</span>
       <span class="k">try</span><span class="p">:</span>
-        <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cutPatch</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">ext_size</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="n">ignore_thresh</span><span class="p">)</span>
+        <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cutPatch</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">ps</span><span class="o">=</span><span class="n">ext_size</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="n">ignore_thresh</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
           <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">warp2dJoint</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">)</span> <span class="c"># ignores label if non-image</span>
         <span class="k">else</span><span class="p">:</span>
@@ -669,7 +746,7 @@
     
     <span class="k">return</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span>    
 
-<div class="viewcode-block" id="CNNData.getExampleWeights"><a class="viewcode-back" href="../../_Training.html#training.CNNData.CNNData.getExampleWeights">[docs]</a>  <span class="k">def</span> <span class="nf">getExampleWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_rec</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">gain</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">blurr</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="CNNData.getExampleWeights"><a class="viewcode-back" href="../../out2/Training.html#training.CNNData.CNNData.getExampleWeights">[docs]</a>  <span class="k">def</span> <span class="nf">getExampleWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_rec</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">gain</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span> <span class="n">blurr</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="n">off</span>           <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
     <span class="n">previous_pred</span> <span class="o">=</span> <span class="n">raw_rec</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c"># the last channel is the prediction  </span>
     <span class="n">previous_pred</span> <span class="o">=</span> <span class="n">previous_pred</span><span class="p">[:,</span><span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="o">-</span><span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
@@ -689,7 +766,7 @@
     <span class="k">return</span> <span class="n">weights</span>
    </div>
   <span class="k">def</span> <span class="nf">_getcube</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Draw an example cube according to sampling weight on trainig data, or randomly on valid data&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Draw an example cube according to sampling weight on training data, or randomly on valid data&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">source</span><span class="o">==</span><span class="s">&#39;train&#39;</span><span class="p">:</span>
       <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span>
       <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sampling_weight</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -714,12 +791,12 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Cut a patch from a cube of data and label</span>
 <span class="sd">    To enable deformations the patch must be cut with ``ps`` shape. ``thresh`` specifies threshold on negative</span>
-<span class="sd">    (i.e. ignore) labels, then a nother interation ``it`` is started (but maximal 10)</span>
+<span class="sd">    (i.e. ignore) labels, then another iteration ``it`` is started (but maximal 10)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">ps</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
       <span class="n">ps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span>
       
-    <span class="n">off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
+
 
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -734,6 +811,7 @@
                       <span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                       <span class="n">shift</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span><span class="p">:</span>
+          <span class="n">off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
           <span class="n">cut_lab</span> <span class="o">=</span> <span class="n">lab</span><span class="p">[</span><span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                         <span class="n">off</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">off</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
                         <span class="n">off</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">off</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
@@ -765,6 +843,7 @@
                       <span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
        
        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span><span class="p">:</span>
+         <span class="n">off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
          <span class="n">cut_lab</span> <span class="o">=</span> <span class="n">labT</span><span class="p">[</span><span class="n">z_pos</span><span class="p">,</span>
                       <span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">off</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                       <span class="n">off</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">shift</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">ps</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">off</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
@@ -799,10 +878,12 @@
   <span class="k">def</span> <span class="nf">_read_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d_path</span><span class="p">,</span> <span class="n">l_path</span><span class="p">,</span> <span class="n">d_files</span><span class="p">,</span> <span class="n">l_files</span><span class="p">,</span> <span class="n">downsample_xy</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Image files on disk are expected to be in order (ch,x,y,z) or (x,y,z)</span>
-<span class="sd">    But image stacks are returned as (z,ch,x,y) and label as (z,x,y,) irrespecitve of the order in the file.</span>
+<span class="sd">    But image stacks are returned as (z,ch,x,y) and label as (z,x,y,) irrespective of the order in the file.</span>
 <span class="sd">    If the image files have no channel this dimension is extended to a singleton dimension.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d_files</span><span class="p">)</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">l_files</span><span class="p">):</span>
+      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;d_files and l_files must be lists of same length!&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">d_f</span><span class="p">,</span> <span class="n">d_key</span><span class="p">),</span> <span class="p">(</span><span class="n">l_f</span><span class="p">,</span> <span class="n">l_key</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">d_files</span><span class="p">,</span> <span class="n">l_files</span><span class="p">):</span>
       <span class="k">print</span> <span class="s">&#39;Loading </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">d_f</span><span class="p">,</span>
       <span class="n">d</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">h5Load</span><span class="p">(</span><span class="n">d_path</span> <span class="o">+</span> <span class="n">d_f</span><span class="p">,</span> <span class="n">d_key</span><span class="p">)</span>
@@ -823,7 +904,7 @@
           <span class="n">d</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>  <span class="c"># add (empty) 0-axis</span>
   
         <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">size</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-          <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+          <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-scalar&#39;</span><span class="p">:</span>
           <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Scalar labels must be 1d&quot;</span>
   
@@ -831,7 +912,7 @@
         <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>  <span class="c"># (ch,x,y,z)--&gt;(z,ch,x,y)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span><span class="p">:</span>            
           <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>  <span class="c">#    (x,y,z)--&gt;(z,x,y)</span>
-          <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">_stripCubes</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+          <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">_stripCubes</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
 
       <span class="k">else</span><span class="p">:</span> <span class="c"># data in memory layout:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
@@ -843,12 +924,12 @@
   
         <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">size</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
           <span class="n">sh</span> <span class="o">=</span> <span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],)</span> <span class="o">+</span> <span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
-          <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+          <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-scalar&#39;</span><span class="p">:</span>
           <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Scalar labels must be 1d&quot;</span>
   
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span><span class="p">:</span>            
-          <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">_stripCubes</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+          <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">_stripCubes</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
 
       <span class="c"># determine normalisation depending on int or float type</span>
       <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">dtype</span> <span class="ow">in</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">,</span>
@@ -858,7 +939,16 @@
         <span class="n">m</span>  <span class="o">=</span> <span class="mi">1</span>
       
       <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span>
-      <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+      <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">l</span><span class="o">.</span><span class="n">dtype</span><span class="p">):</span>
+          <span class="n">m</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+          <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">iinfo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span><span class="o">.</span><span class="n">max</span>
+          <span class="k">if</span> <span class="n">m</span>  <span class="o">&gt;</span> <span class="n">M</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Loading of data: labels must be cast to </span><span class="si">%s</span><span class="s">, but </span><span class="si">%s</span><span class="s"> cannot store </span><span class="se">\</span>
+<span class="s">            value </span><span class="si">%g</span><span class="s">, maximum allowed value: </span><span class="si">%g</span><span class="s">. You may try to renumber </span><span class="se">\</span>
+<span class="s">            labels.&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">M</span><span class="p">))</span>
+            
+      <span class="n">l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
+
 
       <span class="k">if</span> <span class="n">downsample_xy</span><span class="p">:</span>
         <span class="n">f</span>     <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">downsample_xy</span><span class="p">)</span>
@@ -871,7 +961,7 @@
         
         <span class="n">l</span>     <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span>    <span class="p">:</span><span class="n">l_sh</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">cut</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">:</span><span class="n">l_sh</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">cut</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
         <span class="n">sh</span>    <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span>    <span class="p">::</span><span class="n">f</span><span class="p">,</span> <span class="p">::</span><span class="n">f</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
-        <span class="n">new_l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+        <span class="n">new_l</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ldtype</span><span class="p">)</span>
         
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
           <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
@@ -885,7 +975,7 @@
       <span class="n">gc</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span>
 
 
-      <span class="k">print</span> <span class="s">&quot;data.shape=</span><span class="si">%s</span><span class="s">, label.shape=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+      <span class="k">print</span> <span class="s">&quot;Internal data.shape=</span><span class="si">%s</span><span class="s">, label.shape=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
       <span class="k">print</span> <span class="s">&#39;---&#39;</span>
       <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
       <span class="n">label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
@@ -908,31 +998,19 @@
   <span class="kn">from</span> <span class="nn">parallelisation</span> <span class="kn">import</span> <span class="n">BackgroundProc</span>
   <span class="kn">from</span> <span class="nn">skimage</span> <span class="kn">import</span> <span class="n">io</span>
 
-<span class="c">#  _data_path       = &#39;~/devel/data/MPI/&#39;</span>
-<span class="c">#  _label_path      = &#39;~/devel/data/MPI/&#39;</span>
-<span class="c">#  _d_files         = [(&#39;raw_center_cube_mag1_v3.h5&#39;, &#39;raw&#39;),]#, (&#39;raw_center_cube_mag1_v3.h5&#39;, &#39;raw&#39;)]</span>
-<span class="c">#  l_files          = [(&#39;syn_mito_int16_stripped.h5&#39;, &#39;labels&#39;),]#, (&#39;syn_mito_int16_stripped.h5&#39;, &#39;labels&#39;)]</span>
 
-  <span class="n">_data_path</span>        <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/devel/data/MPI/barrier_gt_relu_rec/&#39;</span><span class="p">)</span> <span class="c"># (*) Path to data dir</span>
-  <span class="n">_label_path</span>       <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/devel/data/MPI/barrier_gt_4/&#39;</span><span class="p">)</span> <span class="c"># (*) Path to label dir</span>
-  <span class="n">_d_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;cube</span><span class="si">%d</span><span class="s">_barrier_raw.h5&#39;</span> <span class="o">%</span> <span class="n">ii</span><span class="p">,</span> <span class="s">&#39;raw&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
-  <span class="n">_l_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;cube</span><span class="si">%d</span><span class="s">_barrier_gt.h5&#39;</span> <span class="o">%</span> <span class="n">ii</span><span class="p">,</span> <span class="s">&#39;labels&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
+  <span class="n">_data_path</span>        <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/devel/data/BirdGT/&#39;</span><span class="p">)</span> <span class="c"># (*) Path to data dir</span>
+  <span class="n">_label_path</span>       <span class="o">=</span> <span class="n">_data_path</span>
+  <span class="n">_d_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;raw_cube0.h5&#39;</span><span class="p">,</span> <span class="s">&#39;raw&#39;</span><span class="p">)]</span>
+  <span class="n">_l_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;cube0_neuron-int16.h5&#39;</span><span class="p">,</span> <span class="s">&#39;lab&#39;</span><span class="p">)]</span>
 
-  <span class="n">_data_path</span>        <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/devel/data/ISBI/&#39;</span><span class="p">)</span> <span class="c"># (*) Path to data dir</span>
-  <span class="n">_label_path</span>       <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~/devel/data/ISBI/&#39;</span><span class="p">)</span> <span class="c"># (*) Path to label dir</span>
-  <span class="n">_d_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;imgs_padd_</span><span class="si">%i</span><span class="s">.h5&#39;</span> <span class="o">%</span> <span class="n">ii</span><span class="p">,</span> <span class="s">&#39;raw&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span>
-  <span class="n">_l_files</span>          <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;barrier_</span><span class="si">%i</span><span class="s">.h5&#39;</span> <span class="o">%</span> <span class="n">ii</span><span class="p">,</span> <span class="s">&#39;labels&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span>
-
-  <span class="n">cube_prios</span>        <span class="o">=</span> <span class="bp">None</span><span class="c">#[80./6]*6+[15./16]*16+[5./2]*2   </span>
+  <span class="n">cube_prios</span>        <span class="o">=</span> <span class="bp">None</span>
   <span class="n">n_lab</span>            <span class="o">=</span> <span class="mi">2</span> <span class="c"># int or None for auto</span>
 
   <span class="n">n_dim</span>           <span class="o">=</span> <span class="mi">3</span>
-  <span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>         <span class="c"># (*) &lt;int&gt; or &lt;2/3-tuple&gt; in (x,y)/(x,y,z)-order for anisotropic CNN</span>
-  <span class="n">filters</span>         <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span> <span class="c"># [1,1,1]</span>
-  <span class="n">pool</span>            <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span> <span class="c"># [1,1,1]</span>
-<span class="c">#  filters = trainutils._xyz2zyx(filters)</span>
-<span class="c">#  pool = trainutils._xyz2zyx(pool)</span>
-
+  <span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>         <span class="c"># (*) &lt;int&gt; or &lt;2/3-tuple&gt; in (x,y)/(x,y,z)-order for anisotropic CNN</span>
+  <span class="n">filters</span>         <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="c"># [1,1,1]</span>
+  <span class="n">pool</span>            <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="c"># [1,1,1]</span>
   <span class="n">MFP</span>             <span class="o">=</span> <span class="bp">False</span>
     
   <span class="n">grey_augment_channels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c"># List of channel indices to apply transform</span>
@@ -943,60 +1021,78 @@
   <span class="n">patch_size</span> <span class="o">=</span> <span class="n">dimensions</span><span class="o">.</span><span class="n">input</span>
   <span class="n">off</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dimensions</span><span class="o">.</span><span class="n">offset</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-  <span class="n">D</span> <span class="o">=</span> <span class="n">CNNData</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">.</span><span class="n">pred_stride</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">.</span><span class="n">offset</span><span class="p">,</span> <span class="n">n_dim</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="n">n_lab</span><span class="p">,</span> <span class="n">anistropic_data</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span><span class="n">zchxy_order</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="n">D</span> <span class="o">=</span> <span class="n">CNNData</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">.</span><span class="n">pred_stride</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">.</span><span class="n">offset</span><span class="p">,</span> <span class="n">n_dim</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="n">n_lab</span><span class="p">,</span> <span class="n">anistropic_data</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+              <span class="n">zchxy_order</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;img-img&#39;</span><span class="p">,</span> <span class="n">border_mode</span><span class="o">=</span><span class="s">&#39;keep&#39;</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="s">&#39;malis&#39;</span><span class="p">)</span>
   <span class="n">D</span><span class="o">.</span><span class="n">addDataFromFile</span><span class="p">(</span><span class="n">_data_path</span><span class="p">,</span> <span class="n">_label_path</span><span class="p">,</span> <span class="n">_d_files</span><span class="p">,</span> <span class="n">_l_files</span><span class="p">,</span> <span class="n">cube_prios</span><span class="o">=</span><span class="n">cube_prios</span><span class="p">,</span> <span class="n">valid_cubes</span><span class="o">=</span><span class="p">[])</span>
 
-  <span class="n">batch</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">strided</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="n">flip_data</span><span class="p">,</span> <span class="n">grey_augment_channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ret_info</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
-                     <span class="n">warp_on</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">ignore_thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
-<span class="c">#                     </span>
-<span class="c">#  plotTrainingTarget(batch[0][0,0], batch[1][0], 1)                   </span>
-<span class="c">#  img = batch[0][0,:,0]</span>
-<span class="c">#  lab = batch[1][0]</span>
-  
-<span class="c">#  plotTrainingTarget(batch[0][0,146,0], batch[1][0,100], 1)</span>
-<span class="c">#  plotTrainingTarget(batch[0][0,0+off,0], batch[1][0,0], 1)</span>
-<span class="c">#  plotTrainingTarget(batch[0][0,2+off,0], batch[1][0,2], 1)</span>
-<span class="c">#  plotTrainingTarget(batch[0][0,20+off,0], batch[1][0,20], 1)</span>
-  
-  <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">strided</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="n">flip_data</span><span class="p">,</span>
-                <span class="n">grey_augment_channels</span><span class="o">=</span><span class="n">grey_augment_channels</span><span class="p">,</span>
-                <span class="n">ret_info</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">warp_on</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_thresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-                
-  <span class="n">bg</span> <span class="o">=</span> <span class="n">BackgroundProc</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">getbatch</span><span class="p">,</span> <span class="n">n_proc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">target_args</span><span class="o">=</span><span class="p">(),</span> <span class="n">target_kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-  <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
-  <span class="n">tt0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">30</span><span class="p">):</span>
-    <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">info1</span><span class="p">,</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="c">#data, label, info1, info2 = bg.get()</span>
-  <span class="c">#  print label.mean()</span>
-  <span class="c">#  time.sleep(1.0/50)</span>
-  <span class="c">#  plotTrainingTarget(data[0:1], label[0:1], 1)</span>
-  <span class="c">#  plotTrainingTarget(data[0,140,0], label[0,94], 1)</span>
-  <span class="c">#  plotTrainingTarget(data[0,146,0], label[0,100], 1)</span>
-  <span class="c">#  plotTrainingTarget(data[0,148,0], label[0,102], 1)</span>
-  <span class="c">#  plotTrainingTarget(data[1,0], label[1], 1)</span>
-  
-  <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
-  <span class="n">tt1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-  <span class="k">print</span> <span class="s">&quot;clock&quot;</span><span class="p">,(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
-  <span class="k">print</span> <span class="s">&quot;time&quot;</span><span class="p">,(</span><span class="n">tt1</span> <span class="o">-</span> <span class="n">tt0</span><span class="p">)</span>  
-  <span class="n">bg</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+  <span class="c">#----------------------------------------------------------------------------</span>
 
-  <span class="n">img</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,</span><span class="mi">0</span><span class="p">]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="n">io</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="s">&#39;/tmp/</span><span class="si">%i</span><span class="s">-img.png&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">img</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-  <span class="n">lab</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">lab</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-    <span class="n">io</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="s">&#39;/tmp/</span><span class="si">%i</span><span class="s">-lab.png&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">off</span><span class="p">),</span> <span class="n">lab</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span>
+  <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">strided</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="n">flip_data</span><span class="p">,</span>
+                  <span class="n">grey_augment_channels</span><span class="o">=</span><span class="n">grey_augment_channels</span><span class="p">,</span>
+                  <span class="n">ret_info</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">warp_on</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_thresh</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+  <span class="n">batch</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">strided</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="n">flip_data</span><span class="p">,</span> <span class="n">grey_augment_channels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ret_info</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                     <span class="n">warp_on</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_thresh</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+  <span class="kn">import</span> <span class="nn">SliceViewer</span>
   
-<span class="c">#  t0 = time.clock()</span>
-<span class="c">#  tt0 = time.time()</span>
-<span class="c">#  for i in xrange(100):</span>
-<span class="c">#    data, label, info1, info2 = D.getbatch(**kwargs)</span>
-<span class="c">#  t1 = time.clock()</span>
-<span class="c">#  tt1 = time.time()</span>
-<span class="c">#  print &quot;clock&quot;,(t1 - t0)</span>
-<span class="c">#  print &quot;time&quot;,(tt1 - tt0)  </span>
+  <span class="k">if</span> <span class="bp">True</span><span class="p">:</span> <span class="c"># BG                  </span>
+    <span class="n">bg</span> <span class="o">=</span> <span class="n">BackgroundProc</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">getbatch</span><span class="p">,</span> <span class="n">n_proc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">target_args</span><span class="o">=</span><span class="p">(),</span> <span class="n">target_kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+          <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">seg_gt</span><span class="p">,</span> <span class="n">info1</span><span class="p">,</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">bg</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+          <span class="c">#data, label, info1, info2 = D.getbatch(**kwargs)</span>
+          <span class="n">label</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="n">seg</span>   <span class="o">=</span> <span class="n">seg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="n">seg_gt</span><span class="o">=</span> <span class="n">seg_gt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+          <span class="n">nhood</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+          
+          <span class="n">aff_pred</span> <span class="o">=</span> <span class="n">label</span><span class="o">*</span><span class="mf">0.95</span> <span class="o">+</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">label</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+          <span class="n">pos_counts</span><span class="p">,</span> <span class="n">neg_counts</span>  <span class="o">=</span> <span class="n">malis</span><span class="o">.</span><span class="n">get_malis_weights</span><span class="p">(</span><span class="n">aff_pred</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">seg</span><span class="p">,</span> <span class="n">nhood</span><span class="p">)</span>
+   
+          <span class="n">seg_color</span> <span class="o">=</span> <span class="n">seg</span> <span class="o">*</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">seg</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+          <span class="n">seg_color</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">nipy_spectral</span><span class="p">(</span><span class="n">seg_color</span><span class="p">)</span>
+          <span class="n">seg_color_gt</span> <span class="o">=</span> <span class="n">seg_gt</span> <span class="o">*</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">seg_gt</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+          <span class="n">seg_color_gt</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">nipy_spectral</span><span class="p">(</span><span class="n">seg_color_gt</span><span class="p">)</span>
+          
+          <span class="n">aff_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">aff_pred</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+          <span class="n">pos_counts</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">pos_counts</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>
+          <span class="n">neg_counts</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">neg_counts</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+          <span class="n">neg_counts</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">neg_counts</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span>      
+          
+          <span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span> 
+          <span class="n">fig</span><span class="p">,</span> <span class="n">scroll_plot</span> <span class="o">=</span> <span class="n">SliceViewer</span><span class="o">.</span><span class="n">scroll_plot</span><span class="p">([</span><span class="n">aff_pred</span><span class="p">,</span> <span class="n">seg_color</span><span class="p">,</span> <span class="n">seg_color_gt</span><span class="p">,</span> <span class="n">neg_counts</span><span class="p">],</span>
+                                                     <span class="p">[</span><span class="s">&#39;PRED&#39;</span><span class="p">,</span> <span class="s">&#39;SEG&#39;</span><span class="p">,</span> <span class="s">&#39;SEG_GT&#39;</span><span class="p">,</span> <span class="s">&#39;NEG&#39;</span><span class="p">])</span>
+          <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+          <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>           
+      
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">bg</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="c">#  img = data[0,:,0]</span>
+<span class="c">#  for i in xrange(img.shape[0]):</span>
+<span class="c">#    plt.imsave(&#39;/tmp/%i-img.png&#39;%(i), img[i,], cmap=&#39;gray&#39;)</span>
+<span class="c">#    </span>
+<span class="c">#  lab = label[0]</span>
+<span class="c">#  for i in xrange(lab.shape[1]):</span>
+<span class="c">#    io.imsave(&#39;/tmp/%i-lab.png&#39;%(i+off), lab[:,i].min(axis=0).astype(np.uint8)*255)</span>
+
+<span class="c">#   TIMING</span>
+    <span class="k">if</span> <span class="bp">False</span><span class="p">:</span>
+      <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+      <span class="n">tt0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">info1</span><span class="p">,</span> <span class="n">info2</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+      <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
+      <span class="n">tt1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+      <span class="k">print</span> <span class="s">&quot;clock&quot;</span><span class="p">,(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span>
+      <span class="k">print</span> <span class="s">&quot;time&quot;</span><span class="p">,(</span><span class="n">tt1</span> <span class="o">-</span> <span class="n">tt0</span><span class="p">)</span> 
+
+ 
+<span class="c">#fig, scroller = SliceViewer.scroll_plot([aff_pred, seg_color, pos_counts, neg_counts], [&#39;PRED&#39;, &#39;LAB&#39;, &#39;POS&#39;, &#39;NEG&#39;])</span>
+<span class="c">#fig.show()</span>
 </pre></div>
 
           </div>
@@ -1004,7 +1100,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1013,16 +1109,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

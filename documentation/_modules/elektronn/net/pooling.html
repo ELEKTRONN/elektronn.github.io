@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>elektronn.net.pooling &mdash; ELEKTRONN</title>
+    
+    <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1rc',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="shortcut icon" href="../../../_static/elektronnfavicon.ico"/>
+    <link rel="top" title="ELEKTRONN" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" /> 
+  </head>
+  <body role="document">
+
+<div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
+<a href="../../../index.html"><img src="../../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for elektronn.net.pooling</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">theano</span>
+<span class="kn">from</span> <span class="nn">theano</span> <span class="kn">import</span> <span class="n">tensor</span> <span class="k">as</span> <span class="n">T</span>
+
+  
+<div class="viewcode-block" id="maxabs"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.pooling.maxabs">[docs]</a><span class="k">def</span> <span class="nf">maxabs</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">):</span>
+  <span class="n">pos</span>  <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">t1</span>  <span class="o">&gt;</span>  <span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
+  <span class="n">neg</span>  <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">-</span><span class="n">t1</span> <span class="o">&gt;</span> <span class="o">-</span><span class="n">t2</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
+  <span class="n">ret</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pos</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="n">neg</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">neg</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">ret</span>
+ 
+</div>
+<div class="viewcode-block" id="my_max_pool_3d"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.pooling.my_max_pool_3d">[docs]</a><span class="k">def</span> <span class="nf">my_max_pool_3d</span><span class="p">(</span><span class="n">sym_input</span><span class="p">,</span> <span class="n">pool_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot; this one is pure theano. Hence all gradient-related stuff is working! No dimshuffling&quot;&quot;&quot;</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">sym_input</span><span class="p">[:,:,:,:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">t</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">sym_input</span>
+
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],:,:,:]</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">t</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">s</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[:,:,:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],:]</span>
+            <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">t</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">sym_ret</span> <span class="o">=</span> <span class="n">s</span>
+
+    <span class="k">return</span> <span class="n">sym_ret</span>
+
+</div>
+<div class="viewcode-block" id="maxout"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.pooling.maxout">[docs]</a><span class="k">def</span> <span class="nf">maxout</span><span class="p">(</span><span class="n">conv_out</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pools axis 1 (the channels) of ``conv_out`` by ``factor``.</span>
+<span class="sd">    I.e. the number of channels is decreased by this factor.</span>
+<span class="sd">    The pooling can either be done as ``max`` or ``maxabs``.</span>
+<span class="sd">    Spatial dimensions are unchanged</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">factor</span> <span class="o">&gt;</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;max&#39;</span><span class="p">:</span>
+      <span class="n">compare</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">maximum</span>
+    <span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;maxabs&#39;</span><span class="p">:</span>
+      <span class="n">compare</span> <span class="o">=</span> <span class="n">maxabs</span>
+    
+    <span class="k">if</span> <span class="n">axis</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>    
+      <span class="n">ret</span> <span class="o">=</span>  <span class="n">conv_out</span><span class="p">[:,</span><span class="mi">0</span><span class="p">::</span><span class="n">factor</span><span class="p">]</span> 
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+         <span class="n">t</span> <span class="o">=</span> <span class="n">conv_out</span><span class="p">[:,</span><span class="n">i</span><span class="p">::</span><span class="n">factor</span><span class="p">]</span>
+         <span class="n">ret</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+         
+    <span class="k">elif</span> <span class="n">axis</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+      <span class="n">ret</span> <span class="o">=</span>  <span class="n">conv_out</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">::</span><span class="n">factor</span><span class="p">]</span> 
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">factor</span><span class="p">):</span>
+         <span class="n">t</span> <span class="o">=</span> <span class="n">conv_out</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">::</span><span class="n">factor</span><span class="p">]</span>
+         <span class="n">ret</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+         
+    <span class="k">return</span> <span class="n">ret</span>
+
+</div>
+<div class="viewcode-block" id="pooling2d"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.pooling.pooling2d">[docs]</a><span class="k">def</span> <span class="nf">pooling2d</span><span class="p">(</span><span class="n">conv_out</span><span class="p">,</span> <span class="n">pool_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pools axis 2,3 (x,y) of ``conv_out`` by respective ``pool_shape``.</span>
+<span class="sd">    I.e. the spatial extent is decreased by this factor.</span>
+<span class="sd">    The pooling can either be done as ``max`` or ``maxabs``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;max&#39;</span><span class="p">:</span>
+      <span class="n">compare</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">maximum</span>
+    <span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;maxabs&#39;</span><span class="p">:</span>
+      <span class="n">compare</span> <span class="o">=</span> <span class="n">maxabs</span>
+    
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">conv_out</span>
+    
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+      <span class="n">ret</span> <span class="o">=</span>  <span class="n">conv_out</span><span class="p">[:,:,:,</span><span class="mi">0</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> 
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+         <span class="n">t</span> <span class="o">=</span> <span class="n">conv_out</span><span class="p">[:,:,:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+         <span class="n">ret</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+         
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+      <span class="n">accum</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],:]</span> 
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[:,:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],:,]</span>
+        <span class="n">accum</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">accum</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+      
+      <span class="n">ret</span> <span class="o">=</span> <span class="n">accum</span>
+      
+    <span class="k">return</span> <span class="n">ret</span>
+</div>
+<div class="viewcode-block" id="pooling3d"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.pooling.pooling3d">[docs]</a><span class="k">def</span> <span class="nf">pooling3d</span><span class="p">(</span><span class="n">conv_out</span><span class="p">,</span> <span class="n">pool_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pools axis 2,3 (x,y) of ``conv_out`` by respective ``pool_shape``.</span>
+<span class="sd">    I.e. the spatial extent is decreased by this factor.</span>
+<span class="sd">    The pooling can either be done as ``max`` or ``maxabs``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;max&#39;</span><span class="p">:</span>
+      <span class="n">compare</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">maximum</span>
+    <span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;maxabs&#39;</span><span class="p">:</span>
+      <span class="n">compare</span> <span class="o">=</span> <span class="n">maxabs</span>
+    
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">conv_out</span> <span class="c">#(1,4,1,4,4)</span>
+    
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+      <span class="n">ret</span> <span class="o">=</span>  <span class="n">conv_out</span><span class="p">[:,:,:,:,</span><span class="mi">0</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> 
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
+         <span class="n">t</span> <span class="o">=</span> <span class="n">conv_out</span><span class="p">[:,:,:,:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+         <span class="n">ret</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+         
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+      <span class="n">accum</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[:,</span><span class="mi">0</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],:,:,:]</span> 
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],:,:,:]</span>
+        <span class="n">accum</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">accum</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+      
+      <span class="n">ret</span> <span class="o">=</span> <span class="n">accum</span>
+
+    <span class="k">if</span> <span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+      <span class="n">accum</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[:,:,:,</span><span class="mi">0</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],:]</span>      
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[:,:,:,</span><span class="n">i</span><span class="p">::</span><span class="n">pool_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],:]</span>
+        <span class="n">accum</span> <span class="o">=</span> <span class="n">compare</span><span class="p">(</span><span class="n">accum</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>      
+    
+      <span class="n">ret</span> <span class="o">=</span> <span class="n">accum</span>
+      
+    <span class="k">return</span> <span class="n">ret</span>
+
+</div>
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~/devel/ELEKTRONN/&quot;</span><span class="p">))</span>
+    <span class="kn">from</span> <span class="nn">Training.trainutils</span> <span class="kn">import</span> <span class="n">timeit</span>
+    <span class="n">sym_input</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">,</span> <span class="n">broadcastable</span><span class="o">=</span><span class="p">[</span><span class="bp">False</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">)()</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="n">sym_ret</span> <span class="o">=</span> <span class="n">my_max_pool_3d</span><span class="p">(</span><span class="n">sym_input</span><span class="p">,</span> <span class="n">pool</span><span class="p">)</span><span class="c">#my_max_pool_3d_stupid(sym_input)</span>
+    <span class="n">f_maxp_3d_ref</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">(</span><span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="n">sym_input</span><span class="p">],</span><span class="n">sym_ret</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">sym_ret</span> <span class="o">=</span> <span class="n">pooling3d</span><span class="p">(</span><span class="n">sym_input</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="s">&#39;max&#39;</span><span class="p">)</span><span class="c">#my_max_pool_3d_stupid(sym_input)</span>
+    <span class="n">f_maxp_3d</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">(</span><span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="n">sym_input</span><span class="p">],</span><span class="n">sym_ret</span><span class="p">),</span><span class="mi">4</span><span class="p">)</span>
+    
+    <span class="n">sym_ret</span> <span class="o">=</span> <span class="n">pooling3d</span><span class="p">(</span><span class="n">sym_input</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="s">&#39;maxabs&#39;</span><span class="p">)</span><span class="c">#my_max_pool_3d_stupid(sym_input)</span>
+    <span class="n">f_maxp_3d_new</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">(</span><span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="n">sym_input</span><span class="p">],</span><span class="n">sym_ret</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+    
+<span class="c">#    sym_ret = maxabsPool3d(sym_input, pool)#my_max_pool_3d_stupid(sym_input)</span>
+<span class="c">#    f_maxabsp_3d= timeit(theano.function([sym_input],sym_ret), 4)</span>
+
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">inp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="o">+</span><span class="mi">32</span><span class="o">*</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">16</span><span class="o">+</span><span class="mi">32</span><span class="o">*</span><span class="n">i</span><span class="p">,</span><span class="mi">16</span><span class="o">+</span><span class="mi">32</span><span class="o">*</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float32&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+        <span class="k">print</span> <span class="n">inp</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">a0</span> <span class="o">=</span> <span class="n">f_maxp_3d_ref</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="n">a1</span> <span class="o">=</span> <span class="n">f_maxp_3d</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="n">a2</span> <span class="o">=</span> <span class="n">f_maxp_3d_new</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="c">#a3 = f_maxabsp_3d(inp)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a0</span><span class="p">))</span>
+        <span class="c">#print a1.shape</span>
+    
+    <span class="n">r1</span> <span class="o">=</span> <span class="n">a1</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">a2</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c">#r3 = a3[0,:,0]</span>
+    <span class="n">r0</span> <span class="o">=</span> <span class="n">inp</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c">#d  = r3 - r4</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

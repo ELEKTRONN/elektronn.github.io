@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,24 +68,22 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for net.netcreation</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
-
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
 <span class="kn">import</span> <span class="nn">cPickle</span>
 <span class="kn">import</span> <span class="nn">convnet</span>
 <span class="kn">from</span> <span class="nn">netutils</span> <span class="kn">import</span> <span class="n">CNNCalculator</span>
 
 <span class="c">### CNN Creation #############################################################################################</span>
-<div class="viewcode-block" id="createNet"><a class="viewcode-back" href="../../_Net.html#net.netcreation.createNet">[docs]</a><span class="k">def</span> <span class="nf">createNet</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">n_ch</span><span class="p">,</span> <span class="n">n_lab</span><span class="p">,</span> <span class="n">dimension_calc</span><span class="p">):</span>
+<div class="viewcode-block" id="createNet"><a class="viewcode-back" href="../../out2/Net.html#net.netcreation.createNet">[docs]</a><span class="k">def</span> <span class="nf">createNet</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">input_size</span><span class="p">,</span> <span class="n">n_ch</span><span class="p">,</span> <span class="n">n_lab</span><span class="p">,</span> <span class="n">dimension_calc</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Creates CNN according to config</span>
 
@@ -138,7 +133,13 @@
   <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">MLP_layers</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">rnn_layer_kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
     <span class="n">cnn</span><span class="o">.</span><span class="n">addPerceptronLayer</span><span class="p">(</span><span class="n">n_lab</span><span class="p">,</span> <span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="n">force_no_dropout</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
   <span class="k">else</span><span class="p">:</span>
-    <span class="n">cnn</span><span class="o">.</span><span class="n">addConvLayer</span><span class="p">(</span><span class="n">n_lab</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="n">is_last_layer</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c"># reshape=True</span>
+    <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">target</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;affinity&#39;</span><span class="p">,</span> <span class="s">&#39;malis&#39;</span><span class="p">]:</span>
+      <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">target</span> <span class="o">==</span> <span class="s">&#39;malis&#39;</span><span class="p">:</span>
+         <span class="n">cnn</span><span class="o">.</span><span class="n">addConvLayer</span><span class="p">(</span><span class="n">n_lab</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="n">is_last_layer</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="s">&#39;malis&#39;</span><span class="p">)</span> <span class="c"># reshape=True</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">cnn</span><span class="o">.</span><span class="n">addConvLayer</span><span class="p">(</span><span class="n">n_lab</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="n">is_last_layer</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c"># reshape=True</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">cnn</span><span class="o">.</span><span class="n">addConvLayer</span><span class="p">(</span><span class="n">n_lab</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;linear&#39;</span><span class="p">,</span> <span class="n">is_last_layer</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c"># reshape=True</span>
     
   <span class="n">use_class_weights</span>   <span class="o">=</span> <span class="bp">True</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">class_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="bp">False</span>
   <span class="n">use_label_prop</span>      <span class="o">=</span> <span class="bp">True</span> <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">label_prop_thresh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="bp">False</span>
@@ -147,7 +148,7 @@
     
   <span class="n">cnn</span><span class="o">.</span><span class="n">setOptimizerParams</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">SGD_params</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">CG_params</span><span class="p">,</span>
                          <span class="n">config</span><span class="o">.</span><span class="n">RPROP_params</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">LBFGS_params</span><span class="p">,</span>
-                         <span class="n">config</span><span class="o">.</span><span class="n">SSGD_params</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">)</span>
+                         <span class="n">config</span><span class="o">.</span><span class="n">Adam_params</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">weight_decay</span><span class="p">)</span>
    
   <span class="k">if</span> <span class="n">enable_dropout</span><span class="p">:</span>
     <span class="n">cnn</span><span class="o">.</span><span class="n">setDropoutRates</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">dropout_rates</span><span class="p">)</span>                      
@@ -156,7 +157,7 @@
   <span class="k">return</span> <span class="n">cnn</span>
 
 </div>
-<div class="viewcode-block" id="createNetfromParams"><a class="viewcode-back" href="../../_Net.html#net.netcreation.createNetfromParams">[docs]</a><span class="k">def</span> <span class="nf">createNetfromParams</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="createNetfromParams"><a class="viewcode-back" href="../../out2/Net.html#net.netcreation.createNetfromParams">[docs]</a><span class="k">def</span> <span class="nf">createNetfromParams</span><span class="p">(</span><span class="n">param_file</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span>
                         <span class="n">poolings</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">MFP</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">only_prediction</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Convenience function to create CNN without ``config`` directly from a saved parameter file.</span>
@@ -168,7 +169,7 @@
 <span class="sd">  param_file: string/path</span>
 <span class="sd">    File to initialise parameters of CNN from. The file must contain a list of shapes of the W-parameters as</span>
 <span class="sd">    first entry and should ideally contain a list of pooling factors as last entry, alternatively the can be</span>
-<span class="sd">    given as optinal argument</span>
+<span class="sd">    given as optional argument</span>
 <span class="sd">  patch_size: tuple of int</span>
 <span class="sd">    Patch size for input data</span>
 <span class="sd">  batch_size: int</span>
@@ -180,7 +181,7 @@
 <span class="sd">  MFP: list of bool/{0,1}</span>
 <span class="sd">    Whether to use MFP in the respective layers</span>
 <span class="sd">  only_prediction: Bool</span>
-<span class="sd">    This exlcudes the building of the gradient (faster)</span>
+<span class="sd">    This excludes the building of the gradient (faster)</span>
 
 <span class="sd">  Returns</span>
 <span class="sd">  -------</span>
@@ -250,7 +251,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -259,16 +260,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

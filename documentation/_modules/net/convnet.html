@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,17 +68,15 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for net.convnet</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
-
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
 <span class="k">print</span> <span class="s">&quot;Load ELEKTRONN Core&quot;</span>
 
@@ -96,7 +91,7 @@
 <span class="kn">import</span> <span class="nn">optimizer</span> <span class="kn">as</span> <span class="nn">opt</span>
 <span class="kn">from</span> <span class="nn">perceptronlayer</span> <span class="kn">import</span> <span class="n">PerceptronLayer</span><span class="p">,</span> <span class="n">RecurrentLayer</span>
 <span class="kn">from</span> <span class="nn">convlayer2d</span> <span class="kn">import</span> <span class="n">ConvLayer2d</span>
-<span class="kn">from</span> <span class="nn">convlayer3d</span> <span class="kn">import</span> <span class="n">ConvLayer3d</span>
+<span class="kn">from</span> <span class="nn">convlayer3d</span> <span class="kn">import</span> <span class="n">ConvLayer3d</span><span class="p">,</span> <span class="n">AffinityLayer3d</span><span class="p">,</span> <span class="n">MalisLayer</span>
 
 <span class="k">def</span> <span class="nf">_printOps</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -112,7 +107,7 @@
     <span class="k">print</span> <span class="s">&#39;Computational Cost: </span><span class="si">%.1f</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">factor</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="MixedConvNN"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN">[docs]</a><span class="k">class</span> <span class="nc">MixedConvNN</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN">[docs]</a><span class="k">class</span> <span class="nc">MixedConvNN</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">  Parameters</span>
 <span class="sd">  ----------</span>
@@ -120,10 +115,10 @@
 <span class="sd">  input_size: tuple</span>
 <span class="sd">    Data shapes, excluding batch and channel (used to infer the dimensionality)</span>
 <span class="sd">  input_depth: int/None</span>
-<span class="sd">    Is None by default this means non-image data (no convLayers allowed). Change to 1 for b/w, 3 for RGB and\</span>
+<span class="sd">    Is None by default this means non-image data (no conv layers allowed). Change to 1 for b/w, 3 for RGB and\</span>
 <span class="sd">    4 for RGB-D images etc. For RNN this is the length of the time series.</span>
 <span class="sd">  batch_size: int/None</span>
-<span class="sd">    For variable batchsize (slower!)</span>
+<span class="sd">    None for variable batch size</span>
 <span class="sd">  enable_dropout:  Bool</span>
 <span class="sd">    Turn on or off dropout</span>
 <span class="sd">  recurrent:       Bool</span>
@@ -231,7 +226,7 @@
   <span class="c">############################################################################################################</span>
 
 
-<div class="viewcode-block" id="MixedConvNN.addPerceptronLayer"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.addPerceptronLayer">[docs]</a>  <span class="k">def</span> <span class="nf">addPerceptronLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_outputs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">enable_input_noise</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+<div class="viewcode-block" id="MixedConvNN.addPerceptronLayer"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.addPerceptronLayer">[docs]</a>  <span class="k">def</span> <span class="nf">addPerceptronLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_outputs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">enable_input_noise</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                         <span class="n">add_in_output_layers</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">force_no_dropout</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds a Perceptron layer to the CNN.</span>
@@ -288,10 +283,10 @@
 
   <span class="c">############################################################################################################</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.addConvLayer"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.addConvLayer">[docs]</a>  <span class="k">def</span> <span class="nf">addConvLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nof_filters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">filter_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pool_shape</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="MixedConvNN.addConvLayer"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.addConvLayer">[docs]</a>  <span class="k">def</span> <span class="nf">addConvLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nof_filters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">filter_size</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pool_shape</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span>
                    <span class="n">add_in_output_layers</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">force_no_dropout</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                    <span class="n">use_fragment_pooling</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">is_last_layer</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">layer_input_shape</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                   <span class="n">layer_input</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pooling_mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">):</span>
+                   <span class="n">layer_input</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">pooling_mode</span><span class="o">=</span><span class="s">&#39;max&#39;</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds a convolutional layer to the CNN. The dimensionality is *automatically* inferred.</span>
 
@@ -375,7 +370,8 @@
 
     <span class="k">if</span> <span class="n">use_fragment_pooling</span><span class="p">:</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="o">!=</span><span class="mi">1</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;MFP is activated and batch_size is not 1&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;MFP is activated and batch_size is not 1&quot;</span><span class="p">)</span>
+        <span class="c">#raise ValueError(&quot;MFP is activated and batch_size is not 1&quot;)</span>
         <span class="c"># self.batch_size = 1 doesn&#39;t help</span>
 
       <span class="c"># if there is mfp in at least 1 layer the output must be reshaped</span>
@@ -392,6 +388,14 @@
     <span class="k">if</span> <span class="n">n_dim</span><span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
       <span class="n">filter_shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">nof_filters</span><span class="p">,</span> <span class="n">filter_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">layer_input_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">filter_size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">filter_size</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
       <span class="n">CL</span> <span class="o">=</span> <span class="n">ConvLayer3d</span>
+      
+      <span class="k">if</span> <span class="n">affinity</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;WARNING: hack for adding affinity layer / MALIS active&quot;</span>
+        <span class="k">if</span> <span class="n">affinity</span><span class="o">==</span><span class="s">&#39;malis&#39;</span><span class="p">:</span>
+          <span class="n">CL</span> <span class="o">=</span> <span class="n">MalisLayer</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">CL</span> <span class="o">=</span> <span class="n">AffinityLayer3d</span>
+        
       <span class="k">if</span> <span class="n">reshape</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="s">&#39;int16&#39;</span><span class="p">,</span> <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;y_cnn_labels&#39;</span><span class="p">)()</span>
 
@@ -423,12 +427,13 @@
       <span class="n">layer_input_shape</span><span class="p">[</span><span class="mi">1</span> <span class="k">if</span> <span class="n">n_dim</span><span class="o">==</span><span class="mi">2</span> <span class="k">else</span> <span class="mi">2</span><span class="p">]</span> <span class="c"># Cost for 1 patch</span>
 
     <span class="n">_printOps</span><span class="p">(</span><span class="n">num_multiplications</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Param count:&quot;</span><span class="p">,</span><span class="n">layer</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="s">&#39;+&#39;</span><span class="p">,</span><span class="n">layer</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="s">&#39;=&#39;</span><span class="p">,</span><span class="n">layer</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">size</span><span class="o">+</span><span class="n">layer</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
     <span class="k">print</span> <span class="s">&#39;---&#39;</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">TotalForwardPassCost</span> <span class="o">+=</span> <span class="n">num_multiplications</span>
 
   <span class="c">############################################################################################################</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.addRecurrentLayer"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.addRecurrentLayer">[docs]</a>  <span class="k">def</span> <span class="nf">addRecurrentLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_hid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.addRecurrentLayer"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.addRecurrentLayer">[docs]</a>  <span class="k">def</span> <span class="nf">addRecurrentLayer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_hid</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds a recurrent layer (only possible for non-image input of format (batch, time, features))</span>
 
@@ -474,7 +479,7 @@
 
   <span class="c">############################################################################################################</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.addTiedAutoencoderChain"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.addTiedAutoencoderChain">[docs]</a>  <span class="k">def</span> <span class="nf">addTiedAutoencoderChain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_layers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">force_no_dropout</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+<div class="viewcode-block" id="MixedConvNN.addTiedAutoencoderChain"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.addTiedAutoencoderChain">[docs]</a>  <span class="k">def</span> <span class="nf">addTiedAutoencoderChain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_layers</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">force_no_dropout</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                               <span class="n">activation_func</span><span class="o">=</span><span class="s">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">input_noise</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">tie_W</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates connected layers to invert Perceptron layers. Input is assumed to come from the first layer.</span>
@@ -524,7 +529,7 @@
 
   <span class="c">############################################################################################################</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.compileDebugFunctions"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.compileDebugFunctions">[docs]</a>  <span class="k">def</span> <span class="nf">compileDebugFunctions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.compileDebugFunctions"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.compileDebugFunctions">[docs]</a>  <span class="k">def</span> <span class="nf">compileDebugFunctions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gradients</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compiles the debug_functions which return the network activations / output. To use them compile them with </span>
 <span class="sd">    this function. They by accessible as cnn.debug_functions (normal output), cnn.debug_conv_output,</span>
@@ -545,7 +550,7 @@
 
   <span class="c">############################################################################################################</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.compileOutputFunctions"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.compileOutputFunctions">[docs]</a>  <span class="k">def</span> <span class="nf">compileOutputFunctions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s">&#39;nll&#39;</span><span class="p">,</span> <span class="n">use_class_weights</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_example_weights</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+<div class="viewcode-block" id="MixedConvNN.compileOutputFunctions"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.compileOutputFunctions">[docs]</a>  <span class="k">def</span> <span class="nf">compileOutputFunctions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s">&#39;nll&#39;</span><span class="p">,</span> <span class="n">use_class_weights</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_example_weights</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                              <span class="n">use_lazy_labels</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_label_prop</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">only_forward</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compiles the output functions ``get_loss``, ``get_error``, ``class_probabilities`` and defines the</span>
@@ -606,7 +611,7 @@
   
     <span class="n">layer_last</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">=</span> <span class="n">layer_last</span><span class="o">.</span><span class="n">output_shape</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span><span class="o">!=</span><span class="mi">3</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">layer_last</span><span class="o">.</span><span class="n">output_shape</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span><span class="o">!=</span><span class="mi">3</span><span class="p">:</span> <span class="c">#Perceptron layer or any other</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="n">layer_last</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="n">layer_last</span><span class="o">.</span><span class="n">output_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -637,7 +642,32 @@
         <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">None</span>
         
       <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_instance</span> <span class="o">=</span> <span class="n">layer_last</span><span class="o">.</span><span class="n">NLL_weak</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="n">class_weights</span><span class="p">)</span>
-     
+ 
+    <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s">&#39;affinity&#39;</span><span class="p">:</span> 
+      <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="s">&#39;int16&#39;</span><span class="p">,(</span><span class="bp">False</span><span class="p">,)</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;y_cnn_affinity_targets&#39;</span><span class="p">)()</span>
+      <span class="k">if</span> <span class="n">use_class_weights</span><span class="p">:</span>
+        <span class="n">class_weights</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="s">&#39;float32&#39;</span><span class="p">,</span> <span class="p">[</span><span class="bp">False</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;class_weights&#39;</span><span class="p">)()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y_aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_weights</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">None</span>
+        
+      <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_loss_instance</span> <span class="o">=</span> <span class="n">layer_last</span><span class="o">.</span><span class="n">NLL_affinity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="n">class_weights</span><span class="p">)</span>
+    
+    
+    <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s">&#39;malis&#39;</span><span class="p">:</span> 
+      <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="s">&#39;int16&#39;</span><span class="p">,(</span><span class="bp">False</span><span class="p">,)</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;y_cnn_affinity_targets&#39;</span><span class="p">)()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_y_aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="s">&#39;int16&#39;</span><span class="p">,(</span><span class="bp">False</span><span class="p">,)</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;y_cnn_seg_gt&#39;</span><span class="p">)())</span>
+      <span class="k">if</span> <span class="n">use_class_weights</span><span class="p">:</span>
+        <span class="n">class_weights</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorType</span><span class="p">(</span><span class="s">&#39;float32&#39;</span><span class="p">,</span> <span class="p">[</span><span class="bp">False</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;class_weights&#39;</span><span class="p">)()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y_aux</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_weights</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">class_weights</span> <span class="o">=</span> <span class="bp">None</span>
+        
+      <span class="n">ret</span> <span class="o">=</span> <span class="n">layer_last</span><span class="o">.</span><span class="n">NLL_Malis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y_aux</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>     
+      <span class="bp">self</span><span class="o">.</span><span class="n">_loss</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_loss_instance</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 
+      <span class="bp">self</span><span class="o">.</span><span class="n">malis_stats</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">function</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y_aux</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">ret</span><span class="p">)</span>
+      
     <span class="k">elif</span> <span class="n">target</span> <span class="o">==</span> <span class="s">&#39;nll&#39;</span><span class="p">:</span>        
       <span class="k">if</span> <span class="n">use_lazy_labels</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">layer_last</span><span class="p">,</span> <span class="n">ConvLayer2d</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer_last</span><span class="p">,</span> <span class="n">ConvLayer3d</span><span class="p">)):</span>
@@ -693,7 +723,7 @@
       <span class="bp">self</span><span class="o">.</span><span class="n">_gradients</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_loss</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">disconnected_inputs</span><span class="o">=</span><span class="s">&quot;warn&quot;</span><span class="p">)</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">get_loss</span>  <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_loss</span>
     
-    <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">layer_last</span><span class="p">,</span> <span class="n">ConvLayer2d</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer_last</span><span class="p">,</span> <span class="n">ConvLayer3d</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer_last</span><span class="p">,</span> <span class="p">(</span><span class="n">ConvLayer2d</span><span class="p">,</span> <span class="n">ConvLayer3d</span><span class="p">,</span> <span class="n">AffinityLayer3d</span><span class="p">)):</span>
       <span class="k">try</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">=</span> <span class="n">layer_last</span><span class="o">.</span><span class="n">prob_shape</span>
       <span class="k">except</span><span class="p">:</span>
@@ -711,7 +741,7 @@
 
   <span class="c">############################################################################################################</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.resetMomenta"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.resetMomenta">[docs]</a>  <span class="k">def</span> <span class="nf">resetMomenta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.resetMomenta"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.resetMomenta">[docs]</a>  <span class="k">def</span> <span class="nf">resetMomenta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Resets the trailing average of the gradient to sole current gradient&quot;&quot;&quot;</span>
     <span class="k">print</span> <span class="s">&quot;CNN: resetting momenta&quot;</span>
     <span class="k">print</span> <span class="s">&#39;</span><span class="se">\t</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_grads</span><span class="p">)])</span>
@@ -727,7 +757,7 @@
       <span class="k">pass</span>
 
 </div>
-<div class="viewcode-block" id="MixedConvNN.randomizeWeights"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">reset_momenta</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.randomizeWeights"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.randomizeWeights">[docs]</a>  <span class="k">def</span> <span class="nf">randomizeWeights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">reset_momenta</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Resets weights to random values (calls randomize_weights() on each layer)&quot;&quot;&quot;</span>
     <span class="k">print</span> <span class="s">&quot;CNN: Randomizing weights&quot;</span>
     <span class="k">for</span> <span class="n">lay</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_layers</span><span class="p">:</span>
@@ -740,7 +770,7 @@
   <span class="c">############################################################################################################</span>
 
 </div>
-<div class="viewcode-block" id="MixedConvNN.trainingStep"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.trainingStep">[docs]</a>  <span class="k">def</span> <span class="nf">trainingStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.trainingStep"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.trainingStep">[docs]</a>  <span class="k">def</span> <span class="nf">trainingStep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Perform one optimiser iteration.</span>
 <span class="sd">    Optimizers can be chosen by the kwarg ``mode``. They are complied on demand (which may take a while) and cached</span>
@@ -819,28 +849,22 @@
       <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">LBFGS</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="c"># this already is updated loss</span>
       <span class="n">loss_instance</span> <span class="o">=</span> <span class="n">loss</span>
 
-    <span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;GCD&#39;</span><span class="p">:</span>
-      <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;GCD&#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">GCD</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">compileGCD</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SGD_params</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;Adam&#39;</span><span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;Adam&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Adam</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">compileAdam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_Adam_params</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
 
-      <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">GCD</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="c"># this already is updated loss</span>
+      <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="c"># this already is updated loss</span>
 
-    <span class="k">elif</span> <span class="n">mode</span><span class="o">==</span><span class="s">&#39;SSGD&#39;</span><span class="p">:</span>
-      <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;SSGD&#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">SSGD</span> <span class="o">=</span> <span class="n">opt</span><span class="o">.</span><span class="n">compileSSGD</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_SSGD_params</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
-
-      <span class="n">ret</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SSGD</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="c"># this already is updated loss</span>
-      <span class="n">loss</span><span class="p">,</span> <span class="n">loss_instance</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ret</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-      <span class="n">param_var</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
       <span class="k">print</span> <span class="s">&quot;No mode </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">mode</span>
       <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 
     <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-10</span> <span class="c"># add some epsilon to ensure &gt; 0</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">loss</span><span class="p">),</span> <span class="n">loss_instance</span><span class="p">,</span> <span class="n">param_var</span><span class="p">,</span> <span class="n">t</span> <span class="c">### TODO remove again</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">loss</span><span class="p">),</span> <span class="n">loss_instance</span><span class="p">,</span> <span class="n">t</span> <span class="c">### TODO remove again</span>
 
 </div>
-<div class="viewcode-block" id="MixedConvNN.setOptimizerParams"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.setOptimizerParams">[docs]</a>  <span class="k">def</span> <span class="nf">setOptimizerParams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SGD</span><span class="o">=</span><span class="p">{},</span> <span class="n">CG</span><span class="o">=</span><span class="p">{},</span> <span class="n">RPROP</span><span class="o">=</span><span class="p">{},</span> <span class="n">LBFGS</span><span class="o">=</span><span class="p">{},</span> <span class="n">SSGD</span><span class="o">=</span><span class="p">{},</span> <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.setOptimizerParams"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.setOptimizerParams">[docs]</a>  <span class="k">def</span> <span class="nf">setOptimizerParams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SGD</span><span class="o">=</span><span class="p">{},</span> <span class="n">CG</span><span class="o">=</span><span class="p">{},</span> <span class="n">RPROP</span><span class="o">=</span><span class="p">{},</span> <span class="n">LBFGS</span><span class="o">=</span><span class="p">{},</span> <span class="n">Adam</span><span class="o">=</span><span class="p">{},</span>
+                         <span class="n">weight_decay</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Initialise optimiser hyper-parameters prior to compilation. SGD, CG and LBFGS this can also be done during</span>
 <span class="sd">    Training.</span>
@@ -876,9 +900,10 @@
                              <span class="n">iprint</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="c"># set to 0 for direct printing of steps</span>
                              <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_LBFGS_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">LBFGS</span><span class="p">)</span>
-
-    <span class="bp">self</span><span class="o">.</span><span class="n">_SSGD_params</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_SSGD_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">SSGD</span><span class="p">)</span>
+    
+    <span class="bp">self</span><span class="o">.</span><span class="n">_Adam_params</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_Adam_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Adam</span><span class="p">)</span>
+  
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;SSGD&#39;</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">SSGD</span><span class="o">.</span><span class="n">updateOptimizerParams</span><span class="p">(</span><span class="n">SSGD</span><span class="p">)</span>
 
@@ -889,16 +914,16 @@
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;LBFGS&#39;</span><span class="p">):</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">LBFGS</span><span class="o">.</span><span class="n">updateOptimizerParams</span><span class="p">(</span><span class="n">LBFGS</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.setSGDLR"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.setSGDLR">[docs]</a>  <span class="k">def</span> <span class="nf">setSGDLR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.09</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.setSGDLR"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.setSGDLR">[docs]</a>  <span class="k">def</span> <span class="nf">setSGDLR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.09</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">SGD_LR</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">value</span><span class="p">),</span><span class="n">borrow</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.setSGDMomentum"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.setSGDMomentum">[docs]</a>  <span class="k">def</span> <span class="nf">setSGDMomentum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.setSGDMomentum"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.setSGDMomentum">[docs]</a>  <span class="k">def</span> <span class="nf">setSGDMomentum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">SGD_momentum</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">value</span><span class="p">),</span><span class="n">borrow</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.setWeightDecay"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.setWeightDecay">[docs]</a>  <span class="k">def</span> <span class="nf">setWeightDecay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.setWeightDecay"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.setWeightDecay">[docs]</a>  <span class="k">def</span> <span class="nf">setWeightDecay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">value</span><span class="o">=</span><span class="mf">0.0005</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">global_weightdecay</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">value</span><span class="p">),</span><span class="n">borrow</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.setDropoutRates"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.setDropoutRates">[docs]</a>  <span class="k">def</span> <span class="nf">setDropoutRates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rates</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.setDropoutRates"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.setDropoutRates">[docs]</a>  <span class="k">def</span> <span class="nf">setDropoutRates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rates</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Assumes a vector/list/array as input, first entry &lt;--&gt; first layer (etc.)&quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">lay</span><span class="p">,</span><span class="n">ra</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span><span class="n">rates</span><span class="p">,</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rates</span><span class="p">))):</span>
       <span class="k">try</span><span class="p">:</span>
@@ -909,7 +934,7 @@
         <span class="c">#print &#39;set_dropout_rates: Warning: Dropout not enabled in this layer&#39;</span>
         <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.getDropoutRates"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.getDropoutRates">[docs]</a>  <span class="k">def</span> <span class="nf">getDropoutRates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.getDropoutRates"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.getDropoutRates">[docs]</a>  <span class="k">def</span> <span class="nf">getDropoutRates</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Returns list of dropout rates&quot;&quot;&quot;</span>
     <span class="n">rates</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">lay</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
@@ -927,20 +952,20 @@
 </div>
   <span class="k">def</span> <span class="nf">_predictDenseTile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_img</span><span class="p">,</span> <span class="n">out_arr</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
       <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">      Paramters</span>
-<span class="sd">      ---------</span>
+<span class="sd">      Parameters</span>
+<span class="sd">      ----------</span>
 <span class="sd">      raw_img: np.ndarray</span>
 <span class="sd">        raw image (ch, x, y) or (z, ch, x, y)to be predicted</span>
 <span class="sd">        The shape must be cnn.patch_size + cnn.output_strides - 1 (elwise)</span>
 <span class="sd">      out_arr: np.ndarray</span>
 <span class="sd">        The shape is cnn.patch_size + cnn.mfp_strides - floor(cnn.offset) - 1 (elwise)</span>
 <span class="sd">      offsets: array / list</span>
-<span class="sd">        The cnn offsets (only needed if cnn was initialised witouth a dimension calculator)</span>
+<span class="sd">        The cnn offsets (only needed if cnn was initialised without a dimension calculator)</span>
 <span class="sd">        </span>
 <span class="sd">      Returns</span>
 <span class="sd">      -------</span>
 <span class="sd">      class_probabilities: np.ndarray</span>
-<span class="sd">        predcition (n_lab, z, x, y)</span>
+<span class="sd">        prediction (n_lab, z, x, y)</span>
 <span class="sd">        The shape is cnn.patch_size + cnn.mfp_strides - floor(cnn.offset) - 1 (elwise)</span>
 
 <span class="sd">      &quot;&quot;&quot;</span>           
@@ -982,7 +1007,7 @@
       <span class="k">return</span> <span class="n">out_arr</span>
 
 
-<div class="viewcode-block" id="MixedConvNN.predictDense"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.predictDense">[docs]</a>  <span class="k">def</span> <span class="nf">predictDense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_img</span><span class="p">,</span> <span class="n">show_progress</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">as_uint8</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">pad_raw</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.predictDense"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.predictDense">[docs]</a>  <span class="k">def</span> <span class="nf">predictDense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_img</span><span class="p">,</span> <span class="n">show_progress</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">as_uint8</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">pad_raw</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Core function that performs the inference</span>
 <span class="sd">    </span>
@@ -996,7 +1021,7 @@
 <span class="sd">      Return class proabilites as uint8 image (scaled between 0 and 255!) </span>
 <span class="sd">    pad_raw: Bool</span>
 <span class="sd">      Whether to apply padding (by mirroring) to the raw input image</span>
-<span class="sd">      in order to get predictions on the full imge domain.</span>
+<span class="sd">      in order to get predictions on the full imgae domain.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c"># WARNING: this code contains mixed orders of xyz and zxy! The raw_img is swapped later!</span>
 
@@ -1032,12 +1057,13 @@
       <span class="n">ps</span>         <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mi">1</span><span class="p">,],</span> <span class="n">ps</span><span class="p">])</span>
       <span class="n">strides</span>    <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mi">1</span><span class="p">,],</span> <span class="n">strides</span><span class="p">])</span>
       <span class="n">offset</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([[</span><span class="mi">0</span><span class="p">,],</span> <span class="n">offset</span><span class="p">])</span>
-      
+    
     <span class="k">if</span> <span class="n">pad_raw</span><span class="p">:</span>
       <span class="n">raw_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">raw_img</span><span class="p">,</span>
                        <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="n">offset</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">offset</span><span class="p">[</span><span class="mi">1</span><span class="p">]),(</span><span class="n">offset</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">offset</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="p">(</span><span class="n">offset</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">offset</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span>
                         <span class="n">mode</span><span class="o">=</span><span class="s">&#39;symmetric&#39;</span><span class="p">)</span>
-    
+     
+              
     <span class="n">raw_sh</span>     <span class="o">=</span> <span class="n">raw_img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c"># only spatial, not channels  </span>
     
     <span class="n">tile_sh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">strides</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="c"># zxy</span>
@@ -1076,8 +1102,9 @@
           <span class="k">if</span> <span class="n">this_is_end_tile</span><span class="p">:</span> <span class="c"># requires 0-padding</span>
             <span class="n">right_pad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">tile_sh</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">raw_tile</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="c"># (ch,x,y,z)</span>
             <span class="n">right_pad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">,],</span> <span class="n">right_pad</span><span class="p">))</span> <span class="c"># for channel dimension</span>
-            <span class="n">left_pad</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">raw_tile</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>                  
-            <span class="n">raw_tile</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">raw_tile</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="n">left_pad</span><span class="p">,</span><span class="n">right_pad</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;constant&#39;</span><span class="p">)</span>                                    
+            <span class="n">left_pad</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">raw_tile</span><span class="o">.</span><span class="n">ndim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+            <span class="n">pad_with</span>  <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">left_pad</span><span class="p">,</span><span class="n">right_pad</span><span class="p">))</span>
+            <span class="n">raw_tile</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">raw_tile</span><span class="p">,</span> <span class="n">pad_with</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;constant&#39;</span><span class="p">)</span>                                    
           
           <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
             <span class="c"># slice from raw_tile(ch,x,y,z) --&gt; (ch,x,y)</span>
@@ -1113,7 +1140,7 @@
                 
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39; - done</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;string_escape&quot;</span><span class="p">))</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&quot;Inference speed: </span><span class="si">%.3f</span><span class="s"> MB/min</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">*</span><span class="mi">60</span><span class="o">/</span><span class="mi">1000000</span><span class="o">/</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">time_start</span><span class="p">))</span>
+    <span class="k">print</span> <span class="s">&quot;Inference speed: </span><span class="si">%.3f</span><span class="s"> MB or MPix /s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="n">predictions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">*</span><span class="mf">1.0</span><span class="o">/</span><span class="mi">1000000</span><span class="o">/</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">time_start</span><span class="p">))</span>
     
     <span class="k">if</span> <span class="n">strip_z</span><span class="p">:</span>
       <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[:,:,:,</span><span class="mi">0</span><span class="p">]</span>   
@@ -1121,21 +1148,21 @@
     <span class="k">return</span> <span class="n">predictions</span>
 
 </div>
-<div class="viewcode-block" id="MixedConvNN.get_activities"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.get_activities">[docs]</a>  <span class="k">def</span> <span class="nf">get_activities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.get_activities"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.get_activities">[docs]</a>  <span class="k">def</span> <span class="nf">get_activities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
       <span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
       <span class="n">activities</span><span class="o">=</span><span class="p">[]</span>
       <span class="k">for</span> <span class="n">layer</span><span class="p">,</span> <span class="n">dbgf</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">debug_functions</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
           <span class="n">activities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dbgf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">)</span>
       <span class="k">return</span> <span class="n">activities</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.get_nonpooled_activities"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.get_nonpooled_activities">[docs]</a>  <span class="k">def</span> <span class="nf">get_nonpooled_activities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.get_nonpooled_activities"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.get_nonpooled_activities">[docs]</a>  <span class="k">def</span> <span class="nf">get_nonpooled_activities</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
       <span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
       <span class="n">activities</span><span class="o">=</span><span class="p">[]</span>
       <span class="k">for</span> <span class="n">layer</span><span class="p">,</span> <span class="n">dbgf</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">debug_conv_output</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
           <span class="n">activities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dbgf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="p">)</span>
       <span class="k">return</span> <span class="n">activities</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.saveParameters"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.saveParameters">[docs]</a>  <span class="k">def</span> <span class="nf">saveParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;CNN.save&#39;</span><span class="p">,</span> <span class="n">layers</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.saveParameters"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.saveParameters">[docs]</a>  <span class="k">def</span> <span class="nf">saveParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;CNN.save&#39;</span><span class="p">,</span> <span class="n">layers</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Saves parameters to file, that can be loaded by ``loadParameters``&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
       <span class="k">print</span> <span class="s">&#39;Saving params to file&#39;</span>
@@ -1162,7 +1189,7 @@
     <span class="n">cPickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">poolings</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="c"># list of all pooling factors</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </div>
-<div class="viewcode-block" id="MixedConvNN.loadParameters"><a class="viewcode-back" href="../../_Net.html#net.convnet.MixedConvNN.loadParameters">[docs]</a>  <span class="k">def</span> <span class="nf">loadParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">myfile</span><span class="o">=</span><span class="s">&quot;CNN.save&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_layers_to_load</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="MixedConvNN.loadParameters"><a class="viewcode-back" href="../../out2/Net.html#net.convnet.MixedConvNN.loadParameters">[docs]</a>  <span class="k">def</span> <span class="nf">loadParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">myfile</span><span class="o">=</span><span class="s">&quot;CNN.save&quot;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">n_layers_to_load</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads parameters from file created by ``saveParameters``. The parameter shapes do not need to fit the CNN</span>
 <span class="sd">    architecture, they &quot;squeezed&quot; or &quot;padded&quot; to fit.</span>
@@ -1354,7 +1381,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1363,16 +1390,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>

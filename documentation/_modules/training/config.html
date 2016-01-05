@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1.0rc',
+        VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -27,13 +27,13 @@
     <link rel="top" title="ELEKTRONN" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="../../index.html"><img src="../../_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -42,17 +42,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>
 
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<div id="searchbox" style="display: none">
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
@@ -71,17 +68,16 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <h1>Source code for training.config</h1><div class="highlight"><pre>
 <span class="c"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">ELEKTRONN - Neural Network Toolkit</span>
+<span class="c"># ELEKTRONN - Neural Network Toolkit</span>
+<span class="c">#</span>
+<span class="c"># Copyright (c) 2014 - now</span>
+<span class="c"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
+<span class="c"># Authors: Marius Killinger, Gregor Urban</span>
 
-<span class="sd">Copyright (c) 2014 - now</span>
-<span class="sd">Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
-<span class="sd">Authors: Marius Killinger, Gregor Urban</span>
-<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -89,18 +85,16 @@
 <span class="kn">from</span> <span class="nn">elektronn.net</span> <span class="kn">import</span> <span class="n">netutils</span>
 <span class="kn">import</span> <span class="nn">trainutils</span>
 
-<div class="viewcode-block" id="MasterConfig"><a class="viewcode-back" href="../../_Training.html#training.config.MasterConfig">[docs]</a><span class="k">class</span> <span class="nc">MasterConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="MasterConfig"><a class="viewcode-back" href="../../out2/Training.html#training.config.MasterConfig">[docs]</a><span class="k">class</span> <span class="nc">MasterConfig</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This class hardcodes the distributionwide default values</span>
+<span class="sd">    This class hard-codes the distribution-wide default values</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c">### Toolkit Setup ### ------------------------------------------------------------------------------------------------------------</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span>        <span class="o">=</span> <span class="s">&quot;~/CNN_Training/&quot;</span>    <span class="c"># (*) &lt;String&gt;: where to create the CNN directory. In this directory a new folder is created with the name of the model</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">plot_on</span>          <span class="o">=</span> <span class="bp">True</span>                 <span class="c"># &lt;Bool&gt;: whether to create plots of the errors etc.</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">print_status</span>     <span class="o">=</span> <span class="bp">True</span>                 <span class="c"># &lt;Bool&gt;: whether to print Training status to std.out</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">device</span>           <span class="o">=</span> <span class="bp">False</span>                <span class="c"># False (use .theanorc value) or int (use gpu&lt;i&gt;)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">no_X</span>             <span class="o">=</span> <span class="bp">False</span>                <span class="c"># Whether to import matplotlib in X-server free mode (for ssh without -X option)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">no_X_hosts</span>       <span class="o">=</span> <span class="p">[]</span>                   <span class="c"># list of hostnames which never import X</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">param_save_h</span>     <span class="o">=</span> <span class="mf">1.0</span>                  <span class="c"># hours: frequency to save a permanent parameter snapshot</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">initial_prev_h</span>   <span class="o">=</span> <span class="mf">1.0</span>                  <span class="c"># hours: time after which first preview is made</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">prev_save_h</span>      <span class="o">=</span> <span class="mf">3.0</span>                  <span class="c"># hours: frequency to create previews</span>
@@ -205,6 +199,10 @@
     
     <span class="c"># RPROP ($)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">RPROP_params</span>    <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">penalty</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">gain</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">beta</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">initial_update_size</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">)</span> <span class="c"># &lt;Dict&gt;</span>
+    
+    <span class="c"># Adam ($)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">Adam_params</span>    <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">LR</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span> <span class="n">beta1</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">beta2</span><span class="o">=</span><span class="mf">0.999</span><span class="p">,</span> <span class="n">epsilon</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">)</span> <span class="c"># &lt;Dict&gt;</span>
+    
     <span class="c"># CG ($)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">CG_params</span>       <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">n_steps</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>       <span class="c"># update steps per same batch 3 &lt;--&gt; 6</span>
                            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span>           <span class="c"># termination criterion of line search, must be &lt;= 0.35</span>
@@ -222,7 +220,7 @@
     <span class="c"># ---------------------------------------------------------------------------------------------------------------------------------------</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="s">&quot;&quot;</span> <span class="c"># Just a hack</span>
 </div>
-<div class="viewcode-block" id="DefaultConfig"><a class="viewcode-back" href="../../_Training.html#training.config.DefaultConfig">[docs]</a><span class="k">class</span> <span class="nc">DefaultConfig</span><span class="p">(</span><span class="n">MasterConfig</span><span class="p">):</span>
+<div class="viewcode-block" id="DefaultConfig"><a class="viewcode-back" href="../../out2/Training.html#training.config.DefaultConfig">[docs]</a><span class="k">class</span> <span class="nc">DefaultConfig</span><span class="p">(</span><span class="n">MasterConfig</span><span class="p">):</span>
   <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class overwrites the master values with values from a user file (if present)</span>
@@ -249,7 +247,7 @@
 
 <span class="c">### Configuration ############################################################################################</span>
 
-<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../_Training.html#training.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Config"><a class="viewcode-back" href="../../out2/Training.html#training.config.Config">[docs]</a><span class="k">class</span> <span class="nc">Config</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Configuration object to manage the parameters of ``trainingInstance``</span>
 
@@ -340,7 +338,7 @@
       <span class="n">trainutils</span><span class="o">.</span><span class="n">initGPU</span><span class="p">(</span><span class="n">gpu</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Config.parseConfig"><a class="viewcode-back" href="../../_Training.html#training.config.Config.parseConfig">[docs]</a>    <span class="k">def</span> <span class="nf">parseConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Config.parseConfig"><a class="viewcode-back" href="../../out2/Training.html#training.config.Config.parseConfig">[docs]</a>    <span class="k">def</span> <span class="nf">parseConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">print</span> <span class="s">&quot;Reading config-file </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,)</span>
       <span class="n">config_dict</span> <span class="o">=</span> <span class="n">default_config</span><span class="o">.</span><span class="n">__dict__</span> <span class="c"># take attributes from default config</span>
       <span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span> <span class="o">=</span> <span class="n">config_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -349,23 +347,28 @@
       <span class="n">config_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">custom_dict</span><span class="p">)</span>
 
       <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">:</span>
-          <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span><span class="p">:</span>
-              <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span><span class="p">[</span><span class="s">&#39;save_path&#39;</span><span class="p">,</span> <span class="s">&#39;param_file&#39;</span><span class="p">,</span> <span class="s">&#39;data_path&#39;</span><span class="p">,</span> <span class="s">&#39;label_path&#39;</span><span class="p">,</span> <span class="s">&#39;preview_data_path&#39;</span><span class="p">]:</span>
-                <span class="k">try</span><span class="p">:</span>
-                  <span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-                <span class="k">except</span><span class="p">:</span>
-                  <span class="k">pass</span>
-              <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
-          <span class="k">else</span><span class="p">:</span>
-              <span class="n">min_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">levenshtein</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span><span class="p">])</span>
-              <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;&lt;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;&gt;  is not valid configuration variable.</span><span class="se">\n\</span>
-<span class="s">              Did you mean &lt;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span><span class="p">[</span><span class="n">min_dist</span><span class="p">])</span><span class="o">+</span><span class="s">&quot;&gt;?&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span><span class="p">:</span>
+          <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span><span class="p">[</span><span class="s">&#39;save_path&#39;</span><span class="p">,</span> <span class="s">&#39;param_file&#39;</span><span class="p">,</span> <span class="s">&#39;data_path&#39;</span><span class="p">,</span> <span class="s">&#39;label_path&#39;</span><span class="p">,</span>
+                        <span class="s">&#39;preview_data_path&#39;</span><span class="p">,</span> <span class="s">&#39;data_class_name&#39;</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+              <span class="k">if</span> <span class="n">key</span><span class="o">==</span><span class="s">&#39;data_class_name&#39;</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+              <span class="k">else</span><span class="p">:</span>
+                <span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+              <span class="k">pass</span>
+
+          <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+          <span class="n">min_dist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">levenshtein</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span><span class="p">])</span>
+          <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;&lt;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;&gt;  is not valid configuration variable.</span><span class="se">\n\</span>
+<span class="s">          Did you mean &lt;&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span><span class="p">[</span><span class="n">min_dist</span><span class="p">])</span><span class="o">+</span><span class="s">&quot;&gt;?&quot;</span><span class="p">)</span>
 
       <span class="bp">self</span><span class="o">.</span><span class="n">n_layers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MLP_layers</span><span class="p">)</span> <span class="c"># rnn layer is not counted here</span>
       <span class="k">return</span> <span class="n">custom_dict</span>
 
 </div>
-<div class="viewcode-block" id="Config.fixValues"><a class="viewcode-back" href="../../_Training.html#training.config.Config.fixValues">[docs]</a>    <span class="k">def</span> <span class="nf">fixValues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Config.fixValues"><a class="viewcode-back" href="../../out2/Training.html#training.config.Config.fixValues">[docs]</a>    <span class="k">def</span> <span class="nf">fixValues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitor_batch_size</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span> <span class="c"># make the monitor size a multiple of the normal</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">monitor_batch_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
                                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">monitor_batch_size</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">monitor_batch_size</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">))</span>
@@ -400,13 +403,14 @@
         
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span><span class="p">)</span> <span class="c"># normalise weights</span>
+        <span class="c">#self.class_weights /= np.sum(self.class_weights) # normalise weights</span>
+        <span class="k">print</span> <span class="s">&quot;WARNING: weight normalisation is suspendend but this contradicts doc!&quot;</span>
         
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_ignore_threshold</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">example_ignore_threshold</span> <span class="o">=</span> <span class="mf">0.0</span>
         
       </div>
-<div class="viewcode-block" id="Config.typeChecks"><a class="viewcode-back" href="../../_Training.html#training.config.Config.typeChecks">[docs]</a>    <span class="k">def</span> <span class="nf">typeChecks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Config.typeChecks"><a class="viewcode-back" href="../../out2/Training.html#training.config.Config.typeChecks">[docs]</a>    <span class="k">def</span> <span class="nf">typeChecks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
       <span class="n">is_string</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>  <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
       <span class="n">is_int</span>   <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
       <span class="n">is_list</span>   <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -414,7 +418,7 @@
       <span class="n">is_float</span>  <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
       
       <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;save_path&#39;</span><span class="p">,</span> <span class="s">&#39;save_name&#39;</span><span class="p">,</span> <span class="s">&#39;data_path&#39;</span><span class="p">,</span> <span class="s">&#39;label_path&#39;</span><span class="p">,</span> <span class="s">&#39;mode&#39;</span><span class="p">,</span>
-                    <span class="s">&#39;border_mode&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;optimizer&#39;</span><span class="p">,</span> <span class="s">&#39;data_class_name&#39;</span><span class="p">,</span> <span class="s">&#39;param_file&#39;</span><span class="p">,</span> <span class="s">&#39;preview_data_path&#39;</span><span class="p">]:</span>
+                    <span class="s">&#39;border_mode&#39;</span><span class="p">,</span> <span class="s">&#39;target&#39;</span><span class="p">,</span> <span class="s">&#39;optimizer&#39;</span><span class="p">,</span> <span class="s">&#39;param_file&#39;</span><span class="p">,</span> <span class="s">&#39;preview_data_path&#39;</span><span class="p">]:</span>
         <span class="k">assert</span> <span class="n">is_string</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">)),</span> <span class="s">&quot;Parameter </span><span class="si">%s</span><span class="s"> must be a string or None&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
       
       <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;overwrite&#39;</span><span class="p">,</span> <span class="s">&#39;plot_on&#39;</span><span class="p">,</span> <span class="s">&#39;print_status&#39;</span><span class="p">,</span> <span class="s">&#39;flip_data&#39;</span><span class="p">,</span> <span class="s">&#39;anisotropic_data&#39;</span><span class="p">,</span> <span class="s">&#39;lazy_labels&#39;</span><span class="p">,</span>
@@ -435,7 +439,7 @@
         <span class="k">assert</span> <span class="n">is_float</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param</span><span class="p">)),</span> <span class="s">&quot;Parameter </span><span class="si">%s</span><span class="s"> must be a Float&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">param</span><span class="p">)</span> 
         
         </div>
-<div class="viewcode-block" id="Config.checkConfig"><a class="viewcode-back" href="../../_Training.html#training.config.Config.checkConfig">[docs]</a>    <span class="k">def</span> <span class="nf">checkConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="Config.checkConfig"><a class="viewcode-back" href="../../out2/Training.html#training.config.Config.checkConfig">[docs]</a>    <span class="k">def</span> <span class="nf">checkConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">custom_dict</span><span class="p">):</span>
       <span class="n">mandatory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mandatory_vars</span>
       <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-img&#39;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;img-scalar&#39;</span><span class="p">:</span>
         <span class="n">mandatory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mandatory_cnn</span><span class="p">)</span>
@@ -470,12 +474,12 @@
       <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;img-img&#39;</span><span class="p">,</span> <span class="s">&#39;img-scalar&#39;</span><span class="p">,</span> <span class="s">&#39;vect-scalar&#39;</span><span class="p">],</span> <span class="s">&quot;Unknown mode&quot;</span>
       <span class="k">assert</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rnn_layer_kwargs</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;img-img&#39;</span><span class="p">,</span> <span class="s">&#39;img-scalar&#39;</span><span class="p">])</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s">&#39;vect-scalar&#39;</span><span class="p">,</span>\
       <span class="s">&quot;RNN layers can only be used in &#39;vect-scalar&#39; mode&quot;</span>
-      <span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;nll&#39;</span><span class="p">,</span> <span class="s">&#39;regression&#39;</span><span class="p">,</span> <span class="s">&#39;nll_mutiple_binary&#39;</span><span class="p">,</span> <span class="s">&#39;nll_weak&#39;</span><span class="p">]</span>
+      <span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;nll&#39;</span><span class="p">,</span> <span class="s">&#39;regression&#39;</span><span class="p">,</span> <span class="s">&#39;nll_mutiple_binary&#39;</span><span class="p">,</span> <span class="s">&#39;nll_weak&#39;</span><span class="p">,</span> <span class="s">&#39;affinity&#39;</span><span class="p">,</span> <span class="s">&#39;malis&#39;</span><span class="p">]</span>
       <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">,</span>\
-      <span class="s">&quot;Invalid target functions, must be </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="s">&quot;nll or regression&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
+      <span class="s">&quot;Invalid target functions, must be in </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span>
 
       </div>
-<div class="viewcode-block" id="Config.backupScripts"><a class="viewcode-back" href="../../_Training.html#training.config.Config.backupScripts">[docs]</a>    <span class="k">def</span> <span class="nf">backupScripts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer_file</span><span class="p">):</span>
+<div class="viewcode-block" id="Config.backupScripts"><a class="viewcode-back" href="../../out2/Training.html#training.config.Config.backupScripts">[docs]</a>    <span class="k">def</span> <span class="nf">backupScripts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer_file</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves all python files into the folder specified by ``self.save_path``</span>
 <span class="sd">        Also changes working directory to the ``save_path`` directory</span>
@@ -510,7 +514,7 @@
             <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="o">+</span><span class="s">&quot;Backup/config.py&quot;</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="Config.levenshtein"><a class="viewcode-back" href="../../_Training.html#training.config.Config.levenshtein">[docs]</a>    <span class="k">def</span> <span class="nf">levenshtein</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
+<div class="viewcode-block" id="Config.levenshtein"><a class="viewcode-back" href="../../out2/Training.html#training.config.Config.levenshtein">[docs]</a>    <span class="k">def</span> <span class="nf">levenshtein</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes Levenshtein-distance between ``s1`` and ``s2`` strings</span>
 <span class="sd">        Taken from: http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python</span>
@@ -541,7 +545,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -550,16 +554,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="../../np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">ELEKTRONN</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
     </div>
   </body>
 </html>
