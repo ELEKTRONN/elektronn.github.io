@@ -148,20 +148,20 @@ permalink: /getting-started/
 							<li>labels: shape (x,y,z)</li>
 							<li>for classification: labels contain integer numbers, ranging from 0 to (#classes-1)</li>
 							<li>for regression: labels contain float numbers</li>
-							<li>for 2d images the dimension z can be viewed as the axis along which the instances of the training set are stacked</li>
+							<li>for 2d images the z-dimension can be viewed as the axis along which the instances of the training set are stacked</li>
 						</ul>
 					</li>
 
-					<li>Find a valid CNN architecture by by using <a href="{{ site.documentation-url }}/_Net.html#net.netutils.CNNCalculator">net.netutils.CNNCalculator()</a>.</li>
+					<li>Find a valid CNN architecture by using <a href="{{ site.documentation-url }}/_Net.html#net.netutils.CNNCalculator">net.netutils.CNNCalculator()</a>.</li>
 
 					<li>Edit <code>config_template.py</code> as a new file to specify your training scenario.</li>
 
 					<li>
-						<p>Run the script <code>TrainCNN.py</code> from command line (or from an IDE like spyder):</p>
+						<p>Run the script <code>TrainCNN.py</code> from command line (or from a Python IDE like spyder):</p>
 						<p><code>TrainCNN.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
 					</li>
 
-					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is hard work and needs time. For a better understanding of how they should be trained refer to the sources in the next section.</li>
+					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is work and needs time. For a better understanding of how they should be trained and which architecture you should pick, refer to the sources in the next section.</li>
 				</ul>		
 
 			</div>
