@@ -63,40 +63,43 @@ permalink: /getting-started/
 				</header>
 
 				<ul>
-					<li>Install below dependencies in advance (manual installation of <em>theano</em> is optional, the setup will install it otherwise)</li> 
+					<li>Install below dependencies in advance</li> 
 					<li>
-						<p>Install <strong>ELEKTRONN</strong> from the repository using
-						<code>pip</code> (options can specify target locations, editable
-						installs etc., see <code>man pip</code>):</p>
+					<p>Install <strong>ELEKTRONN</strong> from the repository using
+					<code>pip</code>:</p>
 
-						<p><pre><code>pip install https://github.com/ELEKTRONN/ELEKTRONN [options]</code></pre></p> 
+					<p><pre><code>pip install https://github.com/ELEKTRONN/ELEKTRONN [options]</code></pre></p> 
 
-						<p>This will install <strong>ELEKTRONN</strong> as a python
-						package. Alternatively you can download the files, add the folder
-						to <code>PYTHONPATH</code> and directly use the code. If you plan to adapt the scripts and data processing methods
-						a developer install using the pip option <code>-e</code> might be advisable.</p>
+					<p>This will install <strong>ELEKTRONN</strong> as a python
+					package. Options can specify target locations, editable installs etc. (see <code>man pip</code>)
+                                        If you plan to alter the scripts and data processing methods directly,
+				        a developer install using the <code>pip</code> option <code>-e</code> might be advisable.
+					Alternatively you can download the files, add the folder
+				        to <code>PYTHONPATH</code> and directly use the code.</p>
 					</li>
-					<li>Configure <em>theano</em> as explained below</li> 
-					<li>You can optionally create a user configuration file by editing the file <code>examples/config_template.py</code> and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#id7">configuration</a>)</li> 
-					<li> Optionally try out one of the examples to confirm everything works</li>
+					<li>Configure <em>theano</em> as explained in the <a href=""{{ site.documentation-url }}/Installation.html#theano">documentation</a></li> 
+					<li>You can optionally create a user configuration file by editing the file <code>examples/config_template.py</code> and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#configuration-of-parameters">configuration</a>)</li> 
+					<li> [Optionally: try out one of the examples to confirm everything works]</li>
 				</ul>
 
 				<header class="major">
 					<h3>Dependencies</h3>
 				</header>
 
-				<p><strong>ELEKTRONN</strong> has dependencies which are sometimes
+				<p>Manual installation of <em>theano</em> is optional, the setup will install it otherwise.
+                                <strong>ELEKTRONN</strong> has some dependencies which are sometimes
 				difficult to install using <code>pip</code> (e.g. because
 				<code>pip</code> does not install system-level dependencies). You can
 				try:</p>
 
 				<p><pre><code>pip install -r requirements.txt</code></pre></p>
 
-				<p>But that will most likely fail. Instead we recommend that you install those packages by your system package manager e.g.:</p>
+				<p>But that will most likely fail to install all required packages. Instead we recommend that you install 
+                                those packages by your system package manager e.g.:</p>
 
 				<p><code>apt-get install python-numpy python-scipy python-matplotlib python-h5py</code></p>
 
-				<p>The dependencies are listed in the file <a href="{{ site.github-url }}/blob/master/requirements.txt">requirements.txt</a></p>
+				<p>All dependencies are listed in the file <a href="{{ site.github-url }}/blob/master/requirements.txt">requirements.txt</a></p>
 			</div>
 		</div>
 	</div>
@@ -142,7 +145,7 @@ permalink: /getting-started/
 				</header>
 
 				<ul>
-					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets.</li>
+					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets. <a href="{{ site.documentation-url }}/Pipeline.html#data-format">More information</a></li>
 
 					<li>
 						<p>Transform your data arrays to h5 data sets in separate files for images and labels.</p>
@@ -156,12 +159,12 @@ permalink: /getting-started/
 						</ul>
 					</li>
 
-					<li>Find a valid CNN architecture by using <a href="{{ site.documentation-url }}/_Net.html#net.netutils.CNNCalculator">net.netutils.CNNCalculator()</a>.</li>
+					<li>Find a valid CNN architecture by using <a href="{{ site.documentation-url }}/elektronn.net.html#elektronn.net.netutils.CNNCalculator">net.netutils.CNNCalculator()</a>.</li>
 
-					<li>Edit <code>config_template.py</code> as a new file to specify your training scenario.</li>
+					<li>Edit <a href="{{ site.github-url }}/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> as a new file to specify your training scenario.</li>
 
 					<li>
-						<p>Run the script <code>TrainCNN.py</code> from command line (or from a Python IDE like spyder):</p>
+						<p>Run the script <a href="{{ site.github-url }}/blob/master/elektronn/scripts/TrainCNN.py">scripts/TrainCNN.py</a> from command line (or from a Python IDE like spyder):</p>
 						<p><code>TrainCNN.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
 					</li>
 
