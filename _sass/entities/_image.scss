@@ -1,49 +1,47 @@
-.MPI-Logo {
-	max-width: 256px;
-
-	@include breakpoint($on-notebook) {
-		max-width: 80%;
-	}
-}
-
-.member-gallery {
-	//overflow: hidden;
-}
-
-.member-gallery .col {
-	padding: 0;
-	margin: 0;
-}
-
 .members {
 	flex-direction: column;
 
-	@include breakpoint($on-notebook) {
+	@include breakpoint(1180px) {
 		flex-direction: row;
 	}
 }
 
-.member {
-	h4 { 
-		@extend .-m-z;
-		@extend .-mb;
-		@extend .-text-center;
+.member-gallery {
+	@extend .-pt-l;
+
+	@include breakpoint(1180px) {
+		padding: 32px 0 0 32px;
+	}
+
+	.col {
+		@extend .-fixed-width;
+		max-width: 200px;
 	}
 }
+
 
 .member-image {
-	@extend .-center;
+	width: 170px;
+	height: 170px;
+	border: 1px solid #cbd3dd;
 	border-radius: 50%;
-	width: 100%;
-	width: 120px;
-	height: 120px;
+	@extend .-center;
+	@extend .-bdr-circle;
 	overflow: hidden;
-
-	@include breakpoint($on-desktop) {
-		width: 170px;
-		height: 170px;
-	}
-
-	&.-green { border: 1px solid #12AC87 }
-	&.-blue { border: 2px solid #28A7E9 }
 }
+
+//.member-image {
+//	//@extend .-center;
+//	@extend .-bdr-circle;
+//	width: 170px;
+//	height: 170px;
+//	overflow: hidden;
+//
+//	@include breakpoint($on-desktop) {
+//		width: 170px;
+//		height: 170px;
+//	}
+//
+//	&.-green { border: 1px solid #12AC87 }
+//	&.-blue { border: 2px solid #28A7E9 }
+//}

@@ -1,37 +1,45 @@
 .button {
-	@extend .-bdr-green;
-	@extend .-bg-green;
-	@extend .-bdr-round;
+	@extend .-relative;
+	@extend .-pt-l;
+	@extend .-pb-l;
+	@extend .-pr-xl;
+	@extend .-pl-xl;
+	background: rgba(#435676, .7);
+	transition: all .2s ease-in;
 
-	border-bottom: 4px solid darken(#12ac87, 10);
-	text-align: left;
-	color: #fff;
-
-	&.-icon .fa {
-		@extend .-pv-s;
-		@extend .-pl-s;
-		display: inline-block;
-		width: 2em;
-		border-right: 1px solid darken(#12ac87, 10);
-
+	&:before, &:after {
+		@extend .-absolute;
+		width: 100%;
+		height: 100%;
+		content: '';
+		z-index: -1;
+		transition: all .2s ease-in;
 	}
 
-	&.-icon span {
-		@extend .-pv-s;
-		@extend .-ph;
+	&:before {
+		background: rgba(#FF6100, .5);
+		left: -3px;
+		bottom: -3px;
 	}
 
-	display: block;
-	transition: background-color .25s linear;
+	&:after {
+		background: rgba(#5BA4FF, .5);
+		left: 3px;
+		top: -3px;
+	}
+
+	&:hover:before { left: 0; bottom: 0; }
+	&:hover:after { left: 0; top: 0; }
+	&:hover { background: #435676; }
 
 	@include breakpoint($on-mobile) {
 		display: inline-block;
 		text-align: center;
 		max-width: 100%;
 	}
+}
 
-	&:hover {
-		@extend .-bg-green-light;
-		border-bottom: 4px solid darken(#12ac87, 10);
-	}
+a.button {
+	color: #fff;
+	border-bottom: 0;
 }

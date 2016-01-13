@@ -3,6 +3,18 @@
 
 "use strict";
 
+(function() {
+	var	$window = document.window,
+	$body = document.getElementsByTagName("body")[0]
+
+	$body.classList.toggle('is-loading');
+
+	window.addEventListener("load", function() {
+		$body.classList.toggle("is-loading");
+	});
+
+	window.addEventListener("unload", function() {});
+})();
 
 (function() {
 	// Nav.
@@ -20,3 +32,4 @@
 			$nav.classList.remove("visible");
 	});
 })();
+

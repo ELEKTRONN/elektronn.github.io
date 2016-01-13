@@ -1,88 +1,109 @@
-body, input, select, textarea {
-	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 100%;
-	line-height: 1.65;
-	//color: #A2B5C3;
-	color: #8297a7;
+html {
+	@extend .-font-normal;
+}
 
-	@include breakpoint($on-notebook) {
-	}
+body, input, select, textarea {
+	font-family: 'Roboto', sans-serif;
+	line-height: 1.65;
+	color: #5B677D;
+	font-weight: 300;
 }
 
 p {
-	margin-top: .825em;
-	margin-bottom: .825em;
+	@extend .-mt-xl;
 }
 
 
 h1, h2, h3, h4, h5, h6 {
-	//color: #fff;
-	color: #272e3a;
+	color: #4C5B76;
+	font-weight: 400;
 }
 
 h2 {
-	font-size: 1.35em;
-	line-height: 1.65/1.35;
-	margin-top: 1.65/1.35 * 1.5em;
-	margin-bottom: 1.65/1.35 * 0.5em;
+	font-size: 24px;
 }
 
 h3 {
-	font-size: 1.15em;
-	line-height: 1.65/(1.15);
-	margin-top: 1.65/(1.15)*1.5em;
-	margin-bottom: 1.65/(1.15)*0.5em;
+	font-size: 20px;
 }
 
 h4 {
-	font-size: 1em;
-	line-height: 1.65;
-	margin-top: 1.65 * 1em;
-	margin-bottom: 1.65 * 1em;
+	font-size: 16px;
 }
 
-header.-underlined {
-	> * {
-		display: inline-block;
-		@extend .-bdr-green-light;
-		margin-bottom: .5em;
+.banner .-major {
+	padding-top: 0;
+}
+
+header.-major {
+	text-align: center;
+
+	.style3 & {
+		text-shadow: 0 1px 2px rgba(0,0,0,0.39);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	}
+
+	padding-top: 55px;
+	padding-bottom: 25px;
+	margin-bottom: 50px;
+	border-bottom: 1px solid #e8ecef;
+
+	& h2 {
+		@extend .-mb-l;
+	}
+
+	p {
+		margin: 0;
+		padding-bottom: 25px;
+	}
+
+	i {
+		margin-bottom: 25px;
 	}
 }
 
-header.major {
-	@extend .-relative;
-	@extend .-text-center;
-	@extend .-mb-l;
-	color: #fff;
-
-	&:after {
-		@extend .-bdr-green-light;
-		bottom: -.5em;
-		content: '';
-		left: calc(50% - 2em);
-		position: absolute;
-		width: 4em;
+header.-minor {
+	text-align: center;
+	i {
+		margin-bottom: 25px;
 	}
+}
+
+.boxed {
+	font-size: 48px;
+	color: #cbd3dd;
+	display: block;
+	border: 1px solid #cbd3dd;
+	width: 64px;
+	height: 64px;
+	text-align: center;
+	line-height: 48px;
+	padding-top: 6px;
+	border-radius: 3px;
+	outline: 0;
 }
 
 strong, b {
-	color: #3d5567;
+	color: #4A5A77;
 	font-weight: normal;
 }
 
 em, i { font-style: italic; }
 
 a {
-	color: #12ac87;
+	color: #008cdd;
 	text-decoration: none;
-	border-bottom: 2px solid lighten(#12ac87, 10);
-
-	&:hover { @extend .-bdr-green-light }
+	&:hover {
+		color: #292e31;
+	}
 }
 
 code {
-	color: #fff;
-	border: 1px solid #465f78;
+	font-size: 13px;
+	background-color: #fdfdfd;
+	color: #333;
+	text-shadow: 0 1px #fff;
 	padding: 3px;
-	background-color: #34495e;
+	font-family: monospace;
+	border: 1px solid #dae0e7;
 }

@@ -1,15 +1,11 @@
-.logo { max-width: 8rem; }
-
-.nav-wrapper {
-	width: 100%;
-}
+.nav-wrapper { width: 100%; }
 
 .nav {
 	display: flex;
 	flex-direction: column;
-	position: relative;
 	transform: translateY(100%);
 	transition: all .3s ease-in;
+	border-top: 1px solid rgba(49,78,95,0.12);
 
 	@include breakpoint($on-notebook) {
 		transform: translateY(0);
@@ -19,15 +15,36 @@
 	&.visible { transform: translateY(0); }
 }
 
-
 .nav-link {
-	color: #bbb;
-	border-top: 1px solid #546878;
-	background: #414F5D;
-	color: #84ACC0;
-	padding: .5rem;
-	transition: all .1s linear;
-	border-bottom: 4px solid #414f5d;
+	color: #5B677D;
+	//color: #435676;
+	padding: .5rem 1rem 1rem;
+	transition: all .1s ease-in;
+	position: relative;
+	//background: rgba(#5BA4FF, .9);
+	background: #fff;
+
+	&:after {
+		@extend .-bdr-circle;
+		background: #FF6100;
+		transform: scale(0);
+		transition: all .1s ease-in;
+		content: '';
+		width: 8px;
+		height: 8px;
+
+		@include breakpoint($on-notebook) {
+			position: absolute;
+			bottom: 8px;
+			left: calc(50% - 4px);
+		}
+	}
+
+	&.active, &:hover {
+	color: #292e31;
+	}
+
+	&.active:after, &:hover:after { transform: scale(1); }
 
 	i { margin-right: .5rem; }
 
@@ -35,22 +52,6 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		overflow: hidden;
-		border-right: 1px solid #2D3942;
-		border-bottom: 1px solid #414f5d;
-	}
-
-	&:last-of-type { border-right: 0; }
-
-
-	&.active, &.active:hover {
-		border-bottom: 4px solid darken(#414f5d, 15);
-		background: #36404E;
-		color: #02C093;
-	}
-
-	&:hover {
-		border-bottom: 4px solid #414f5d;
-		color: #02c093;
 	}
 }
 
@@ -60,7 +61,5 @@
 	position: relative;
 	bottom: 0;
 
-	@include breakpoint($on-notebook) {
-		display: none;
-	}
+	@include breakpoint($on-notebook) { display: none; }
 }

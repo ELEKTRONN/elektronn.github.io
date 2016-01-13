@@ -3,135 +3,154 @@ layout: page
 permalink: /getting-started/
 ---
 
-<section class="content style3 -diagonal-border">
-	<div class="container row -pt-xl -pb-xxl">
-		<div class="col">
-			<header class="major">
-				<i class="fa fa-download fa-2x"></i>
-				<br>
-				<h3 class="-mt-z">Installation</h3>
-			</header>
-			<p><strong>ELEKTRONN</strong> is a Python package that can be installed
-			with <code>pip</code>. <a href="#Installation">Installation
-				instructions.</a></p>
-			<p><a class="tag -icon" href="{{ site.github-url }}"><i class="fa fa-github"></i>Source Code</a></p>
+<section class="-bg-circles -pb-xxl">
+	<div class="container banner -large">
+		<div class="row -middle">
+			<div class="col -fixed-width">
+				<div class="container -small">
+					<header class="-major">
+						<span class="header-icon -getting-started"><i class="icon ion-ios-lightbulb"></i></span>
+						<h2>Getting started</h2>
+						<p>Learn how to use <strong>ELEKTRONN</strong>.</p>
+					</header>
+				</div>
+			</div> <!-- col -->
 		</div>
+	</div>
 
-		<div class="col">
-			<header class="major">
-				<i class="fa fa-rocket fa-2x"></i>
-				<br>
-				<h3 class="-mt-z">Getting started</h3>
-			</header>
-			<p>Learn how to use <strong>ELEKTRONN</strong> for your data from our basic recipe <a href="#BasicRecipe">below</a>
-			or try out the <a href="{{ site.documentation-url }}/Examples.html">examples</a>.
-		</div>
+	<div class="container -center">
+		<div class="row pillars">
+			<div class="col">
+				<header>
+					<h3>Installation</h3>
+				</header>
 
-		<div class="col">
-			<header class="major">
-				<i class="fa fa-book fa-2x"></i>
-				<br>
-				<h3 class="-mt-z">Documentation</h3>
-			</header>
-			<p><strong>ELEKTRONN’s</strong> full documentation can be found here:</p>
-			<p> <a class="tag -icon" href="{{ site.documentation-url }}"><i class="fa fa-book"></i>Documentation</a></p>
-		</div>
+				<footer>
+					<p><strong>ELEKTRONN</strong> is a Python package that can be installed
+					with <code>pip</code>. <a href="#Installation">Installation
+						instructions.</a></p>
+					<p><a class="tag -icon" href="{{ site.github-url }}"><i class="icon ion ion-social-github"></i>Source Code</a></p>
+				</footer>
+			</div>
 
-		<div class="col">
-			<header class="major">
-				<i class="fa fa-puzzle-piece fa-2x"></i>
-				<br>
-				<h3 class="-mt-z">Use Cases</h3>
-			</header>
-			<p><strong>ELEKTRONN</strong> can be used for...</p>
-			<ul>
-				<li>object recognition</li>
-				<li>image segmentation</li>
-				<li>prediction of income</li>
-				<li>... much more</li>
-			</ul>
-		</div>
+			<div class="col -grey2">
+				<header>
+					<h3>Getting started</h3>
+				</header>
+
+				<footer>
+					<p>Learn how to use <strong>ELEKTRONN</strong> for your data from our basic recipe <a href="#BasicRecipe">below</a>
+					or try out the <a href="{{ site.documentation-url }}/Examples.html">examples</a>.
+				</footer>
+			</div>
+
+			<div class="col -grey3">
+				<header>
+					<h3>Documentation</h3>
+				</header>
+
+				<footer>
+					<p><strong>ELEKTRONN’s</strong> full documentation can be found here:</p>
+					<p><a class="tag -icon" href="{{ site.documentation-url }}"><i class="icon ion ion-ios-book-outline"></i>Documentation</a></p>
+				</footer>
+			</div>
+
+			<div class="col -grey4">
+				<header>
+					<h3>Use Cases</h3>
+				</header>
+
+				<footer>
+					<p><strong>ELEKTRONN</strong> can be used for...</p>
+					<ul>
+						<li>object recognition</li>
+						<li>image segmentation</li>
+						<li>prediction of income</li>
+						<li>... much more</li>
+					</ul>
+				</footer>
+			</div>
+		</div> <!-- end col -->
 	</div>
 </section>
 
-<section class="content style4 -diagonal-border">
-	<div class="container -pb-xxl">
+<section class="content style1 diagonal-border -pb-xxxl">
+	<div class="container -center">
 		<div class="row">
 			<div class="col">
-				<header class="major">
+				<header class="-major">
+					<i class="boxed icon ion ion-monitor"></i>
 					<h2 id="Installation">Installation</h2>
 				</header>
 
 				<ul>
 					<li>Install below dependencies in advance</li> 
 					<li>
-					<p>Install <strong>ELEKTRONN</strong> from the repository using
-					<code>pip</code>:</p>
+						<p>Install <strong>ELEKTRONN</strong> from the repository using
+						<code>pip</code>:</p>
 
-					<p><pre><code>pip install https://github.com/ELEKTRONN/ELEKTRONN [options]</code></pre></p> 
+						<pre><code>pip install https://github.com/ELEKTRONN/ELEKTRONN [options]</code></pre>
 
-					<p>This will install <strong>ELEKTRONN</strong> as a python
-					package. Options can specify target locations, editable installs etc. (see <code>man pip</code>).
-                                        If you plan to alter the scripts and data processing methods directly,
-				        a developer install using the <code>pip</code> option <code>-e</code> might be advisable.
-					Alternatively you can download the files, add the folder
-				        to <code>PYTHONPATH</code> and directly use the code.</p>
+						<p>This will install <strong>ELEKTRONN</strong> as a python
+						package. Options can specify target locations, editable installs etc. (see <code>man pip</code>).
+						If you plan to alter the scripts and data processing methods directly,
+						a developer install using the <code>pip</code> option <code>-e</code> might be advisable.
+						Alternatively you can download the files, add the folder
+						to <code>PYTHONPATH</code> and directly use the code.</p>
 					</li>
 					<li>Configure <em>theano</em> as explained in the <a href="{{ site.documentation-url }}/Installation.html#theano">documentation</a></li> 
 					<li>You can optionally create a user configuration file by editing the file <code>examples/config_template.py</code> and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#configuration-of-parameters">configuration</a>)</li> 
 					<li> [Optionally: try out one of the <a href="{{ site.documentation-url }}/Examples.html">examples</a> to confirm everything works]</li>
 				</ul>
 
-				<header class="major">
-					<h3>Dependencies</h3>
+				<header class="-major">
+					<i class="boxed icon ion ion-social-buffer"></i>
+					<h2>Dependencies</h2>
 				</header>
 
-				<p>Manual installation of <em>theano</em> is optional, the setup will install it otherwise.
-                                <strong>ELEKTRONN</strong> has some dependencies which are sometimes
-				difficult to install using <code>pip</code> (e.g. because
-				<code>pip</code> does not install system-level dependencies). You can
-				try:</p>
+				<p>Manual installation of <em>theano</em> is optional, the setup will
+				install it otherwise. <strong>ELEKTRONN</strong> has some dependencies
+				which are sometimes difficult to install using <code>pip</code> (e.g.
+				because <code>pip</code> does not install system-level dependencies).
+				You can try:</p>
 
-				<p><pre><code>pip install -r requirements.txt</code></pre></p>
+				<pre><code>pip install -r requirements.txt</code></pre>
 
-				<p>But that will most likely fail to install all required packages. Instead we recommend that you install 
-                                those packages by your system package manager e.g.:</p>
+				<p>But that will most likely fail to install all required packages.
+				Instead we recommend that you install those packages by your system
+				package manager e.g.:</p>
 
 				<p><code>apt-get install python-numpy python-scipy python-matplotlib python-h5py</code></p>
 
-				<p>All dependencies are listed in the file <a href="{{ site.github-url }}/blob/master/requirements.txt">requirements.txt</a></p>
+				<p>All dependencies are listed in the file <a
+					href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/requirements.txt">requirements.txt</a></p>
 			</div>
 		</div>
-	</div>
-</section>
 
-<section class="content style3">
-	<div class="container">
 		<div class="row">
 			<div class="col">
-				<header class="major">
+				<header class="-major">
 					<h2>Get started with <strong>ELEKTRONN</strong></h2>
 				</header>
 
 				<p>For people new to Neural Networks and CNNs we recommend reading the <a href="{{ site.documentation-url }}/IntroNN.html">introduction</a> in our documentation.</p>
-				<p>An even more detailed introduction, including formulae and references can be found <a href="/downloads/Intro-ANN.pdf">here</a>.</p>
+
+				<p>An even more detailed introduction, including formulae and references can be found <a href="{{ "downloads/Intro-ANN.pdf" | prepend: site.baseurl }}">here</a>.</p>
+
 			</div>
 
 			<div class="col">
 				<div class="box -float-right">
-					<header class="major">
-						<h4>External Links</h4>
+					<header class="-major">
+						<h2>External Links</h2>
 					</header>
+
 					<ul>
 						<li><a href="http://deeplearning.net/software/theano/index.html">Theano homepage</a></li>
-
 						<li><a href="http://deeplearning.net/tutorial/contents.html">Overview Theano tutorials</a></li>
-
 						<li><a href="http://http://arxiv.org/abs/1206.5533">Practical recommendations for gradient-based training of deep architectures [2012 Y.Bengio]</a></li>
-
-                                                <li><a href="https://cs231n.github.io/convolutional-networks/">Tutorial from Stanford CS class</a></li>
-
-                                                <li><a href="https://youtu.be/bEUX_56Lojc">VIDEO Tutorial by Nando de Freitas</a></iframe></li>
+						<li><a href="https://cs231n.github.io/convolutional-networks/">Tutorial from Stanford CS class</a></li>
+						<li><a href="https://youtu.be/bEUX_56Lojc">VIDEO Tutorial by Nando de Freitas</a></li>
 					</ul>
 
 				</div>
@@ -140,12 +159,12 @@ permalink: /getting-started/
 
 		<div class="row">
 			<div class="col">
-				<header class="major">
-					<h3 id="BasicRecipe">Basic recipe for CNN training with images</h3>
+				<header class="-major">
+					<h2 id="BasicRecipe">Basic recipe for CNN training with images</h2>
 				</header>
 
-				<ul>
-					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets. <a href="{{ site.documentation-url }}/Pipeline.html#data-format">More information</a></li>
+<ul>
+					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets. <a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">More information</a></li>
 
 					<li>
 						<p>Transform your data arrays to h5 data sets in separate files for images and labels.</p>
@@ -161,16 +180,15 @@ permalink: /getting-started/
 
 					<li>Find a valid CNN architecture by using <a href="{{ site.documentation-url }}/elektronn.net.html#elektronn.net.netutils.CNNCalculator">net.netutils.CNNCalculator()</a>.</li>
 
-					<li>Edit <a href="{{ site.github-url }}/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> as a new file to specify your training scenario.</li>
+					<li>Edit <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> as a new file to specify your training scenario.</li>
 
 					<li>
-						<p>Run the script <a href="{{ site.github-url }}/blob/master/elektronn/scripts/TrainCNN.py">scripts/TrainCNN.py</a> from command line (or from a Python IDE like spyder):</p>
+						<p>Run the script <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/scripts/TrainCNN.py">scripts/TrainCNN.py</a> from command line (or from a Python IDE like spyder):</p>
 						<p><code>TrainCNN.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
 					</li>
 
 					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is work and needs time. For a better understanding of how they should be trained and which architecture you should pick, refer to the sources in the next section.</li>
-				</ul>		
-
+				</ul>
 			</div>
 		</div>
 	</div>

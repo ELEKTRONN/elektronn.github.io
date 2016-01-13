@@ -35,18 +35,18 @@ include:
 navigation:
  - text: Home
    url: /
-   icon: fa-home
+   icon: ion-android-home
  - text: Getting Started
    url: /getting-started/
-   icon: fa-rocket
+   icon: ion-ios-lightbulb
 # - text: Use Cases
 #   url: /use-cases/
  - text: Development
    url: /development/
-   icon: fa-cubes
+   icon: ion-ios-flask
  - text: About
    url: /about/
-   icon: fa-users
+   icon: ion-ios-people
 # - text: Links
 #   url: /links/
 #   icon: fa-bookmark

@@ -1,16 +1,2 @@
-.d-ib { display: inline-block }
-.d-f { display: flex }
-.d-b { display: block }
-.d-n { display: none }
-
-.-d-b-mobile {
-	display: none;
-
-	@include breakpoint($on-mobile) {
-		display: block;
-	}
-}
-
-@media (min-width: 800px) {
-	.d-n--medium { display: none }
-}
+.-inline-block { display: inline-block }
+.-block { display: block }

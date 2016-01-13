@@ -2,115 +2,135 @@
 layout: default
 ---
 
-<section id="banner" class="banner row -middle -text-center -diagonal-border">
-	<div class="ornaments -z-back">
-		<img class="circle -purple" src="{{ "images/icons/circle+purple.svg" | prepend: site.baseurl }}" alt="">
-		<img class="circle" src="{{ "images/icons/circle.svg" | prepend: site.baseurl }}" alt="">
-		<img class="plus" src="{{ "images/icons/plus.svg" | prepend: site.baseurl }}" alt="">
-		<img class="dot" src="{{ "images/icons/dot.svg" | prepend: site.baseurl }}" alt="">
-		<img class="cross" src="{{ "images/icons/cross.svg" | prepend: site.baseurl }}" alt="">
-	</div>
+<section class="banner -font-large -bg-circles -text-center -z-middle -full-min-height">
+	<div class="container -small -animated">
+		<img width="96" height="96" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
 
-	<div class="col container -relative -z-middle">
-		<img class="logo -huge" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
-
-		<h1 class="title -huge"><img src="{{ "images/-Title+1.svg" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
+		<h1 class="title -center"><img src="{{ "images/Title.png" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
 
 		<p class="subtitle">A Neural Network Toolkit</p>
 
 		<ul class="-horizontal">
-			<li><a href="#What-is-ELEKTRONN" class="button -icon"><i class="fa fa-lightbulb-o fa-fw"></i><span>Learn more</span></a></li>
-			<li><a href="{{ site.documentation-url }}" class="button -icon"><i class="fa fa-book fa-fw"></i><span>Documentation</span></a></li>
-			<li><a href="{{ site.github-url }}" class="button -primary -icon"><i class="fa fa-github fa-fw"></i><span>GitHub</span></a></li>
+			<li><a href="{{ site.documentation-url }}" class="button -primary -icon"><i class="icon ion ion-ios-book-outline"></i><span>Documentation</span></a></li>
+			<li><a href="{{ site.github-url }}" class="button -icon"><i class="icon ion ion-social-github"></i><span>GitHub</span></a></li>
 		</ul>
 	</div>
+
+	<div class="learn-more">
+		<a href="#What-is-ELEKTRONN"><span class="-uppercase -small">Learn more</span></a>
+		<a class="caret-3d" href="#What-is-ELEKTRONN"><i class="icon ion ion-chevron-down"></i></a>
+	</div>
 </section>
 
-<section class="content style3 -pb-z -diagonal-border">
-	<div class="container row">
-		<div class="col -pb-l">
-			<header class="major">
-				<h2 id="What-is-ELEKTRONN">What is ELEKTRONN?</h2>
-			</header>
 
-			<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes powerful neural networks 
-			accessible to programmers outside the machine learning community.</p>
-		</div>
+<section class="content style1 diagonal-border -pt-xxxl">
+	<div class="container -center">
+		<div class="row">
+			<div class="col">
+				<header class="-major">
+					<h2 id="What-is-ELEKTRONN">What is ELEKTRONN?</h2>
+				</header>
 
-		<div class="col">
-			<img src="{{ "images/WhatIsELEKTRONN.svg" | prepend: site.baseurl }}" alt="What is ELEKTRONN">
+				<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes
+				powerful neural networks accessible to programmers outside the machine
+				learning community.</p>
+			</div>
+
+			<div class="col">
+				<img src="{{ "images/WhatIsELEKTRONN.png" | prepend: site.baseurl }}" alt="What is ELEKTRONN">
+			</div>
 		</div>
 	</div>
 </section>
 
-<section class="Features content style4 -diagonal-border">
-	<div class="container">
-		<div class="row -middle">
+<section class="content style2">
+	<div class="container -center">
+		<div class="row">
+			<div class="col -text-center -pt-xl -pb-xl">
+				<span class="-font-normal"><strong>ELEKTRONN</strong> can easily installed via <em>pip.</em> <a href="#">Get started <i class="icon ion-chevron-right"></i></a></span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="content style4">
+	<div class="container -center">
+		<div class="row">
 			<div class="col">
-				<header class="major">
+				<header class="-minor">
+					<i class="boxed icon ion ion-ios-speedometer-outline"></i>
 					<h3>Flexible Training</h3>
 				</header>
 
-				<p><strong>ELEKTRONN</strong> puts emphasis on the analysis of <strong>image</strong>
-				data using convolutional neural networks
-				<em>(CNN).</em> For this task, we provide a <strong>ready-made,
-					flexible training pipeline</strong> with helpful utility functions
-				and comprehensive documentation (+link).</p>
+				<p><strong>ELEKTRONN</strong> puts emphasis on the analysis of image
+				data using convolutional neural networks (CNN). For this task, we
+				provide a <strong>ready-made, flexible training pipeline</strong> with
+				helpful utility functions and comprehensive <a href="{{
+					site.documentation-url }}">documentation</a>.</p>
 			</div>
 
 			<div class="col">
-				<img src="{{ "images/PowerfulLearning.png" | prepend: site.baseurl }}" alt="ELEKTRONN provides many useful neural network features out of the box.">
-			</div>
-		</div> <!-- row -->
-
-		<div class="row -middle -pb-xxl">
-			<div class="col">
-				<header class="major">
-					<h3>Simple Setup & Carefully optimized</h2>
+				<header class="-minor">
+					<i class="boxed icon ion ion-social-python"></i>
+					<h3>Simple Setup & Carefully optimized</h3>
 				</header>
 
 				<p><strong>ELEKTRONN</strong> is written in <strong>Python</strong> and
-				based on the <strong>Theano</strong> framework. It works best on NVIDIA GPUs and delivers state-of-the art performance, including fast training and inference on massive image datasets.</p>
+				based on the <strong>Theano</strong> framework. It works best on NVIDIA
+				GPUs and delivers state-of-the art performance, including fast training
+				and inference on massive image datasets.</p>
 			</div>
 
 			<div class="col">
-				<img src="{{ "images/EasyInstall.png" | prepend: site.baseurl }}" alt="ELEKTRONN can easily be installed">
+				<header class="-minor">
+					<i class="boxed icon ion ion-social-github"></i>
+					<h3>Open Source </h3>
+				</header>
+
+				<p><strong>ELEKTRONN’s</strong> source code is licensed under the GPL,
+				and available at <a href="{{ site.github-url }}">our GitHub
+					repository</a>.</p>
 			</div>
-		</div> <!-- row -->
+		</div>
 	</div>
 </section>
 
-<section class="content style3">
-	<div class="container">
+
+<section class="content style3 -pb-xxl">
+	<div class="container -center">
 		<div class="row">
 			<div class="col">
-				<header class="major">
-					<h4>Machine Learning with neural networks</h4>
+				<header class="-major">
+					<i class="icon ion ion-ios-analytics boxed"></i>
+					<h3>Machine Learning with neural networks</h3>
 				</header>
 
 				<p>Many data analysis and classification tasks can be formulated as a
-				<em>machine learning problem:</em> without explicit expert knowledge
-				or manual guidance artificial neural networks can be trained to map certain inputs <em>(e.g. raw images)</em>
-				to outputs <em>(e.g. probability maps for classes)</em>. The
-				mapping is created by training on a set of example input-output pairs - <strong>training examples</strong> - that
-				that must be provided initially.</p>
+				<em>machine learning problem:</em> without explicit expert knowledge or
+				manual guidance artificial neural networks can be trained to map
+				certain inputs <em>(e.g. raw images)</em> to outputs <em>(e.g.
+					probability maps for classes)</em>. The mapping is created by
+				training on a set of exemplary input-output pairs—<strong>training
+					examples</strong>—that that must be provided initially.</p>
 			</div>
 		</div>
-		<div class="row">
-				<figure class="-center cd-image-container">
-					<img src="{{ "images/raw.png" | prepend: site.baseurl }}" alt="Original Image">
-					<span class="cd-image-label" data-type="original">Original</span>
 
-					<div class="cd-resize-img"> <!-- the resizable image on top -->
-						<img src="{{ "images/membrane_marius.png" | prepend: site.baseurl }}" alt="Modified Image">
-						<span class="cd-image-label" data-type="modified">Probability Map</span>
-					</div>
+		<div class="row -pb-xxxl">
+			<figure class="-center cd-image-container">
+				<img src="{{ "images/7000_2011_139_raw.png" | prepend: site.baseurl }}" alt="Original Image">
+				<span class="cd-image-label" data-type="original">Original</span>
 
-					<span class="cd-handle"></span>
-				</figure> <!-- cd-image-container -->
+				<div class="cd-resize-img"> <!-- the resizable image on top -->
+					<img src="{{ "images/7000_2011_139_mem.png" | prepend: site.baseurl }}" alt="Modified Image">
+					<span class="cd-image-label" data-type="modified">Probability Map</span>
+				</div>
+
+				<span class="cd-handle"></span>
+			</figure> <!-- cd-image-container -->
 		</div>
 	</div>
 </section>
+
 
 <script src="{{ "js/jquery-1.11.3.min.js" | prepend: site.baseurl }}"></script>
 <script>
@@ -200,4 +220,5 @@ function updateLabel(label, resizeElement, position) {
 		( label.offset().left > resizeElement.offset().left + resizeElement.outerWidth() ) ? label.removeClass('is-hidden') : label.addClass('is-hidden') ;
 	}
 }
+
 </script>

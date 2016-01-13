@@ -1,10 +1,14 @@
 .-fixed { position: fixed }
 .-absolute { position: absolute }
 .-relative { position: relative }
+
 .-at-bottom { bottom: 0 }
 .-at-top { top: 0 }
 .-at-right { right: 0 }
 
+.-float-left { float: left }
+.-float-right { float: left }
+
 .-z-front { z-index: 30 }
 .-z-middle { z-index: 20 }
-.-z-back { z-index: 10 }
+.-z-back { z-index: -1 }

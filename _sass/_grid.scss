@@ -1,10 +1,7 @@
 @media (min-width: $on-mobile) {
 	.row { display: flex; flex-flow: row wrap }
-	.row.-no-wrap { flex-wrap: nowrap; }
-	.col { flex: 1 1 0% }
+	.row.-no-wrap { flex-wrap: nowrap }
+	.col { flex: 1 }
 	.-fixed-width { flex-grow: 0; flex-basis: auto }
-	.-middle {
-		align-items: center;
-		align-content: center;
-	}
+	.-middle { align-items: center; align-content: center }
 }
