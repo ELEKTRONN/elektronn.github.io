@@ -60,7 +60,7 @@
 <li><a class="reference internal" href="#module-elektronn.training.CNNData">elektronn.training.CNNData module</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.config">elektronn.training.config module</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.parallelisation">elektronn.training.parallelisation module</a></li>
-<li><a class="reference internal" href="#module-elektronn.training.predictor">elektronn.training.predictor module</a></li>
+<li><a class="reference internal" href="#elektronn-training-predictor-module">elektronn.training.predictor module</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.traindata">elektronn.training.traindata module</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.trainer">elektronn.training.trainer module</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.trainutils">elektronn.training.trainutils module</a></li>
@@ -176,7 +176,7 @@ stacked to a vector. For vect-scalar training use the <code class="docutils lite
 </div></blockquote>
 <p><strong>zchxy_order: Bool</strong></p>
 <blockquote>
-<div><p>If the data files are already in memory layout (z,ch,x,y)/(z,x,y), this option must be set to True, 
+<div><p>If the data files are already in memory layout (z,ch,x,y)/(z,x,y), this option must be set to True,
 which makes data loading faster.</p>
 </div></blockquote>
 <p><strong>border_mode: string</strong></p>
@@ -661,57 +661,8 @@ avoid a warning message.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-elektronn.training.predictor">
-<span id="elektronn-training-predictor-module"></span><h2>elektronn.training.predictor module<a class="headerlink" href="#module-elektronn.training.predictor" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="elektronn.training.predictor.create_predncnn">
-<code class="descclassname">elektronn.training.predictor.</code><code class="descname">create_predncnn</code><span class="sig-paren">(</span><em>config_file</em>, <em>n_ch</em>, <em>n_lab</em>, <em>gpu=None</em>, <em>override_MFP_to_active=False</em>, <em>imposed_input_size=None</em>, <em>param_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/predictor.html#create_predncnn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.predictor.create_predncnn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Creates and compiles a CNN/NN as specified in a config file (used for training).
-Loads the last parameters from the training directory.</p>
-<p>The CNN/NN object is returned</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file: string</strong></p>
-<blockquote>
-<div><p>Path to a CNN config file</p>
-</div></blockquote>
-<p><strong>n_ch: int</strong></p>
-<blockquote>
-<div><p>Number of input channels, for a MLP this is the dimensionality of the input vectors, for CNNs this is the
-number of channels in an image/volume (e.g. 1 for plain gray value images)</p>
-</div></blockquote>
-<p><strong>n_lab: int</strong></p>
-<blockquote>
-<div><p>Number of distinct labels/classes</p>
-</div></blockquote>
-<p><strong>gpu: int</strong></p>
-<blockquote>
-<div><p>Specifying id of GPU to initialise for usage. E.g. 1 &#8211;&gt; &#8220;gpu1&#8221;, None will initialise gpu0,    False will not initialise any GPU. This only works if &#8220;device&#8221; is not set in <code class="docutils literal"><span class="pre">.theanorc</span></code> or if theano
-has not been imported up to now. If the initialisation fails an error will be printed but the script
-will not crash.</p>
-</div></blockquote>
-<p><strong>override_MFP_to_active: Bool</strong></p>
-<blockquote>
-<div><p>If true, activates MFP in all layers where possible, ignoring the configuration in the config file.
-This is useful for prediction using a config file from training. (only for CNN)</p>
-</div></blockquote>
-<p><strong>imposed_input_size: tuple or None</strong></p>
-<blockquote>
-<div><p>Similar as above, this can be used to impose another input size than specified in the config file.
-(z,x,y)!!! (only for CNN)</p>
-</div></blockquote>
-<p><strong>param_file: string/None</strong></p>
-<blockquote class="last">
-<div><p>If other parameters than &#8220;<a href="#id1"><span class="problematic" id="id2">*</span></a>-Last.param&#8221; should be loaded, this can specify the param file.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<div class="section" id="elektronn-training-predictor-module">
+<h2>elektronn.training.predictor module<a class="headerlink" href="#elektronn-training-predictor-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-elektronn.training.traindata">
 <span id="elektronn-training-traindata-module"></span><h2>elektronn.training.traindata module<a class="headerlink" href="#module-elektronn.training.traindata" title="Permalink to this headline">¶</a></h2>
@@ -869,9 +820,7 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config: trainutils.ConfigObj</strong></p>
-<blockquote class="last">
-<div><p>Container for all configurations</p>
-</div></blockquote>
+<p class="last"><strong>Container for all configurations</strong></p>
 </td>
 </tr>
 </tbody>
@@ -930,11 +879,11 @@ CNN can be accessed:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
 <span class="go">&gt;&gt; Debug_Run &lt;&lt;</span>
 <span class="go">Shortcuts:</span>
-<span class="go">&#39;q&#39; (leave interface),        &#39;abort&#39; (saving params),</span>
-<span class="go">&#39;kill&#39;(no saving),            &#39;save&#39;/&#39;load&#39; (opt:filename),</span>
-<span class="go">&#39;sf&#39;/&#39; (show filters)&#39;,       &#39;smooth&#39; (smooth filters),</span>
-<span class="go">&#39;sethist &lt;int&gt;&#39;,      &#39;setlr &lt;float&gt;&#39;,</span>
-<span class="go">&#39;setmom &lt;float&gt;&#39; ,            &#39;params&#39; print info,</span>
+<span class="go">&#39;q&#39; (leave interface),            &#39;abort&#39; (saving params),</span>
+<span class="go">&#39;kill&#39;(no saving),        &#39;save&#39;/&#39;load&#39; (opt:filename),</span>
+<span class="go">&#39;sf&#39;/&#39; (show filters)&#39;,           &#39;smooth&#39; (smooth filters),</span>
+<span class="go">&#39;sethist &lt;int&gt;&#39;,          &#39;setlr &lt;float&gt;&#39;,</span>
+<span class="go">&#39;setmom &lt;float&gt;&#39; ,        &#39;params&#39; print info,</span>
 <span class="go">Change Training mode :(&#39;SGD&#39;,&#39;CG&#39;, &#39;RPROP&#39;, &#39;LBFGS&#39;)</span>
 <span class="go">For EVERYTHING else enter your command in the command line</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">setlr</span> <span class="mf">0.01</span> <span class="c"># Change learning rate of SGD</span>
@@ -1261,62 +1210,6 @@ If keys is <code class="docutils literal"><span class="pre">None</span></code> a
 <div class="section" id="module-elektronn.training.warping">
 <span id="elektronn-training-warping-module"></span><h2>elektronn.training.warping module<a class="headerlink" href="#module-elektronn.training.warping" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="elektronn.training.warping.timeit">
-<code class="descclassname">elektronn.training.warping.</code><code class="descname">timeit</code><span class="sig-paren">(</span><em>foo</em>, <em>n=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#timeit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.timeit" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="elektronn.training.warping.warp2dFast">
-<code class="descclassname">elektronn.training.warping.</code><code class="descname">warp2dFast</code><span class="sig-paren">(</span><em>img</em>, <em>patch_size</em>, <em>rot=0</em>, <em>shear=0</em>, <em>scale=(1</em>, <em>1)</em>, <em>stretch=(0</em>, <em>0)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp2dFast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp2dFast" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create warped mapping for a spatial 2D input image.
-The transformation is done w.r.t to the <em>center</em> of the image.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
-<blockquote>
-<div><p>The array must be 3-dimensional (ch,x,y) and larger/equal the patch size</p>
-</div></blockquote>
-<p><strong>patch_size: 2-tuple</strong></p>
-<blockquote>
-<div><p>Patch size <em>excluding</em> channel: (px, py).
-The warping result of the input image is cropped to this size</p>
-</div></blockquote>
-<p><strong>rot: float</strong></p>
-<blockquote>
-<div><p>Rotation angle in deg for rotation around z-axis</p>
-</div></blockquote>
-<p><strong>shear: float</strong></p>
-<blockquote>
-<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
-</div></blockquote>
-<p><strong>scale: 2-tuple of float</strong></p>
-<blockquote>
-<div><p>Scale per axis</p>
-</div></blockquote>
-<p><strong>stretch: 2-tuple of float</strong></p>
-<blockquote>
-<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
-to the outer border of image per axis. The 4 entry correspond to:</p>
-<ul class="simple">
-<li>X stretching depending on Y</li>
-<li>Y stretching depending on X</li>
-</ul>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img: np.ndarray</p>
-<blockquote class="last">
-<div><p>Warped image (cropped to patch_size)</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="elektronn.training.warping.warp2dJoint">
 <code class="descclassname">elektronn.training.warping.</code><code class="descname">warp2dJoint</code><span class="sig-paren">(</span><em>img</em>, <em>lab</em>, <em>patch_size</em>, <em>rot</em>, <em>shear</em>, <em>scale</em>, <em>stretch</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp2dJoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp2dJoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</p>
@@ -1372,65 +1265,6 @@ to the outer border of image per axis. The 4 entry correspond to:</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="elektronn.training.warping.warp3dFast">
-<code class="descclassname">elektronn.training.warping.</code><code class="descname">warp3dFast</code><span class="sig-paren">(</span><em>img</em>, <em>patch_size</em>, <em>rot=0</em>, <em>shear=0</em>, <em>scale=(1</em>, <em>1</em>, <em>1)</em>, <em>stretch=(0</em>, <em>0</em>, <em>0</em>, <em>0)</em>, <em>twist=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp3dFast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp3dFast" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create warped mapping for a spatial 3D input image.
-The transformation is done w.r.t to the <em>center</em> of the image.</p>
-<p>Note that some transformations are not applied to the z-axis. This makes this function simpler
-and it is also better for anisotropic data as the different scales are not mixed up then.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
-<blockquote>
-<div><p>The array must be 4-dimensional (z,ch,x,y) and larger/equal the patch size</p>
-</div></blockquote>
-<p><strong>patch_size: 3-tuple</strong></p>
-<blockquote>
-<div><p>Patch size <em>excluding</em> channel: (pz, px, py).
-The warping result of the input image is cropped to this size</p>
-</div></blockquote>
-<p><strong>rot: float</strong></p>
-<blockquote>
-<div><p>Rotation angle in deg for rotation around z-axis</p>
-</div></blockquote>
-<p><strong>shear: float</strong></p>
-<blockquote>
-<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
-</div></blockquote>
-<p><strong>scale: 3-tuple of float</strong></p>
-<blockquote>
-<div><p>Scale per axis</p>
-</div></blockquote>
-<p><strong>stretch: 4-tuple of float</strong></p>
-<blockquote>
-<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
-to the outer border of image per axis. The 4 entry correspond to:</p>
-<ul class="simple">
-<li>X stretching depending on Y</li>
-<li>Y stretching depending on X</li>
-<li>X stretching depending on Z</li>
-<li>Y stretching depending on Z</li>
-</ul>
-</div></blockquote>
-<p><strong>twist: float</strong></p>
-<blockquote>
-<div><p>Dependence of the rotation angle on z in deg from center to outer border</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img: np.ndarray</p>
-<blockquote class="last">
-<div><p>Warped array (cropped to patch_size)</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
 <dt id="elektronn.training.warping.warp3dJoint">
 <code class="descclassname">elektronn.training.warping.</code><code class="descname">warp3dJoint</code><span class="sig-paren">(</span><em>img</em>, <em>lab</em>, <em>patch_size</em>, <em>rot=0</em>, <em>shear=0</em>, <em>scale=(1</em>, <em>1</em>, <em>1)</em>, <em>stretch=(0</em>, <em>0</em>, <em>0</em>, <em>0)</em>, <em>twist=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#warp3dJoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.warp3dJoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</p>
@@ -1441,7 +1275,7 @@ to the outer border of image per axis. The 4 entry correspond to:</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
 <blockquote>
 <div><p>Image data
-The array must be 4-dimensional (ch,z,x,y) and larger/equal the patch size</p>
+The array must be 4-dimensional (z,ch,x,y) and larger/equal the patch size</p>
 </div></blockquote>
 <p><strong>lab: array</strong></p>
 <blockquote>
@@ -1509,6 +1343,11 @@ return required size for warping input patch</p>
 <code class="descclassname">elektronn.training.warping.</code><code class="descname">getWarpParams</code><span class="sig-paren">(</span><em>patch_size</em>, <em>amount=1.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#getWarpParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.getWarpParams" title="Permalink to this definition">¶</a></dt>
 <dd><p>To be called from CNNData. Get warping parameters + required warping input patch size.</p>
 </dd></dl>
+
+<dl class="function">
+<dt id="elektronn.training.warping.maketestimage">
+<code class="descclassname">elektronn.training.warping.</code><code class="descname">maketestimage</code><span class="sig-paren">(</span><em>sh</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/warping.html#maketestimage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.warping.maketestimage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="function">
 <dt id="elektronn.training.warping.test">
