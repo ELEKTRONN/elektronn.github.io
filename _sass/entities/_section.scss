@@ -51,13 +51,13 @@ body.is-loading .banner .container.-animated {
 				position: absolute;
 				content: '\f123';
 				left: 0px;
-				bottom: -4px;
+				bottom: -6px;
 				color: rgba(#ff6100, .5);
 				z-index: -1;
 				transition: all .2s ease-in;
 			}
 
-			&:hover:after { bottom: -6px; }
+			&:hover:after { bottom: -3px; }
 		}
 
 		a {
