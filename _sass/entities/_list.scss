@@ -2,7 +2,7 @@ ul {
 	padding-left: 1.65em;
 	list-style: square;
 
-	li + li {
+	li {
 		margin-top: 8px;
 	}
 
@@ -26,7 +26,7 @@ ul {
 		justify-content: center;
 		padding: 0;
 
-		li + li { margin: 0 }
+		li { margin: 0 }
 
 		li {
 			border: 1px solid #8D9AB0;
