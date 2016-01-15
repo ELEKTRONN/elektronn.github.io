@@ -33,7 +33,8 @@ layout: default
 
 				<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes
 				powerful neural networks accessible to programmers outside the machine
-				learning community.</p>
+				learning community. Our focus lies on high troughput analysis of large scale 2d and 3d 
+                                images with <em>convolutional</em> neural networks (CNNs).</p>
 			</div>
 
 			<div class="col">
@@ -62,20 +63,21 @@ layout: default
 					<h3>Flexible Training</h3>
 				</header>
 
-				<p><strong>ELEKTRONN</strong> puts emphasis on the analysis of image
-				data using convolutional neural networks (CNN). For this task, we
-				provide a <strong>ready-made, flexible training pipeline</strong> with
-				helpful utility functions and comprehensive <a href="{{ site.documentation-url }}">documentation</a>.</p>
+				<p><strong>ELEKTRONN</strong> can be used for machine learning tasks formualted on
+                                image data or abstract feature vectors. We provide a <strong>ready-made, 
+                                flexible training pipeline</strong> with
+				helpful utility functions and comprehensive <a href="{{ site.documentation-url }}">documentation</a>. 
+                                See our <a href="{{ site.documentation-url }}">list of features</a> for more details.</p>
 			</div>
 
 			<div class="col">
 				<header class="-minor">
 					<i class="boxed icon ion ion-social-python"></i>
-					<h3>Simple Setup & Carefully optimized</h3>
+					<h3>Simple Usage & Optimized Runtimes</h3>
 				</header>
 
 				<p><strong>ELEKTRONN</strong> is written in <strong>Python</strong> and
-				based on the <strong>Theano</strong> framework. It works best on NVIDIA
+				based on the <strong>Theano</strong> framework. It can be accelerated with NVIDIA
 				GPUs and delivers state-of-the art performance, including fast training
 				and inference on massive image datasets.</p>
 			</div>
@@ -86,8 +88,8 @@ layout: default
 					<h3>Open Source </h3>
 				</header>
 
-				<p><strong>ELEKTRONN’s</strong> source code is licensed under the GPL,
-				and available at <a href="{{ site.github-url }}">our GitHub
+				<p><strong>ELEKTRONN</strong> is an open source project and licensed under the GPL.
+				The code is available at <a href="{{ site.github-url }}">our GitHub
 					repository</a>.</p>
 			</div>
 		</div>
@@ -101,27 +103,27 @@ layout: default
 			<div class="col">
 				<header class="-major">
 					<i class="icon ion ion-ios-analytics boxed"></i>
-					<h3>Machine Learning with neural networks</h3>
+					<h3>Machine Learning with Meural Networks</h3>
 				</header>
 
 				<p>Many data analysis and classification tasks can be formulated as a
 				<em>machine learning problem:</em> without explicit expert knowledge or
-				manual guidance artificial neural networks can be trained to map
-				certain inputs <em>(e.g. raw images)</em> to outputs <em>(e.g.
-					probability maps for classes)</em>. The mapping is created by
-				training on a set of exemplary input-output pairs—<strong>training
-					examples</strong>—that that must be provided initially.</p>
+				manual guidance artificial Neural Networks can be trained to map
+				certain inputs (e.g. raw images) to outputs (e.g.
+					probability maps for classes). The mapping is found by
+				<em>training</em> on a set of exemplary "input-output pairs"—<strong>training
+					examples</strong> — that that must be provided initially.</p>
 			</div>
 		</div>
 
 		<div class="row -pb-xxxl">
 			<figure class="-center cd-image-container">
-				<img src="{{ "images/7000_2011_139_raw.png" | prepend: site.baseurl }}" alt="Original Image">
-				<span class="cd-image-label" data-type="original">Original</span>
+				<img src="{{ "images/combined.png" | prepend: site.baseurl }}" alt="Original Image">
+				<span class="cd-image-label" data-type="original">Probability Map</span>
 
 				<div class="cd-resize-img"> <!-- the resizable image on top -->
-					<img src="{{ "images/combined.png" | prepend: site.baseurl }}" alt="Modified Image">
-					<span class="cd-image-label" data-type="modified">Probability Map</span>
+					<img src="{{ "images/7000_2011_139_raw.png" | prepend: site.baseurl }}" alt="Modified Image">
+					<span class="cd-image-label" data-type="modified">Original</span>
 				</div>
 
 				<span class="cd-handle"></span>
