@@ -20,7 +20,7 @@ permalink: /getting-started/
 				</header>
 
 				<footer>
-					<p><strong>ELEKTRONN</strong> is a Python package that can be installed
+					<p><strong>ELEKTRONN</strong> is a Python2.7 package that can be installed
 					with <code>pip</code>. <a href="#Installation">Installation
 						instructions.</a></p>
 					<p><a class="tag -icon" href="{{ site.github-url }}"><i class="icon ion ion-social-github"></i>Source Code</a></p>
@@ -33,7 +33,7 @@ permalink: /getting-started/
 				</header>
 
 				<footer>
-					<p>Learn how to use <strong>ELEKTRONN</strong> for your data from our basic recipe <a href="#BasicRecipe">below</a>
+					<p>Learn how to use <strong>ELEKTRONN</strong> for your data analysis task: read our <a href="#BasicRecipe">basic recipe</a>
 					or try out the <a href="{{ site.documentation-url }}/Examples.html">examples</a>.
 				</footer>
 			</div>
@@ -44,7 +44,7 @@ permalink: /getting-started/
 				</header>
 
 				<footer>
-					<p><strong>ELEKTRONN’s</strong> full documentation can be found here:</p>
+					<p><strong>ELEKTRONN’s</strong> full documentation, including many tips for training, can be found here:</p>
 					<p><a class="tag -icon" href="{{ site.documentation-url }}"><i class="icon ion ion-ios-book-outline"></i>Documentation</a></p>
 				</footer>
 			</div>
@@ -159,10 +159,10 @@ permalink: /getting-started/
 				</header>
 
 				<ul>
-					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets. <a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">More information</a></li>
+					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets. <a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">More information</a>.</li>
 
 					<li>
-						<p>Transform your data arrays to h5 data sets in separate files for images and labels.</p>
+						<p>Convert your data arrays to h5 data sets in separate files for images and labels.</p>
 
 						<ul>
 							<li>images: shape (x,y,z) or (ch,x,y,z)</li>
@@ -173,7 +173,7 @@ permalink: /getting-started/
 						</ul>
 					</li>
 
-					<li>Find a valid CNN architecture by using <a href="{{ site.documentation-url }}/elektronn.net.html#elektronn.net.netutils.CNNCalculator">net.netutils.CNNCalculator()</a>.</li>
+					<li>Find a valid CNN architecture by using <a href="{{ site.documentation-url }}/elektronn.net.html#elektronn.net.netutils.CNNCalculator">elektronn.net.netutils.CNNCalculator()</a>.</li>
 
 					<li>Edit <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> as a new file to specify your training scenario.</li>
 
