@@ -78,19 +78,20 @@ permalink: /getting-started/
 				</header>
 
 				<ul>
-					<li>Install below dependencies in advance</li> 
 					<li>
 						<p>Install <strong>ELEKTRONN</strong> from the repository using
 						<code>pip</code>:</p>
 
-						<pre><code>pip install https://github.com/ELEKTRONN/ELEKTRONN [options]</code></pre>
+						<pre><code>pip install [options] elektronn</code></pre>
 
 						<p>This will install <strong>ELEKTRONN</strong> as a python
 						package. Options can specify target locations, editable installs etc. (see <code>man pip</code>).
+                                                Note: on some distributions (e.g. Arch Linux), you need to use <code>pip2</code> instead of <code>pip</code> to install Python 2 packages like ELEKTRONN.
 						If you plan to alter the scripts and data processing methods directly,
 						a developer install using the <code>pip</code> option <code>-e</code> might be advisable.
 						Alternatively you can download the files, add the folder
 						to <code>PYTHONPATH</code> and directly use the code.</p>
+
 					</li>
 					<li>Configure <em>theano</em> as explained in the <a href="{{ site.documentation-url }}/Installation.html#theano">documentation</a></li> 
 					<li>You can optionally create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/examples/config_template.py">examples/config_template.py</a>
@@ -105,20 +106,27 @@ permalink: /getting-started/
 
 				<p>Manual installation of <em>theano</em> is optional, the setup will
 				install it otherwise. <strong>ELEKTRONN</strong> has some dependencies
-				which are sometimes difficult to install using <code>pip</code> (e.g.
+				which are sometimes difficult to install using <code>pip</code> (amongst other reasons
 				because <code>pip</code> does not install system-level dependencies).
 				You can try:</p>
 
 				<pre><code>pip install -r requirements.txt</code></pre>
+                                
+                                <p>or:</p>
 
-				<p>But that will most likely fail to install all required packages.
-				Instead we recommend that you install those packages by your system
+                                <pre><code>pip install elektronn</code></pre>
+
+				<p>But that will most likely fail for some required packages.
+				Instead we recommend that you install those packages with your system
 				package manager e.g.:</p>
 
 				<p><code>apt-get install python-numpy python-scipy python-matplotlib python-h5py</code></p>
 
 				<p>All dependencies are listed in the file <a
 				href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/requirements.txt">requirements.txt</a></p>
+
+                                <p>A comfortable way to setup a python environment with common scientific python packages is e.g. the <a
+				href="https://www.continuum.io/downloads">Anaconda distribution by Continuum</a>.</p>
 			</div>
 		</div>
 
@@ -178,8 +186,8 @@ permalink: /getting-started/
 					<li>Edit <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> as a new file to specify your training scenario.</li>
 
 					<li>
-						<p>Run the script <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/scripts/TrainCNN.py">scripts/TrainCNN.py</a> from command line (or from a Python IDE like spyder):</p>
-						<p><code>TrainCNN.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
+						<p>Run the script <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/scripts/elektronn-train.py">scripts/elektronn-train.py</a> from command line (or from a Python IDE like spyder):</p>
+						<p><code>elektronn-train.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
 					</li>
 
 					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is work and needs time. For a better understanding of how they should be trained and which architecture you should pick, refer to the sources in the next section.</li>
