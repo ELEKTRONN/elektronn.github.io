@@ -7,7 +7,7 @@
 Welcome to the ELEKTRONN documentation!
 =======================================
 
-ELEKTRONN is a highly configurable toolkit for training 3D/2D CNNs and general Neural Networks. It is written in python and based on `theano <http://deeplearning.net/software/theano>`_ and therefore benefits from fast GPU implementations.
+ELEKTRONN is a highly configurable toolkit for training 3D/2D CNNs and general Neural Networks. It is written in Python and based on `theano <http://deeplearning.net/software/theano>`_ and therefore benefits from fast GPU implementations.
 This toolkit was created by Marius Killinger and Gregor Urban at the `Max Planck Institute For Medical Research <http://www.mpimf-heidelberg.mpg.de/en>`_ to solve connectomics tasks (see the `paper <???>`_).
 
 The package includes a sophisticated training pipeline designed for classification/localisation tasks on 3D/2D images. Additionally the toolkit offers training routines for tasks on non-image data.
@@ -18,6 +18,12 @@ The design goals of ELEKTRONN are twofold:
  * At the same time we want give people the flexibility to create their own Neural Networks by reusing and customising the building blocks of our implementation. To leverage the full flexibility of ELEKTRONN modifying the pipeline is encouraged.
 
 .. TODO put some nice pictures etc. here
+
+.. image:: http://elektronn.org/downloads/combined_title.png
+   :alt: Logo+Example
+   :target: http://elektronn.org/
+
+Membrane and mitochondria probability maps. Predicted with a CNN with recursive training. Data: zebra finch area X dataset j0126 by Jörgen Kornfeld. (Click on the image for our main website)
 
 Main Features
 =============

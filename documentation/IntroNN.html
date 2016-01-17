@@ -8,7 +8,7 @@
     
     <title>Practical Introduction to Neural Networks &mdash; ELEKTRONN</title>
     
-    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -28,13 +28,13 @@
     <link rel="next" title="Using the Training Pipeline" href="Pipeline.html" />
     <link rel="prev" title="Examples" href="Examples.html" /> 
   </head>
-  <body role="document">
+  <body>
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -44,16 +44,279 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="Pipeline.html" title="Using the Training Pipeline"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="Examples.html" title="Examples"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
       </ul>
     </div>
+  
 
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="practical-introduction-to-neural-networks">
+<span id="training"></span><h1>Practical Introduction to Neural Networks<a class="headerlink" href="#practical-introduction-to-neural-networks" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#general" id="id1">General</a></li>
+<li><a class="reference internal" href="#classification-modes-in-elektronn" id="id2">Classification Modes in ELEKTRONN</a></li>
+<li><a class="reference internal" href="#data-considerations" id="id3">Data Considerations</a><ul>
+<li><a class="reference internal" href="#preprocessing" id="id4">Preprocessing</a></li>
+<li><a class="reference internal" href="#label-quality" id="id5">Label Quality</a></li>
+<li><a class="reference internal" href="#label-coverage" id="id6">Label Coverage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#network-architecture" id="id7">Network Architecture</a><ul>
+<li><a class="reference internal" href="#convolutional-networks" id="id8">Convolutional Networks</a></li>
+<li><a class="reference internal" href="#multi-layer-perceptron-mlp" id="id9">Multi Layer Perceptron (MLP)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tweaks" id="id10">Tweaks</a><ul>
+<li><a class="reference internal" href="#class-weights" id="id11">Class weights</a></li>
+<li><a class="reference internal" href="#data-augmentation" id="id12">Data Augmentation</a></li>
+<li><a class="reference internal" href="#dropout" id="id13">Dropout</a></li>
+<li><a class="reference internal" href="#weight-decay" id="id14">Weight Decay</a></li>
+<li><a class="reference internal" href="#input-noise" id="id15">Input Noise</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#training-optimisation" id="id16">Training / Optimisation</a><ul>
+<li><a class="reference internal" href="#stochastic-gradient-descent-sgd" id="id17">Stochastic Gradient Descent (SGD)</a></li>
+<li><a class="reference internal" href="#resilient-backpropagation-rprop" id="id18">Resilient Backpropagation (RPROP)</a></li>
+<li><a class="reference internal" href="#conjugate-gradient-cg" id="id19">Conjugate Gradient (CG)</a></li>
+<li><a class="reference internal" href="#l-bfgs" id="id20">l-BFGS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tips-for-tuning" id="id21">Tips for Tuning</a></li>
+</ul>
+</div>
+<div class="section" id="general">
+<h2><a class="toc-backref" href="#id1">General</a><a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<p>Neural Networks (NNs), including CNNs as a special case, are a class of non-linear, parametrised functions mapping <img class="math" src="_images/math/0b502ef2e8a9256fc56aa9992d67488e038d8efa.png" alt="\mathbb{R}^N \rightarrow \mathbb{R}^M"/> - seen from very narrow point of view assumed for the sake of this practical tutorial, for a more comprehensive description refer to <a class="reference external" href="http://www.elektronn.org/downloads/Intro-ANN.pdf">Marius&#8217; Intro</a>.</p>
+<p>NNs are typically models for <em>supervised</em> training (excluding <a class="reference internal" href="Examples.html#autoencoder"><em>auto encoders</em></a>, which can be used for <em>unsupervised</em> tasks). This means the user must provide input <em>examples</em> and corresponding desired outputs, called <em>labels</em>. Together they form a <em>training set</em>. The deviation between current output and desired output is called <em>loss</em>. The parameters of the NN (also called synaptic <em>weights</em>) are optimised by gradient descent techniques in order to minimise the loss. Provided the training has been successful in minimising the training loss <strong>and</strong> the training examples cover a representative variety of input data, the NN will <em>generalise</em> i.e. it is able to produce good output <em>predictions</em> for <strong>unseen</strong> input data. The loss (or classification accuracy) should be evaluated on a hold out <em>validation</em> data set to give an estimate of the generalisation capability and to detect over-fitting.</p>
+<p>NNs can outperform many other models but they are rather difficult to handle. In particular they demand many training examples and precise labels with little noise. Furthermore they might require a high number of trial runs with different architectures and meta-parameters until a good model is found. The reward is the prospect of state-of-the-art results that often outperform other methods.</p>
+</div>
+<div class="section" id="classification-modes-in-elektronn">
+<span id="modes"></span><h2><a class="toc-backref" href="#id2">Classification Modes in ELEKTRONN</a><a class="headerlink" href="#classification-modes-in-elektronn" title="Permalink to this headline">¶</a></h2>
+<p>Generally there are three <em>modes</em> of training set ups, supported by the built-in pipeline:</p>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li><strong>img-img</strong>: input data <strong>and</strong> output data are image-like (i.e. there exist neighbourhood relations between adjacent elements (pixels) in the data arrays. This property is irrespective of dimensionality and can also be seen as neighbourhoods of temporal nature). E.g. for connectomic membrane segmentation the inputs are 3D EM-images and the labels images too, that have <tt class="docutils literal"><span class="pre">1</span></tt> for pixels in which a membrane is present and <tt class="docutils literal"><span class="pre">0</span></tt> for background.</li>
+</ul>
+</div></blockquote>
+<div class="figure align-center">
+<img alt="_images/Img-Img.png" src="_images/Img-Img.png" />
+<p class="caption">EM-Images and derived membrane labels from the ISBI 3D data set (the original labels contained neurite <em>IDs</em> and not neurite <em>boundaries</em>)</p>
+<div class="legend">
+<blockquote>
+<div><ul class="simple">
+<li><strong>img-scalar</strong>: the input data is image like, but the labels correspond to the image as a <em>whole</em> - not to individual pixels/locations. E.g. &#8220;this image shows a cat&#8221; or &#8220;this is an image of digit 3&#8221;</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="figure align-center">
+<img alt="_images/Img-Scalar.png" src="_images/Img-Scalar.png" />
+<p class="caption">20 instances form the MNIST data set and their target labels.</p>
+<div class="legend">
+<blockquote>
+<div><ul class="simple">
+<li><strong>vect-scalar</strong>: the input data is a vector of arbitrary features (i.e. there exists no relation between adjacent elements). This could also be a flattened image as in the <a class="reference internal" href="Examples.html#mnist"><em>MNIST-example</em></a>, but more illustrative are e.g. word counts of a document or demographic properties of persons as in the depicted example:</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="figure align-center">
+<img alt="_images/Vect-Scalar.png" src="_images/Vect-Scalar.png" />
+<p class="caption">Exemplary features of the &#8220;Adult&#8221; data set and the (binary) prediction target.</p>
+</div>
+</div></blockquote>
+<p>Convolutions are only applicable for the first and second mode. Note that a neighbourhood relation can also be temporal e.g. a z-<em>stack</em> of 2D images (x,y-axes) from a video sequence: the images are ordered by time and a 3D convolution becomes a <em>spatio-temporal filter</em>.</p>
+<p>The tutorial for the <a class="reference internal" href="Pipeline.html#pipeline"><em>training pipeline</em></a> assumes the operation mode <em>img-img</em>. <em>img-scalar</em> training is mentioned in comments and vect-scalar, both are demonstrated in the <a class="reference internal" href="Examples.html#mnist"><em>MNIST-example</em></a>.</p>
+</div>
+<div class="section" id="data-considerations">
+<h2><a class="toc-backref" href="#id3">Data Considerations</a><a class="headerlink" href="#data-considerations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="preprocessing">
+<h3><a class="toc-backref" href="#id4">Preprocessing</a><a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>The training convergence is usually improved a lot by scaling the input data properly. However there is no single way to do this. Common methods are:</dt>
+<dd><ul class="first last simple">
+<li>normalisation: scale range to (0,1)</li>
+<li>standardisation: subtract mean and scale variance to 1 (where the mean and variances can be computed per pixel, per feature or over all inputs)</li>
+<li>Whitening: like standardisation but including de-correlation of all features</li>
+</ul>
+</dd>
+</dl>
+<p>For images normalisation to (0,1) works usually good and is most convenient - images stored as <tt class="docutils literal"><span class="pre">uint8</span></tt> (grayscale 0-255) are converted to float and normalised to (0,1) automatically by the <a class="reference internal" href="Pipeline.html#data-format"><em>pipeline</em></a>.</p>
+</div>
+<div class="section" id="label-quality">
+<h3><a class="toc-backref" href="#id5">Label Quality</a><a class="headerlink" href="#label-quality" title="Permalink to this headline">¶</a></h3>
+<p>Training data must in general be densely labelled i.e. for each pixel of a raw image the corresponding pixel in the label image must contain the class index (or a float value for regression). In particular for object detection/classification this means all pixels of that object must carry the index of the class to which the object belongs. E.g. if the task is to detect cats, dogs and birds (their position in an image), every pixel of an animal&#8217;s silhouette must carry the corresponding class index in the label image.
+Noise in these annotations is bad (e.g. the labelled area is smaller or larger than the real object extent, the contours do not match). We found that CNNs can tolerate label noise well if there is a large number of training examples, that essentially average out the noise during the training.</p>
+<p>The above does not apply to <em>img-scalar</em> training, since spatial relations are not considered.</p>
+</div>
+<div class="section" id="label-coverage">
+<h3><a class="toc-backref" href="#id6">Label Coverage</a><a class="headerlink" href="#label-coverage" title="Permalink to this headline">¶</a></h3>
+<p>A CNN can only generalise well if the training data covers a great range/variety of possible inputs. This inevitably requires more amount of labelled data, often an expensive undertaking. To help out ELEKTRONN has special loss functions that allows training on data that is not densely labelled. This training mode still requires some dense examples but additionally allows you to provide data that is cheap and fast to annotate. For details see <a class="reference internal" href="Lazy.html#lazy-labels"><em>lazy-labels</em></a>. The lazy labels method is not applicable to the <em>img-scalar</em> training.</p>
+<p>If you generate ground truth be aware of the CNN offsets: to make a train at a location an image patch around the location (&#8220;context&#8221;) must be provided as input. So if you have images of a certain size, you cannot make predictions or do training for the pixels which lie in a stripe close to the border. The thickness of this stripe is determined by the offsets, which in turn are determined by the size of the convolution filters. Never label data for in the border stripes in which you cannot make predictions, this is a waste of resources. Also see the notes in <a class="reference internal" href="Pipeline.html#data-format"><em>Data Format</em></a>:</p>
+</div>
+</div>
+<div class="section" id="network-architecture">
+<h2><a class="toc-backref" href="#id7">Network Architecture</a><a class="headerlink" href="#network-architecture" title="Permalink to this headline">¶</a></h2>
+<p>When defining an architecture several things should be considered:</p>
+<div class="section" id="convolutional-networks">
+<h3><a class="toc-backref" href="#id8">Convolutional Networks</a><a class="headerlink" href="#convolutional-networks" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul>
+<li><dl class="first docutils">
+<dt>Filter sizes:</dt>
+<dd><ul class="first last simple">
+<li>Larger filters increase the field of view.</li>
+<li>Larger filters are slower to compute but do not require significantly more GPU-RAM.</li>
+<li>Larger filters introduce more model parameters, but as the number of filters that can be used is limited by speed or GPU-RAM the greater &#8220;expressiveness&#8221; of larger filters might actually not be utilised and smaller filters are faster and could be equally good.</li>
+<li>In the very first layer the filter size must be even if pooling by factor 2 is used. Otherwise output neurons lie &#8220;between&#8221; input pixels.</li>
+<li>Filter sizes and pooling factors can defined for each dimension separately. This is useful if 3D data has anisotropic resolution or just &#8220;a little&#8221; information in the z-direction is needed. A useful and fast compromise between a plain 3D and 2D network is a CNN that has e.g. filter shape (4,4,1) in the first layers and later (2,2,2): this means the first part is basically a stack of parallel 2D CNNs which are later concatenated to 3D CNN. Such &#8220;flat&#8221; 3D CNNs are faster than their isotropic counterparts.</li>
+<li>The last layers may have filter sizes (1,1,1) which means no convolution in any dimension and is equivalent to a stack of parallel fully connected layers (where the number of filters corresponds to the neuron count).</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Number of Filters:</dt>
+<dd><ul class="first last simple">
+<li>Due to larger feature map sizes in the first layers (before pooling) fewer filters can be used than in later layers.</li>
+<li>A large number of filters in later layers may be cheap to compute for training as the feature map sizes are small but predictions still become expensive then.</li>
+<li>Still it is advisable to have a tendency of increasing filter size for later layers. This can be motivated from the view, that early layers extract primitives (such as edges) and the number of relevant primitives is rather small compared to the number of relevant combinations of such primitives.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Maxpooling:</dt>
+<dd><ul class="first last simple">
+<li>Reduces the feature map size of that layer, so subsequent layers are cheaper to compute.</li>
+<li>Adds some translational invariance (e.g. it does not matter if an edge-pattern is a little bit more right or left). This is good to some extent, but too many consecutive poolings reduce localisation.</li>
+<li>Increases the field of view of a single output neuron.</li>
+<li>Results in <em>strided</em> output/predictions due to the down-sampling. Strided means the neurons after pooling correspond (spatially) to every second input neuron, by applying succesive poolings this becomes every fourth, eight and so on, the &#8220;stepsize&#8221; is called stride. Per layer for a given number of input neurons the number of output neurons is reduced by the pooling factor, this is important because too few output neurons give noisier gradients and the training progress might be slower. Another effect is that poolings make prediction more expensive, because the pixels &#8220;between the stride&#8221; must be predicted in another forward-pass through the CNN. The simple and slow way is iterating over all positions between the strides and accumulate the strided predictions to a dense image. The fast (and computationally optimal) way is to activate <a class="reference internal" href="Prediction.html#mfp"><em>Max Fragment Pooling (MFP)</em></a> which gives dense images directly but requires a lot of GPU-RAM.</li>
+<li>The final strides in each dimension is the product of pooling factors in each dimension (e.g. 2**4=16), the number of total prediction positions (or fragments for MFP) is the product of all pooling factors: in 3D 4 poolings with factor 2 in all dimensions gives the astonishing number of 4096! As mentioned for the filter sizes below, it is possible to create &#8220;flat&#8221; 3D CNNs that avoid this, by applying the pooling only in x and y, not z with pooling factors written as (2,2,1).</li>
+<li>It is recommended to use only poolings in the first layers and not more than in 4 layers in total. The value of the pooling factor should 2 be.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To get centered field of views (this means label pixels are aligned with output neurons and do not lie &#8220;in between&#8221;) when using pooling factors of 2, the filter size in the first layer must be even This is at first counter-intuitive because for an even-sized filter there is no &#8220;central&#8221; pixel, but if followed by a pooling with factor 2, this results in total in a centered output.</p>
+</div>
+</div>
+<div class="section" id="multi-layer-perceptron-mlp">
+<h3><a class="toc-backref" href="#id9">Multi Layer Perceptron (MLP)</a><a class="headerlink" href="#multi-layer-perceptron-mlp" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>MLP layers (Perceptron layers): these are only needed for <em>img-scalar</em> training. The image-like feature maps of the last convolutional layer are <em>flattened</em> to a vector and given as input to the perceptron layer, thus one or more perceptron layers can be attached. If the image-like extent of the last convolutional layer is large and/or the layer has many filters the flattened vector might be quite large. It is therefore advisable to reduce the image extent by using maxpooling in the layers to a small extent, e.g. 2x2(x2). The convolutional part can be interpreted as a feature extractor and perceptron layers as a classificator, but in fact this is rather a continuous transition. Each MLP layer is characterised by the number of (output) neurons.</li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Always check the CNN architecture before starting a training by using <tt class="xref py py-func docutils literal"><span class="pre">net.netutils.CNNCalculator()</span></tt>. Only the input shapes listed in the attribute <tt class="docutils literal"><span class="pre">valid_inputs</span></tt> can be used. This is also applicable for <em>img-scalar</em> training, because for pooling by factor 2, the layers must have even sizes; if the desired architecture is not possible for the size of the images, the images must be constant-padded/cropped to change their size or the architecture must be changed.</p>
+</div>
+<p>It should be kept in mind that all training sets and training goals are different and the above instructions are just meant as a general guide. Various architecture versions should be tested against each other to find out what works well for a particular task.</p>
+</div>
+</div>
+<div class="section" id="tweaks">
+<h2><a class="toc-backref" href="#id10">Tweaks</a><a class="headerlink" href="#tweaks" title="Permalink to this headline">¶</a></h2>
+<p>A number of helpful CNN/NN tweaks is supported by ELEKETRONN and presented in this section.</p>
+<div class="section" id="class-weights">
+<h3><a class="toc-backref" href="#id11">Class weights</a><a class="headerlink" href="#class-weights" title="Permalink to this headline">¶</a></h3>
+<p>Often data sets are unbalanced (e.g. there are more background pixels than object pixels, or much more people earning less than 50 000 $). In such cases the classifier might get stuck predicting the most frequent class with high probability and assigning little probability to the remaining classes - but not actually learning the discrimination. Using class weights, the training errors (i.e. incentives)  can be changed to give the less frequent classes greater importance. This prevents the mentioned problem.</p>
+</div>
+<div class="section" id="data-augmentation">
+<span id="warping"></span><h3><a class="toc-backref" href="#id12">Data Augmentation</a><a class="headerlink" href="#data-augmentation" title="Permalink to this headline">¶</a></h3>
+<p>CNNs are well-performing classifiers, but require a lot of data examples to generalise well. A method to supply this demand is data <em>augmentation</em>: from the limited given data set (potentially infinitely) many examples are created by applying transforms under which the labels are expected to be constant. This is especially well suited for images.  In almost all cases small translations and changes in brightness and contrast leave the overall content intact.
+In many cases rotations, mirroring, little scaling and minor warping deformations are possible, too. All mentioned transformations are implemented in the <a class="reference internal" href="Pipeline.html#pipeline"><em>pipeline</em></a> for images. For <em>img-img</em> training the labels are subjected to the geometric transformations jointly with the images (preserving the spatial correspondence). By applying the transformations with randomly drawn parameters the training set becomes arbitrarily large. But it should be noted that the augmented training inputs are <em>highly correlated</em> compared to genuinely new data. It should furthermore be noted, that the warping deformations require on average greater patch sizes (see black regions in image below) and thus the border regions are exposed to the classifier less frequently. This can be mitigated by applying the warps only to a fraction of the examples.</p>
+<div class="figure align-center">
+<img alt="_images/Warp.png" src="_images/Warp.png" />
+<p class="caption">Two exemplary results of random rotation, flipping, deformation and historgram augmentation. The black regions are only shown for illustration here, internally the data pipeline calculates the required input patch (larger than the CNN input size) such that if cropped to the CNN input size, after the transformation, no missing pixels remain. The labels would be transformed in the same way but are not shown here.</p>
+</div>
+</div>
+<div class="section" id="dropout">
+<h3><a class="toc-backref" href="#id13">Dropout</a><a class="headerlink" href="#dropout" title="Permalink to this headline">¶</a></h3>
+<p>Dropout is a major regularisation technique for Neural Networks that improves generalisation. When using dropout for training, a fraction of neurons are turned off - but randomly, changing at every training iteration step. This can be interpreted as training an <em>ensemble</em> of networks (in which the members share common weights) and sampling members randomly every training step. To make a prediction the ensemble average is used, which can be <em>approximated</em> by turning all neurons on i.e. setting the dropout rate to 0 (because then the sum of incoming activations at a neuron is larger, the weights are rescaled automatically when changing the rate). Training with dropout requires more neurons per layer (i.e. more filters for CNNs), larger training times and larger learning rates. We recommend to first narrow down a useful architecture without dropout and from that point start experimenting with dropout.</p>
+</div>
+<div class="section" id="weight-decay">
+<h3><a class="toc-backref" href="#id14">Weight Decay</a><a class="headerlink" href="#weight-decay" title="Permalink to this headline">¶</a></h3>
+<p>Weight decay is synonymous with a L2 penalty on the weights. This means additional to the loss that comes from the deviation between current output and desired output, large weight values are regarded as loss - the weights are driven to have smaller magnitudes while at the same time being able to produce good output. This acts as a regulariser (see <a class="reference external" href="https://en.wikipedia.org/wiki/Tikhonov_regularization">Tikhonov Regularisation</a>).</p>
+</div>
+<div class="section" id="input-noise">
+<h3><a class="toc-backref" href="#id15">Input Noise</a><a class="headerlink" href="#input-noise" title="Permalink to this headline">¶</a></h3>
+<p>This source of randomisation adds Gaussian noise to the input of a layer (e.g. in the central layer of an auto encoder). Thereby the NN is forced to be invariant and robust against small differences in the input and to generalise better. Input noise is somewhat similar to drop out, but contrast drop out sets certain inputs to 0 randomly.</p>
+</div>
+</div>
+<div class="section" id="training-optimisation">
+<h2><a class="toc-backref" href="#id16">Training / Optimisation</a><a class="headerlink" href="#training-optimisation" title="Permalink to this headline">¶</a></h2>
+<p>Because of the non-linear activation functions, the loss function of an NNs is a highly non-convex function of its weights. Analytic solutions do not exist, so we optimize using gradient descent techniques with various heuristics. Convergence is a user-defined state, either determined by good enough results (no progress possible any more) or by the point where the loss on a held out <em>validation set</em> begins to increase, while the loss on the training set still decreases - continuing training in this situation inevitably leads to over-fitting and bad generalisation.</p>
+<div class="section" id="stochastic-gradient-descent-sgd">
+<h3><a class="toc-backref" href="#id17">Stochastic Gradient Descent (SGD)</a><a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h3>
+<p>This is the basic principle behind all other optimisers. SGD is the most common optimisation scheme and works in most cases. One advantage of SGD is that it works well with only one example per batch.</p>
+<dl class="docutils">
+<dt>In every iteration:</dt>
+<dd><ul class="first last simple">
+<li>From the training data one or several examples are drawn. The number of drawn examples is called <em>batch size</em>.</li>
+<li>The output of the NN, given the current weights, is calculated</li>
+<li>The <strong>gradient</strong> of the loss (deviation between output and desired output) is calculated w.r.t to the weights</li>
+<li>The weights are <em>updated</em> by following down the gradient for a fixed step size - the <em>learning rate</em></li>
+<li>The whole procedure is repeated with a new batch until convergence</li>
+</ul>
+</dd>
+</dl>
+<p>The learning rate is usually decreased by schedule over the time of the training.</p>
+<div class="figure align-center">
+<img alt="_images/gradient-descent.png" src="_images/gradient-descent.png" />
+</div>
+<p>Illustration of gradient descent on error surface a 2-D, this corresponds to a model with just two parameters. As can be seen, the outcome depends on the starting point (aka <em>weight initialisation</em>) and may lead to different <em>local</em> optima. For more dimensions the problem of multiple local optima is even more severe. If you train a network twice under same conditions except for the random weight initialisation and the random batch shuffling, you will almost definitely end up in completely different local optima. But empirically the performance is pretty close.  In practice another difficulty is more relevant: saddle-points which may ill-condition the training. [<a class="reference external" href="http://blog.datumbox.com/tuning-the-learning-rate-in-gradient-descent/">img source</a>]</p>
+<div class="section" id="momentum">
+<h4>Momentum<a class="headerlink" href="#momentum" title="Permalink to this headline">¶</a></h4>
+<p>Momentum replaces the true gradient by an exponential moving average over the previous gradients. This can speed up progress by accumulation of gradients and prevent over-fitting to only the current example by averaging over other examples. Momentum is parametrised by a meta-parameter that determines the mixing rate of the previous gradients and the current gradient. In the picture of the error surface it can be visualised by a massive ball rolling down the hill which, through its mass, can accumulate speed/momentum and also go upwards shortly - across a small ridge for example.</p>
+</div>
+</div>
+<div class="section" id="resilient-backpropagation-rprop">
+<h3><a class="toc-backref" href="#id18">Resilient Backpropagation (RPROP)</a><a class="headerlink" href="#resilient-backpropagation-rprop" title="Permalink to this headline">¶</a></h3>
+<p>RPROP is a heuristic that determines the learning rate for every parameter individually based on the criterion how often the sign of the gradient changes over the iterations. If the sign stays the same for a long time the learning rate grows (similar to momentum) and if the sign fluctuates a lot, very small steps are made for this parameter.
+RPROP can be very fast and good but can also to be too aggressive for some data sets or small batch sizes leaving a larger spread between training loss and validation loss.</p>
+</div>
+<div class="section" id="conjugate-gradient-cg">
+<h3><a class="toc-backref" href="#id19">Conjugate Gradient (CG)</a><a class="headerlink" href="#conjugate-gradient-cg" title="Permalink to this headline">¶</a></h3>
+<p>Conjugate gradient uses a heuristic to estimate the value of the momentum meta-parameter in every iteration step. In addition, the learning rate is not fixed but the optimal step size is found by a bounded line search along the gradient direction. CG requires multiple steps on the same batch for the heuristic to work.</p>
+<p>CG needs fewer iteration steps but is slower per step. Larger batch sizes are needed because several steps are done per same batch. Generalisation properties can be superior to SGD and it can even be faster but that depends on the particular data set and careful tuning of meta-parameters. Further detail on <a class="reference external" href="https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method">the wikipedia article</a> (we use the Polak–Ribière heuristic).</p>
+</div>
+<div class="section" id="l-bfgs">
+<h3><a class="toc-backref" href="#id20">l-BFGS</a><a class="headerlink" href="#l-bfgs" title="Permalink to this headline">¶</a></h3>
+<p>Limited-memory Broyden–Fletcher–Goldfarb–Shanno (l-BFGS) aims at estimating the inverse Hessian from the history of gradients. Similar to CG this history must be acquired on the same batch and the number of steps on the same batch is even higher. Using the approximate inverse Hessian, parameter updates can be made with a second order correction (in contrast plain gradient descent is a linear approximation). Again batch sizes must be larger because of the high number of steps per batch. Further reading is advisable: <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html">used implementation</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Limited-memory_BFGS">wikipedia entry</a>.</p>
+</div>
+</div>
+<div class="section" id="tips-for-tuning">
+<h2><a class="toc-backref" href="#id21">Tips for Tuning</a><a class="headerlink" href="#tips-for-tuning" title="Permalink to this headline">¶</a></h2>
+<p>The learning rate should be as large as possible at the beginning of the training and decrease gradually or in steps (optimally always after the loss has plateaued for some time). Conversely the momentum should be raised towards the end of the training but it can also be kept constant.
+As learning rate as large as possible means the following: since the gradient is only a linear approximation, the loss decreases only along a small step size on the gradient and goes up again for larger steps (very quickly). Thus by setting a fixed learning rate, some update steps may in fact lead to an increase of the loss if they are too large. The learning rate should be so large that <strong>most</strong> of the updates decrease the loss but large enough that a few steps lead to increases - because then you know that a greater learning rate would not be possible. The training pipeline creates a plot with the per step changes of the loss.</p>
+<p>The learning rate depends on the NN architecture and the batch size. Deeper nets commonly require smaller learning rates. Larger batches can go with larger learning rates (there is less noise in the gradients).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -100,14 +363,12 @@
   <h4>Next topic</h4>
   <p class="topless"><a href="Pipeline.html"
                         title="next chapter">Using the Training Pipeline</a></p>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/IntroNN.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/IntroNN.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -122,269 +383,9 @@
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <div class="section" id="practical-introduction-to-neural-networks">
-<span id="training"></span><h1>Practical Introduction to Neural Networks<a class="headerlink" href="#practical-introduction-to-neural-networks" title="Permalink to this headline">¶</a></h1>
-<div class="contents local topic" id="contents">
-<ul class="simple">
-<li><a class="reference internal" href="#general" id="id5">General</a></li>
-<li><a class="reference internal" href="#classification-modes-in-elektronn" id="id6">Classification Modes in ELEKTRONN</a></li>
-<li><a class="reference internal" href="#data-considerations" id="id7">Data Considerations</a><ul>
-<li><a class="reference internal" href="#preprocessing" id="id8">Preprocessing</a></li>
-<li><a class="reference internal" href="#label-quality" id="id9">Label Quality</a></li>
-<li><a class="reference internal" href="#label-coverage" id="id10">Label Coverage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#network-architecture" id="id11">Network Architecture</a><ul>
-<li><a class="reference internal" href="#convolutional-networks" id="id12">Convolutional Networks</a></li>
-<li><a class="reference internal" href="#multi-layer-perceptron-mlp" id="id13">Multi Layer Perceptron (MLP)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tweaks" id="id14">Tweaks</a><ul>
-<li><a class="reference internal" href="#class-weights" id="id15">Class weights</a></li>
-<li><a class="reference internal" href="#data-augmentation" id="id16">Data Augmentation</a></li>
-<li><a class="reference internal" href="#dropout" id="id17">Dropout</a></li>
-<li><a class="reference internal" href="#weight-decay" id="id18">Weight Decay</a></li>
-<li><a class="reference internal" href="#input-noise" id="id19">Input Noise</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#training-optimisation" id="id20">Training / Optimisation</a><ul>
-<li><a class="reference internal" href="#stochastic-gradient-descent-sgd" id="id21">Stochastic Gradient Descent (SGD)</a></li>
-<li><a class="reference internal" href="#resilient-backpropagation-rprop" id="id22">Resilient Backpropagation (RPROP)</a></li>
-<li><a class="reference internal" href="#conjugate-gradient-cg" id="id23">Conjugate Gradient (CG)</a></li>
-<li><a class="reference internal" href="#l-bfgs" id="id24">l-BFGS</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tips-for-tuning" id="id25">Tips for Tuning</a></li>
-</ul>
-</div>
-<div class="section" id="general">
-<h2><a class="toc-backref" href="#id5">General</a><a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
-<p>Neural Networks (NNs), including CNNs as a special case, are a class of non-linear, parametrised functions mapping <img class="math" src="_images/math/0b502ef2e8a9256fc56aa9992d67488e038d8efa.png" alt="\mathbb{R}^N \rightarrow \mathbb{R}^M"/> - seen from very narrow point of view assumed for the sake of this practical tutorial, for a more comprehensive description refer to <a class="reference external" href="http://www.elektronn.org/downloads/Intro-ANN.pdf">Marius&#8217; Intro</a>.</p>
-<p>NNs are typically models for <em>supervised</em> training (excluding <a class="reference internal" href="Examples.html#autoencoder"><span>auto encoders</span></a>, which can be used for <em>unsupervised</em> tasks). This means the user must provide input <em>examples</em> and corresponding desired outputs, called <em>labels</em>. Together they form a <em>training set</em>. The deviation between current output and desired output is called <em>loss</em>. The parameters of the NN (also called synaptic <em>weights</em>) are optimised by gradient descent techniques in order to minimise the loss. Provided the training has been successful in minimising the training loss <strong>and</strong> the training examples cover a representative variety of input data, the NN will <em>generalise</em> i.e. it is able to produce good output <em>predictions</em> for <strong>unseen</strong> input data. The loss (or classification accuracy) should be evaluated on a hold out <em>validation</em> data set to give an estimate of the generalisation capability and to detect over-fitting.</p>
-<p>NNs can outperform many other models but they are rather difficult to handle. In particular they demand many training examples and precise labels with little noise. Furthermore they might require a high number of trial runs with different architectures and meta-parameters until a good model is found. The reward is the prospect of state-of-the-art results that often outperform other methods.</p>
-</div>
-<div class="section" id="classification-modes-in-elektronn">
-<span id="modes"></span><h2><a class="toc-backref" href="#id6">Classification Modes in ELEKTRONN</a><a class="headerlink" href="#classification-modes-in-elektronn" title="Permalink to this headline">¶</a></h2>
-<p>Generally there are three <em>modes</em> of training set ups, supported by the built-in pipeline:</p>
-<blockquote>
-<div><blockquote>
-<div><ul class="simple">
-<li><strong>img-img</strong>: input data <strong>and</strong> output data are image-like (i.e. there exist neighbourhood relations between adjacent elements (pixels) in the data arrays. This property is irrespective of dimensionality and can also be seen as neighbourhoods of temporal nature). E.g. for connectomic membrane segmentation the inputs are 3D EM-images and the labels images too, that have <code class="docutils literal"><span class="pre">1</span></code> for pixels in which a membrane is present and <code class="docutils literal"><span class="pre">0</span></code> for background.</li>
-</ul>
-</div></blockquote>
-<div class="figure align-center" id="id1">
-<img alt="_images/Img-Img.png" src="_images/Img-Img.png" />
-<p class="caption"><span class="caption-text">EM-Images and derived membrane labels from the ISBI 3D data set (the original labels contained neurite <em>IDs</em> and not neurite <em>boundaries</em>)</span></p>
-<div class="legend">
-<blockquote>
-<div><ul class="simple">
-<li><strong>img-scalar</strong>: the input data is image like, but the labels correspond to the image as a <em>whole</em> - not to individual pixels/locations. E.g. &#8220;this image shows a cat&#8221; or &#8220;this is an image of digit 3&#8221;</li>
-</ul>
-</div></blockquote>
-</div>
-</div>
-<div class="figure align-center" id="id2">
-<img alt="_images/Img-Scalar.png" src="_images/Img-Scalar.png" />
-<p class="caption"><span class="caption-text">20 instances form the MNIST data set and their target labels.</span></p>
-<div class="legend">
-<blockquote>
-<div><ul class="simple">
-<li><strong>vect-scalar</strong>: the input data is a vector of arbitrary features (i.e. there exists no relation between adjacent elements). This could also be a flattened image as in the <span class="xref std std-ref">MNIST-example</span>, but more illustrative are e.g. word counts of a document or demographic properties of persons as in the depicted example:</li>
-</ul>
-</div></blockquote>
-</div>
-</div>
-<div class="figure align-center" id="id3">
-<img alt="_images/Vect-Scalar.png" src="_images/Vect-Scalar.png" />
-<p class="caption"><span class="caption-text">Exemplary features of the &#8220;Adult&#8221; data set and the (binary) prediction target.</span></p>
-</div>
-</div></blockquote>
-<p>Convolutions are only applicable for the first and second mode. Note that a neighbourhood relation can also be temporal e.g. a z-<em>stack</em> of 2D images (x,y-axes) from a video sequence: the images are ordered by time and a 3D convolution becomes a <em>spatio-temporal filter</em>.</p>
-<p>The tutorial for the <a class="reference internal" href="Pipeline.html#pipeline"><span>training pipeline</span></a> assumes the operation mode <em>img-img</em>. <em>img-scalar</em> training is mentioned in comments and vect-scalar, both are demonstrated in the <span class="xref std std-ref">MNIST-example</span>.</p>
-</div>
-<div class="section" id="data-considerations">
-<h2><a class="toc-backref" href="#id7">Data Considerations</a><a class="headerlink" href="#data-considerations" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="preprocessing">
-<h3><a class="toc-backref" href="#id8">Preprocessing</a><a class="headerlink" href="#preprocessing" title="Permalink to this headline">¶</a></h3>
-<dl class="docutils">
-<dt>The training convergence is usually improved a lot by scaling the input data properly. However there is no single way to do this. Common methods are:</dt>
-<dd><ul class="first last simple">
-<li>normalisation: scale range to (0,1)</li>
-<li>standardisation: subtract mean and scale variance to 1 (where the mean and variances can be computed per pixel, per feature or over all inputs)</li>
-<li>Whitening: like standardisation but including de-correlation of all features</li>
-</ul>
-</dd>
-</dl>
-<p>For images normalisation to (0,1) works usually good and is most convenient - images stored as <code class="docutils literal"><span class="pre">uint8</span></code> (grayscale 0-255) are converted to float and normalised to (0,1) automatically by the <a class="reference internal" href="Pipeline.html#data-format"><span>pipeline</span></a>.</p>
-</div>
-<div class="section" id="label-quality">
-<h3><a class="toc-backref" href="#id9">Label Quality</a><a class="headerlink" href="#label-quality" title="Permalink to this headline">¶</a></h3>
-<p>Training data must in general be densely labelled i.e. for each pixel of a raw image the corresponding pixel in the label image must contain the class index (or a float value for regression). In particular for object detection/classification this means all pixels of that object must carry the index of the class to which the object belongs. E.g. if the task is to detect cats, dogs and birds (their position in an image), every pixel of an animal&#8217;s silhouette must carry the corresponding class index in the label image.
-Noise in these annotations is bad (e.g. the labelled area is smaller or larger than the real object extent, the contours do not match). We found that CNNs can tolerate label noise well if there is a large number of training examples, that essentially average out the noise during the training.</p>
-<p>The above does not apply to <em>img-scalar</em> training, since spatial relations are not considered.</p>
-</div>
-<div class="section" id="label-coverage">
-<h3><a class="toc-backref" href="#id10">Label Coverage</a><a class="headerlink" href="#label-coverage" title="Permalink to this headline">¶</a></h3>
-<p>A CNN can only generalise well if the training data covers a great range/variety of possible inputs. This inevitably requires more amount of labelled data, often an expensive undertaking. To help out ELEKTRONN has special loss functions that allows training on data that is not densely labelled. This training mode still requires some dense examples but additionally allows you to provide data that is cheap and fast to annotate. For details see <a class="reference internal" href="Lazy.html#lazy-labels"><span>lazy-labels</span></a>. The lazy labels method is not applicable to the <em>img-scalar</em> training.</p>
-<p>If you generate ground truth be aware of the CNN offsets: to make a train at a location an image patch around the location (&#8220;context&#8221;) must be provided as input. So if you have images of a certain size, you cannot make predictions or do training for the pixels which lie in a stripe close to the border. The thickness of this stripe is determined by the offsets, which in turn are determined by the size of the convolution filters. Never label data for in the border stripes in which you cannot make predictions, this is a waste of resources. Also see the notes in <a class="reference internal" href="Pipeline.html#data-format"><span>Data Format</span></a>:</p>
-</div>
-</div>
-<div class="section" id="network-architecture">
-<h2><a class="toc-backref" href="#id11">Network Architecture</a><a class="headerlink" href="#network-architecture" title="Permalink to this headline">¶</a></h2>
-<p>When defining an architecture several things should be considered:</p>
-<div class="section" id="convolutional-networks">
-<h3><a class="toc-backref" href="#id12">Convolutional Networks</a><a class="headerlink" href="#convolutional-networks" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><ul>
-<li><dl class="first docutils">
-<dt>Filter sizes:</dt>
-<dd><ul class="first last simple">
-<li>Larger filters increase the field of view.</li>
-<li>Larger filters are slower to compute but do not require significantly more GPU-RAM.</li>
-<li>Larger filters introduce more model parameters, but as the number of filters that can be used is limited by speed or GPU-RAM the greater &#8220;expressiveness&#8221; of larger filters might actually not be utilised and smaller filters are faster and could be equally good.</li>
-<li>In the very first layer the filter size must be even if pooling by factor 2 is used. Otherwise output neurons lie &#8220;between&#8221; input pixels.</li>
-<li>Filter sizes and pooling factors can defined for each dimension separately. This is useful if 3D data has anisotropic resolution or just &#8220;a little&#8221; information in the z-direction is needed. A useful and fast compromise between a plain 3D and 2D network is a CNN that has e.g. filter shape (4,4,1) in the first layers and later (2,2,2): this means the first part is basically a stack of parallel 2D CNNs which are later concatenated to 3D CNN. Such &#8220;flat&#8221; 3D CNNs are faster than their isotropic counterparts.</li>
-<li>The last layers may have filter sizes (1,1,1) which means no convolution in any dimension and is equivalent to a stack of parallel fully connected layers (where the number of filters corresponds to the neuron count).</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Number of Filters:</dt>
-<dd><ul class="first last simple">
-<li>Due to larger feature map sizes in the first layers (before pooling) fewer filters can be used than in later layers.</li>
-<li>A large number of filters in later layers may be cheap to compute for training as the feature map sizes are small but predictions still become expensive then.</li>
-<li>Still it is advisable to have a tendency of increasing filter size for later layers. This can be motivated from the view, that early layers extract primitives (such as edges) and the number of relevant primitives is rather small compared to the number of relevant combinations of such primitives.</li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt>Maxpooling:</dt>
-<dd><ul class="first last simple">
-<li>Reduces the feature map size of that layer, so subsequent layers are cheaper to compute.</li>
-<li>Adds some translational invariance (e.g. it does not matter if an edge-pattern is a little bit more right or left). This is good to some extent, but too many consecutive poolings reduce localisation.</li>
-<li>Increases the field of view of a single output neuron.</li>
-<li>Results in <em>strided</em> output/predictions due to the down-sampling. Strided means the neurons after pooling correspond (spatially) to every second input neuron, by applying succesive poolings this becomes every fourth, eight and so on, the &#8220;stepsize&#8221; is called stride. Per layer for a given number of input neurons the number of output neurons is reduced by the pooling factor, this is important because too few output neurons give noisier gradients and the training progress might be slower. Another effect is that poolings make prediction more expensive, because the pixels &#8220;between the stride&#8221; must be predicted in another forward-pass through the CNN. The simple and slow way is iterating over all positions between the strides and accumulate the strided predictions to a dense image. The fast (and computationally optimal) way is to activate <a class="reference internal" href="Prediction.html#mfp"><span>Max Fragment Pooling (MFP)</span></a> which gives dense images directly but requires a lot of GPU-RAM.</li>
-<li>The final strides in each dimension is the product of pooling factors in each dimension (e.g. 2**4=16), the number of total prediction positions (or fragments for MFP) is the product of all pooling factors: in 3D 4 poolings with factor 2 in all dimensions gives the astonishing number of 4096! As mentioned for the filter sizes below, it is possible to create &#8220;flat&#8221; 3D CNNs that avoid this, by applying the pooling only in x and y, not z with pooling factors written as (2,2,1).</li>
-<li>It is recommended to use only poolings in the first layers and not more than in 4 layers in total. The value of the pooling factor should 2 be.</li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</div></blockquote>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">To get centered field of views (this means label pixels are aligned with output neurons and do not lie &#8220;in between&#8221;) when using pooling factors of 2, the filter size in the first layer must be even This is at first counter-intuitive because for an even-sized filter there is no &#8220;central&#8221; pixel, but if followed by a pooling with factor 2, this results in total in a centered output.</p>
-</div>
-</div>
-<div class="section" id="multi-layer-perceptron-mlp">
-<h3><a class="toc-backref" href="#id13">Multi Layer Perceptron (MLP)</a><a class="headerlink" href="#multi-layer-perceptron-mlp" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><ul class="simple">
-<li>MLP layers (Perceptron layers): these are only needed for <em>img-scalar</em> training. The image-like feature maps of the last convolutional layer are <em>flattened</em> to a vector and given as input to the perceptron layer, thus one or more perceptron layers can be attached. If the image-like extent of the last convolutional layer is large and/or the layer has many filters the flattened vector might be quite large. It is therefore advisable to reduce the image extent by using maxpooling in the layers to a small extent, e.g. 2x2(x2). The convolutional part can be interpreted as a feature extractor and perceptron layers as a classificator, but in fact this is rather a continuous transition. Each MLP layer is characterised by the number of (output) neurons.</li>
-</ul>
-</div></blockquote>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Always check the CNN architecture before starting a training by using <code class="xref py py-func docutils literal"><span class="pre">net.netutils.CNNCalculator()</span></code>. Only the input shapes listed in the attribute <code class="docutils literal"><span class="pre">valid_inputs</span></code> can be used. This is also applicable for <em>img-scalar</em> training, because for pooling by factor 2, the layers must have even sizes; if the desired architecture is not possible for the size of the images, the images must be constant-padded/cropped to change their size or the architecture must be changed.</p>
-</div>
-<p>It should be kept in mind that all training sets and training goals are different and the above instructions are just meant as a general guide. Various architecture versions should be tested against each other to find out what works well for a particular task.</p>
-</div>
-</div>
-<div class="section" id="tweaks">
-<h2><a class="toc-backref" href="#id14">Tweaks</a><a class="headerlink" href="#tweaks" title="Permalink to this headline">¶</a></h2>
-<p>A number of helpful CNN/NN tweaks is supported by ELEKETRONN and presented in this section.</p>
-<div class="section" id="class-weights">
-<h3><a class="toc-backref" href="#id15">Class weights</a><a class="headerlink" href="#class-weights" title="Permalink to this headline">¶</a></h3>
-<p>Often data sets are unbalanced (e.g. there are more background pixels than object pixels, or much more people earning less than 50 000 $). In such cases the classifier might get stuck predicting the most frequent class with high probability and assigning little probability to the remaining classes - but not actually learning the discrimination. Using class weights, the training errors (i.e. incentives)  can be changed to give the less frequent classes greater importance. This prevents the mentioned problem.</p>
-</div>
-<div class="section" id="data-augmentation">
-<span id="warping"></span><h3><a class="toc-backref" href="#id16">Data Augmentation</a><a class="headerlink" href="#data-augmentation" title="Permalink to this headline">¶</a></h3>
-<p>CNNs are well-performing classifiers, but require a lot of data examples to generalise well. A method to supply this demand is data <em>augmentation</em>: from the limited given data set (potentially infinitely) many examples are created by applying transforms under which the labels are expected to be constant. This is especially well suited for images.  In almost all cases small translations and changes in brightness and contrast leave the overall content intact.
-In many cases rotations, mirroring, little scaling and minor warping deformations are possible, too. All mentioned transformations are implemented in the <a class="reference internal" href="Pipeline.html#pipeline"><span>pipeline</span></a> for images. For <em>img-img</em> training the labels are subjected to the geometric transformations jointly with the images (preserving the spatial correspondence). By applying the transformations with randomly drawn parameters the training set becomes arbitrarily large. But it should be noted that the augmented training inputs are <em>highly correlated</em> compared to genuinely new data. It should furthermore be noted, that the warping deformations require on average greater patch sizes (see black regions in image below) and thus the border regions are exposed to the classifier less frequently. This can be mitigated by applying the warps only to a fraction of the examples.</p>
-<div class="figure align-center" id="id4">
-<img alt="_images/Warp.png" src="_images/Warp.png" />
-<p class="caption"><span class="caption-text">Two exemplary results of random rotation, flipping, deformation and historgram augmentation. The black regions are only shown for illustration here, internally the data pipeline calculates the required input patch (larger than the CNN input size) such that if cropped to the CNN input size, after the transformation, no missing pixels remain. The labels would be transformed in the same way but are not shown here.</span></p>
-</div>
-</div>
-<div class="section" id="dropout">
-<h3><a class="toc-backref" href="#id17">Dropout</a><a class="headerlink" href="#dropout" title="Permalink to this headline">¶</a></h3>
-<p>Dropout is a major regularisation technique for Neural Networks that improves generalisation. When using dropout for training, a fraction of neurons are turned off - but randomly, changing at every training iteration step. This can be interpreted as training an <em>ensemble</em> of networks (in which the members share common weights) and sampling members randomly every training step. To make a prediction the ensemble average is used, which can be <em>approximated</em> by turning all neurons on i.e. setting the dropout rate to 0 (because then the sum of incoming activations at a neuron is larger, the weights are rescaled automatically when changing the rate). Training with dropout requires more neurons per layer (i.e. more filters for CNNs), larger training times and larger learning rates. We recommend to first narrow down a useful architecture without dropout and from that point start experimenting with dropout.</p>
-</div>
-<div class="section" id="weight-decay">
-<h3><a class="toc-backref" href="#id18">Weight Decay</a><a class="headerlink" href="#weight-decay" title="Permalink to this headline">¶</a></h3>
-<p>Weight decay is synonymous with a L2 penalty on the weights. This means additional to the loss that comes from the deviation between current output and desired output, large weight values are regarded as loss - the weights are driven to have smaller magnitudes while at the same time being able to produce good output. This acts as a regulariser (see <a class="reference external" href="https://en.wikipedia.org/wiki/Tikhonov_regularization">Tikhonov Regularisation</a>).</p>
-</div>
-<div class="section" id="input-noise">
-<h3><a class="toc-backref" href="#id19">Input Noise</a><a class="headerlink" href="#input-noise" title="Permalink to this headline">¶</a></h3>
-<p>This source of randomisation adds Gaussian noise to the input of a layer (e.g. in the central layer of an auto encoder). Thereby the NN is forced to be invariant and robust against small differences in the input and to generalise better. Input noise is somewhat similar to drop out, but contrast drop out sets certain inputs to 0 randomly.</p>
-</div>
-</div>
-<div class="section" id="training-optimisation">
-<h2><a class="toc-backref" href="#id20">Training / Optimisation</a><a class="headerlink" href="#training-optimisation" title="Permalink to this headline">¶</a></h2>
-<p>Because of the non-linear activation functions, the loss function of an NNs is a highly non-convex function of its weights. Analytic solutions do not exist, so we optimize using gradient descent techniques with various heuristics. Convergence is a user-defined state, either determined by good enough results (no progress possible any more) or by the point where the loss on a held out <em>validation set</em> begins to increase, while the loss on the training set still decreases - continuing training in this situation inevitably leads to over-fitting and bad generalisation.</p>
-<div class="section" id="stochastic-gradient-descent-sgd">
-<h3><a class="toc-backref" href="#id21">Stochastic Gradient Descent (SGD)</a><a class="headerlink" href="#stochastic-gradient-descent-sgd" title="Permalink to this headline">¶</a></h3>
-<p>This is the basic principle behind all other optimisers. SGD is the most common optimisation scheme and works in most cases. One advantage of SGD is that it works well with only one example per batch.</p>
-<dl class="docutils">
-<dt>In every iteration:</dt>
-<dd><ul class="first last simple">
-<li>From the training data one or several examples are drawn. The number of drawn examples is called <em>batch size</em>.</li>
-<li>The output of the NN, given the current weights, is calculated</li>
-<li>The <strong>gradient</strong> of the loss (deviation between output and desired output) is calculated w.r.t to the weights</li>
-<li>The weights are <em>updated</em> by following down the gradient for a fixed step size - the <em>learning rate</em></li>
-<li>The whole procedure is repeated with a new batch until convergence</li>
-</ul>
-</dd>
-</dl>
-<p>The learning rate is usually decreased by schedule over the time of the training.</p>
-<div class="figure align-center">
-<img alt="_images/gradient-descent.png" src="_images/gradient-descent.png" />
-</div>
-<p>Illustration of gradient descent on error surface a 2-D, this corresponds to a model with just two parameters. As can be seen, the outcome depends on the starting point (aka <em>weight initialisation</em>) and may lead to different <em>local</em> optima. For more dimensions the problem of multiple local optima is even more severe. If you train a network twice under same conditions except for the random weight initialisation and the random batch shuffling, you will almost definitely end up in completely different local optima. But empirically the performance is pretty close.  In practice another difficulty is more relevant: saddle-points which may ill-condition the training. [<a class="reference external" href="http://blog.datumbox.com/tuning-the-learning-rate-in-gradient-descent/">img source</a>]</p>
-<div class="section" id="momentum">
-<h4>Momentum<a class="headerlink" href="#momentum" title="Permalink to this headline">¶</a></h4>
-<p>Momentum replaces the true gradient by an exponential moving average over the previous gradients. This can speed up progress by accumulation of gradients and prevent over-fitting to only the current example by averaging over other examples. Momentum is parametrised by a meta-parameter that determines the mixing rate of the previous gradients and the current gradient. In the picture of the error surface it can be visualised by a massive ball rolling down the hill which, through its mass, can accumulate speed/momentum and also go upwards shortly - across a small ridge for example.</p>
-</div>
-</div>
-<div class="section" id="resilient-backpropagation-rprop">
-<h3><a class="toc-backref" href="#id22">Resilient Backpropagation (RPROP)</a><a class="headerlink" href="#resilient-backpropagation-rprop" title="Permalink to this headline">¶</a></h3>
-<p>RPROP is a heuristic that determines the learning rate for every parameter individually based on the criterion how often the sign of the gradient changes over the iterations. If the sign stays the same for a long time the learning rate grows (similar to momentum) and if the sign fluctuates a lot, very small steps are made for this parameter.
-RPROP can be very fast and good but can also to be too aggressive for some data sets or small batch sizes leaving a larger spread between training loss and validation loss.</p>
-</div>
-<div class="section" id="conjugate-gradient-cg">
-<h3><a class="toc-backref" href="#id23">Conjugate Gradient (CG)</a><a class="headerlink" href="#conjugate-gradient-cg" title="Permalink to this headline">¶</a></h3>
-<p>Conjugate gradient uses a heuristic to estimate the value of the momentum meta-parameter in every iteration step. In addition, the learning rate is not fixed but the optimal step size is found by a bounded line search along the gradient direction. CG requires multiple steps on the same batch for the heuristic to work.</p>
-<p>CG needs fewer iteration steps but is slower per step. Larger batch sizes are needed because several steps are done per same batch. Generalisation properties can be superior to SGD and it can even be faster but that depends on the particular data set and careful tuning of meta-parameters. Further detail on <a class="reference external" href="https://en.wikipedia.org/wiki/Nonlinear_conjugate_gradient_method">the wikipedia article</a> (we use the Polak–Ribière heuristic).</p>
-</div>
-<div class="section" id="l-bfgs">
-<h3><a class="toc-backref" href="#id24">l-BFGS</a><a class="headerlink" href="#l-bfgs" title="Permalink to this headline">¶</a></h3>
-<p>Limited-memory Broyden–Fletcher–Goldfarb–Shanno (l-BFGS) aims at estimating the inverse Hessian from the history of gradients. Similar to CG this history must be acquired on the same batch and the number of steps on the same batch is even higher. Using the approximate inverse Hessian, parameter updates can be made with a second order correction (in contrast plain gradient descent is a linear approximation). Again batch sizes must be larger because of the high number of steps per batch. Further reading is advisable: <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html">used implementation</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Limited-memory_BFGS">wikipedia entry</a>.</p>
-</div>
-</div>
-<div class="section" id="tips-for-tuning">
-<h2><a class="toc-backref" href="#id25">Tips for Tuning</a><a class="headerlink" href="#tips-for-tuning" title="Permalink to this headline">¶</a></h2>
-<p>The learning rate should be as large as possible at the beginning of the training and decrease gradually or in steps (optimally always after the loss has plateaued for some time). Conversely the momentum should be raised towards the end of the training but it can also be kept constant.
-As learning rate as large as possible means the following: since the gradient is only a linear approximation, the loss decreases only along a small step size on the gradient and goes up again for larger steps (very quickly). Thus by setting a fixed learning rate, some update steps may in fact lead to an increase of the loss if they are too large. The learning rate should be so large that <strong>most</strong> of the updates decrease the loss but large enough that a few steps lead to increases - because then you know that a greater learning rate would not be possible. The training pipeline creates a plot with the per step changes of the loss.</p>
-<p>The learning rate depends on the NN architecture and the batch size. Deeper nets commonly require smaller learning rates. Larger batches can go with larger learning rates (there is less noise in the gradients).</p>
-</div>
-</div>
-
-
-          </div>
-        </div>
-      </div>
       <div class="clearer"></div>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
+    <div class="related">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -394,17 +395,20 @@ As learning rate as large as possible means the following: since the gradient is
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="Pipeline.html" title="Using the Training Pipeline"
              >next</a> |</li>
         <li class="right" >
           <a href="Examples.html" title="Examples"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer" role="contentinfo">
+    <div class="footer">
         &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
     </div>
   </body>
 </html>
