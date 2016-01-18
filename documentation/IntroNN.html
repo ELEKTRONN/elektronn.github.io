@@ -8,7 +8,7 @@
     
     <title>Practical Introduction to Neural Networks &mdash; ELEKTRONN</title>
     
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,11 +26,7 @@
     <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
     <link rel="top" title="ELEKTRONN" href="index.html" />
     <link rel="next" title="Using the Training Pipeline" href="Pipeline.html" />
-    <link rel="prev" title="Examples" href="Examples.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
-
+    <link rel="prev" title="Examples" href="Examples.html" /> 
   </head>
   <body role="document">
 
@@ -38,7 +34,94 @@
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Pipeline.html" title="Using the Training Pipeline"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Examples.html" title="Examples"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
+    </div>
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Practical Introduction to Neural Networks</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#classification-modes-in-elektronn">Classification Modes in ELEKTRONN</a></li>
+<li><a class="reference internal" href="#data-considerations">Data Considerations</a><ul>
+<li><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
+<li><a class="reference internal" href="#label-quality">Label Quality</a></li>
+<li><a class="reference internal" href="#label-coverage">Label Coverage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#network-architecture">Network Architecture</a><ul>
+<li><a class="reference internal" href="#convolutional-networks">Convolutional Networks</a></li>
+<li><a class="reference internal" href="#multi-layer-perceptron-mlp">Multi Layer Perceptron (MLP)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tweaks">Tweaks</a><ul>
+<li><a class="reference internal" href="#class-weights">Class weights</a></li>
+<li><a class="reference internal" href="#data-augmentation">Data Augmentation</a></li>
+<li><a class="reference internal" href="#dropout">Dropout</a></li>
+<li><a class="reference internal" href="#weight-decay">Weight Decay</a></li>
+<li><a class="reference internal" href="#input-noise">Input Noise</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#training-optimisation">Training / Optimisation</a><ul>
+<li><a class="reference internal" href="#stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</a><ul>
+<li><a class="reference internal" href="#momentum">Momentum</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#resilient-backpropagation-rprop">Resilient Backpropagation (RPROP)</a></li>
+<li><a class="reference internal" href="#conjugate-gradient-cg">Conjugate Gradient (CG)</a></li>
+<li><a class="reference internal" href="#l-bfgs">l-BFGS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tips-for-tuning">Tips for Tuning</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Examples.html"
+                        title="previous chapter">Examples</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Pipeline.html"
+                        title="next chapter">Using the Training Pipeline</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/IntroNN.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
 
     <div class="document">
       <div class="documentwrapper">
@@ -299,93 +382,29 @@ As learning rate as large as possible means the following: since the gradient is
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Practical Introduction to Neural Networks</a><ul>
-<li><a class="reference internal" href="#general">General</a></li>
-<li><a class="reference internal" href="#classification-modes-in-elektronn">Classification Modes in ELEKTRONN</a></li>
-<li><a class="reference internal" href="#data-considerations">Data Considerations</a><ul>
-<li><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
-<li><a class="reference internal" href="#label-quality">Label Quality</a></li>
-<li><a class="reference internal" href="#label-coverage">Label Coverage</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#network-architecture">Network Architecture</a><ul>
-<li><a class="reference internal" href="#convolutional-networks">Convolutional Networks</a></li>
-<li><a class="reference internal" href="#multi-layer-perceptron-mlp">Multi Layer Perceptron (MLP)</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tweaks">Tweaks</a><ul>
-<li><a class="reference internal" href="#class-weights">Class weights</a></li>
-<li><a class="reference internal" href="#data-augmentation">Data Augmentation</a></li>
-<li><a class="reference internal" href="#dropout">Dropout</a></li>
-<li><a class="reference internal" href="#weight-decay">Weight Decay</a></li>
-<li><a class="reference internal" href="#input-noise">Input Noise</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#training-optimisation">Training / Optimisation</a><ul>
-<li><a class="reference internal" href="#stochastic-gradient-descent-sgd">Stochastic Gradient Descent (SGD)</a><ul>
-<li><a class="reference internal" href="#momentum">Momentum</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#resilient-backpropagation-rprop">Resilient Backpropagation (RPROP)</a></li>
-<li><a class="reference internal" href="#conjugate-gradient-cg">Conjugate Gradient (CG)</a></li>
-<li><a class="reference internal" href="#l-bfgs">l-BFGS</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#tips-for-tuning">Tips for Tuning</a></li>
-</ul>
-</li>
-</ul>
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="Examples.html" title="previous chapter">Examples</a></li>
-      <li>Next: <a href="Pipeline.html" title="next chapter">Using the Training Pipeline</a></li>
-  </ul></li>
-</ul>
-</div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/IntroNN.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2015, Gregor Urban, Marius F Killinger.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
-      
-      |
-      <a href="_sources/IntroNN.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Pipeline.html" title="Using the Training Pipeline"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Examples.html" title="Examples"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
   </body>
 </html>
