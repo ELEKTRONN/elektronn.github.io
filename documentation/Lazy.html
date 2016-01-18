@@ -8,7 +8,7 @@
     
     <title>Lazy Labels &mdash; ELEKTRONN</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,41 +26,24 @@
     <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
     <link rel="top" title="ELEKTRONN" href="index.html" />
     <link rel="next" title="Making Predictions" href="Prediction.html" />
-    <link rel="prev" title="Using the Training Pipeline" href="Pipeline.html" /> 
+    <link rel="prev" title="Using the Training Pipeline" href="Pipeline.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Prediction.html" title="Making Predictions"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="Pipeline.html" title="Using the Training Pipeline"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
-      </ul>
-    </div>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="lazy-labels">
 <span id="id1"></span><h1>Lazy Labels<a class="headerlink" href="#lazy-labels" title="Permalink to this headline">¶</a></h1>
@@ -71,20 +54,20 @@
 <div class="section" id="solution">
 <h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
 <p>Lazy Labels refers to ground truth that can be generated with very little effort and gives the possibility to include monotonic image examples into the training set.</p>
-<p>An example use case is a EM volume of a cell nucleus (say background class <tt class="docutils literal"><span class="pre">0</span></tt>), but the patch contains also mitochondria (class <tt class="docutils literal"><span class="pre">1</span></tt>), or more categories of other objects. But <strong>certainly no</strong> vesicle clouds(class <tt class="docutils literal"><span class="pre">2</span></tt>). The cheapest option is to label nothing at all in this cube and instead specify a <em>mask</em> that indicates all classes that have not been labelled and <em>another mask</em> that indicates that there are no instances of class <tt class="docutils literal"><span class="pre">2</span></tt> in this whole patch. During training this patch can act to drive the predicted probability of class <tt class="docutils literal"><span class="pre">2</span></tt> on this patch towards zero, i.e. the CNN gets &#8220;punished&#8221; for predicting <tt class="docutils literal"><span class="pre">2</span></tt> on this patch, but predictions for other classes are ignored because we don&#8217;t know them.</p>
-<p>This provides of course much less training information and therefore it would be sensible give this patch less weigh by presenting it fewer times than other patches during training. We can give it a lower value in the <tt class="docutils literal"><span class="pre">cube_prios</span></tt> list than the densely labelled cubes.
-The other option is to label the cell nucleus manually as background (because it is a large contiguous object that is relatively cheap to label) and set a mask that the background was labelled (but no other classes). For the remaining pixels around the nucleus the labels are all set to <tt class="docutils literal"><span class="pre">-1</span></tt> to be <strong>ignored</strong> (this area would be more expensive to label because there might be many small objects of different classes e.g. mitochondria). Thus the information content is slightly higher than for the first option, but it&#8217;s also more work.</p>
+<p>An example use case is a EM volume of a cell nucleus (say background class <code class="docutils literal"><span class="pre">0</span></code>), but the patch contains also mitochondria (class <code class="docutils literal"><span class="pre">1</span></code>), or more categories of other objects. But <strong>certainly no</strong> vesicle clouds(class <code class="docutils literal"><span class="pre">2</span></code>). The cheapest option is to label nothing at all in this cube and instead specify a <em>mask</em> that indicates all classes that have not been labelled and <em>another mask</em> that indicates that there are no instances of class <code class="docutils literal"><span class="pre">2</span></code> in this whole patch. During training this patch can act to drive the predicted probability of class <code class="docutils literal"><span class="pre">2</span></code> on this patch towards zero, i.e. the CNN gets &#8220;punished&#8221; for predicting <code class="docutils literal"><span class="pre">2</span></code> on this patch, but predictions for other classes are ignored because we don&#8217;t know them.</p>
+<p>This provides of course much less training information and therefore it would be sensible give this patch less weigh by presenting it fewer times than other patches during training. We can give it a lower value in the <code class="docutils literal"><span class="pre">cube_prios</span></code> list than the densely labelled cubes.
+The other option is to label the cell nucleus manually as background (because it is a large contiguous object that is relatively cheap to label) and set a mask that the background was labelled (but no other classes). For the remaining pixels around the nucleus the labels are all set to <code class="docutils literal"><span class="pre">-1</span></code> to be <strong>ignored</strong> (this area would be more expensive to label because there might be many small objects of different classes e.g. mitochondria). Thus the information content is slightly higher than for the first option, but it&#8217;s also more work.</p>
 <p>Lazy labelled training images should only be used to supplement densely labelled data.</p>
 </div>
 <div class="section" id="application">
 <h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
-<p>The exact effect of the masks is precisely described in the API documentation of the loss function (<tt class="xref py py-meth docutils literal"><span class="pre">net.convlayer2D.ConvLayer2D.NLL()</span></tt> or <tt class="xref py py-meth docutils literal"><span class="pre">net.convlayer3D.ConvLayer3D.NLL()</span></tt>).</p>
+<p>The exact effect of the masks is precisely described in the API documentation of the loss function (<code class="xref py py-meth docutils literal"><span class="pre">net.convlayer2D.ConvLayer2D.NLL()</span></code> or <code class="xref py py-meth docutils literal"><span class="pre">net.convlayer3D.ConvLayer3D.NLL()</span></code>).</p>
 <dl class="docutils">
 <dt>To use lazy labels 2 things must be done:</dt>
 <dd><ol class="first last arabic simple">
-<li>Turn the option <tt class="docutils literal"><span class="pre">lazy_labels</span></tt> in the configuration</li>
-<li>For every image/label cube pair: add another h5 dataset in the <strong>same</strong> h5 file of the labels by the data set name &#8220;info&#8221;. This data set must be a tuple containing two arrays of length <tt class="docutils literal"><span class="pre">n_lab</span></tt> with entries 0 or 1. The first array gives <tt class="docutils literal"><span class="pre">mask_class_labeled</span></tt> corresponding to this volume, the second <tt class="docutils literal"><span class="pre">mask_class_not_present</span></tt>.</li>
-<li>(optionally) set lower <tt class="docutils literal"><span class="pre">cube_prios</span></tt> for the cubes with less label information content.</li>
+<li>Turn the option <code class="docutils literal"><span class="pre">lazy_labels</span></code> in the configuration</li>
+<li>For every image/label cube pair: add another h5 dataset in the <strong>same</strong> h5 file of the labels by the data set name &#8220;info&#8221;. This data set must be a tuple containing two arrays of length <code class="docutils literal"><span class="pre">n_lab</span></code> with entries 0 or 1. The first array gives <code class="docutils literal"><span class="pre">mask_class_labeled</span></code> corresponding to this volume, the second <code class="docutils literal"><span class="pre">mask_class_not_present</span></code>.</li>
+<li>(optionally) set lower <code class="docutils literal"><span class="pre">cube_prios</span></code> for the cubes with less label information content.</li>
 </ol>
 </dd>
 </dl>
@@ -95,7 +78,7 @@ The other option is to label the cell nucleus manually as background (because it
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -106,19 +89,23 @@ The other option is to label the cell nucleus manually as background (because it
 </ul>
 </li>
 </ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="Pipeline.html"
-                        title="previous chapter">Using the Training Pipeline</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="Prediction.html"
-                        title="next chapter">Making Predictions</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Lazy.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Pipeline.html" title="previous chapter">Using the Training Pipeline</a></li>
+      <li>Next: <a href="Prediction.html" title="next chapter">Making Predictions</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Lazy.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -135,30 +122,20 @@ The other option is to label the cell nucleus manually as background (because it
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="Prediction.html" title="Making Predictions"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="Pipeline.html" title="Using the Training Pipeline"
-             >previous</a> |</li>
-        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2015, Gregor Urban, Marius F Killinger.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/Lazy.txt"
+          rel="nofollow">Page source</a>
     </div>
+
+    
+
+    
   </body>
 </html>

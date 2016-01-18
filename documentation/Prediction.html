@@ -8,7 +8,7 @@
     
     <title>Making Predictions &mdash; ELEKTRONN</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,55 +26,38 @@
     <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
     <link rel="top" title="ELEKTRONN" href="index.html" />
     <link rel="next" title="Tips for Adaptation and Extending" href="NetCore.html" />
-    <link rel="prev" title="Lazy Labels" href="Lazy.html" /> 
+    <link rel="prev" title="Lazy Labels" href="Lazy.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
   </head>
-  <body>
+  <body role="document">
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
 </div>
 
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="NetCore.html" title="Tips for Adaptation and Extending"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="Lazy.html" title="Lazy Labels"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
-      </ul>
-    </div>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="making-predictions">
 <h1>Making Predictions<a class="headerlink" href="#making-predictions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="general">
 <h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
-<p>Once a CNN/NN is trained predictions can be made. For CNNs prediction speed benefits greatly from larger input patch sizes and MFP (see below). Therefore it is recommended to create a new CNN/NN instance using <tt class="xref py py-func docutils literal"><span class="pre">training.predictor.create_predncnn()</span></tt> where the size from training can be overridden and the parameters are loaded from the <tt class="docutils literal"><span class="pre">*-LAST.param</span></tt>-file in the save directory. The same config file as for the training can be used.</p>
+<p>Once a CNN/NN is trained predictions can be made. For CNNs prediction speed benefits greatly from larger input patch sizes and MFP (see below). Therefore it is recommended to create a new CNN/NN instance using <code class="xref py py-func docutils literal"><span class="pre">training.predictor.create_predncnn()</span></code> where the size from training can be overridden and the parameters are loaded from the <code class="docutils literal"><span class="pre">*-LAST.param</span></code>-file in the save directory. The same config file as for the training can be used.</p>
 <p>The returned CNN/NN is a completely normal network object which you can use in your own prediction script; you script just has to provide you data in the correct format:</p>
 <blockquote>
 <div><ul class="simple">
-<li>For images the convenience method <tt class="xref py py-meth docutils literal"><span class="pre">net.convnet.MixedConvNN.predictDense()</span></tt> is available which creates <em>dense</em> predictions for images/volumes of arbitrary sizes (the must however be larger than the input size). Normally the predictions have some offset (caused from the convolutions) but there exists an option to mirror the raw data such that the returned prediction covers the full extent of the input image (this might however introduce some artifacts because the mirroring is not a natural continuation of the image).</li>
-<li>For non-image data predictions can be made using simply <tt class="docutils literal"><span class="pre">cnn.class_probabilities()</span></tt> (make sure to prepare your test data in the required input shape).</li>
+<li>For images the convenience method <code class="xref py py-meth docutils literal"><span class="pre">net.convnet.MixedConvNN.predictDense()</span></code> is available which creates <em>dense</em> predictions for images/volumes of arbitrary sizes (the must however be larger than the input size). Normally the predictions have some offset (caused from the convolutions) but there exists an option to mirror the raw data such that the returned prediction covers the full extent of the input image (this might however introduce some artifacts because the mirroring is not a natural continuation of the image).</li>
+<li>For non-image data predictions can be made using simply <code class="docutils literal"><span class="pre">cnn.class_probabilities()</span></code> (make sure to prepare your test data in the required input shape).</li>
 </ul>
 </div></blockquote>
-<p>You should experiment a bit with the input size to get optimal prediction speeds. There is a script similar to <tt class="docutils literal"><span class="pre">elektronn-train</span></tt> called <tt class="docutils literal"><span class="pre">elektronn-profile</span></tt> which does that job for you: pass a configuration file as commandline argument and the script loops over various input sizes and creates a <tt class="docutils literal"><span class="pre">csv</span></tt>-table of the respective speeds. You can find the fastest input size, that just fits in your RAM in that table and use it for making predictions.</p>
+<p>You should experiment a bit with the input size to get optimal prediction speeds. There is a script similar to <code class="docutils literal"><span class="pre">elektronn-train</span></code> called <code class="docutils literal"><span class="pre">elektronn-profile</span></code> which does that job for you: pass a configuration file as commandline argument and the script loops over various input sizes and creates a <code class="docutils literal"><span class="pre">csv</span></code>-table of the respective speeds. You can find the fastest input size, that just fits in your RAM in that table and use it for making predictions.</p>
 <p>Theoretically predicting the whole array in one go, instead of several tiles, would be fastest. For each tile some calculations have to be repeated and the larger the tiles the more intermediate results can be shared. But this is usually impossible due to limited GPU-RAM.</p>
 </div>
 <div class="section" id="max-fragment-pooling-mfp">
@@ -89,7 +72,7 @@ Compilation time is significantly longer.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
@@ -99,19 +82,23 @@ Compilation time is significantly longer.</p>
 </ul>
 </li>
 </ul>
-
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="Lazy.html"
-                        title="previous chapter">Lazy Labels</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="NetCore.html"
-                        title="next chapter">Tips for Adaptation and Extending</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/Prediction.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Lazy.html" title="previous chapter">Lazy Labels</a></li>
+      <li>Next: <a href="NetCore.html" title="next chapter">Tips for Adaptation and Extending</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Prediction.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -128,30 +115,20 @@ Compilation time is significantly longer.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="np-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="NetCore.html" title="Tips for Adaptation and Extending"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="Lazy.html" title="Lazy Labels"
-             >previous</a> |</li>
-        <li><a href="index.html">ELEKTRONN</a> &raquo;</li> 
-      </ul>
-    </div>
     <div class="footer">
-        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+      &copy;2015, Gregor Urban, Marius F Killinger.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/Prediction.txt"
+          rel="nofollow">Page source</a>
     </div>
+
+    
+
+    
   </body>
 </html>
