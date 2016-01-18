@@ -79,24 +79,15 @@ permalink: /getting-started/
 
 				<ul>
 					<li>
-						<p>Install <strong>ELEKTRONN</strong> with
-						<code>pip</code>:</p>
+						<p>A comfortable way to setup a python environment with common scientific python packages, as needed by <strong>ELEKTRONN</strong>,  is the <a href="https://store.continuum.io/cshop/anaconda/">`Anaconda distribution by Continuum</a> (make sure to use the Python 2.7 version). If you don't want to install the whole Anaconda distribution you can use Miniconda instead.Install <strong>ELEKTRONN</strong> using conda:</p>
 
-						<pre><code>pip install [options] elektronn</code></pre>
+						<pre><code>conda config --add channels elektronn<br>conda install elektronn</code></pre>
 
-						<p>This will install <strong>ELEKTRONN</strong> as a python
-						package. Options can specify target locations, editable installs etc. (see <code>man pip</code>).
-                                                Note: on some distributions (e.g. Arch Linux), you need to use <code>pip2</code> instead of <code>pip</code> to install Python 2 packages like ELEKTRONN.
-						If you plan to alter the scripts and data processing methods directly,
-						a developer install using the <code>pip</code> option <code>-e</code> might be advisable.
-						Alternatively you can download the files, add the folder
-						to <code>PYTHONPATH</code> and directly use the code.</p>
-
-					</li>
-					<li>Configure <em>theano</em> as explained in the <a href="{{ site.documentation-url }}/Installation.html#theano">documentation</a></li> 
+						<li><p>This resolves all dependencies and installs <strong>ELEKTRONN</strong>, but you still need to *configure* theano (which will be installed as a dependency) as described in the <a href="{{ site.documentation-url }}/Installation.html#theano">documentation</a>.</p></li>
 					<li>[Optionally:  create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/examples/config_template.py">examples/config_template.py]</a>
                                         and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#configuration-of-parameters">configuration</a>)</li> 
-					<li> [Optionally: try out one of the <a href="{{ site.documentation-url }}/Examples.html">examples</a> to confirm everything works]</li>
+					<li>[Optionally: try out one of the <a href="{{ site.documentation-url }}/Examples.html">examples</a> to confirm everything works]</li>
+                                        <li>For installation without Anaconda (pip or manually) please refer to the <a href="{{ site.documentation-url }}/Installation.html">instructions</a> in the documentation.</li>
 				</ul>
 
 				<header class="-major">
