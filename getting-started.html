@@ -8,7 +8,7 @@ permalink: /getting-started/
 		<header class="-major">
 			<span class="header-icon -getting-started"><i class="icon ion-ios-lightbulb"></i></span>
 			<h2>Getting started</h2>
-			<p>Learn how to use <strong>ELEKTRONN</strong>.</p>
+			<p>Learn how to use <strong>ELEKTRONN</strong></p>
 		</header>
 	</div>
 
@@ -20,7 +20,7 @@ permalink: /getting-started/
 				</header>
 
 				<footer>
-					<p><strong>ELEKTRONN</strong> is a Python2.7 package that can be installed
+					<p><strong>ELEKTRONN</strong> is a Python 2.7 package that can be installed
 					with <code>pip</code>. <a href="#Installation">Installation
 						instructions.</a></p>
 					<p><a class="tag -icon" href="{{ site.github-url }}"><i class="icon ion ion-social-github"></i>Source Code</a></p>
@@ -79,7 +79,7 @@ permalink: /getting-started/
 
 				<ul>
 					<li>
-						<p>Install <strong>ELEKTRONN</strong> from the repository using
+						<p>Install <strong>ELEKTRONN</strong> with
 						<code>pip</code>:</p>
 
 						<pre><code>pip install [options] elektronn</code></pre>
@@ -94,7 +94,7 @@ permalink: /getting-started/
 
 					</li>
 					<li>Configure <em>theano</em> as explained in the <a href="{{ site.documentation-url }}/Installation.html#theano">documentation</a></li> 
-					<li>You can optionally create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/examples/config_template.py">examples/config_template.py</a>
+					<li>[Optionally:  create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/examples/config_template.py">examples/config_template.py]</a>
                                         and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#configuration-of-parameters">configuration</a>)</li> 
 					<li> [Optionally: try out one of the <a href="{{ site.documentation-url }}/Examples.html">examples</a> to confirm everything works]</li>
 				</ul>
@@ -105,7 +105,7 @@ permalink: /getting-started/
 				</header>
 
 				<p>Manual installation of <em>theano</em> is optional, the setup will
-				install it otherwise. <strong>ELEKTRONN</strong> has some dependencies
+				install it otherwise. <strong>ELEKTRONN</strong> has dependencies
 				which are sometimes difficult to install using <code>pip</code> (amongst other reasons
 				because <code>pip</code> does not install system-level dependencies).
 				You can try:</p>
@@ -117,7 +117,7 @@ permalink: /getting-started/
                                 <pre><code>pip install elektronn</code></pre>
 
 				<p>But that will most likely fail for some required packages.
-				Instead we recommend that you install those packages with your system
+				Instead we recommend that you install those particular packages with your system
 				package manager e.g.:</p>
 
 				<p><code>apt-get install python-numpy python-scipy python-matplotlib python-h5py</code></p>
@@ -125,7 +125,7 @@ permalink: /getting-started/
 				<p>All dependencies are listed in the file <a
 				href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/requirements.txt">requirements.txt</a></p>
 
-                                <p>A comfortable way to setup a python environment with common scientific python packages is e.g. the <a
+                                <p>A comfortable way to setup a python environment with common scientific python packages is the <a
 				href="https://www.continuum.io/downloads">Anaconda distribution by Continuum</a>.</p>
 			</div>
 		</div>
@@ -136,9 +136,9 @@ permalink: /getting-started/
 					<h2>Get started with <strong>ELEKTRONN</strong></h2>
 				</header>
 
-				<p>For people new to Neural Networks and CNNs we recommend reading the <a href="{{ site.documentation-url }}/IntroNN.html">introduction</a> in our documentation.</p>
+				<p>For people new to Neural Networks and CNNs we recommend reading the practical <a href="{{ site.documentation-url }}/IntroNN.html">introduction</a> in our documentation.</p>
 
-				<p>An even more detailed introduction, including formulae and references can be found <a href="{{ "downloads/Intro-ANN.pdf" | prepend: site.baseurl }}">here</a>.</p>
+				<p>An more theoretical introduction, including formulae and references can be found <a href="{{ "downloads/Intro-ANN.pdf" | prepend: site.baseurl }}">here</a>.</p>
 
 			</div>
 
@@ -167,7 +167,7 @@ permalink: /getting-started/
 				</header>
 
 				<ul>
-					<li>CNN training requires a data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets. <a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">More information</a>.</li>
+					<li>CNN training requires a training data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets (<a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">More information</a>).</li>
 
 					<li>
 						<p>Convert your data arrays to h5 data sets in separate files for images and labels.</p>
@@ -186,11 +186,11 @@ permalink: /getting-started/
 					<li>Edit <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> as a new file to specify your training scenario.</li>
 
 					<li>
-						<p>Run the script <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/scripts/elektronn-train.py">scripts/elektronn-train.py</a> from command line (or from a Python IDE like spyder):</p>
-						<p><code>elektronn-train.py [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
+						<p>Run the script <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/scripts/elektronn-train">scripts/elektronn-train</a> from command line (or from a Python IDE like spyder):</p>
+						<p><code>elektronn-train [config=&lt;/path/to_config_file&gt;] [ gpu={Auto|False|&lt;int&gt;}] [no_X={True|False}]</code></p>
 					</li>
 
-					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is work and needs time. For a better understanding of how they should be trained and which architecture you should pick, refer to the sources in the next section.</li>
+					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is work and needs time. For a better understanding of how they should be trained and which architecture you should pick, refer to the resources in the documentation.</li>
 				</ul>
 			</div>
 		</div>
