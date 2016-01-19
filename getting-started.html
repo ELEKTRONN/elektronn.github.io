@@ -21,7 +21,7 @@ permalink: /getting-started/
 
 				<footer>
 					<p><strong>ELEKTRONN</strong> is a Python 2.7 package that can be installed
-					with <code>pip</code>. <a href="#Installation">Installation
+					with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>. <a href="#Installation">Installation
 						instructions.</a></p>
 					<p><a class="tag -icon" href="{{ site.github-url }}"><i class="icon ion ion-social-github"></i>Source Code</a></p>
 				</footer>
@@ -34,7 +34,7 @@ permalink: /getting-started/
 
 				<footer>
 					<p>Learn how to use <strong>ELEKTRONN</strong> for your data analysis task: read our <a href="#BasicRecipe">basic recipe</a>
-					or try out the <a href="{{ site.documentation-url }}/Examples.html">examples</a>.
+					or try out one of the <a href="{{ site.documentation-url }}/Examples.html">examples</a>.
 				</footer>
 			</div>
 
@@ -57,8 +57,8 @@ permalink: /getting-started/
 				<footer>
 					<p><strong>ELEKTRONN</strong> can be used for...</p>
 					<ul>
-						<li>object recognition</li>
 						<li>image segmentation</li>
+						<li>object recognition</li>
 						<li>prediction of income</li>
 						<li>... much more</li>
 					</ul>
@@ -83,9 +83,9 @@ permalink: /getting-started/
 
 						<pre><code>conda config --add channels elektronn</code><br><code>conda install elektronn</code></pre>
 
-						<li><p>This resolves all dependencies and installs <strong>ELEKTRONN</strong>, but you still need to configure Theano (which will be installed as a dependency) as <a href="{{ site.documentation-url }}/Installation.html#theano">described</a> in the in the documentation.</p></li>
-					<li>[Optionally:  create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/examples/config_template.py">examples/config_template.py</a> and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#configuration-of-parameters">configuration</a>)]</li> 
-					<li>[Optionally: try out one of the <a href="{{ site.documentation-url }}/Examples.html">examples</a> to confirm everything works]</li>
+						<li><p>This resolves all dependencies and installs <strong>ELEKTRONN</strong>, but you still need to configure Theano (which will be installed as a dependency). The configuration is <a href="{{ site.documentation-url }}/Installation.html#theano">described</a> in the in the documentation.</p></li>
+					<li>[Optionally:  create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/examples/config_template.py">examples/config_template.py</a> and put it into your home directory as <code>elektronn.config</code> (see <a href="{{ site.documentation-url }}/Pipeline.html#configuration-of-parameters">configuration</a>).]</li> 
+					<li>[Optionally: try out one of the <a href="{{ site.documentation-url }}/Examples.html">examples</a> to confirm everything works.]</li>
                                         <li>For installation without Anaconda (pip or manually) please refer to the <a href="{{ site.documentation-url }}/Installation.html">instructions</a> in the documentation.</li>
 				</ul>
 
@@ -114,7 +114,7 @@ permalink: /getting-started/
 					<ul>
 						<li><a href="http://deeplearning.net/software/theano/index.html">Theano homepage</a></li>
 						<li><a href="http://deeplearning.net/tutorial/contents.html">Overview Theano tutorials</a></li>
-						<li><a href="http://http://arxiv.org/abs/1206.5533">Practical recommendations for gradient-based training of deep architectures [2012 Y.Bengio]</a></li>
+						<li><a href="http://arxiv.org/abs/1206.5533">Practical recommendations for gradient-based training of deep architectures [2012 Y.Bengio]</a></li>
 						<li><a href="https://cs231n.github.io/convolutional-networks/">Tutorial from Stanford CS class</a></li>
 						<li><a href="https://youtu.be/bEUX_56Lojc">VIDEO Tutorial by Nando de Freitas</a></li>
 					</ul>
@@ -137,9 +137,9 @@ permalink: /getting-started/
 				<pre><code>elektronn-train &lt;/installpath&gt;/elektronn/examples/MNIST_CNN_warp_config.py</code></pre>
                                 
                                 <p>The first argument is the path to a config file, which is within the package's examples directory.
-                                You can also copy the file, edit it and use your modified configuration. If you have an NVIDIA GPU add the 
+                                You can also copy the file, edit it and use your modified version. If you have an NVIDIA GPU add the 
                                 option <code>--gpu=0</code> which will make the execution significantly faster (make sure you have configured
-                                theano when installing <strong>ELEKTRONN</strong>). The plots of the training are saved to <em>~/CNN_Training/2D/MNIST_example_warp</em> (as configured in the example config file). For more details read through our <a href="{{ site.documentation-url }}">documentation.</a></p>
+                                theano when installing <strong>ELEKTRONN</strong>). The plots of the training are saved to <em>~/CNN_Training/2D/MNIST_example_warp</em> (the path can be changed in the config file). For more details read through our <a href="{{ site.documentation-url }}">documentation.</a></p>
 
 
 
@@ -154,7 +154,7 @@ permalink: /getting-started/
 					<li>CNN training requires a training data set of spatial input data (2d/3d, optional with a fourth axis for (colour) channels) and labels (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images or to an image as a whole. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets (<a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">More information</a>).</li>
 
 					<li>
-						<p>Convert your data arrays to h5 data sets in separate files for images and labels.</p>
+						<p>Convert your data arrays to h5 data sets in separate files for images and labels:</p>
 
 						<ul>
 							<li>images: shape (x,y,z) or (ch,x,y,z)</li>
@@ -174,7 +174,7 @@ permalink: /getting-started/
 						<p><code>elektronn-train &lt;/path/to_config_file&gt; [ --gpu={Auto|False|&lt;int&gt;}]</code></p>
 					</li>
 
-					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training Neural Networks is work and needs time. For a better understanding of how they should be trained and which architecture you should pick, refer to the resources in the documentation.</li>
+					<li>Inspect the printed output and the plots to refine training settings or detect misconfigurations. Training neural networks is work and needs time. For a better understanding of how they should be trained and which architecture you should pick, refer to the resources in the documentation and the links above.</li>
 				</ul>
 			</div>
 		</div>
