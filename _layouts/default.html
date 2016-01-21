@@ -59,7 +59,7 @@ function drags(dragElement, resizeElement, container, labelContainer, labelResiz
 		maxLeft = containerOffset + containerWidth - dragWidth - 10;
 
 		dragElement.parents().on("mousemove vmousemove", function(e) {
-			leftValue = e.pageX + xPosition - dragWidth;
+			var leftValue = e.pageX + xPosition - dragWidth;
 
 			//constrain the draggable element to move inside his container
 			if(leftValue < minLeft ) {
