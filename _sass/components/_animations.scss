@@ -1,8 +1,8 @@
 @keyframes fadeUp { from { bottom: -100% } to { bottom: 0 } }
 
-.animated {}
+.-animated {}
 
-.animated.-fade-up {
+.-animated.fadeUp {
 	bottom: -100%;
 	animation: fadeUp ease 1;
 	animation-fill-mode: forwards;

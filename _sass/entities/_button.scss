@@ -1,14 +1,18 @@
 .button {
 	@extend .-relative;
-	@extend .-pt-l;
-	@extend .-pb-l;
-	@extend .-pr-xl;
-	@extend .-pl-xl;
+	@extend .-pt-8;
+	@extend .-pb-8;
+	@extend .-pl-16;
+	@extend .-pr-16;
+	@extend .-bdr-rounded;
 	background: rgba(#435676, .7);
 	transition: all .2s ease-in;
+	
+	& .icon { @extend .-pr-8 }
 
 	&:before, &:after {
 		@extend .-absolute;
+		@extend .-bdr-rounded;
 		width: 100%;
 		height: 100%;
 		content: '';

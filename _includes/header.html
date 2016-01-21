@@ -1,4 +1,4 @@
-<div class="nav-wrapper -z-front -fixed -at-bottom -text-center {% if page.url == "/" %}animated -fade-up{% endif %}">
+<header class="nav-wrapper -z-front -fixed -at-bottom -text-center {% if page.url == "/" %}-animated fadeUp{% endif %}">
 	<nav class="nav row">
 		{% assign url = page.url | remove: 'index.html' %}
 		{% for link in site.navigation %}
@@ -7,4 +7,4 @@
 		{% endfor %}
 	</nav>
 	<a class="nav-link nav-toggle col" href="#nav">Navigation</a>
-</div>
+</header>

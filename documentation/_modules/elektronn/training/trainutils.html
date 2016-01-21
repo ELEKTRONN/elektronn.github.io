@@ -106,20 +106,15 @@
 </div>
 <div class="viewcode-block" id="parseargs"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.trainutils.parseargs">[docs]</a><span class="k">def</span> <span class="nf">parseargs</span><span class="p">(</span><span class="n">gpu</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">s</span><span class="o">==</span><span class="s">&#39;auto&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;auto&#39;</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">None</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">s</span>
-        <span class="k">elif</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">==</span><span class="s">&#39;false&#39;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">False</span>
-        <span class="k">elif</span> <span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
     
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
     <span class="n">usage</span><span class="o">=</span><span class="s">&quot;elektronn-train &lt;/path/to_config_file&gt; [--gpu={Auto|False|&lt;int&gt;}]&quot;</span><span class="p">)</span>
     
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--gpu&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">gpu</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">convert</span><span class="p">,</span>
-                        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;auto&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">,</span><span class="bp">None</span><span class="p">]</span><span class="o">+</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--gpu&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">gpu</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">convert</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;auto&#39;</span><span class="p">,</span><span class="bp">False</span><span class="p">,</span><span class="bp">None</span><span class="p">]</span><span class="o">+</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">))</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;config&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
     <span class="n">parsed</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">parsed</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">parsed</span><span class="o">.</span><span class="n">gpu</span>

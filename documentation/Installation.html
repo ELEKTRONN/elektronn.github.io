@@ -58,11 +58,8 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Installation</a><ul>
-<li><a class="reference internal" href="#setup">Setup</a><ul>
-<li><a class="reference internal" href="#anaconda">Anaconda</a></li>
-<li><a class="reference internal" href="#pip">pip</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li><a class="reference internal" href="#theano">Theano</a></li>
 </ul>
 </li>
@@ -106,60 +103,47 @@
 <span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="setup">
 <h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="anaconda">
-<h3>Anaconda<a class="headerlink" href="#anaconda" title="Permalink to this headline">¶</a></h3>
-<p>A comfortable way to setup a python environment with common scientific python packages is the <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda distribution by Continuum</a> (make sure to use the Python 2.7 version). If you don&#8217;t want to install the whole Anaconda distribution you can use Miniconda instead.</p>
 <ul>
-<li><p class="first">Install ELEKTRONN using  <code class="docutils literal"><span class="pre">conda</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre>conda config --add channels elektronn
-conda install elektronn
-</pre></div>
-</div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This resolves all dependencies, but you still need to <em>configure</em> theano (which will be installed as a dependency) as described <a class="reference internal" href="#theano"><span>below</span></a></p>
-</div>
-</li>
-<li><p class="first">After installation you can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and putting it into your home as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span>Configuration of Parameters</span></a>)</p>
-</li>
-<li><p class="first">Try out one of the <a class="reference internal" href="Examples.html#examples"><span>examples</span></a> to confirm everything works</p>
-</li>
-</ul>
-</div>
-<div class="section" id="pip">
-<h3>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
-<p>If you don&#8217;t want to use Anaconda you can use <code class="docutils literal"><span class="pre">pip</span></code> instead, but then you must take care of the dependices yourself to some degree:</p>
-<ul>
-<li><p class="first">Install ELEKTRONN using python <code class="docutils literal"><span class="pre">pip</span></code> (options can specify target locations, editable installs etc., see <code class="docutils literal"><span class="pre">man</span> <span class="pre">pip</span></code>):</p>
+<li><p class="first">Install ELEKTRONN from the repo using python <code class="docutils literal"><span class="pre">pip</span></code> (options can specify target locations, editable installs etc., see <code class="docutils literal"><span class="pre">man</span> <span class="pre">pip</span></code>):</p>
 <div class="highlight-python"><div class="highlight"><pre>pip install [options] elektronn
 </pre></div>
 </div>
-<p>In the likely case that this gives you errors (amongst other reasons because pip does not install system-level dependencies), you must install the dependencies with your system package manager e.g:</p>
-<div class="highlight-python"><div class="highlight"><pre>apt-get install python-numpy python-scipy python-matplotlib python-h5py
-</pre></div>
-</div>
 </li>
 </ul>
-<blockquote>
-<div><p>The dependencies are listed in the file <code class="docutils literal"><span class="pre">requirements.txt</span></code></p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">&lt;package&gt;</span></code> fails due to a permission error, try <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">--user</span> <span class="pre">&lt;package&gt;</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">In some Distributions (e.g. Arch Linux), you need to use <code class="docutils literal"><span class="pre">pip2</span></code> instead of <code class="docutils literal"><span class="pre">pip</span></code> to install Python 2 packages like ELEKTRONN.</p>
+<p>In some Distributions (e.g. Arch Linux), you need to use <code class="docutils literal"><span class="pre">pip2</span></code> instead of <code class="docutils literal"><span class="pre">pip</span></code> to install Python 2 packages like ELEKTRONN.</p>
+<p class="last">This will install ELEKTRONN as a python package. Alternatively you can download the files, add the folder to <code class="docutils literal"><span class="pre">PYTHONPATH</span></code> and directly use the code.</p>
 </div>
-</div></blockquote>
 <ul class="simple">
-<li>Configure theano as explained <a class="reference internal" href="#theano"><span>below</span></a></li>
-<li>After installation you can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and putting it into your home as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span>Configuration of Parameters</span></a>)</li>
+<li>Configure theano as explained below</li>
+<li>You can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and putting it into your home as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span>Configuration of Parameters</span></a>)</li>
 <li>Try out one of the <a class="reference internal" href="Examples.html#examples"><span>examples</span></a> to confirm everything works</li>
 </ul>
 </div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>ELEKTRONN has dependencies which are sometimes difficult to install using <code class="docutils literal"><span class="pre">pip</span></code> (e.g. because <code class="docutils literal"><span class="pre">pip</span></code> does not install system-level dependencies). You can try:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install -r requirements.txt
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install elektronn
+</pre></div>
+</div>
+<p>But that will most likely fail for some packages. Instead we recommend that you install those with your system package manager e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre>apt-get install python-numpy python-scipy python-matplotlib python-h5py
+</pre></div>
+</div>
+<p>The dependencies are listed in the file <code class="docutils literal"><span class="pre">requirements.txt</span></code></p>
+<p>A comfortable way to setup a python environment with common scientific python packages is e.g. the <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda distribution by Continuum</a>. If you use Anaconda the only additional required package is <code class="docutils literal"><span class="pre">h5py</span></code>.</p>
 </div>
 <div class="section" id="theano">
-<span id="id2"></span><h2>Theano<a class="headerlink" href="#theano" title="Permalink to this headline">¶</a></h2>
+<h2>Theano<a class="headerlink" href="#theano" title="Permalink to this headline">¶</a></h2>
 <p>If you let our setup install theano, you nonetheless have to do the configuration steps below and install CUDA to use the GPU (more details at <a class="reference external" href="http://www.deeplearning.net/software/theano/install.html#install">theano&#8217;s installation instructions</a>):</p>
 <blockquote>
 <div><ul>
@@ -184,13 +168,14 @@ fastmath = True
 root = /usr/local/cuda-7.5/
 </pre></div>
 </div>
+</li>
+</ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you want to use the command line option of <code class="docutils literal"><span class="pre">elektronn-train</span></code> to select a GPU device you can leave out setting a device value here</p>
 </div>
-</li>
-<li><p class="first">You might be interested in using cuDNN which is an optimised CUDA library for CNNs (<a class="reference external" href="http://www.deeplearning.net/software/theano/library/sandbox/cuda/dnn.html?highlight=cudnn">theano&#8217;s instructions</a>).</p>
-</li>
+<ul class="simple">
+<li>You might be interested in using cuDNN which is an optimised CUDA library for CNNs (<a class="reference external" href="http://www.deeplearning.net/software/theano/library/sandbox/cuda/dnn.html?highlight=cudnn">theano&#8217;s instructions</a>).</li>
 </ul>
 </div></blockquote>
 </div>

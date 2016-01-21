@@ -1,11 +1,15 @@
 .-bg-circles {
-	background: url("/images/background.png");
-	background-position: -670px -750px;
-	background-repeat: no-repeat;
+		background: #fff url("/images/background.png") 50% -800px no-repeat;
+
+	@include breakpoint($on-notebook) {
+		background: #fff url("/images/background.png") calc(50% - 320px) -800px no-repeat;
+	}
 }
 
-.-bg-circles-middle {
-	background: url("/images/background.png");
-	background-position: 50% -800px;
-	background-repeat: no-repeat;
-}
+.-bg-transparent { background: transparent }
+
+.-bg-circles-middle { background: #fff url("/images/background.png") calc(50%) -800px no-repeat }
+
+.-bg-card { background: transparent url(/images/classic-back.png) 16px 32px no-repeat }
+
+.-dropshadow { box-shadow: 0px 5px 10px -3px rgba(0,0,0,0.5) }

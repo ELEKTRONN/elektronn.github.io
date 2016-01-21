@@ -7,7 +7,6 @@
 }
 
 .member-gallery {
-	@extend .-pt-l;
 
 	@include breakpoint(1180px) {
 		padding: 32px 0 0 32px;

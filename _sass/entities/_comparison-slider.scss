@@ -1,8 +1,13 @@
+.comparison-slider {
+	@extend .-dropshadow;
+	max-width: 480px;
+	height: 340px;
+	overflow: hidden;
+	border-radius: 6px;
+}
+
 .cd-image-container {
 	position: relative;
-	width: 90% !important;
-	max-width: 640px;
-	z-index: 2;
 }
 
 .cd-image-container img {
@@ -15,12 +20,6 @@
 	bottom: 0;
 	right: 0;
 	color: #fff;
-	border: 1px solid #465f78;
-	background-color: #34495e;
-	padding: .5em 1em;
-	margin: .5em;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 	opacity: 0;
 	transform: translateY(20px);
 	transition: transform 0.3s 0.7s, opacity 0.3s 0.7s;
@@ -33,6 +32,7 @@
 }
 
 .cd-resize-img {
+	margin: 0;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -108,7 +108,7 @@
 	width: 44px;
 	/* center the element */
 	left: 50%;
-	top: 50%;
+	top: calc(365px / 2 - 32px + 22px); // 32px margin
 	margin-left: -22px;
 	margin-top: -22px;
 	border-radius: 50%;
