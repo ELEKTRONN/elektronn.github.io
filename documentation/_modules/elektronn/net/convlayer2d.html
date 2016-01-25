@@ -91,9 +91,9 @@
 
 <div class="viewcode-block" id="getOutputShape"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.getOutputShape">[docs]</a><span class="k">def</span> <span class="nf">getOutputShape</span><span class="p">(</span><span class="n">insh</span><span class="p">,</span> <span class="n">fsh</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">mfp</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Returns shape of convolution result from (bs, ch, x, y) * (nof, ch, xf, yf)</span>
-<span class="sd">  &quot;&quot;&quot;</span>
-    <span class="c">#insh = (1 if input_shape[0]==None else input_shape[0],)+input_shape[1:]</span>
+<span class="sd">    Returns shape of convolution result from (bs, ch, x, y) * (nof, ch, xf, yf)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># insh = (1 if input_shape[0]==None else input_shape[0],)+input_shape[1:]</span>
 
     <span class="k">if</span> <span class="n">insh</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">bs</span> <span class="o">=</span> <span class="bp">None</span>
@@ -107,71 +107,70 @@
 </div>
 <div class="viewcode-block" id="getProbShape"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.getProbShape">[docs]</a><span class="k">def</span> <span class="nf">getProbShape</span><span class="p">(</span><span class="n">output_shape</span><span class="p">,</span> <span class="n">mfp_strides</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Given outputshape (bs, ch, x, y) and mfp_stride (sx, sy) returns shape of Class Prob output</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Given outputshape (bs, ch, x, y) and mfp_stride (sx, sy) returns shape of Class Prob output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">mfp_strides</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">output_shape</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                <span class="n">output_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">output_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 </div>
 <div class="viewcode-block" id="ConvLayer2d"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d">[docs]</a><span class="k">class</span> <span class="nc">ConvLayer2d</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Conv-Pool Layer of a CNN</span>
+<span class="sd">    Conv-Pool Layer of a CNN</span>
 
-<span class="sd">  :type input: theano.tensor.dtensor4 (&#39;batch&#39;, &#39;channel&#39;, x, y)</span>
-<span class="sd">  :param input: symbolic image tensor, of shape input_shape</span>
+<span class="sd">    :type input: theano.tensor.dtensor4 (&#39;batch&#39;, &#39;channel&#39;, x, y)</span>
+<span class="sd">    :param input: symbolic image tensor, of shape input_shape</span>
 
-<span class="sd">  :type input_shape: tuple or list of length 4</span>
-<span class="sd">  :param input_shape: (batch size, num input feature maps, image height, image width)</span>
+<span class="sd">    :type input_shape: tuple or list of length 4</span>
+<span class="sd">    :param input_shape: (batch size, num input feature maps, image height, image width)</span>
 
-<span class="sd">  :type filter_shape: tuple or list of length 4</span>
-<span class="sd">  :param filter_shape: (number of filters, input_channels, filter height,filter width)</span>
+<span class="sd">    :type filter_shape: tuple or list of length 4</span>
+<span class="sd">    :param filter_shape: (number of filters, input_channels, filter height,filter width)</span>
 
 
-<span class="sd">  :type pool: int 2-tuple</span>
-<span class="sd">  :param pool: the down-sampling (max-pooling) factor</span>
+<span class="sd">    :type pool: int 2-tuple</span>
+<span class="sd">    :param pool: the down-sampling (max-pooling) factor</span>
 
-<span class="sd">  :type activation_func: string</span>
-<span class="sd">  :param activation_func: Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</span>
+<span class="sd">    :type activation_func: string</span>
+<span class="sd">    :param activation_func: Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</span>
 
-<span class="sd">  :type enable_dropout: Bool</span>
-<span class="sd">  :param enable_dropout: whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with</span>
+<span class="sd">    :type enable_dropout: Bool</span>
+<span class="sd">    :param enable_dropout: whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with</span>
 <span class="sd">               self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</span>
 
-<span class="sd">  :type use_fragment_pooling: Bool</span>
-<span class="sd">  :param use_fragment_pooling: whether to use max fragment pooling in this layer (MFP)</span>
+<span class="sd">    :type use_fragment_pooling: Bool</span>
+<span class="sd">    :param use_fragment_pooling: whether to use max fragment pooling in this layer (MFP)</span>
 
-<span class="sd">  :type reshape_output: Bool</span>
-<span class="sd">  :param reshape_output: whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments</span>
+<span class="sd">    :type reshape_output: Bool</span>
+<span class="sd">    :param reshape_output: whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments</span>
 <span class="sd">                         to dense images if MFP was enabled. Use this in for the last layer.</span>
 
-<span class="sd">  :type mfp_offsets: list of list of ints</span>
-<span class="sd">  :param mfp_offsets: this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.</span>
+<span class="sd">    :type mfp_offsets: list of list of ints</span>
+<span class="sd">    :param mfp_offsets: this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.</span>
 <span class="sd">                      Only needed if MFP is enabled.</span>
 
-<span class="sd">  :type mfp_strides: list of int</span>
-<span class="sd">  :param mfp_strides: the strides of the output in each dimension</span>
+<span class="sd">    :type mfp_strides: list of int</span>
+<span class="sd">    :param mfp_strides: the strides of the output in each dimension</span>
 
-<span class="sd">  :type input_layer: layer object</span>
-<span class="sd">  :param input_layer: just for keeping track of un-usual input layers</span>
+<span class="sd">    :type input_layer: layer object</span>
+<span class="sd">    :param input_layer: just for keeping track of un-usual input layers</span>
 
-<span class="sd">  :type W: np.ndarray or T.TensorVariable</span>
-<span class="sd">  :param W: weight matrix. If array, the values are used to initialise a shared variable for this layer.</span>
+<span class="sd">    :type W: np.ndarray or T.TensorVariable</span>
+<span class="sd">    :param W: weight matrix. If array, the values are used to initialise a shared variable for this layer.</span>
 <span class="sd">                           If TensorVariable, than this variable is directly used (weight sharing with the</span>
 <span class="sd">                           layer from which this variable comes from)</span>
 
-<span class="sd">  :type b: np.ndarray or T.TensorVariable</span>
-<span class="sd">  :param b: bias vector. If array, the values are used to initialise a shared variable for this layer.</span>
+<span class="sd">    :type b: np.ndarray or T.TensorVariable</span>
+<span class="sd">    :param b: bias vector. If array, the values are used to initialise a shared variable for this layer.</span>
 <span class="sd">                           If TensorVariable, than this variable is directly used (weight sharing with the</span>
 <span class="sd">                           layer from which this variable comes from)</span>
 
-<span class="sd">  :type pooling_mode: str</span>
-<span class="sd">  :param pooling_mode: &#39;max&#39; or &#39;maxabs&#39; where the first is normal maxpooling and the second also retains</span>
+<span class="sd">    :type pooling_mode: str</span>
+<span class="sd">    :param pooling_mode: &#39;max&#39; or &#39;maxabs&#39; where the first is normal maxpooling and the second also retains</span>
 <span class="sd">                       sign of large negative values</span>
 
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="nb">input</span><span class="p">,</span>
@@ -217,9 +216,7 @@
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;W_conv&#39;</span><span class="p">,</span>
                     <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
-                    <span class="n">W</span><span class="p">,</span>
-                    <span class="n">T</span><span class="o">.</span><span class="n">TensorVariable</span><span class="p">),</span> <span class="s">&quot;W must be either np.ndarray or theano var&quot;</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorVariable</span><span class="p">),</span> <span class="s">&quot;W must be either np.ndarray or theano var&quot;</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span>
 
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -254,9 +251,7 @@
                     <span class="n">name</span><span class="o">=</span><span class="s">&#39;b_conv&#39;</span><span class="p">,</span>
                     <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
-                    <span class="n">b</span><span class="p">,</span>
-                    <span class="n">T</span><span class="o">.</span><span class="n">TensorVariable</span><span class="p">),</span> <span class="s">&quot;b must be either np.ndarray or theano var&quot;</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">T</span><span class="o">.</span><span class="n">TensorVariable</span><span class="p">),</span> <span class="s">&quot;b must be either np.ndarray or theano var&quot;</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
 
         <span class="c"># store parameters of this layer</span>
@@ -264,11 +259,12 @@
 
         <span class="c"># convolve input feature maps with filters</span>
         <span class="c"># shape of pooled_out , e.g.: (1,2,27,27) for 2 class-output</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conv_out</span> <span class="o">=</span> <span class="n">conv</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span><span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
-                                    <span class="n">filters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span>
-                                    <span class="n">border_mode</span><span class="o">=</span><span class="s">&#39;valid&#39;</span><span class="p">,</span>
-                                    <span class="n">filter_shape</span><span class="o">=</span><span class="n">filter_shape</span><span class="p">)</span>
-        <span class="c"># image_shape = input_shape if input_shape[0] is not None else None)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv_out</span> <span class="o">=</span> <span class="n">conv</span><span class="o">.</span><span class="n">conv2d</span><span class="p">(</span>
+                <span class="nb">input</span><span class="o">=</span><span class="nb">input</span><span class="p">,</span>
+                <span class="n">filters</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">,</span>
+                <span class="n">border_mode</span><span class="o">=</span><span class="s">&#39;valid&#39;</span><span class="p">,</span>
+                <span class="n">filter_shape</span><span class="o">=</span><span class="n">filter_shape</span>
+        <span class="p">)</span>  <span class="c"># image_shape = input_shape if input_shape[0] is not None else None)</span>
 
         <span class="c"># down-sample each feature map individually, using maxpooling</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">pool</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">):</span>
@@ -284,9 +280,7 @@
 
         <span class="k">if</span> <span class="n">enable_dropout</span><span class="p">:</span>
             <span class="c">#print &quot;Dropout: ACTIVE&quot;</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">activation_noise</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="s">&#39;Dropout Rate&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">activation_noise</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Dropout Rate&#39;</span><span class="p">)</span>
             <span class="n">rng</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">shared_randomstreams</span><span class="o">.</span><span class="n">RandomStreams</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
             <span class="n">p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_noise</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dropout_gate</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">p</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">binomial</span><span class="p">(</span>
@@ -294,8 +288,7 @@
                 <span class="mi">1</span><span class="p">,</span>
                 <span class="n">p</span><span class="p">,</span>
                 <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
-            <span class="n">pooled_out</span> <span class="o">=</span> <span class="n">pooled_out</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout_gate</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span>
-                                                                    <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">pooled_out</span> <span class="o">=</span> <span class="n">pooled_out</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout_gate</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="c"># add the bias term. Since the bias is a vector (1D array), we first</span>
         <span class="c"># reshape it to a tensor of shape (1,n_filters,1,1). Each bias will</span>
@@ -304,11 +297,9 @@
         <span class="n">r</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c"># maxout factor</span>
         <span class="n">lin_output</span> <span class="o">=</span> <span class="n">pooled_out</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">activation_func</span> <span class="o">==</span> <span class="s">&#39;tanh&#39;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">lin_output</span>
-                                 <span class="p">)</span>  <span class="c"># shape: (batch_size, num_outputs)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">tanh</span><span class="p">(</span><span class="n">lin_output</span><span class="p">)</span>  <span class="c"># shape: (batch_size, num_outputs)</span>
         <span class="k">elif</span> <span class="n">activation_func</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;ReLU&#39;</span><span class="p">,</span> <span class="s">&#39;relu&#39;</span><span class="p">]:</span>  <span class="c">#rectified linear unit</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">lin_output</span> <span class="o">*</span> <span class="p">(</span><span class="n">lin_output</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                        <span class="p">)</span>  <span class="c"># shape: (batch_size, num_outputs)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">lin_output</span> <span class="o">*</span> <span class="p">(</span><span class="n">lin_output</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>  <span class="c"># shape: (batch_size, num_outputs)</span>
         <span class="k">elif</span> <span class="n">activation_func</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;sigmoid&#39;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">lin_output</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">activation_func</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;abs&#39;</span><span class="p">]:</span>
@@ -322,19 +313,16 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 
-        <span class="n">output_shape</span> <span class="o">=</span> <span class="n">getOutputShape</span><span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span>
-                                      <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">output_shape</span> <span class="o">=</span> <span class="n">getOutputShape</span><span class="p">(</span><span class="n">input_shape</span><span class="p">,</span> <span class="n">filter_shape</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">use_fragment_pooling</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span>
 
-        <span class="k">print</span> <span class="s">&quot;Output =&quot;</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">,</span> <span class="s">&quot;Dropout&quot;</span><span class="p">,</span> <span class="p">(</span>
-            <span class="s">&quot;ON,&quot;</span> <span class="k">if</span> <span class="n">enable_dropout</span> <span class="k">else</span>
-            <span class="s">&quot;OFF,&quot;</span><span class="p">),</span> <span class="s">&quot;Act:&quot;</span><span class="p">,</span> <span class="n">activation_func</span><span class="p">,</span> <span class="s">&quot;pool:&quot;</span><span class="p">,</span> <span class="n">pooling_mode</span>
+        <span class="k">print</span> <span class="s">&quot;Output =&quot;</span><span class="p">,</span> <span class="n">output_shape</span><span class="p">,</span> <span class="s">&quot;Dropout&quot;</span><span class="p">,</span> <span class="p">(</span><span class="s">&quot;ON,&quot;</span> <span class="k">if</span> <span class="n">enable_dropout</span> <span class="k">else</span> <span class="s">&quot;OFF,&quot;</span><span class="p">),</span> <span class="s">&quot;Act:&quot;</span><span class="p">,</span>\
+            <span class="n">activation_func</span><span class="p">,</span> <span class="s">&quot;pool:&quot;</span><span class="p">,</span> <span class="n">pooling_mode</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_shape</span> <span class="o">=</span> <span class="n">output_shape</span>  <span class="c"># e.g. (None, 16, 100, 100)</span>
 
         <span class="n">sh</span> <span class="o">=</span> <span class="n">lin_output</span><span class="o">.</span><span class="n">shape</span>  <span class="c"># (bs,ch,x,y) # use this shape to reshape the output to image-shape after softmax</span>
         <span class="n">sh</span> <span class="o">=</span> <span class="p">(</span><span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c">#(ch, x, y, bs)</span>
         <span class="c"># put batchsize, at back --&gt; (ch,x,y,bs), flatten this --&gt; (ch, x*y*bs), swap labels --&gt; (x*y*bs, ch)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">lin_output</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span>
-            <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">nnet</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">lin_output</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
         <span class="k">if</span> <span class="n">reshape_output</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">reshapeoutput</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">use_fragment_pooling</span><span class="p">:</span>
@@ -359,8 +347,7 @@
 
         <span class="k">for</span> <span class="n">px</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
             <span class="k">for</span> <span class="n">py</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">pool</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="n">pxy</span> <span class="o">=</span> <span class="n">pool_func</span><span class="p">(</span><span class="n">conv_out</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">px</span><span class="p">:</span><span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">pool</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">px</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">py</span><span class="p">:</span>
-                                         <span class="n">sh</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">pool</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">py</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+                <span class="n">pxy</span> <span class="o">=</span> <span class="n">pool_func</span><span class="p">(</span><span class="n">conv_out</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">px</span><span class="p">:</span><span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">pool</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">px</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">py</span><span class="p">:</span><span class="n">sh</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">pool</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">py</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pxy</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">offsets</span><span class="p">:</span>
                     <span class="n">new</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
@@ -376,22 +363,17 @@
 </div>
 <div class="viewcode-block" id="ConvLayer2d.reshapeoutput"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.reshapeoutput">[docs]</a>    <span class="k">def</span> <span class="nf">reshapeoutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">):</span>
         <span class="c"># same shape as result, no significant time cost</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span>
-            <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 </div>
 <div class="viewcode-block" id="ConvLayer2d.fragmentstodense"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.fragmentstodense">[docs]</a>    <span class="k">def</span> <span class="nf">fragmentstodense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">):</span>
         <span class="n">mfp_strides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mfp_strides</span>
-        <span class="n">example_stride</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span>
-            <span class="n">mfp_strides</span>
-        <span class="p">)</span>  <span class="c"># This stride is conceptually unneeded but theano-grad fails otherwise</span>
+        <span class="n">example_stride</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">mfp_strides</span><span class="p">)</span>  <span class="c"># This stride is conceptually unneeded but theano-grad fails otherwise</span>
         <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
-        <span class="n">embedding</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sh</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span>
-                            <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sh</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">ix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mfp_offsets</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ix</span><span class="p">):</span>
             <span class="n">embedding</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">set_subtensor</span><span class="p">(</span>
-                <span class="n">embedding</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">n</span><span class="p">::</span><span class="n">mfp_strides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="p">::</span><span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">example_stride</span><span class="p">])</span>
+                <span class="n">embedding</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">n</span><span class="p">::</span><span class="n">mfp_strides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">m</span><span class="p">::</span><span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="n">example_stride</span><span class="p">])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span> <span class="o">=</span> <span class="n">embedding</span>
 </div>
@@ -555,63 +537,64 @@
             <span class="n">mask_class_not_present</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
             <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns the symbolic mean and instance-wise negative log-likelihood of the prediction</span>
-<span class="sd">    of this model under a given target distribution.</span>
+<span class="sd">        Returns the symbolic mean and instance-wise negative log-likelihood of the prediction</span>
+<span class="sd">        of this model under a given target distribution.</span>
 
-<span class="sd">    y: theano.tensor.TensorType</span>
-<span class="sd">      corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can</span>
-<span class="sd">      be used for label propagation)</span>
-<span class="sd">              </span>
-<span class="sd">    class_weights: theano.tensor.TensorType</span>
-<span class="sd">      weight vector of float32 of length  ``n_lab``. Values: ``1.0`` (default), ``w &lt; 1.0`` (less important),</span>
-<span class="sd">      ``w &gt; 1.0`` (more important class)</span>
-<span class="sd">    </span>
-<span class="sd">    The following refers to lazy labels, the masks are always on a per patch basis, depending on the</span>
-<span class="sd">    origin cube of the patch. The masks are properties of the individual image cubes and must be loaded</span>
-<span class="sd">    into CNNData.</span>
-<span class="sd">    </span>
-<span class="sd">    mask_class_labeled: theano.tensor.TensorType</span>
-<span class="sd">      shape = (batchsize, num_classes).</span>
-<span class="sd">      Binary masks indicating whether a class is properly labeled in ``y``. If a class ``k``</span>
-<span class="sd">      is (in general) present in the image patches **and** ``mask_class_labeled[k]==1``, then</span>
-<span class="sd">      the labels  **must** obey ``y==k`` for all pixels where the class is present.</span>
-<span class="sd">      If a class ``k`` is present in the image, but was not labeled (-&gt; cheaper labels), set</span>
-<span class="sd">      ``mask_class_labeled[k]=0``. Then all pixels for which the ``y==k`` will be ignored.</span>
-<span class="sd">      Alternative: set ``y=-1`` to ignore those pixels.</span>
-<span class="sd">      Limit case: ``mask_class_labeled[:]==1`` will result in the ordinary NLL.</span>
-<span class="sd">      </span>
-<span class="sd">    mask_class_not_present: theano.tensor.TensorType</span>
-<span class="sd">      shape = (batchsize, num_classes).</span>
-<span class="sd">      Binary mask indicating whether a class is present in the image patches.</span>
-<span class="sd">      ``mask_class_not_present[k]==1`` means that the image does **not** contain examples of class ``k``.</span>
-<span class="sd">      Then for all pixels in the patch, class ``k`` predictive probabilities are trained towards ``0``.</span>
-<span class="sd">      Limit case: ``mask_class_not_present[:]==0`` will result in the ordinary NLL.</span>
-<span class="sd">      </span>
-<span class="sd">    label_prop_thresh: float (0.5,1)</span>
-<span class="sd">      This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).</span>
-<span class="sd">      If the predictive probability of the most likely class exceeds the threshold, this class is assumed to</span>
-<span class="sd">      be the correct label and the training is pushed in this direction.</span>
-<span class="sd">      Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</span>
-<span class="sd">    </span>
-<span class="sd">    Examples:</span>
-<span class="sd">    </span>
-<span class="sd">    - A cube contains no class ``k``. Instead of labelling the remaining classes they can be</span>
-<span class="sd">      marked as unlabelled by the first mask (``mask_class_labeled[:]==0``, whether ``mask_class_labeled[k]``</span>
-<span class="sd">      is ``0`` or ``1`` is actually indifferent because the labels should not be ``y==k`` anyway in this case).</span>
-<span class="sd">      Additionally ``mask_class_not_present[k]==1`` (otherwise ``0``) to suppress predictions of ``k`` in</span>
-<span class="sd">      in this patch. The actual value of the labels is indifferent, it can either be ``-1`` or it could be the</span>
-<span class="sd">      background class, if the background is marked as unlabelled (i.e. then those labels are ignored).</span>
-<span class="sd">    </span>
-<span class="sd">    - Only part of the cube is densely labelled. Set ``mask_class_labeled[:]=1`` for all classes, but set the</span>
-<span class="sd">      label values in the un-labelled part to ``-1`` to ignore this part.</span>
-<span class="sd">    </span>
-<span class="sd">    - Only a particular class ``k`` is labelled in the cube. Either set all other label pixels to ``-1`` or the</span>
-<span class="sd">      corresponding flags in ``mask_class_labeled`` for the unlabelled classes.</span>
-<span class="sd">    </span>
-<span class="sd">   ..  Note::</span>
-<span class="sd">      Using ``-1`` labels or telling that a class is not labelled, is somewhat redundant and just</span>
-<span class="sd">      supported for convenience.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        y: theano.tensor.TensorType</span>
+<span class="sd">          corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can</span>
+<span class="sd">          be used for label propagation)</span>
+
+<span class="sd">        class_weights: theano.tensor.TensorType</span>
+<span class="sd">          weight vector of float32 of length  ``n_lab``. Values: ``1.0`` (default), ``w &lt; 1.0`` (less important),</span>
+<span class="sd">          ``w &gt; 1.0`` (more important class)</span>
+
+<span class="sd">        The following refers to lazy labels, the masks are always on a per patch basis, depending on the</span>
+<span class="sd">        origin cube of the patch. The masks are properties of the individual image cubes and must be loaded</span>
+<span class="sd">        into CNNData.</span>
+
+<span class="sd">        mask_class_labeled: theano.tensor.TensorType</span>
+<span class="sd">          shape = (batchsize, num_classes).</span>
+<span class="sd">          Binary masks indicating whether a class is properly labeled in ``y``. If a class ``k``</span>
+<span class="sd">          is (in general) present in the image patches **and** ``mask_class_labeled[k]==1``, then</span>
+<span class="sd">          the labels  **must** obey ``y==k`` for all pixels where the class is present.</span>
+<span class="sd">          If a class ``k`` is present in the image, but was not labeled (-&gt; cheaper labels), set</span>
+<span class="sd">          ``mask_class_labeled[k]=0``. Then all pixels for which the ``y==k`` will be ignored.</span>
+<span class="sd">          Alternative: set ``y=-1`` to ignore those pixels.</span>
+<span class="sd">          Limit case: ``mask_class_labeled[:]==1`` will result in the ordinary NLL.</span>
+
+<span class="sd">        mask_class_not_present: theano.tensor.TensorType</span>
+<span class="sd">          shape = (batchsize, num_classes).</span>
+<span class="sd">          Binary mask indicating whether a class is present in the image patches.</span>
+<span class="sd">          ``mask_class_not_present[k]==1`` means that the image does **not** contain examples of class ``k``.</span>
+<span class="sd">          Then for all pixels in the patch, class ``k`` predictive probabilities are trained towards ``0``.</span>
+<span class="sd">          Limit case: ``mask_class_not_present[:]==0`` will result in the ordinary NLL.</span>
+
+<span class="sd">        label_prop_thresh: float (0.5,1)</span>
+<span class="sd">          This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).</span>
+<span class="sd">          If the predictive probability of the most likely class exceeds the threshold, this class is assumed to</span>
+<span class="sd">          be the correct label and the training is pushed in this direction.</span>
+<span class="sd">          Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">        - A cube contains no class ``k``. Instead of labelling the remaining classes they can be</span>
+<span class="sd">          marked as unlabelled by the first mask (``mask_class_labeled[:]==0``, whether ``mask_class_labeled[k]``</span>
+<span class="sd">          is ``0`` or ``1`` is actually indifferent because the labels should not be ``y==k`` anyway in this case).</span>
+<span class="sd">          Additionally ``mask_class_not_present[k]==1`` (otherwise ``0``) to suppress predictions of ``k`` in</span>
+<span class="sd">          in this patch. The actual value of the labels is indifferent, it can either be ``-1`` or it could be the</span>
+<span class="sd">          background class, if the background is marked as unlabelled (i.e. then those labels are ignored).</span>
+
+<span class="sd">        - Only part of the cube is densely labelled. Set ``mask_class_labeled[:]=1`` for all classes, but set the</span>
+<span class="sd">          label values in the un-labelled part to ``-1`` to ignore this part.</span>
+
+<span class="sd">        - Only a particular class ``k`` is labelled in the cube. Either set all other label pixels to ``-1`` or the</span>
+<span class="sd">          corresponding flags in ``mask_class_labeled`` for the unlabelled classes.</span>
+
+<span class="sd">        ..  Note::</span>
+<span class="sd">          Using ``-1`` labels or telling that a class is not labelled, is somewhat redundant and just</span>
+<span class="sd">          supported for convenience.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c"># NOTE: This whole function has a ugly problem with NaN. They arise for pred values close to 0 or 1</span>
         <span class="c"># (i.e. for NNs that make very confident and usually also correct predictions) because initially the log of</span>
         <span class="c"># all the whole pred tensor is taken. Later we want to use only some indices of the tensor (mask) but</span>
@@ -622,12 +605,12 @@
         <span class="c"># fails because the replaced value is disconnected from the parameters and gives NaN (mathematically</span>
         <span class="c"># the gradient should correctly be 0 then; there is a Theano ticket open to request a fix).</span>
         <span class="c"># So finally the best practice is to add a stabilisation to the log: T.log(pred) --&gt; T.log(pred+eps)</span>
-        <span class="c"># This looks ugly, but does the task and the introduced error is completely negligible</span>
+        <span class="c"># This looks ugly, but does the task and the introduced error is completely negligible.</span>
+
         <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-6</span>
         <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span>  <span class="c"># predictive (bs, cl, x, y)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c"># the labels (bs, 1,  x, y)</span>
-        <span class="n">cls</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span>
-            <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>  <span class="c"># available classes</span>
+        <span class="n">cls</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>  <span class="c"># available classes</span>
         <span class="n">label_selection</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c"># selects correct labels</span>
 
         <span class="k">if</span> <span class="n">class_weights</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -645,9 +628,7 @@
 
         <span class="k">if</span> <span class="n">label_prop_thresh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>  <span class="c"># Label propagation block</span>
             <span class="n">above_thresh</span> <span class="o">=</span> <span class="n">pred</span> <span class="o">&gt;</span> <span class="n">label_prop_thresh</span>  <span class="c"># this is one for the class with highes prob</span>
-            <span class="n">prop_mask</span> <span class="o">=</span> <span class="n">above_thresh</span> <span class="o">*</span> <span class="p">(</span>
-                <span class="mi">1</span> <span class="o">-</span> <span class="n">mask_class_labeled</span>
-            <span class="p">)</span>  <span class="c"># don&#39;t do where training labels are available</span>
+            <span class="n">prop_mask</span> <span class="o">=</span> <span class="n">above_thresh</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">mask_class_labeled</span><span class="p">)</span>  <span class="c"># don&#39;t do where training labels are available</span>
             <span class="n">nll_inst_up_prop</span> <span class="o">=</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pred</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">*</span> <span class="n">prop_mask</span> <span class="o">*</span> <span class="n">class_weights</span>
             <span class="n">N_up_prop</span> <span class="o">=</span> <span class="n">prop_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
@@ -655,21 +636,17 @@
             <span class="n">N_up</span> <span class="o">+=</span> <span class="n">N_up_prop</span>
 
         <span class="k">if</span> <span class="n">mask_class_not_present</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>  <span class="c"># Down vote block</span>
-            <span class="n">mask_class_not_present</span> <span class="o">=</span> <span class="n">mask_class_not_present</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span>
-                <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>
-            <span class="n">nll_inst_dn</span> <span class="o">=</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">pred</span> <span class="o">*</span> <span class="n">mask_class_not_present</span> <span class="o">*</span>
-                                        <span class="n">class_weights</span><span class="p">)</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
-            <span class="n">N_dn</span> <span class="o">=</span> <span class="n">mask_class_not_present</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-            <span class="p">)</span>  <span class="c"># number of not present classes examples</span>
+            <span class="n">mask_class_not_present</span> <span class="o">=</span> <span class="n">mask_class_not_present</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>
+            <span class="n">nll_inst_dn</span> <span class="o">=</span> <span class="o">-</span><span class="n">T</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="p">(</span><span class="n">pred</span> <span class="o">*</span> <span class="n">mask_class_not_present</span> <span class="o">*</span> <span class="n">class_weights</span><span class="p">)</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
+            <span class="n">N_dn</span> <span class="o">=</span> <span class="n">mask_class_not_present</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>  <span class="c"># number of not present classes examples</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">nll_inst_dn</span> <span class="o">=</span> <span class="mf">0.0</span>
             <span class="n">N_dn</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="n">nll_inst</span> <span class="o">=</span> <span class="p">(</span><span class="n">nll_inst_up</span> <span class="o">+</span> <span class="n">nll_inst_dn</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">N_total</span> <span class="o">=</span> <span class="p">(</span><span class="n">N_up</span> <span class="o">+</span> <span class="n">N_dn</span><span class="p">)</span>
-        <span class="n">N_total</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span>
-            <span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">N_total</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N_total</span>
-        <span class="p">)</span>  <span class="c"># patch N_total to be not 0, when this is the case the sum is 0 anyway!</span>
+        <span class="c"># patch N_total to be not 0, when this is the case the sum is 0 anyway:</span>
+        <span class="n">N_total</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">N_total</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N_total</span><span class="p">)</span>
         <span class="n">nll</span> <span class="o">=</span> <span class="p">(</span><span class="n">nll_inst_up</span> <span class="o">+</span> <span class="n">nll_inst_dn</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">N_total</span>
 
         <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll_inst</span>
@@ -681,13 +658,12 @@
                  <span class="n">mask_class_not_present</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">label_prop_thresh</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    NLL that mixes the current cnn output and the hard labels as target</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        NLL that mixes the current cnn output and the hard labels as target</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">eps</span> <span class="o">=</span> <span class="mf">1e-6</span>
         <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span>  <span class="c"># predictive (bs, cl, x, y)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c"># the labels (bs, 1,  x, y)</span>
-        <span class="n">cls</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span>
-            <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>  <span class="c"># available classes</span>
+        <span class="n">cls</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_probabilities</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">,</span> <span class="s">&#39;x&#39;</span><span class="p">)</span>  <span class="c"># available classes</span>
         <span class="n">hard_labels</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>  <span class="c"># selects correct labels</span>
 
         <span class="n">soft_labels</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">hard_labels</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">pred</span>
@@ -706,40 +682,37 @@
         <span class="n">N_dn</span> <span class="o">=</span> <span class="mf">0.0</span>
 
         <span class="n">N_total</span> <span class="o">=</span> <span class="p">(</span><span class="n">N_up</span> <span class="o">+</span> <span class="n">N_dn</span><span class="p">)</span>
-        <span class="n">N_total</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span>
-            <span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">N_total</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N_total</span>
-        <span class="p">)</span>  <span class="c"># patch N_total to be not 0, when this is the case the sum is 0 anyway!</span>
+        <span class="c"># patch N_total to be not 0, when this is the case the sum is 0 anyway:</span>
+        <span class="n">N_total</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">switch</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">N_total</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">N_total</span><span class="p">)</span>
         <span class="n">nll</span> <span class="o">=</span> <span class="p">(</span><span class="n">nll_inst_up</span> <span class="o">+</span> <span class="n">nll_inst_dn</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">N_total</span>
 
         <span class="k">return</span> <span class="n">nll</span><span class="p">,</span> <span class="n">nll</span>
 </div>
 <div class="viewcode-block" id="ConvLayer2d.squared_distance"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.squared_distance">[docs]</a>    <span class="k">def</span> <span class="nf">squared_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns squared distance between prediction and ``y``</span>
+<span class="sd">        Returns squared distance between prediction and ``y``</span>
 
-<span class="sd">    :type y: theano.tensor.TensorType</span>
-<span class="sd">    :param y: corresponds to a vector that gives for each example the</span>
-<span class="sd">                  correct label</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        :type y: theano.tensor.TensorType</span>
+<span class="sd">        :param y: corresponds to a vector that gives for each example the</span>
+<span class="sd">                      correct label</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
 </div>
 <div class="viewcode-block" id="ConvLayer2d.errors"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.errors">[docs]</a>    <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Returns classification accuracy</span>
+<span class="sd">        Returns classification accuracy</span>
 
-<span class="sd">    :type y: theano.tensor.TensorType</span>
-<span class="sd">    :param y: corresponds to a vector that gives for each example the</span>
-<span class="sd">              correct label</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        :type y: theano.tensor.TensorType</span>
+<span class="sd">        :param y: corresponds to a vector that gives for each example the</span>
+<span class="sd">                  correct label</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="c"># check if y has same dimension of y_pred</span>
         <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
-                <span class="s">&#39;y should have the same shape as self.class_prediction&#39;</span><span class="p">,</span>
-                <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s">&#39;class_prediction&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;y should have the same shape as self.class_prediction&#39;</span><span class="p">,</span>
+                            <span class="p">(</span><span class="s">&#39;y&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="s">&#39;class_prediction&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="o">.</span><span class="n">type</span><span class="p">))</span>
         <span class="c"># check if y is of the correct datatype</span>
         <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;int&#39;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">neq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="n">T</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span>
-            <span class="p">)])</span>
+            <span class="k">return</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">T</span><span class="o">.</span><span class="n">neq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_prediction</span><span class="p">,</span> <span class="n">y</span><span class="p">)[</span><span class="n">T</span><span class="o">.</span><span class="n">ge</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">print</span> <span class="s">&quot;something went wrong&quot;</span>
             <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>

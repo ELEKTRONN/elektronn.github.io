@@ -504,9 +504,9 @@ Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Alg
 <blockquote>
 <div><p>Whether to create a multiprocessing.Lock</p>
 </div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">handle: mp.Array:</p>
+<p><strong>Returns</strong></p>
+<p><strong>&#8212;&#8212;-</strong></p>
+<p><strong>handle: mp.Array:</strong></p>
 <blockquote class="last">
 <div><p>flat with data from ndarray copied to it</p>
 </div></blockquote>
@@ -594,7 +594,7 @@ has finished.</p>
 <em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">SharedQ</code><span class="sig-paren">(</span><em>n_proc=0</em>, <em>default_target=None</em>, <em>default_args=()</em>, <em>default_kwargs={}</em>, <em>profile=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
 <p>FIFO Queue to process np.ndarrays in the background (also pre-loading of data from disk)</p>
-<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,  for this the shapes are required as too. The target requires the signature:</p>
+<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,    for this the shapes are required as too. The target requires the signature:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -643,7 +643,7 @@ has finished.</p>
 <dt id="elektronn.training.parallelisation.SharedQ.startproc">
 <code class="descname">startproc</code><span class="sig-paren">(</span><em>dtypes</em>, <em>shapes</em>, <em>target=None</em>, <em>target_args=()</em>, <em>target_kwargs={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ.startproc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ.startproc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts a new process</p>
-<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,    for this the shapes are required as too. The target requires the signature:</p>
+<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,        for this the shapes are required as too. The target requires the signature:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>

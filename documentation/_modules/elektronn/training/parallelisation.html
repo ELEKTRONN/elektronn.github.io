@@ -118,20 +118,21 @@
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="SharedMem.shm2ndarray"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.SharedMem.shm2ndarray">[docs]</a>    <span class="k">def</span> <span class="nf">shm2ndarray</span><span class="p">(</span><span class="n">mp_array</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">      Parameters</span>
-<span class="sd">      ----------</span>
-<span class="sd">      </span>
-<span class="sd">      mp_array: a mp.Array</span>
-<span class="sd">      shape:    (optional) the returned np.ndarray is reshaped to this shape, flat otherwise</span>
-<span class="sd">      </span>
-<span class="sd">      Returns</span>
-<span class="sd">      -------</span>
-<span class="sd">      </span>
-<span class="sd">      array: np.ndarray</span>
-<span class="sd">       That can be normally used but changes are reflected in shared mem</span>
-<span class="sd">       </span>
-<span class="sd">      Note: the returned array is still pointing to the sharedmem, data might be changed by another process!</span>
-<span class="sd">      &quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        mp_array: a mp.Array</span>
+<span class="sd">        shape:    (optional) the returned np.ndarray is reshaped to this shape, flat otherwise</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        array: np.ndarray</span>
+<span class="sd">         That can be normally used but changes are reflected in shared mem</span>
+
+<span class="sd">        Note: the returned array is still pointing to the sharedmem, data might be changed by another process!</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c">#if not hasattr(mp_array, &#39;_type_&#39;):</span>
         <span class="c">#  mp_array = mp_array.get_obj()</span>
 
@@ -147,20 +148,17 @@
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="SharedMem.ndarray2shm"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.SharedMem.ndarray2shm">[docs]</a>    <span class="k">def</span> <span class="nf">ndarray2shm</span><span class="p">(</span><span class="n">np_array</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">          Parameters</span>
-<span class="sd">          ----------</span>
-
-<span class="sd">          np_array: np.ndarray</span>
-<span class="sd">            array of arbitrary shape</span>
-<span class="sd">          lock: Bool</span>
-<span class="sd">            Whether to create a multiprocessing.Lock</span>
-
-<span class="sd">          Returns</span>
-<span class="sd">          -------</span>
-
-<span class="sd">          handle: mp.Array:</span>
-<span class="sd">            flat with data from ndarray copied to it</span>
-<span class="sd">          &quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        np_array: np.ndarray</span>
+<span class="sd">          array of arbitrary shape</span>
+<span class="sd">        lock: Bool</span>
+<span class="sd">          Whether to create a multiprocessing.Lock</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        handle: mp.Array:</span>
+<span class="sd">          flat with data from ndarray copied to it</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">array1d</span> <span class="o">=</span> <span class="n">np_array</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s">&#39;A&#39;</span><span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -174,23 +172,23 @@
 </div>
 <div class="viewcode-block" id="SharedMem.puthandle"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.SharedMem.puthandle">[docs]</a>    <span class="k">def</span> <span class="nf">puthandle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates new shared memory and puts it on the queue. Other sub-processes can write to it.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    dtype: np.dtype</span>
-<span class="sd">      Type of data to store in array</span>
-<span class="sd">    shape: tuple</span>
-<span class="sd">      Properties of shared mem to be created</span>
-<span class="sd">    data: np.ndarray</span>
-<span class="sd">     (optional) values to fill shared array with</span>
-<span class="sd">    lock: Bool</span>
-<span class="sd">      Whether to create a multiprocessing.Lock on the shared variable</span>
+<span class="sd">        Creates new shared memory and puts it on the queue. Other sub-processes can write to it.</span>
 
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    sharedmem handle: mp.array</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dtype: np.dtype</span>
+<span class="sd">          Type of data to store in array</span>
+<span class="sd">        shape: tuple</span>
+<span class="sd">          Properties of shared mem to be created</span>
+<span class="sd">        data: np.ndarray</span>
+<span class="sd">         (optional) values to fill shared array with</span>
+<span class="sd">        lock: Bool</span>
+<span class="sd">          Whether to create a multiprocessing.Lock on the shared variable</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sharedmem handle: mp.array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
         <span class="n">size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -216,9 +214,9 @@
 </div></div>
 <div class="viewcode-block" id="Proc"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.Proc">[docs]</a><span class="k">class</span> <span class="nc">Proc</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">Process</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  A *reusable* and *configurable* background process, that does the same job every time</span>
-<span class="sd">  ``events[&#39;new&#39;]`` is set and signals that is has finished one iteration by setting ``events[&#39;ready&#39;]``</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    A *reusable* and *configurable* background process, that does the same job every time</span>
+<span class="sd">    ``events[&#39;new&#39;]`` is set and signals that is has finished one iteration by setting ``events[&#39;ready&#39;]``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">events</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">target_args</span><span class="p">,</span>
                  <span class="n">target_kwargs</span><span class="p">,</span> <span class="n">profile</span><span class="p">):</span>
@@ -239,22 +237,18 @@
 <div class="viewcode-block" id="Proc.run"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.Proc.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s">&#39;new&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span>
-                <span class="p">)</span>  <span class="c"># wait till host has fetched data from shm and demands new data from this proc</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s">&#39;new&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>  <span class="c"># wait till host has fetched data from shm and demand new data from this proc</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s">&#39;new&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
                 <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">target_args</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">target_kwargs</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span>
                     <span class="n">a</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">r</span>
 
-                <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s">&#39;ready&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
-                <span class="p">)</span>  <span class="c"># signal host that task is done and data is ready in shm</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="s">&#39;ready&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>  <span class="c"># signal host that task is done and data is ready in shm</span>
                 <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
                     <span class="n">t_exec</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                        <span class="s">&#39;Executing Target and writing to shm </span><span class="si">%g</span><span class="s"> ms&#39;</span> <span class="o">%</span>
-                        <span class="p">(</span><span class="n">t_exec</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Executing Target and writing to shm </span><span class="si">%g</span><span class="s"> ms&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t_exec</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
             <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
                 <span class="k">pass</span>
 
@@ -269,45 +263,45 @@
                  <span class="n">target_kwargs</span><span class="o">=</span><span class="p">{},</span>
                  <span class="n">profile</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Data structure to manage repeated background tasks by reusing a fixed number of *initially* created</span>
-<span class="sd">    background process with the same arguments at every time. (E.g. retrieving an augmented batch)</span>
-<span class="sd">    Remember to call ``BackgroundProc.shutdown`` after use to avoid zombie process and RAM clutter.</span>
-<span class="sd">  </span>
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">  </span>
-<span class="sd">    dtypes:</span>
-<span class="sd">      list of dtypes of the target return values</span>
-<span class="sd">    shapes:</span>
-<span class="sd">      list of shapes of the target return values</span>
-<span class="sd">    n_proc: int</span>
-<span class="sd">      number of background procs to use</span>
-<span class="sd">    target: callable</span>
-<span class="sd">      target function for background proc. Can even be a method of an object, if object\</span>
-<span class="sd">    data is read-only (then data will not be copied in RAM and the new process is lean). If\</span>
-<span class="sd">    several procs use random modules, new seeds must be created inside target because they\</span>
-<span class="sd">    have the same random state at the beginning.</span>
-<span class="sd">    target_args:  tuple</span>
-<span class="sd">      Proc args (constant)</span>
-<span class="sd">    target_kwargs: dict</span>
-<span class="sd">      Proc kwargs (constant)</span>
-<span class="sd">    profile: Bool</span>
-<span class="sd">      Whether to print timing results in to stdout</span>
-<span class="sd">  </span>
-<span class="sd">    Examples</span>
-<span class="sd">    --------</span>
-<span class="sd">  </span>
-<span class="sd">    Use case to retrieve batches from a data structure ``D``:</span>
-<span class="sd">  </span>
-<span class="sd">      &gt;&gt;&gt; data, label = D.getbatch(2, strided=False,</span>
-<span class="sd">      flip=True, grey_augment_channels=[0])</span>
-<span class="sd">      &gt;&gt;&gt; kwargs = {&#39;strided&#39;: False, &#39;flip&#39;: True, &#39;grey_augment_channels&#39;: [0]}</span>
-<span class="sd">      &gt;&gt;&gt; bg = BackgroundProc([np.float32, np.int16], [data.shape,label.shape],</span>
-<span class="sd">      D.getbatch,n_proc=2, target_args=(2,), target_kwargs=kwargs, profile=False)</span>
-<span class="sd">      &gt;&gt;&gt; for i in xrange(100):</span>
-<span class="sd">      &gt;&gt;&gt;   data, label = bg.get()</span>
-<span class="sd">  </span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        Data structure to manage repeated background tasks by reusing a fixed number of *initially* created</span>
+<span class="sd">        background process with the same arguments at every time. (E.g. retrieving an augmented batch)</span>
+<span class="sd">        Remember to call ``BackgroundProc.shutdown`` after use to avoid zombie process and RAM clutter.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+<span class="sd">        dtypes:</span>
+<span class="sd">          list of dtypes of the target return values</span>
+<span class="sd">        shapes:</span>
+<span class="sd">          list of shapes of the target return values</span>
+<span class="sd">        n_proc: int</span>
+<span class="sd">          number of background procs to use</span>
+<span class="sd">        target: callable</span>
+<span class="sd">          target function for background proc. Can even be a method of an object, if object\</span>
+<span class="sd">        data is read-only (then data will not be copied in RAM and the new process is lean). If\</span>
+<span class="sd">        several procs use random modules, new seeds must be created inside target because they\</span>
+<span class="sd">        have the same random state at the beginning.</span>
+<span class="sd">        target_args:  tuple</span>
+<span class="sd">          Proc args (constant)</span>
+<span class="sd">        target_kwargs: dict</span>
+<span class="sd">          Proc kwargs (constant)</span>
+<span class="sd">        profile: Bool</span>
+<span class="sd">          Whether to print timing results in to stdout</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        Use case to retrieve batches from a data structure ``D``:</span>
+
+<span class="sd">          &gt;&gt;&gt; data, label = D.getbatch(2, strided=False,</span>
+<span class="sd">          flip=True, grey_augment_channels=[0])</span>
+<span class="sd">          &gt;&gt;&gt; kwargs = {&#39;strided&#39;: False, &#39;flip&#39;: True, &#39;grey_augment_channels&#39;: [0]}</span>
+<span class="sd">          &gt;&gt;&gt; bg = BackgroundProc([np.float32, np.int16], [data.shape,label.shape],</span>
+<span class="sd">          D.getbatch,n_proc=2, target_args=(2,), target_kwargs=kwargs, profile=False)</span>
+<span class="sd">          &gt;&gt;&gt; for i in xrange(100):</span>
+<span class="sd">          &gt;&gt;&gt;   data, label = bg.get()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dtypes</span> <span class="o">=</span> <span class="n">dtypes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span> <span class="o">=</span> <span class="n">shapes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
@@ -336,20 +330,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mp_arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;new&#39;</span><span class="p">:</span> <span class="n">mp</span><span class="o">.</span><span class="n">Event</span><span class="p">(),</span> <span class="s">&#39;ready&#39;</span><span class="p">:</span> <span class="n">mp</span><span class="o">.</span><span class="n">Event</span><span class="p">()})</span>
 
-        <span class="k">for</span> <span class="n">shm</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">mp_arrays</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">):</span>  <span class="c"># initialise the procs and give them their mp-arrays</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">Proc</span><span class="p">(</span><span class="n">shm</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">target_args</span><span class="p">,</span> <span class="n">target_kwargs</span><span class="p">,</span>
-                     <span class="n">profile</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">shm</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">):</span>  <span class="c"># initialise the procs and give them their mp-arrays</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">Proc</span><span class="p">(</span><span class="n">shm</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">target_args</span><span class="p">,</span> <span class="n">target_kwargs</span><span class="p">,</span> <span class="n">profile</span><span class="p">)</span>
             <span class="n">p</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="n">e</span><span class="p">[</span><span class="s">&#39;new&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">procs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BackgroundProc.get"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.BackgroundProc.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This gets the next result from a background process and blocks until the corresponding proc</span>
-<span class="sd">    has finished.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        This gets the next result from a background process and blocks until the corresponding proc</span>
+<span class="sd">        has finished.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_proc</span>  <span class="c"># advance index of next item</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -358,8 +349,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s">&#39;ready&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">shm</span><span class="p">,</span> <span class="n">shp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mp_arrays</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">shapes</span><span class="p">):</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SharedMem</span><span class="o">.</span><span class="n">shm2ndarray</span><span class="p">(</span><span class="n">shm</span><span class="p">,</span> <span class="n">shp</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-                          <span class="p">)</span>  <span class="c"># copy! Otherwise a proc will write to result</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SharedMem</span><span class="o">.</span><span class="n">shm2ndarray</span><span class="p">(</span><span class="n">shm</span><span class="p">,</span> <span class="n">shp</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>  <span class="c"># copy! Otherwise a proc will write to result</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s">&#39;new&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
         <span class="n">t2</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">()</span>
@@ -367,8 +357,7 @@
             <span class="n">t_wait</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
             <span class="n">t_write</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-                <span class="s">&#39;Waiting for subprocess </span><span class="si">%g</span><span class="s"> ms, converting to numpy </span><span class="si">%g</span><span class="s"> ms&#39;</span> <span class="o">%</span>
-                <span class="p">(</span><span class="n">t_wait</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">t_write</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+                <span class="s">&#39;Waiting for subprocess </span><span class="si">%g</span><span class="s"> ms, converting to numpy </span><span class="si">%g</span><span class="s"> ms&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t_wait</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">t_write</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </div>
@@ -379,54 +368,54 @@
 </div>
 <div class="viewcode-block" id="BackgroundProc.reset"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.BackgroundProc.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Should be called after an exception (e.g. by pressing ctrl+c) was raised.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        Should be called after an exception (e.g. by pressing ctrl+c) was raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="p">:</span>
             <span class="n">e</span><span class="p">[</span><span class="s">&#39;new&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">()</span>
 
 </div></div>
 <div class="viewcode-block" id="SharedQ"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.SharedQ">[docs]</a><span class="k">class</span> <span class="nc">SharedQ</span><span class="p">(</span><span class="n">SharedMem</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  FIFO Queue to process np.ndarrays in the background (also pre-loading of data from disk)</span>
+<span class="sd">    FIFO Queue to process np.ndarrays in the background (also pre-loading of data from disk)</span>
 
-<span class="sd">  procs must accept list of ``mp.Array`` and make items ``np.ndarray`` using ``SharedQ.shm2ndarray``,\</span>
-<span class="sd">  for this the shapes are required as too. The target requires the signature::</span>
+<span class="sd">    procs must accept list of ``mp.Array`` and make items ``np.ndarray`` using ``SharedQ.shm2ndarray``,\</span>
+<span class="sd">    for this the shapes are required as too. The target requires the signature::</span>
 
-<span class="sd">     &gt;&gt;&gt; target(mp_arrays, shapes, *args, **kwargs)</span>
+<span class="sd">       &gt;&gt;&gt; target(mp_arrays, shapes, *args, **kwargs)</span>
 
-<span class="sd">  Whereas mp_array and shape are *automatically* added internally</span>
-<span class="sd">  </span>
-<span class="sd">  All parameters are optional:</span>
+<span class="sd">    Whereas mp_array and shape are *automatically* added internally</span>
 
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  </span>
+<span class="sd">    All parameters are optional:</span>
 
-<span class="sd">  n_proc: int </span>
-<span class="sd">    If larger than 0, a message is printed if to few processes are running</span>
-<span class="sd">  default_target: callable</span>
-<span class="sd">    Default background proc callable</span>
-<span class="sd">  default_args: tuple</span>
-<span class="sd">    Default background proc and their parameters</span>
-<span class="sd">  default_kwargs: dict</span>
-<span class="sd">    Default background proc kwargs</span>
-<span class="sd">  profile: Bool</span>
-<span class="sd">    Whether to print timing results in terminal</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 
-<span class="sd">  Examples</span>
-<span class="sd">  ---------</span>
 
-<span class="sd">  Automatic use:</span>
+<span class="sd">    n_proc: int</span>
+<span class="sd">      If larger than 0, a message is printed if to few processes are running</span>
+<span class="sd">    default_target: callable</span>
+<span class="sd">      Default background proc callable</span>
+<span class="sd">    default_args: tuple</span>
+<span class="sd">      Default background proc and their parameters</span>
+<span class="sd">    default_kwargs: dict</span>
+<span class="sd">      Default background proc kwargs</span>
+<span class="sd">    profile: Bool</span>
+<span class="sd">      Whether to print timing results in terminal</span>
 
-<span class="sd">    &gt;&gt;&gt; Q = SharedQ(n_proc=2)</span>
-<span class="sd">    &gt;&gt;&gt; Q.startproc(target=, shape= args=, kwargs=)</span>
-<span class="sd">    &gt;&gt;&gt; Q.startproc(target=, shape= args=, kwargs=)</span>
-<span class="sd">    &gt;&gt;&gt; for i in xrange(5):</span>
-<span class="sd">    &gt;&gt;&gt;   Q.startproc(target=, shape= args=, kwargs=)</span>
-<span class="sd">    &gt;&gt;&gt;   item = Q.get() # starts as many new jobs as to maintain n_proc</span>
-<span class="sd">    &gt;&gt;&gt;   dosomehtingelse(item) # processes work in background to pre-fetch data for next iteration</span>
+<span class="sd">    Examples</span>
+<span class="sd">    ---------</span>
 
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Automatic use:</span>
+
+<span class="sd">      &gt;&gt;&gt; Q = SharedQ(n_proc=2)</span>
+<span class="sd">      &gt;&gt;&gt; Q.startproc(target=, shape= args=, kwargs=)</span>
+<span class="sd">      &gt;&gt;&gt; Q.startproc(target=, shape= args=, kwargs=)</span>
+<span class="sd">      &gt;&gt;&gt; for i in xrange(5):</span>
+<span class="sd">      &gt;&gt;&gt;   Q.startproc(target=, shape= args=, kwargs=)</span>
+<span class="sd">      &gt;&gt;&gt;   item = Q.get() # starts as many new jobs as to maintain n_proc</span>
+<span class="sd">      &gt;&gt;&gt;   dosomehtingelse(item) # processes work in background to pre-fetch data for next iteration</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">n_proc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -450,15 +439,15 @@
                   <span class="n">target_args</span><span class="o">=</span><span class="p">(),</span>
                   <span class="n">target_kwargs</span><span class="o">=</span><span class="p">{}):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Starts a new process</span>
+<span class="sd">        Starts a new process</span>
 
-<span class="sd">    procs must accept list of ``mp.Array`` and make items ``np.ndarray`` using ``SharedQ.shm2ndarray``,\</span>
-<span class="sd">    for this the shapes are required as too. The target requires the signature::</span>
+<span class="sd">        procs must accept list of ``mp.Array`` and make items ``np.ndarray`` using ``SharedQ.shm2ndarray``,\</span>
+<span class="sd">        for this the shapes are required as too. The target requires the signature::</span>
 
-<span class="sd">       target(mp_arrays, shapes, *args, **kwargs)</span>
+<span class="sd">           target(mp_arrays, shapes, *args, **kwargs)</span>
 
-<span class="sd">    Whereas mp_array  and shape are *automatically* added internally</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        Whereas mp_array  and shape are *automatically* added internally</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="n">data</span> <span class="o">=</span> <span class="n">target_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;data&#39;</span><span class="p">)</span>
 
@@ -487,10 +476,10 @@
 </div>
 <div class="viewcode-block" id="SharedQ.get"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.parallelisation.SharedQ.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This gets the first results in the queue and blocks until the corresponding proc</span>
-<span class="sd">    has finished. If a n_proc value is defined this then new procs must be started *before* to</span>
-<span class="sd">    avoid a warning message.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        This gets the first results in the queue and blocks until the corresponding proc</span>
+<span class="sd">        has finished. If a n_proc value is defined this then new procs must be started *before* to</span>
+<span class="sd">        avoid a warning message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="n">proc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">len</span> <span class="o">-=</span> <span class="mi">1</span>
         <span class="n">missing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_proc</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">len</span>
@@ -509,8 +498,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile</span><span class="p">:</span>
             <span class="n">t_join</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span>
             <span class="n">t_conv</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Join </span><span class="si">%g</span><span class="s"> ms, Shared2Numpy </span><span class="si">%g</span><span class="s"> ms&#39;</span> <span class="o">%</span>
-                             <span class="p">(</span><span class="n">t_join</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">t_conv</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Join </span><span class="si">%g</span><span class="s"> ms, Shared2Numpy </span><span class="si">%g</span><span class="s"> ms&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t_join</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">t_conv</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">result</span>
 

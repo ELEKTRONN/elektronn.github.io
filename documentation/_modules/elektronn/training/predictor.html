@@ -126,7 +126,7 @@
 <span class="sd">      (z,x,y)!!! (only for CNN)</span>
 <span class="sd">    param_file: string/None</span>
 <span class="sd">      If other parameters than &quot;*-Last.param&quot; should be loaded, this can specify the param file.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">config_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">gpu</span> <span class="o">==</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">gpu</span> <span class="o">=</span> <span class="n">default_config</span><span class="o">.</span><span class="n">device</span>
@@ -141,8 +141,7 @@
     <span class="kn">from</span> <span class="nn">elektronn.net.netcreation</span> <span class="kn">import</span> <span class="n">createNet</span>  <span class="c"># import after gpu init</span>
 
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span>  <span class="c"># The trainer works directly in the save dir</span>
-    <span class="n">cnn</span> <span class="o">=</span> <span class="n">createNet</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">n_ch</span><span class="p">,</span> <span class="n">n_lab</span><span class="p">,</span>
-                    <span class="n">config</span><span class="o">.</span><span class="n">dimensions</span><span class="p">)</span>  <span class="c"># 1 ch 2 label</span>
+    <span class="n">cnn</span> <span class="o">=</span> <span class="n">createNet</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">n_ch</span><span class="p">,</span> <span class="n">n_lab</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">dimensions</span><span class="p">)</span>  <span class="c"># 1 ch 2 label</span>
     <span class="k">if</span> <span class="n">param_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">-LAST.param&quot;</span> <span class="o">%</span> <span class="n">config</span><span class="o">.</span><span class="n">save_name</span>
     <span class="k">else</span><span class="p">:</span>

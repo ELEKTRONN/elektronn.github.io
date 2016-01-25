@@ -194,8 +194,7 @@ sign of large negative values</li>
 <dl class="method">
 <dt id="elektronn.net.convlayer2d.ConvLayer2d.NLL">
 <code class="descname">NLL</code><span class="sig-paren">(</span><em>y</em>, <em>class_weights=None</em>, <em>mask_class_labeled=None</em>, <em>mask_class_not_present=None</em>, <em>label_prop_thresh=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer2d.html#ConvLayer2d.NLL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer2d.ConvLayer2d.NLL" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
+<dd><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
 of this model under a given target distribution.</p>
 <dl class="docutils">
 <dt>y: theano.tensor.TensorType</dt>
@@ -243,7 +242,6 @@ label values in the un-labelled part to <code class="docutils literal"><span cla
 <li>Only a particular class <code class="docutils literal"><span class="pre">k</span></code> is labelled in the cube. Either set all other label pixels to <code class="docutils literal"><span class="pre">-1</span></code> or the
 corresponding flags in <code class="docutils literal"><span class="pre">mask_class_labeled</span></code> for the unlabelled classes.</li>
 </ul>
-</div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Using <code class="docutils literal"><span class="pre">-1</span></code> labels or telling that a class is not labelled, is somewhat redundant and just
@@ -364,8 +362,7 @@ sign of large negative values</li>
 <dl class="method">
 <dt id="elektronn.net.convlayer3d.ConvLayer3d.NLL">
 <code class="descname">NLL</code><span class="sig-paren">(</span><em>y</em>, <em>class_weights=None</em>, <em>example_weights=None</em>, <em>mask_class_labeled=None</em>, <em>mask_class_not_present=None</em>, <em>label_prop_thresh=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer3d.html#ConvLayer3d.NLL"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer3d.ConvLayer3d.NLL" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
+<dd><p>Returns the symbolic mean and instance-wise negative log-likelihood of the prediction
 of this model under a given target distribution.</p>
 <dl class="docutils">
 <dt>y: theano.tensor.TensorType</dt>
@@ -418,7 +415,6 @@ label values in the unlabelled part to <code class="docutils literal"><span clas
 <li>Only a particular class <code class="docutils literal"><span class="pre">k</span></code> is labelled in the cube. Either set all other label pixels to <code class="docutils literal"><span class="pre">-1</span></code> or the
 corresponding flags in <code class="docutils literal"><span class="pre">mask_class_labeled</span></code> for the unlabelled classes.</li>
 </ul>
-</div></blockquote>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Using <code class="docutils literal"><span class="pre">-1</span></code> labels or telling that a class is not labelled, is somewhat redundant and just
@@ -538,25 +534,15 @@ If unrestricted the predictions are used directly.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>input_size: tuple</strong></p>
-<blockquote>
-<div><p>Data shapes, excluding batch and channel (used to infer the dimensionality)</p>
-</div></blockquote>
+<p><strong>Data shapes, excluding batch and channel (used to infer the dimensionality)</strong></p>
 <p><strong>input_depth: int/None</strong></p>
-<blockquote>
-<div><p>Is None by default this means non-image data (no conv layers allowed). Change to 1 for b/w, 3 for RGB and    4 for RGB-D images etc. For RNN this is the length of the time series.</p>
-</div></blockquote>
+<p><strong>Is None by default this means non-image data (no conv layers allowed). Change to 1 for b/w, 3 for RGB and    4 for RGB-D images etc. For RNN this is the length of the time series.</strong></p>
 <p><strong>batch_size: int/None</strong></p>
-<blockquote>
-<div><p>None for variable batch size</p>
-</div></blockquote>
+<p><strong>None for variable batch size</strong></p>
 <p><strong>enable_dropout:  Bool</strong></p>
-<blockquote>
-<div><p>Turn on or off dropout</p>
-</div></blockquote>
+<p><strong>Turn on or off dropout</strong></p>
 <p><strong>recurrent:       Bool</strong></p>
-<blockquote>
-<div><p>Support recurrent iterations along input depth/time</p>
-</div></blockquote>
+<p><strong>Support recurrent iterations along input depth/time</strong></p>
 <p class="last"><strong>dimension_calc: dimension calculator object</strong></p>
 </td>
 </tr>
@@ -754,7 +740,7 @@ Activation function</p>
 <dl class="method">
 <dt id="elektronn.net.convnet.MixedConvNN.compileDebugFunctions">
 <code class="descname">compileDebugFunctions</code><span class="sig-paren">(</span><em>gradients=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.compileDebugFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.compileDebugFunctions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compiles the debug_functions which return the network activations / output. To use them compile them with 
+<dd><p>Compiles the debug_functions which return the network activations / output. To use them compile them with
 this function. They by accessible as cnn.debug_functions (normal output), cnn.debug_conv_output,
 cnn.debug_gradients_function (if True).</p>
 </dd></dl>
@@ -869,7 +855,7 @@ Any source of noise leads to failure of convergence (at all).</p>
 <div><ul>
 <li><dl class="first docutils">
 <dt>update_loss: Bool</dt>
-<dd><p class="first last">determine current loss <em>after</em> update step (e.g. needed for queue, but <code class="docutils literal"><span class="pre">get_loss</span></code> can also be           called explicitly)</p>
+<dd><p class="first last">determine current loss <em>after</em> update step (e.g. needed for queue, but <code class="docutils literal"><span class="pre">get_loss</span></code> can also be               called explicitly)</p>
 </dd>
 </dl>
 </li>
@@ -1289,14 +1275,14 @@ Useful is also to simply print &#8216;d&#8217; as in the example.</p>
 <span class="go">Info: input (211) changed to (210) (size not possible)</span>
 <span class="go">Info: input (211) changed to (210) (size not possible)</span>
 <span class="go">Info: input (20) changed to (22) (size too small)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span> 
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span>
 <span class="go">Input: [210, 210, 22]</span>
-<span class="go">Layer/Fragment sizes:       [[102, 49, 24, 24], [102, 49, 24, 24], [22, 9, 4, 4]]</span>
-<span class="go">Unpooled Layer sizes:       [[205, 99, 48, 24], [205, 99, 48, 24], [22, 19, 8, 4]]</span>
-<span class="go">Receptive fields:   [[7, 15, 23, 23], [7, 15, 23, 23], [1, 5, 9, 9]]</span>
-<span class="go">Strides:            [[2, 4, 8, 8], [2, 4, 8, 8], [1, 2, 4, 4]]</span>
-<span class="go">Overlap:            [[5, 11, 15, 15], [5, 11, 15, 15], [0, 3, 5, 5]]</span>
-<span class="go">Offset:             [11.5, 11.5, 4.5].</span>
+<span class="go">Layer/Fragment sizes:     [[102, 49, 24, 24], [102, 49, 24, 24], [22, 9, 4, 4]]</span>
+<span class="go">Unpooled Layer sizes:     [[205, 99, 48, 24], [205, 99, 48, 24], [22, 19, 8, 4]]</span>
+<span class="go">Receptive fields: [[7, 15, 23, 23], [7, 15, 23, 23], [1, 5, 9, 9]]</span>
+<span class="go">Strides:          [[2, 4, 8, 8], [2, 4, 8, 8], [1, 2, 4, 4]]</span>
+<span class="go">Overlap:          [[5, 11, 15, 15], [5, 11, 15, 15], [0, 3, 5, 5]]</span>
+<span class="go">Offset:           [11.5, 11.5, 4.5].</span>
 <span class="go">    If offset is non-int: floor(offset).</span>
 <span class="go">    Select labels from within img[offset-x:offset+x]</span>
 <span class="go">    (non-int means, output neurons lie centered on input neurons,</span>

@@ -108,9 +108,7 @@
         <span class="n">fow</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">fow</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">force_center</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s">&#39;Receptive Fields are not centered with field of view (</span><span class="si">%i</span><span class="s">)&#39;</span>
-                    <span class="o">%</span> <span class="n">fow</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Receptive Fields are not centered with field of view (</span><span class="si">%i</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">fow</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">print</span> <span class="s">&#39;WARNING: Receptive Fields are not centered with even field of view (</span><span class="si">%i</span><span class="s">)&#39;</span> <span class="o">%</span> <span class="n">fow</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fow</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
@@ -135,8 +133,7 @@
                 <span class="k">print</span> <span class="s">&quot;Info: output size requires input&gt;1200, next smaller output (</span><span class="si">%i</span><span class="s">) is used&quot;</span> <span class="o">%</span> <span class="nb">input</span>
                 <span class="n">valid_outputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">valid_outputs</span><span class="p">)</span>
 
-            <span class="n">i</span> <span class="o">=</span> <span class="n">valid_outputs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">desired_output</span>
-                                    <span class="p">)</span>  <span class="c"># input corresponding to that output</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">valid_outputs</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">desired_output</span><span class="p">)</span>  <span class="c"># input corresponding to that output</span>
             <span class="nb">input</span> <span class="o">=</span> <span class="n">valid_inputs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
         <span class="k">elif</span> <span class="n">desired_input</span> <span class="ow">in</span> <span class="n">valid_inputs</span><span class="p">:</span>
@@ -147,12 +144,10 @@
             <span class="n">valid_inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">valid_inputs</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">desired_input</span> <span class="o">&lt;</span> <span class="n">valid_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
                 <span class="nb">input</span> <span class="o">=</span> <span class="n">valid_inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">print</span> <span class="s">&quot;Info: input (</span><span class="si">%i</span><span class="s">) changed to (</span><span class="si">%i</span><span class="s">) (size too small)&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="n">desired_input</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;Info: input (</span><span class="si">%i</span><span class="s">) changed to (</span><span class="si">%i</span><span class="s">) (size too small)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">desired_input</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="nb">input</span> <span class="o">=</span> <span class="n">valid_inputs</span><span class="p">[</span><span class="n">valid_inputs</span> <span class="o">&lt;=</span> <span class="n">desired_input</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                <span class="k">print</span> <span class="s">&quot;Info: input (</span><span class="si">%i</span><span class="s">) changed to (</span><span class="si">%i</span><span class="s">) (size not possible)&quot;</span> <span class="o">%</span> <span class="p">(</span>
-                    <span class="n">desired_input</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
+                <span class="k">print</span> <span class="s">&quot;Info: input (</span><span class="si">%i</span><span class="s">) changed to (</span><span class="si">%i</span><span class="s">) (size not possible)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">desired_input</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span>
                 <span class="n">valid_inputs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">valid_inputs</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">valid_inputs</span> <span class="o">=</span> <span class="n">valid_inputs</span>
@@ -166,15 +161,10 @@
 
     <span class="k">def</span> <span class="nf">calclayers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">filters</span><span class="p">,</span> <span class="n">poolings</span><span class="p">,</span> <span class="n">mfp</span><span class="p">):</span>
         <span class="n">stride</span> <span class="o">=</span> <span class="n">poolings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">_Layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span>
-                              <span class="n">filters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                              <span class="n">poolings</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-                              <span class="n">stride</span><span class="p">,</span>
-                              <span class="n">mfp</span><span class="o">=</span><span class="n">mfp</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">_Layer</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">filters</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">poolings</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stride</span><span class="p">,</span> <span class="n">mfp</span><span class="o">=</span><span class="n">mfp</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">filters</span><span class="p">)):</span>
             <span class="n">stride</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">stride</span><span class="p">,</span> <span class="n">poolings</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-            <span class="n">lay</span> <span class="o">=</span> <span class="n">_Layer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pool_out</span><span class="p">,</span> <span class="n">filters</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">poolings</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-                         <span class="n">stride</span><span class="p">,</span> <span class="n">mfp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">lay</span> <span class="o">=</span> <span class="n">_Layer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pool_out</span><span class="p">,</span> <span class="n">filters</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">poolings</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">stride</span><span class="p">,</span> <span class="n">mfp</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lay</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">pool_out</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">pool_out</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">]</span>
@@ -182,16 +172,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="o">.</span><span class="n">stride</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">ls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool_out</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pool_out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pool_out</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span>
-            <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">stride</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">overlap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">overlap</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ls</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool_out</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pool_out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pool_out</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">stride</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stride</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">overlap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">overlap</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">overlap</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">overlap</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;Input: &quot;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Layer/Fragment sizes:</span><span class="se">\t</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Unpooled Layer sizes:</span><span class="se">\t</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="o">+</span>\
         <span class="s">&quot;</span><span class="se">\n</span><span class="s">Receptive fields:</span><span class="se">\t</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Strides:</span><span class="se">\t\t</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="n">stride</span><span class="p">)</span><span class="o">+</span>\
         <span class="s">&quot;</span><span class="se">\n</span><span class="s">Overlap:</span><span class="se">\t\t</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="n">overlap</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Offset:</span><span class="se">\t\t</span><span class="s">&quot;</span><span class="o">+</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span><span class="o">+</span><span class="s">&quot;.</span><span class="se">\n</span><span class="s">If offset is non-int: output neurons lie centered on input neurons,they have an odd FOV</span><span class="se">\n</span><span class="s">&quot;</span>
@@ -245,57 +230,57 @@
                   <span class="n">desired_output</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                   <span class="n">n_dim</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Helper to calculate CNN architectures</span>
-<span class="sd">  </span>
-<span class="sd">  This is a *function*, but it returns an *object* that has various architecture values as attributes.</span>
-<span class="sd">  Useful is also to simply print &#39;d&#39; as in the example.</span>
+<span class="sd">    Helper to calculate CNN architectures</span>
 
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
+<span class="sd">    This is a *function*, but it returns an *object* that has various architecture values as attributes.</span>
+<span class="sd">    Useful is also to simply print &#39;d&#39; as in the example.</span>
 
-<span class="sd">  filters: list</span>
-<span class="sd">    Filter shapes (for anisotropic filters the shapes are again a list)</span>
-<span class="sd">  poolings: list</span>
-<span class="sd">    Pooling factors</span>
-<span class="sd">  desired_input: int or list of int</span>
-<span class="sd">    Desired input size(s). If ``None`` a range of suggestions can be found in the attribute ``valid_inputs``</span>
-<span class="sd">  MFP: list of int/{0,1}</span>
-<span class="sd">    Whether to apply Max-Fragment-Pooling in this layer and check compliance with max-fragment-pooling</span>
-<span class="sd">    (requires other input sizes than normal pooling)</span>
-<span class="sd">  force_center: Bool</span>
-<span class="sd">    Check if output neurons/pixel lie at center of input neurons/pixel (and not in between)</span>
-<span class="sd">  desired_output: int or list of int</span>
-<span class="sd">    Alternative to ``desired_input``</span>
-<span class="sd">  n_dim: int</span>
-<span class="sd">    Dimensionality of CNN</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 
-<span class="sd">  Examples</span>
-<span class="sd">  --------</span>
-<span class="sd">  </span>
-<span class="sd">  Calculation for anisotropic &quot;flat&quot; 3d CNN with MFP in the first layers only::</span>
+<span class="sd">    filters: list</span>
+<span class="sd">      Filter shapes (for anisotropic filters the shapes are again a list)</span>
+<span class="sd">    poolings: list</span>
+<span class="sd">      Pooling factors</span>
+<span class="sd">    desired_input: int or list of int</span>
+<span class="sd">      Desired input size(s). If ``None`` a range of suggestions can be found in the attribute ``valid_inputs``</span>
+<span class="sd">    MFP: list of int/{0,1}</span>
+<span class="sd">      Whether to apply Max-Fragment-Pooling in this layer and check compliance with max-fragment-pooling</span>
+<span class="sd">      (requires other input sizes than normal pooling)</span>
+<span class="sd">    force_center: Bool</span>
+<span class="sd">      Check if output neurons/pixel lie at center of input neurons/pixel (and not in between)</span>
+<span class="sd">    desired_output: int or list of int</span>
+<span class="sd">      Alternative to ``desired_input``</span>
+<span class="sd">    n_dim: int</span>
+<span class="sd">      Dimensionality of CNN</span>
 
-<span class="sd">    &gt;&gt;&gt; desired_input   = [211, 211, 20]</span>
-<span class="sd">    &gt;&gt;&gt; filters         = [[6,6,1], [4,4,4], [2,2,2], [1,1,1]]</span>
-<span class="sd">    &gt;&gt;&gt; pool            = [[2,2,1], [2,2,2], [2,2,2], [1,1,1]]</span>
-<span class="sd">    &gt;&gt;&gt; MFP             = [1,        1,       0,       0,   ]</span>
-<span class="sd">    &gt;&gt;&gt; n_dim=3</span>
-<span class="sd">    &gt;&gt;&gt; d = CNNCalculator(filters, pool, desired_input, MFP=MFP, force_center=True, desired_output=None, n_dim=n_dim)</span>
-<span class="sd">    Info: input (211) changed to (210) (size not possible)</span>
-<span class="sd">    Info: input (211) changed to (210) (size not possible)</span>
-<span class="sd">    Info: input (20) changed to (22) (size too small)</span>
-<span class="sd">    &gt;&gt;&gt; print d </span>
-<span class="sd">    Input: [210, 210, 22]</span>
-<span class="sd">    Layer/Fragment sizes:	[[102, 49, 24, 24], [102, 49, 24, 24], [22, 9, 4, 4]]</span>
-<span class="sd">    Unpooled Layer sizes:	[[205, 99, 48, 24], [205, 99, 48, 24], [22, 19, 8, 4]]</span>
-<span class="sd">    Receptive fields:	[[7, 15, 23, 23], [7, 15, 23, 23], [1, 5, 9, 9]]</span>
-<span class="sd">    Strides:		[[2, 4, 8, 8], [2, 4, 8, 8], [1, 2, 4, 4]]</span>
-<span class="sd">    Overlap:		[[5, 11, 15, 15], [5, 11, 15, 15], [0, 3, 5, 5]]</span>
-<span class="sd">    Offset:		[11.5, 11.5, 4.5].</span>
-<span class="sd">        If offset is non-int: floor(offset).</span>
-<span class="sd">        Select labels from within img[offset-x:offset+x]</span>
-<span class="sd">        (non-int means, output neurons lie centered on input neurons,</span>
-<span class="sd">        i.e. they have an odd field of view)</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    Calculation for anisotropic &quot;flat&quot; 3d CNN with MFP in the first layers only::</span>
+
+<span class="sd">      &gt;&gt;&gt; desired_input   = [211, 211, 20]</span>
+<span class="sd">      &gt;&gt;&gt; filters         = [[6,6,1], [4,4,4], [2,2,2], [1,1,1]]</span>
+<span class="sd">      &gt;&gt;&gt; pool            = [[2,2,1], [2,2,2], [2,2,2], [1,1,1]]</span>
+<span class="sd">      &gt;&gt;&gt; MFP             = [1,        1,       0,       0,   ]</span>
+<span class="sd">      &gt;&gt;&gt; n_dim=3</span>
+<span class="sd">      &gt;&gt;&gt; d = CNNCalculator(filters, pool, desired_input, MFP=MFP, force_center=True, desired_output=None, n_dim=n_dim)</span>
+<span class="sd">      Info: input (211) changed to (210) (size not possible)</span>
+<span class="sd">      Info: input (211) changed to (210) (size not possible)</span>
+<span class="sd">      Info: input (20) changed to (22) (size too small)</span>
+<span class="sd">      &gt;&gt;&gt; print d</span>
+<span class="sd">      Input: [210, 210, 22]</span>
+<span class="sd">      Layer/Fragment sizes:	[[102, 49, 24, 24], [102, 49, 24, 24], [22, 9, 4, 4]]</span>
+<span class="sd">      Unpooled Layer sizes:	[[205, 99, 48, 24], [205, 99, 48, 24], [22, 19, 8, 4]]</span>
+<span class="sd">      Receptive fields:	[[7, 15, 23, 23], [7, 15, 23, 23], [1, 5, 9, 9]]</span>
+<span class="sd">      Strides:		[[2, 4, 8, 8], [2, 4, 8, 8], [1, 2, 4, 4]]</span>
+<span class="sd">      Overlap:		[[5, 11, 15, 15], [5, 11, 15, 15], [0, 3, 5, 5]]</span>
+<span class="sd">      Offset:		[11.5, 11.5, 4.5].</span>
+<span class="sd">          If offset is non-int: floor(offset).</span>
+<span class="sd">          Select labels from within img[offset-x:offset+x]</span>
+<span class="sd">          (non-int means, output neurons lie centered on input neurons,</span>
+<span class="sd">          i.e. they have an odd field of view)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">poolings</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
 
@@ -303,8 +288,7 @@
         <span class="n">MFP</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span><span class="p">,</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">n_dim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c">#not hasattr(filters[0], &#39;__len__&#39;) :</span>
-        <span class="k">return</span> <span class="n">_CNNCalculator</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">poolings</span><span class="p">,</span> <span class="n">desired_input</span><span class="p">,</span> <span class="n">MFP</span><span class="p">,</span>
-                              <span class="n">force_center</span><span class="p">,</span> <span class="n">desired_output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_CNNCalculator</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">poolings</span><span class="p">,</span> <span class="n">desired_input</span><span class="p">,</span> <span class="n">MFP</span><span class="p">,</span> <span class="n">force_center</span><span class="p">,</span> <span class="n">desired_output</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">desired_input</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">desired_input</span> <span class="o">=</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="n">n_dim</span>
@@ -328,8 +312,7 @@
         <span class="n">MFP</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">MFP</span><span class="p">)]</span>
 
         <span class="n">calcs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">mfp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">poolings</span><span class="p">,</span> <span class="n">desired_input</span><span class="p">,</span>
-                                   <span class="n">desired_output</span><span class="p">,</span> <span class="n">MFP</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">o</span><span class="p">,</span> <span class="n">mfp</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">poolings</span><span class="p">,</span> <span class="n">desired_input</span><span class="p">,</span> <span class="n">desired_output</span><span class="p">,</span> <span class="n">MFP</span><span class="p">):</span>
             <span class="n">c</span> <span class="o">=</span> <span class="n">_CNNCalculator</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">mfp</span><span class="p">,</span> <span class="n">force_center</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
             <span class="n">calcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 

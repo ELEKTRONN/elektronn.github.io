@@ -93,97 +93,88 @@
 
 <div class="viewcode-block" id="warp2dJoint"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.warping.warp2dJoint">[docs]</a><span class="k">def</span> <span class="nf">warp2dJoint</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</span>
-<span class="sd">  </span>
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  </span>
-<span class="sd">  img: array</span>
-<span class="sd">    Image data</span>
-<span class="sd">    The array must be 3-dimensional (ch,x,y) and larger/equal the patch size</span>
-<span class="sd">  lab: array</span>
-<span class="sd">    Label data (with offsets subtracted)</span>
-<span class="sd">  patch_size: 2-tuple</span>
-<span class="sd">    Patch size *excluding* channel for the image: (px, py).</span>
-<span class="sd">    The warping result of the input image is cropped to this size</span>
-<span class="sd">  rot: float</span>
-<span class="sd">    Rotation angle in deg for rotation around z-axis</span>
-<span class="sd">  shear: float</span>
-<span class="sd">    Shear angle in deg for shear w.r.t xy-diagonal</span>
-<span class="sd">  scale: 3-tuple of float</span>
-<span class="sd">    Scale per axis</span>
-<span class="sd">  stretch: 4-tuple of float</span>
-<span class="sd">    Fraction of perspective stretching from the center (where stretching is always 1)</span>
-<span class="sd">    to the outer border of image per axis. The 4 entry correspond to:</span>
-<span class="sd">    </span>
-<span class="sd">    - X stretching depending on Y</span>
-<span class="sd">    - Y stretching depending on X</span>
+<span class="sd">    Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</span>
 
-<span class="sd">  Returns</span>
-<span class="sd">  -------</span>
-<span class="sd">  </span>
-<span class="sd">  img, lab: np.ndarrays</span>
-<span class="sd">    Warped image and labels (cropped to patch_size)</span>
-<span class="sd">  </span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    img: array</span>
+<span class="sd">      Image data</span>
+<span class="sd">      The array must be 3-dimensional (ch,x,y) and larger/equal the patch size</span>
+<span class="sd">    lab: array</span>
+<span class="sd">      Label data (with offsets subtracted)</span>
+<span class="sd">    patch_size: 2-tuple</span>
+<span class="sd">      Patch size *excluding* channel for the image: (px, py).</span>
+<span class="sd">      The warping result of the input image is cropped to this size</span>
+<span class="sd">    rot: float</span>
+<span class="sd">      Rotation angle in deg for rotation around z-axis</span>
+<span class="sd">    shear: float</span>
+<span class="sd">      Shear angle in deg for shear w.r.t xy-diagonal</span>
+<span class="sd">    scale: 3-tuple of float</span>
+<span class="sd">      Scale per axis</span>
+<span class="sd">    stretch: 4-tuple of float</span>
+<span class="sd">      Fraction of perspective stretching from the center (where stretching is always 1)</span>
+<span class="sd">      to the outer border of image per axis. The 4 entry correspond to:</span>
+
+<span class="sd">      - X stretching depending on Y</span>
+<span class="sd">      - Y stretching depending on X</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    img, lab: np.ndarrays</span>
+<span class="sd">      Warped image and labels (cropped to patch_size)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lab</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">lab</span> <span class="o">=</span> <span class="n">_warp2dFastLab</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span>
-                             <span class="n">stretch</span><span class="p">)</span>
+        <span class="n">lab</span> <span class="o">=</span> <span class="n">_warp2dFastLab</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">)</span>
 
     <span class="n">img</span> <span class="o">=</span> <span class="n">warp2dFast</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">lab</span>
 
 </div>
-<div class="viewcode-block" id="warp3dJoint"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.warping.warp3dJoint">[docs]</a><span class="k">def</span> <span class="nf">warp3dJoint</span><span class="p">(</span><span class="n">img</span><span class="p">,</span>
-                <span class="n">lab</span><span class="p">,</span>
-                <span class="n">patch_size</span><span class="p">,</span>
-                <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-                <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="warp3dJoint"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.warping.warp3dJoint">[docs]</a><span class="k">def</span> <span class="nf">warp3dJoint</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</span>
-<span class="sd">  </span>
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  </span>
-<span class="sd">  img: array</span>
-<span class="sd">    Image data</span>
-<span class="sd">    The array must be 4-dimensional (z,ch,x,y) and larger/equal the patch size</span>
-<span class="sd">  lab: array</span>
-<span class="sd">    Label data (with offsets subtracted)</span>
-<span class="sd">  patch_size: 3-tuple</span>
-<span class="sd">    Patch size *excluding* channel for the image: (pz, px, py).</span>
-<span class="sd">    The warping result of the input image is cropped to this size</span>
-<span class="sd">  rot: float</span>
-<span class="sd">    Rotation angle in deg for rotation around z-axis</span>
-<span class="sd">  shear: float</span>
-<span class="sd">    Shear angle in deg for shear w.r.t xy-diagonal</span>
-<span class="sd">  scale: 3-tuple of float</span>
-<span class="sd">    Scale per axis</span>
-<span class="sd">  stretch: 4-tuple of float</span>
-<span class="sd">    Fraction of perspective stretching from the center (where stretching is always 1)</span>
-<span class="sd">    to the outer border of image per axis. The 4 entry correspond to:</span>
-<span class="sd">    </span>
-<span class="sd">    - X stretching depending on Y</span>
-<span class="sd">    - Y stretching depending on X</span>
-<span class="sd">    - X stretching depending on Z</span>
-<span class="sd">    - Y stretching depending on Z</span>
-<span class="sd">    </span>
-<span class="sd">  twist: float</span>
-<span class="sd">    Dependence of the rotation angle on z in deg from center to outer border</span>
-<span class="sd">  </span>
-<span class="sd">  Returns</span>
-<span class="sd">  -------</span>
-<span class="sd">  </span>
-<span class="sd">  img, lab: np.ndarrays</span>
-<span class="sd">    Warped image and labels (cropped to patch_size)</span>
-<span class="sd">  </span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Warp image and label data jointly. Non-image labels are ignored i.e. lab must be 3d to be warped</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    img: array</span>
+<span class="sd">      Image data</span>
+<span class="sd">      The array must be 4-dimensional (z,ch,x,y) and larger/equal the patch size</span>
+<span class="sd">    lab: array</span>
+<span class="sd">      Label data (with offsets subtracted)</span>
+<span class="sd">    patch_size: 3-tuple</span>
+<span class="sd">      Patch size *excluding* channel for the image: (pz, px, py).</span>
+<span class="sd">      The warping result of the input image is cropped to this size</span>
+<span class="sd">    rot: float</span>
+<span class="sd">      Rotation angle in deg for rotation around z-axis</span>
+<span class="sd">    shear: float</span>
+<span class="sd">      Shear angle in deg for shear w.r.t xy-diagonal</span>
+<span class="sd">    scale: 3-tuple of float</span>
+<span class="sd">      Scale per axis</span>
+<span class="sd">    stretch: 4-tuple of float</span>
+<span class="sd">      Fraction of perspective stretching from the center (where stretching is always 1)</span>
+<span class="sd">      to the outer border of image per axis. The 4 entry correspond to:</span>
+
+<span class="sd">      - X stretching depending on Y</span>
+<span class="sd">      - Y stretching depending on X</span>
+<span class="sd">      - X stretching depending on Z</span>
+<span class="sd">      - Y stretching depending on Z</span>
+
+<span class="sd">    twist: float</span>
+<span class="sd">      Dependence of the rotation angle on z in deg from center to outer border</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    img, lab: np.ndarrays</span>
+<span class="sd">      Warped image and labels (cropped to patch_size)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lab</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">lab</span> <span class="o">=</span> <span class="n">_warp3dFastLab</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span>
-                             <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="p">)</span>
+        <span class="n">lab</span> <span class="o">=</span> <span class="n">_warp3dFastLab</span><span class="p">(</span><span class="n">lab</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="p">)</span>
 
     <span class="n">img</span> <span class="o">=</span> <span class="n">warp3dFast</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">img</span><span class="p">,</span> <span class="n">lab</span>
@@ -198,8 +189,7 @@
     <span class="k">def</span> <span class="nf">getGrayCode</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n_dim</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_dim</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
-                         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">n_dim</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">n</span><span class="p">)))))])</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([(</span><span class="n">n</span> <span class="o">//</span> <span class="mi">2</span><span class="o">**</span><span class="n">i</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">n_dim</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">n</span><span class="p">)))))])</span>
 
     <span class="n">sh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c">###TODO</span>
     <span class="n">n_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span>
@@ -212,16 +202,10 @@
     <span class="k">return</span> <span class="n">corners</span>
 
 </div>
-<span class="k">def</span> <span class="nf">_warpCorners2d</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span>
-                   <span class="n">corners</span><span class="p">,</span>
-                   <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                   <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                   <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                   <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-                   <span class="n">plot</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_warpCorners2d</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">plot</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Create warped coordinates of corners</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Create warped coordinates of corners</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rot</span> <span class="o">=</span> <span class="n">rot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
     <span class="n">shear</span> <span class="o">=</span> <span class="n">shear</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
     <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
@@ -258,16 +242,10 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 
 
-<span class="k">def</span> <span class="nf">_warpCorners3d</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span>
-                   <span class="n">corners</span><span class="p">,</span>
-                   <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                   <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                   <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                   <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
-                   <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_warpCorners3d</span><span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">rot</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">shear</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">stretch</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">twist</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Create warped coordinates of corners</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Create warped coordinates of corners</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">rot</span> <span class="o">=</span> <span class="n">rot</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
     <span class="n">shear</span> <span class="o">=</span> <span class="n">shear</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
     <span class="n">twist</span> <span class="o">=</span> <span class="n">twist</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
@@ -303,37 +281,30 @@
 
 <div class="viewcode-block" id="getRequiredPatchSize"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.warping.getRequiredPatchSize">[docs]</a><span class="k">def</span> <span class="nf">getRequiredPatchSize</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Given desired patch size and warping parameters:</span>
-<span class="sd">  return required size for warping input patch</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Given desired patch size and warping parameters:</span>
+<span class="sd">    return required size for warping input patch</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">patch_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">patch_size</span><span class="p">)</span>
     <span class="n">corners</span> <span class="o">=</span> <span class="n">getCornerIx</span><span class="p">(</span><span class="n">patch_size</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">patch_size</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="n">_warpCorners2d</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span>
-                                <span class="n">stretch</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">_warpCorners2d</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">patch_size</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="n">coords</span> <span class="o">=</span> <span class="n">_warpCorners3d</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span>
-                                <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="p">)</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">_warpCorners3d</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">corners</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span><span class="p">)</span>
 
-    <span class="n">eff_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">coords</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                       <span class="p">)</span>  <span class="c"># effective range</span>
-    <span class="n">left_exc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span>
-        <span class="n">coords</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-        <span class="mi">0</span><span class="p">)))</span>  <span class="c"># how much image needs to be added left</span>
+    <span class="n">eff_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">coords</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c"># effective range</span>
+    <span class="n">left_exc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mi">0</span><span class="p">)))</span>  <span class="c"># how much image needs to be added left</span>
     <span class="n">right_exc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">coords</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">patch_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-    <span class="n">total_exc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">left_exc</span><span class="p">,</span> <span class="n">right_exc</span>
-                           <span class="p">)</span>  <span class="c"># how much image must be added centrally</span>
+    <span class="n">total_exc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">left_exc</span><span class="p">,</span> <span class="n">right_exc</span><span class="p">)</span>  <span class="c"># how much image must be added centrally</span>
     <span class="n">req_size</span> <span class="o">=</span> <span class="n">patch_size</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">total_exc</span>
 
-    <span class="k">return</span> <span class="n">req_size</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">eff_size</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">left_exc</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">req_size</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">eff_size</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">),</span> <span class="n">left_exc</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="getWarpParams"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.warping.getWarpParams">[docs]</a><span class="k">def</span> <span class="nf">getWarpParams</span><span class="p">(</span><span class="n">patch_size</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  To be called from CNNData. Get warping parameters + required warping input patch size.</span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    To be called from CNNData. Get warping parameters + required warping input patch size.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">print</span> <span class="s">&#39;WARNING: warpAugment amount &gt; 1 this requires more than 1.4 bigger patches before warping&#39;</span>
     <span class="n">rot_max</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">amount</span>
@@ -367,10 +338,7 @@
         <span class="n">out</span> <span class="o">=</span> <span class="n">warp2dFast</span><span class="p">(</span><span class="n">img_s</span><span class="p">,</span> <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">print</span> <span class="s">&quot;&quot;&quot;</span><span class="si">%s</span><span class="s"></span>
-<span class="s">    Warping is broken. Most likeley the distributed _warping.so is not binary compatible to your system.</span>
-<span class="s">    You can try to compile it manually in &quot;&lt;install_dir&gt;/elektronn/training/&quot;:</span>
-<span class="s">    &quot;gcc warping.c -shared -fPIC -o _warping.so -O3&quot;.</span>
-<span class="s">    &quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">)</span>
+<span class="s">        Warping is broken. Most likeley the distributed _warping.so is not binary compatible to your system.&quot;&quot;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">)</span>
 
 </div>
 <span class="n">test</span><span class="p">()</span>
@@ -426,10 +394,7 @@
                                                                     <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
         <span class="n">t</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
-            <span class="n">ext_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span> <span class="o">=</span> <span class="n">getWarpParams</span><span class="p">(</span>
-                <span class="n">ps</span><span class="p">,</span>
-                <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-            <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ext_size</span><span class="p">)</span>
+            <span class="n">ext_size</span><span class="p">,</span> <span class="n">rot</span><span class="p">,</span> <span class="n">shear</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">stretch</span><span class="p">,</span> <span class="n">twist</span> <span class="o">=</span> <span class="n">getWarpParams</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">amount</span><span class="o">=</span><span class="mf">1.0</span><span class="p">);</span> <span class="n">t</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ext_size</span><span class="p">)</span>
     <span class="c">#  img_in = maketestimage(eff_size)</span>
     <span class="c">#  img_in = paddImage(img_in, ext_size, left_exc)[None]</span>
         <span class="n">img_in</span> <span class="o">=</span> <span class="n">maketestimage</span><span class="p">(</span><span class="n">ext_size</span><span class="p">)[</span><span class="bp">None</span><span class="p">]</span>
@@ -447,9 +412,7 @@
 
     <span class="k">if</span> <span class="bp">False</span><span class="p">:</span>  <span class="c"># visual 2d</span>
         <span class="c">#out  = _warp2d_c(test_img, 20, 10, (1,1.1), (0.1, 0))</span>
-        <span class="n">test_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">test_img</span><span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">test_img</span><span class="p">[</span><span class="bp">None</span><span class="p">])),</span>
-            <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">test_img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">test_img</span><span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">test_img</span><span class="p">[</span><span class="bp">None</span><span class="p">])),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">out2</span> <span class="o">=</span> <span class="n">warp2dFast</span><span class="p">(</span><span class="n">test_img</span><span class="p">,</span> <span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">512</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
@@ -502,8 +465,7 @@
             <span class="n">plt</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="s">&#39;/tmp/</span><span class="si">%i</span><span class="s">-ref.png&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">wow1</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
 
         <span class="n">wow2</span> <span class="o">=</span> <span class="n">_warp3dFastLab</span><span class="p">(</span><span class="n">img_s</span><span class="p">[</span><span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="o">-</span><span class="mi">20</span><span class="p">],</span> <span class="p">(</span><span class="n">s1</span> <span class="o">-</span> <span class="mi">40</span><span class="p">,</span> <span class="n">s2</span> <span class="o">-</span> <span class="mi">40</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-                              <span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                              <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+                              <span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">wow2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="s">&#39;/tmp/</span><span class="si">%i</span><span class="s">.png&#39;</span> <span class="o">%</span> <span class="n">i</span><span class="p">,</span> <span class="n">wow2</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="mi">255</span><span class="p">)</span>
 
@@ -512,8 +474,7 @@
         <span class="n">test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">test2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">s</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">s</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">s</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">wow1</span> <span class="o">=</span> <span class="n">warp3dFast</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-                          <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">wow1</span> <span class="o">=</span> <span class="n">warp3dFast</span><span class="p">(</span><span class="n">test</span><span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">),</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
         <span class="c">#wow1 = warp3dFast(test[None], (s,s,s))</span>
         <span class="k">print</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 </pre></div>

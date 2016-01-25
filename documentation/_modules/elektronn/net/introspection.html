@@ -85,11 +85,7 @@
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 
-<div class="viewcode-block" id="plotFilters"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.introspection.plotFilters">[docs]</a><span class="k">def</span> <span class="nf">plotFilters</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span>
-                <span class="n">layer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-                <span class="n">channel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
-                <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                <span class="n">savename</span><span class="o">=</span><span class="s">&#39;filters_layer0.png&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="plotFilters"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.introspection.plotFilters">[docs]</a><span class="k">def</span> <span class="nf">plotFilters</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span> <span class="n">layer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">savename</span><span class="o">=</span><span class="s">&#39;filters_layer0.png&#39;</span><span class="p">):</span>
     <span class="n">W</span> <span class="o">=</span> <span class="n">cnn</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="n">layer</span><span class="p">]</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">W</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c"># RGB</span>
@@ -112,10 +108,7 @@
         <span class="n">mat</span> <span class="o">=</span> <span class="n">embedMatricesInGray</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span>
-               <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;None&#39;</span><span class="p">,</span>
-               <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span>
-               <span class="p">)</span>  <span class="c"># Note that cmap is ignored by matplotlib for RGB-img</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;None&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;gray&#39;</span><span class="p">)</span>  <span class="c"># Note that cmap is ignored by matplotlib for RGB-img</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="k">print</span> <span class="s">&quot;Saving filter image as as </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">savename</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">savename</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s">&#39;tight&#39;</span><span class="p">)</span>
@@ -154,22 +147,16 @@
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-                <span class="n">activity</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-                    <span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sp</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sp</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
-                <span class="p">)</span>  <span class="c">#np.swapaxes(np.swapaxes(activity,2,0),2,4)</span>
+                <span class="n">activity</span> <span class="o">=</span> <span class="n">activity</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sp</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sp</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>  <span class="c">#np.swapaxes(np.swapaxes(activity,2,0),2,4)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">continue</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
             <span class="n">image</span> <span class="o">=</span> <span class="n">embedMatricesInGray</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
-            <span class="n">image</span> <span class="o">=</span> <span class="n">embedMatricesInGray</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span>
-                                        <span class="mi">1</span><span class="p">,</span>
-                                        <span class="bp">True</span><span class="p">,</span>
-                                        <span class="n">fixed_n_horizontal</span><span class="o">=</span><span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">embedMatricesInGray</span><span class="p">(</span><span class="n">activity</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="n">fixed_n_horizontal</span><span class="o">=</span><span class="n">sp</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
         <span class="n">all_act</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-        <span class="n">showMultipleFiguresAdd</span><span class="p">(</span><span class="n">myfig</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span>
-                               <span class="s">&quot;Layer-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; Activity&quot;</span><span class="p">)</span>
+        <span class="n">showMultipleFiguresAdd</span><span class="p">(</span><span class="n">myfig</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="s">&quot;Layer-&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; Activity&quot;</span><span class="p">)</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 
@@ -178,9 +165,7 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">gray</span><span class="p">()</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">&#39;prediction map of first class&#39;</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">prob_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">prob_pred</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span>
-                   <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">prob_pred</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">prob_pred</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;nearest&#39;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">no_show</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -190,27 +175,26 @@
 </div>
 <div class="viewcode-block" id="showParamHistogram"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.introspection.showParamHistogram">[docs]</a><span class="k">def</span> <span class="nf">showParamHistogram</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span> <span class="n">no_show</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">onlyW</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Plots histograms of parameter/weight values.</span>
+<span class="sd">    Plots histograms of parameter/weight values.</span>
 
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  </span>
-<span class="sd">  :type no_show: object</span>
-<span class="sd">  cnn:</span>
-<span class="sd">    instance of MixedConvNN</span>
-<span class="sd">  onlyW:</span>
-<span class="sd">    True/False whether to ignore the biases b</span>
-<span class="sd">  no_show:</span>
-<span class="sd">    True/False whether to pop up plots or silently return a list of image arrays</span>
-<span class="sd">  </span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    :type no_show: object</span>
+<span class="sd">    cnn:</span>
+<span class="sd">      instance of MixedConvNN</span>
+<span class="sd">    onlyW:</span>
+<span class="sd">      True/False whether to ignore the biases b</span>
+<span class="sd">    no_show:</span>
+<span class="sd">      True/False whether to pop up plots or silently return a list of image arrays</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cnn</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">layer</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cnn</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
         <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">params</span> <span class="k">if</span> <span class="n">onlyW</span> <span class="o">==</span> <span class="bp">False</span> <span class="k">else</span> <span class="p">[</span><span class="n">layer</span><span class="o">.</span><span class="n">W</span><span class="p">]:</span>
             <span class="n">pa</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">get_value</span><span class="p">()</span>
             <span class="k">print</span> <span class="s">&#39;Layer {0:2d}: mean={1:3.6e}, median={2:3.6e}, mean(abs)={3:2.6e}, median(abs)={4:2.6e}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="mi">1</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pa</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">pa</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pa</span><span class="p">)),</span>
-                <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pa</span><span class="p">)))</span>
+                <span class="mi">1</span> <span class="o">+</span> <span class="n">i</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pa</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">pa</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pa</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">pa</span><span class="p">)))</span>
             <span class="k">print</span> <span class="s">&#39;Layer  &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;: filter_shape =&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pa</span><span class="p">)</span>
 
             <span class="n">hist</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">pa</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
@@ -227,20 +211,20 @@
 </div>
 <div class="viewcode-block" id="showActivityHistogram"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.introspection.showActivityHistogram">[docs]</a><span class="k">def</span> <span class="nf">showActivityHistogram</span><span class="p">(</span><span class="n">cnn</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">no_show</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">  Plots histograms of activation maps given data. It requires that cnn.debug_functions contains a list</span>
-<span class="sd">  of functions that return the activations (i.e. cnn.compileDebugFunctions must have been called</span>
+<span class="sd">    Plots histograms of activation maps given data. It requires that cnn.debug_functions contains a list</span>
+<span class="sd">    of functions that return the activations (i.e. cnn.compileDebugFunctions must have been called</span>
 
-<span class="sd">  Parameters</span>
-<span class="sd">  ----------</span>
-<span class="sd">  </span>
-<span class="sd">  cnn:</span>
-<span class="sd">    instance of MixedConvNN</span>
-<span class="sd">  data:</span>
-<span class="sd">    input to cnn for which activations should be shown</span>
-<span class="sd">  no_show:</span>
-<span class="sd">    True/False whether to pop up plots or silently return a list of image arrays</span>
-<span class="sd">  </span>
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    cnn:</span>
+<span class="sd">      instance of MixedConvNN</span>
+<span class="sd">    data:</span>
+<span class="sd">      input to cnn for which activations should be shown</span>
+<span class="sd">    no_show:</span>
+<span class="sd">      True/False whether to pop up plots or silently return a list of image arrays</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cnn</span><span class="o">.</span><span class="n">layers</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">layer</span><span class="p">,</span> <span class="n">dbgf</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cnn</span><span class="o">.</span><span class="n">layers</span><span class="p">,</span> <span class="n">cnn</span><span class="o">.</span><span class="n">debug_functions</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span>
         <span class="n">activity</span> <span class="o">=</span> <span class="n">dbgf</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
@@ -256,14 +240,11 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
 </div>
-<div class="viewcode-block" id="embedMatricesInGray"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.introspection.embedMatricesInGray">[docs]</a><span class="k">def</span> <span class="nf">embedMatricesInGray</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span>
-                        <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                        <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                        <span class="n">output_ratio</span><span class="o">=</span><span class="mf">1.7</span><span class="p">,</span>
-                        <span class="n">fixed_n_horizontal</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="embedMatricesInGray"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.introspection.embedMatricesInGray">[docs]</a><span class="k">def</span> <span class="nf">embedMatricesInGray</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">border_width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">output_ratio</span><span class="o">=</span><span class="mf">1.7</span><span class="p">,</span> <span class="n">fixed_n_horizontal</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a big matrix out of smaller ones (mat) assumed format of mat:(index, ch, i_vert,i_horiz)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="c">#    sh = np.shape(mat)</span>
     <span class="c">#    if sh[1]==3: # interpret 3 channels as rgb</span>
     <span class="c">#      mat = np.swapaxes(mat, 1, 3) # swap RGB channels at back</span>
@@ -284,9 +265,7 @@
         <span class="n">nhor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">output_ratio</span><span class="p">))</span>  <span class="c"># aim: ratio 16:9</span>
     <span class="n">nvert</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">nhor</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c">#warning: too big: nvert*nhor &gt;= n</span>
 
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
-        <span class="p">(</span><span class="n">nvert</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">nhor</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">])),</span>
-        <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nvert</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">nhor</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">])),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
         <span class="n">maxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:])</span> <span class="o">+</span> <span class="mf">1e-8</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
@@ -302,9 +281,8 @@
             <span class="c">#print (j*(border_width+sh[1]),j*(border_width+sh[1])+sh[1], i*(border_width+sh[2]),i*(border_width+sh[2])+sh[2])</span>
             <span class="c">#print shape(mat[i+j*nhor,:,:])</span>
             <span class="n">ret</span><span class="p">[</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span><span class="n">j</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span><span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span>
-                    <span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">mins</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
-                        <span class="n">maxs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">]</span> <span class="o">-</span> <span class="n">mins</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">])</span>
+                <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]):</span><span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">border_width</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+               <span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">mins</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">maxs</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">]</span> <span class="o">-</span> <span class="n">mins</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="o">*</span> <span class="n">nhor</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">ret</span>
 
 </div>
