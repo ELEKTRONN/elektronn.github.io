@@ -1,0 +1,107 @@
+@include breakpoint($on-notebook) {
+	.banner {
+		display: table !important; 
+	
+		&__col {
+			display: table-cell;
+			width: 50%;
+			vertical-align: middle;
+			padding: 2em;
+			
+			&--left {
+				
+			}
+		}
+	}
+	
+	.card {
+		border-radius: 4px;
+		overflow: hidden;
+		max-width: 640px;
+		box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		margin-top: 0;
+	}
+}
+
+
+
+.card {
+	background: #fff;
+	box-shadow: 0 -1px 9px 0 rgba(0, 0, 0, 0.23);
+	margin-top: 2em;
+	@extend .-small-rhythm;
+	
+	h2 {
+		text-transform: uppercase;
+		letter-spacing: 1.2px;
+		font-size: 1.6rem;
+		font-weight: bold;
+		color: #888;
+	}
+	
+	&__text {
+		padding: 1em;
+	}
+	
+	&__footer {
+		
+		padding: 1em;
+		border-top: 1px solid #EAEAEA;
+		font-size: 1.2rem;
+	}
+	
+	.card__image {
+		@extend .-no-rhythm;
+		display: none;
+
+	
+		@include breakpoint($on-notebook) {
+			display: block;
+			max-height: 300px;
+			overflow: hidden;
+			position: relative;
+		
+			.topbar {
+				background: rgba(#000, .7);
+				font-size: 1.4rem;
+				text-transform: uppercase;
+				padding: .5em 24px;
+				color: #fff;
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+			}
+		}
+	}
+}
+
+.banner {
+	margin-top: 0;
+	padding-top: 4em;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	width: 100%;
+	background: #f2f2f2 url("/images/background.png") -600px 50% no-repeat;
+	
+	
+	
+	&__col {
+		margin-top: 0;
+		flex: 1;
+		
+		.container {
+			padding: 2em 1em;
+		}
+		
+		&--left {
+			
+		}
+	
+		&--right {
+			//box-shadow: 0 3px 9px rgba(0, 0, 0, 0.3);
+			//box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+		}
+	}	
+}

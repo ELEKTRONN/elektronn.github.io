@@ -1,0 +1,74 @@
+.nav {
+	@extend .-no-rhythm;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	
+	&--visible {
+		.snackbar {
+			transform: translateY(0);
+		}
+		
+	}
+}
+
+.snackbar, .nav__toggle {
+	display: flex;
+	flex-direction: column-reverse;
+	background: #303030;
+	
+}
+
+.nav__toggle {
+	position: relative;
+	z-index: 2;
+}
+
+.snackbar {
+	transform: translateY(100%);
+	transition: all .3s ease-in;
+	border-top: 1px solid #444444;
+	box-shadow: 0px -1px 0px 0px rgba(#D9D9D9, 1);
+}
+
+.snackbar__item {
+	padding: 1em 24px;
+	text-transform: uppercase;
+	letter-spacing: .5px;
+	font-size: 1.5rem;
+	color: #fff;
+	text-decoration: none;
+	@extend .-ellipsis;
+	
+	> i {
+		vertical-align: top;
+		margin-right: 0.8rem;
+	}
+	
+	&:hover, &--active {
+		transition: background .2s ease-in-out, color .2s ease-in-out;
+		background: #2A2A2A;
+		color: red;
+	}
+}
+
+.snackbar__item + .snackbar__item {
+	margin-top: 0;
+}
+
+@include breakpoint($on-notebook) {
+	.snackbar {
+		flex-direction: row;
+		transform: translateY(0);
+		
+		&__item {
+			
+			text-align: center;
+			flex: 1;
+		}
+	}
+	
+	.nav__toggle {
+		display: none;
+	}
+}
