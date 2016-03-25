@@ -18,18 +18,18 @@
 
 (function() {
 	// Nav.
-	var	$nav = document.querySelector('nav');
+	var	$nav = document.querySelector('.nav');
 	var $navToggle = document.querySelector('a[href="#nav"]');
 
 	$navToggle.addEventListener("click", function(event) {
 		event.preventDefault();
 		//event.stopPropagation();
-		$nav.classList.toggle("visible");
+		$nav.classList.toggle("nav--visible");
 	});
 
 	window.addEventListener("keydown", function(event) {
 		if(event.keyCode == 27)
-			$nav.classList.remove("visible");
+			$nav.classList.remove("nav--visible");
 	});
 })();
 
