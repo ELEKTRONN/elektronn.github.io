@@ -1,7 +1,23 @@
 @media (min-width: $on-mobile) {
-	.row { display: flex; flex-flow: row wrap }
-	.row.-no-wrap { flex-wrap: nowrap }
-	.col { flex: 1 }
-	.-fixed-width { flex-grow: 0; flex-basis: auto }
-	.-middle { align-items: center; align-content: center }
+	.row {
+		display: flex;
+		flex-direction: row;
+	}
+	
+	.row--wrap { flex-wrap: wrap }
+	.row--no-wrap { flex-wrap: nowrap }
+	.row--middle {
+		align-items: center;
+		align-content: center;
+	}
+	
+	.row__col { flex: 1 }
+	.row__col + .row__col {
+		margin-top: 0;
+	}
+	
+	.row__col--fixed-width {
+		flex-grow: 0;
+		flex-basis: auto;
+	}
 }
