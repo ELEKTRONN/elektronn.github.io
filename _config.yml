@@ -41,13 +41,13 @@ include:
 navigation:
  - text: Home
    url: /
-   icon: ion-android-home
+   icon: home
  - text: Getting Started
    url: /getting-started/
-   icon: ion-ios-lightbulb
+   icon: home
  - text: Development
    url: /development/
-   icon: ion-ios-flask
+   icon: home
  - text: About
    url: /about/
-   icon: ion-ios-people
+   icon: people
