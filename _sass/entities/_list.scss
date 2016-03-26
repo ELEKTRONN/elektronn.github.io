@@ -1,28 +1,12 @@
 ul {
 	list-style: square;
-	padding-left: 1.65em;
+	margin-left: 2em;
 
 	li * + * {
 		margin-top: .5em;
 	}
 
-	ul {
-	}
-
 	li + li {
 		margin-top: .5em;
 	}
-
-	&.-no-bullets { list-style: none; }
-	&.-horizontal {
-		@extend .-no-bullets;
-		padding-left: 0;
-
-		> li {
-			display: block;
-			margin: 4px;
-			@include breakpoint($on-notebook) { display: inline-block }
-		}
-	}
 }
-

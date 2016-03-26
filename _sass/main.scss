@@ -1,9 +1,9 @@
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,300italic,400italic);
 
-$on-palm:          480px;
+$min-width:          320px;
 $on-mobile:        540px;
-$on-notebook:      720px;
+$on-notebook:      960px;
 $on-desktop:      1200px;
 
 @mixin breakpoint($device) {
@@ -20,16 +20,25 @@ $on-desktop:      1200px;
 @import 'page';
 @import 'typography';
 
-// Components.
+@import 'components/text';
 @import 'components/animations';
+@import 'components/spacing';
+@import 'components/display';
+
+@import 'entities/snackbar';
+@import 'entities/banner';
+@import 'entities/section';
+@import 'entities/list';
+
+
+/*
+// Components.
 @import 'components/background';
 @import 'components/border';
 //@import 'components/colors';
-@import 'components/display';
 @import 'components/position';
 //@import 'components/size';
-@import 'components/spacing';
-@import 'components/text';
+
 //
 //// Entities.
 ////@import 'entities/gradient-bar';
@@ -37,7 +46,6 @@ $on-desktop:      1200px;
 @import 'entities/image';
 @import 'entities/tag';
 @import 'entities/comparison-slider';
-@import 'entities/list';
 @import 'entities/nav';
-@import 'entities/section';
 @import 'entities/text';
+*/

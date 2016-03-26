@@ -23,12 +23,18 @@
 	}
 }
 
+.banner__content {
+	background: #fff;
+	margin-top: 0;
+	box-shadow: 0 -3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
 
 
 .card {
 	background: #fff;
 	box-shadow: 0 -1px 9px 0 rgba(0, 0, 0, 0.23);
 	margin-top: 2em;
+	font-size: 1.4rem;
 	@extend .-small-rhythm;
 	
 	h2 {
@@ -40,7 +46,7 @@
 	}
 	
 	&__text {
-		padding: 1em;
+		padding: 1em 2em;
 	}
 	
 	&__footer {
@@ -78,10 +84,10 @@
 
 .banner {
 	margin-top: 0;
-	padding-top: 4em;
+	padding-top: 2em;
 	display: flex;
 	flex-direction: column;
-	min-height: 100vh;
+	min-height: 80vh;
 	width: 100%;
 	background: #f2f2f2 url("/images/background.png") -600px 50% no-repeat;
 	

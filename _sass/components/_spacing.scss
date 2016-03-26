@@ -2,6 +2,14 @@
 .-left { margin-left: 0; margin-right: auto; }
 .-center { margin-left: auto; margin-right: auto; }
 
+.-no-rhythm	* + * {
+	margin-top: 0;
+}
+
+.-small-rhythm	* + * {
+	margin-top: .5em;
+}
+
 .-m-0 { margin: 0 }
 .-m-1 { margin: 1px }
 .-m-4 { margin: 4px }
