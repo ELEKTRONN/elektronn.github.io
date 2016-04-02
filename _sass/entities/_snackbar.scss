@@ -1,0 +1,74 @@
+.nav {
+	@extend .-no-rhythm;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	
+	&--visible {
+		.snackbar {
+			transform: translateY(0);
+		}
+		
+	}
+}
+
+.snackbar, .nav__toggle {
+	display: flex;
+	flex-direction: column-reverse;
+	background: #f1f1f1;
+	
+}
+
+.nav__toggle {
+	position: relative;
+	z-index: 10;
+}
+
+.snackbar {
+	transform: translateY(100%);
+	transition: all .3s ease-in;
+	z-index: 9;
+    
+}
+
+.snackbar__item {	
+	@extend .-ellipsis;
+		border-radius: 0 !important;
+		
+		border-left: 0 !important;
+		
+    &:first-child {
+    }
+
+    &:last-child {  }
+
+	> i {
+		vertical-align: top;
+		margin-right: 0.8rem;
+	}
+	
+	&:hover, &--active {
+	
+	}
+}
+
+.snackbar__item + .snackbar__item {
+	margin-top: 0;
+}
+
+@include breakpoint($on-notebook) {
+	.snackbar {
+		flex-direction: row;
+		transform: translateY(0);
+		
+		&__item {
+			
+			text-align: center;
+			flex: 1;
+		}
+	}
+	
+	.nav__toggle {
+		display: none;
+	}
+}
