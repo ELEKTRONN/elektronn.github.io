@@ -3,69 +3,76 @@ layout: default
 ---
 
 <section class="banner">
-	<div class="banner__col banner__col--left">
-		<div class="container--small -center">
-			<img class="-block -center" width="96" height="96" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
-
-			<h1 class="-text-center"><img src="{{ "images/Title.png" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
-			<h2 class="-text-center">A Neural Network Toolkit</h2>
-			
-			<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes powerful Neural Networks accessible to scientists outside of the machine learning community.</p>
-
-			<p>Our focus lies on high troughput analysis of large scale 2D and 3D images with <em>convolutional neural networks (CNNs).</em></p>
-		
-			<ul class="">
-				<li><a href="{{ site.documentation-url }}" class="button -primary -icon"><i class="icon ion ion-ios-book-outline"></i><span>Documentation</span></a></li>
-				<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button -icon"><i class="icon ion ion-ios-download-outline"></i><span>Install</span></a></li>
-			</ul>
+	<header class="banner__header">
+		<div class="container--medium -center">
+			<a class="notification" href="#">Current version: <strong>{{ site.data.elektronn.version }}</strong>. Go to our GitHub site to follow our development!</a>
 		</div>
-	</div>
+		
+		<div class="container--large -center">
+			<div class="row">
+				<div class="row__col">
+					<img class="-block -center" width="64" height="64" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
 
-	<div class="banner__col banner__col--right">
-		<div class="card">
-			<div class="card__image">
-				<div class="topbar row">
-					<div class="row__col">
-						<span>Probability Map</span>
-					</div>
+					<h1 class="-text-center"><img src="{{ "images/Title.png" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
+			
+					<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes powerful Neural Networks accessible to scientists outside of the machine learning community.</p>
+
+					<p>Our focus lies on high troughput analysis of large scale 2D and 3D images with <em>convolutional neural networks</em> (CNNs).</p>
+					
+					
+					<ul class="--horizontal -text-center">
+						<li><a href="{{ site.documentation-url }}" class="button">Documentation</a></li>
+						<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button">Install</a></li>
+					</ul>
+					
+					
+					<div class="popover">
+						<h6>About Machine Learning</h6>
 				
-					<div class="row__col -text-right">
-						<span>Raw image</span>
+						<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes). This mapping is found by training on a set of exemplary “input-output pairs” — <em>training examples</em> — that that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
 					</div>
 				</div>
-		
-				<img src="{{ "images/combined.jpg" | prepend: site.baseurl }}" alt="Original Image">
-		
+				
+				<div class="row__col">
+					
+					
+					<div class="comparison-card">
+						<img class="comparison-card__image" src="{{ "images/combined.jpg" | prepend: site.baseurl }}" alt="Original Image">
+					</div>
+					
+					<div class="comparison-card-caption">
+						<p><strong>Membrane and mitochondria probability maps.</strong> Predicted with a CNN with recursive training.</p>
+						
+						<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
+					</div>
+				</div>
+				
 			</div>
-		
-			<div class="card__text">
-				<h2>About Machine Learning</h2>
-				
-				<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance, artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes).</p>
-				
-				<p>This mapping is found by training on a set of exemplary “input-output pairs” — training examples — that that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
 			
-			</div>
-			
-			<footer class="card__footer">
-				<p>&dagger;<em>Membrane and mitochondria probability maps.</em> Predicted with a CNN with recursive training.</p>
-				
-				<p>Data: <em>zebra finch area X dataset j0126</em> by Jörgen Kornfeld.</p>
-			</footer>
+	
 		</div>
-	</div>
-</section>
-
+	</header>
 
 	
 	<article class="banner__content">
-		<div class="container--large -center">
-			<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance, artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes).</p>
-		
-			<p>This mapping is found by training on a set of exemplary “input-output pairs” — training examples — that that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
-		
-			<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance, artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes).</p>
-		
-			<p>This mapping is found by training on a set of exemplary “input-output pairs” — training examples — that that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
+		<div class="row">
+			<div class="row__col">
+				<h3>Flexible Training</h3>
+				
+				<p><strong>ELEKTRONN</strong> can be used for machine learning tasks formulated on image data or abstract feature vectors. We provide a <strong>ready-made, flexible training pipeline</strong> with helpful utility functions and a comprehensive <a href="http://elektronn.github.io/documentation">documentation</a>. See our <a href="http://elektronn.github.io/documentation">list of features</a> for more details.</p>
+			</div>
+
+			<div class="row__col">
+				<h3>Easy Usage & Optimized Runtimes</h3>
+	
+				<p><strong>ELEKTRONN</strong> is written in <strong>Python</strong>	and based on the <a href="http://www.deeplearning.net/software/theano/index.html">Theano</a> framework. It can be accelerated with NVIDIA GPUs and delivers state-of-the art performance, including fast training and inference on massive image datasets.</p>
+			</div>
+			
+			<div class="row__col">
+				<h3>Open Source</h3>
+	
+				<p><strong>ELEKTRONN</strong> is a scientific open source project and licensed under the GPL. The code is available at <a href="https://github.com/ELEKTRONN/ELEKTRONN">our GitHub repository</a> or can be installed with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>.</p>
+			</div>
 		</div>
 	</article>
+</section>
