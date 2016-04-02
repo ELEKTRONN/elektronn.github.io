@@ -1,12 +1,19 @@
 ul {
-	list-style: square;
-	margin-left: 2em;
-
-	li * + * {
-		margin-top: .5em;
+	&.--horizontal {
+		@extend .-no-rhythm;
+		list-style: none;
+		
+		li {
+			display: inline-block;
+			text-align: center;
+		}
 	}
+}
 
-	li + li {
+ul {
+	margin-left: 2em;
+	
+	* + * {
 		margin-top: .5em;
 	}
 }
