@@ -37,9 +37,30 @@ hr {
 }
 
 a {
-	color: #2D72D9;
+	text-decoration: none;
+}
+
+a:not(.tag):not(.button):not(.nav__toggle) {
+	/*color: #2D72D9;
 	border-bottom: 1px solid rgba(#2d72d9, 1);
 	text-decoration: none;
 	&:hover {
+	}*/
+	position: relative;
+	
+	&:hover::after {
+		background-color: #72bee1;
+	}
+	
+	&::after {
+		transition: background-color 0.2s ease-in-out;
+		background-color: #e3e3e3;
+		border-radius: 0.175em;
+		bottom: -3px;
+		content: '';
+		height: 0.175em;
+		left: 0;
+		position: absolute;
+		width: 100%;
 	}
 }
