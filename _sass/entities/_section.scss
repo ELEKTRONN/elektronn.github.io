@@ -12,6 +12,25 @@
 	}
 }
 
+.page {
+	background: #e6e8ed;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background: url("/images/background.png") 50% 50% no-repeat;
+	
+	&__header {
+		flex: 1;
+	}
+	
+	&__body {
+		background: #fff;
+		border: 6px solid #e0e3e8;
+		border-radius: 4px;
+		padding: 2em 1em 5em;
+	}
+}
+
 .page-header {
 	@extend .banner__content;
 	
@@ -21,7 +40,7 @@
 	padding: 2em 2em;
 	font-size: 1.4rem;
 	
-	ul {
+	> * {
 		opacity: .8;
 	}
 }
