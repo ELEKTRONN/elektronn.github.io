@@ -9,7 +9,7 @@ layout: default
 		</div>
 		
 		<div class="container--large -center">
-			<div class="row">
+			<div class="row row--gutter">
 				<div class="row__col">
 					<img class="-block -center" width="64" height="64" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
 
@@ -38,13 +38,15 @@ layout: default
 					
 					<div class="comparison-card">
 						<img class="comparison-card__image" src="{{ "images/combined.jpg" | prepend: site.baseurl }}" alt="Original Image">
+						
+						<div class="comparison-card__caption">
+							<p><strong>Membrane and mitochondria probability maps.</strong> Predicted with a CNN with recursive training.</p>
+						
+							<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
+						</div>
 					</div>
 					
-					<div class="comparison-card-caption">
-						<p><strong>Membrane and mitochondria probability maps.</strong> Predicted with a CNN with recursive training.</p>
-						
-						<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
-					</div>
+					
 				</div>
 				
 			</div>
@@ -55,7 +57,7 @@ layout: default
 
 	
 	<article class="banner__content">
-		<div class="row">
+		<div class="row row--gutter">
 			<div class="row__col">
 				<h3>Flexible Training</h3>
 				
