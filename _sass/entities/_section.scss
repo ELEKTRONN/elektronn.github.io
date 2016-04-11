@@ -21,35 +21,43 @@
 	background: url("/images/background.png") 50% 50% no-repeat;
 	
 	&__header {
-		flex: 1;
+		margin-top: 1em;
+		text-align: center;
+		
+		&__heading {
+			margin-bottom: 4em;
+		}
 	}
 	
 	&__body {
+		flex: 1;
 		background: #fff;
 		border: 6px solid #e0e3e8;
 		border-radius: 4px;
-		padding: 2em 1em 5em;
+		padding: 4em 2em 6em;
+		font-size: 1.4rem;
+		color: rgba(#5d6778, .8);
+		
+		h2 {
+			position: relative;
+			
+			.heading-icon {
+				margin-top: 0;
+				position: absolute;
+				width: 64px;
+				height: 64px;
+				background: red;
+				top: -4px;
+				left: -92px;
+				color: white;
+				border-top-left-radius: 3px;
+				border-bottom-left-radius: 3px;
+				background: #2E435F;
+				text-align: center;
+				line-height: 64px;
+			}
+		}
 	}
-}
-
-.page-header {
-	@extend .banner__content;
-	
-	border-width: 0 0 6px;
-	border-bottom: 6px solid #e0e3e8;
-	margin-bottom: 4em;
-	padding: 2em 2em;
-	font-size: 1.4rem;
-	
-	> * {
-		opacity: .8;
-	}
-}
-
-.content {
-	padding-left: 1em;
-	padding-right: 1em;
-	margin-bottom: 4em;
 }
 
 .member-gallery {
