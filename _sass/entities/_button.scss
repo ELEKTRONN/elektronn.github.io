@@ -1,6 +1,6 @@
 button, .button {
 	display: inline-block;
-	font-size: 12px;
+	font-size: 1.4rem;
 	padding: 8px 16px;
 	color: #555;
 	text-align: center;
@@ -37,6 +37,7 @@ button, .button {
     }
 }
 
-a.button {
-	text-decoration: none;
+a.button:hover {
+	transition-property: none;
+	border-bottom: 1px solid #bbb;
 }

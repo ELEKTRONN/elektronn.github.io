@@ -4,12 +4,12 @@
 	bottom: 0;
 	z-index: 10;
 	width: 100%;
+	z-index: 10;
 	
 	&--visible {
 		.snackbar {
 			transform: translateY(0);
-		}
-		
+		}	
 	}
 }
 
@@ -22,34 +22,25 @@
 
 .nav__toggle {
 	position: relative;
-	z-index: 10;
 }
 
 .snackbar {
 	transform: translateY(100%);
 	transition: all .3s ease-in;
-	z-index: 9;
-    
 }
 
 .snackbar__item {	
 	@extend .-ellipsis;
-		border-radius: 0 !important;
+	
+	border-radius: 0;
+	
+	& + & {
+		border-left: 0;
+	}
 		
-		border-left: 0 !important;
-		
-    &:first-child {
-    }
-
-    &:last-child {  }
-
 	> i {
 		vertical-align: top;
 		margin-right: 0.8rem;
-	}
-	
-	&:hover, &--active {
-	
 	}
 }
 

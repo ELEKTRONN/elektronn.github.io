@@ -80,6 +80,10 @@ $popoverTipSize: 8px;
 	flex: 1;
 	padding: 4em 1em;
 	background: url("/images/background.png") 50% 0% no-repeat;
+	
+	.row__col:last-of-type {
+		align-self: end;
+	}
 }
 
 

@@ -21,37 +21,17 @@ $on-desktop:  1200px;
 @import 'page';
 @import 'typography';
 
-@import 'components/text';
 @import 'components/animations';
-@import 'components/spacing';
 @import 'components/display';
+@import 'components/spacing';
+@import 'components/text';
 
-@import 'entities/snackbar';
 @import 'entities/banner';
-@import 'entities/section';
-@import 'entities/popover';
-@import 'entities/list';
 @import 'entities/button';
+@import 'entities/list';
+@import 'entities/popover';
+@import 'entities/section';
+@import 'entities/snackbar';
+@import 'entities/table';
 @import 'entities/tag';
 @import 'entities/tooltip';
-@import 'entities/table';
-
-
-/*
-// Components.
-@import 'components/background';
-@import 'components/border';
-//@import 'components/colors';
-@import 'components/position';
-//@import 'components/size';
-
-//
-//// Entities.
-////@import 'entities/gradient-bar';
-@import 'entities/button';
-@import 'entities/image';
-@import 'entities/tag';
-@import 'entities/comparison-slider';
-@import 'entities/nav';
-@import 'entities/text';
-*/

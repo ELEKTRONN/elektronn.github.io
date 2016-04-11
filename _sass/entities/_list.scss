@@ -1,6 +1,7 @@
 ul {
 	&.--horizontal {
 		@extend .-no-rhythm;
+		margin-left: 0;
 		list-style: none;
 		
 		li {

@@ -5,7 +5,7 @@ $tooltipTipSize: 7px;
 	@extend .-no-rhythm;
 	position: relative;
 	padding: 3px 10px 4px;
-	max-width: 200px;
+	//max-width: 200px;
 	font-size: 13px;
 	color: white;
 	text-shadow: 0 1px rgba(0, 0, 0, 0.5);
@@ -24,6 +24,22 @@ $tooltipTipSize: 7px;
       height: 0;
       border: $tooltipTipSize solid transparent;
     }
+	
+	h1, h2, h3, h4, h5, h6 {
+		color: white;
+	}
+	
+	a {
+		color: rgba(#fff, .8);
+		
+		&:hover {
+			color: rgba(#fff, 1);
+		}
+	}
+	
+	li a {
+		border: 0;
+	}
 }
 
 
