@@ -4,9 +4,11 @@ layout: default
 
 <section class="banner">
 	<header class="banner__header">
+		<!--
 		<div class="container--medium -center">
-			<a class="notification" href="{{ site.github-url }}">Current version: <strong>{{ site.data.elektronn.version }}</strong>. Go to our GitHub site to follow our development!</a>
-		</div>
+					<a class="notification" href="{{ site.github-url }}">Current version: <strong>{{ site.data.elektronn.version }}</strong>. Go to our GitHub site to follow our development!</a>
+				</div>-->
+		
 		
 		<div class="container--large -center">
 			<div class="row row--gutter">
@@ -15,7 +17,7 @@ layout: default
 
 					<h1 class="-text-center"><img src="{{ "images/Title.png" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
 			
-					<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes powerful Neural Networks accessible to scientists outside of the machine learning community.</p>
+					<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes powerful neural networks accessible to scientists outside of the machine learning community.</p>
 
 					<p>Our focus lies on high troughput analysis of large scale 2D and 3D images with <em>convolutional neural networks</em> (CNNs).</p>
 					
@@ -29,7 +31,7 @@ layout: default
 					<div class="popover">
 						<h6>About Machine Learning</h6>
 				
-						<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes). This mapping is found by training on a set of exemplary “input-output pairs” — <em>training examples</em> — that that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
+						<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes). This mapping is found by training on a set of exemplary “input-output pairs” — <em>training examples</em> — that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
 					</div>
 				</div>
 				
@@ -45,19 +47,14 @@ layout: default
 							<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
 						</div>
 					</div>
-					
-					
 				</div>
-				
 			</div>
-			
-	
 		</div>
 	</header>
 
 	
 	<article class="banner__content">
-		<div class="row row--gutter">
+		<div class="container--large -center row row--gutter">
 			<div class="row__col">
 				<h3>Flexible Training</h3>
 				
