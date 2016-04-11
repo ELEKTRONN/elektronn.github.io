@@ -67,13 +67,9 @@ $popoverTipSize: 8px;
 		@extend .-no-rhythm;
 		margin-top: 0;
 		background: #fff;
-		//border-top: 6px solid #e0e3e8;
-		border-top: 6px solid rgba(#2E435F, .5);
+		font-size: 1.4rem;
+		border-top: 6px solid #e0e3e8;
 		padding: 4em 4em 7em;
-		color: #5d6778;
-	
-		p {
-			opacity: .8;
-		}
+		color: rgba(#5d6778, .8);
 	}
 }
