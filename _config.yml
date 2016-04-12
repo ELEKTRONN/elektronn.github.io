@@ -44,10 +44,10 @@ navigation:
    icon: home
  - text: Getting Started
    url: /getting-started/
-   icon: home
+   icon: explore
  - text: Development
    url: /development/
-   icon: home
+   icon: code
  - text: About
    url: /about/
    icon: people
