@@ -23,8 +23,8 @@ layout: default
 					
 					
 					<ul class="--horizontal -text-center">
-						<li><a href="{{ site.documentation-url }}" class="button">Documentation</a></li>
-						<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button">Install</a></li>
+						<li><a href="{{ site.documentation-url }}" class="button"><i class="material-icons">book</i> Documentation</a></li>
+						<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button"><i class="material-icons">get_app</i> Install</a></li>
 					</ul>
 					
 					
@@ -37,14 +37,15 @@ layout: default
 				
 				<div class="row__col">
 					
-					
-					<div class="comparison-card">
-						<img class="comparison-card__image" src="{{ "images/combined.jpg" | prepend: site.baseurl }}" alt="Original Image">
+					<div class="shadow">
+						<div class="comparison-card">
+							<img class="comparison-card__image" src="{{ "images/combined.jpg" | prepend: site.baseurl }}" alt="Original Image">
 						
-						<div class="comparison-card__caption">
-							<p><strong>Membrane and mitochondria probability maps.</strong> Predicted with a CNN with recursive training.</p>
+							<div class="comparison-card__caption">
+								<p><strong>Membrane and mitochondria probability maps.</strong> Predicted with a CNN with recursive training.</p>
 						
-							<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
+								<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -41,3 +41,9 @@ a.button:hover {
 	transition-property: none;
 	border-bottom: 1px solid #bbb;
 }
+
+.button .material-icons {
+	font-size: 1.6rem;
+	vertical-align: middle;
+	padding: 0 2px 2px 0;
+}
