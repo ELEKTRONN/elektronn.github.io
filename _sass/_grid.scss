@@ -17,6 +17,7 @@
 	}
 	
 	.row__col { flex: 1 }
+	.row__col--auto { flex-grow: 0 }
 	.row__col + .row__col {
 		margin-top: 0;
 	}
