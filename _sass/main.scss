@@ -3,7 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300,300italic,400italic);
 
 $min-width:   320px;
-$on-mobile:   720px;
+$on-mobile:   540px;
 $on-notebook: 960px;
 $on-desktop:  1200px;
 
@@ -21,10 +21,7 @@ $on-desktop:  1200px;
 @import 'page';
 @import 'typography';
 
-@import 'components/animations';
-@import 'components/display';
-@import 'components/spacing';
-@import 'components/text';
+@import 'components';
 
 @import 'entities/banner';
 @import 'entities/button';
@@ -36,3 +33,4 @@ $on-desktop:  1200px;
 @import 'entities/table';
 @import 'entities/tag';
 @import 'entities/tooltip';
+@import 'entities/box';
