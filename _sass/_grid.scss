@@ -5,15 +5,22 @@
 	}
 	
 	.row--gutter {
-		.row__col + .row__col {
-			margin-left: 2em;
+		.row__col {
+			margin: 1em .5em !important;
 		}
+		
+		//.row__col + .row__col {
+//			margin-left: 2em;
+//		}
 	}
 	.row--wrap { flex-wrap: wrap }
 	.row--no-wrap { flex-wrap: nowrap }
 	.row--middle {
 		align-items: center;
 		align-content: center;
+	}
+	.row--center {
+		justify-content: center;
 	}
 	
 	.row__col { flex: 1 }

@@ -11,8 +11,8 @@ layout: default
 		
 		
 		<div class="container--large -center">
-			<div class="row row--gutter">
-				<div class="row__col">
+			<div class="row row--gutter row--middle row--center row--wrap">
+				<div class="row__col -min-width">
 					<img class="-block -center" width="64" height="64" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
 
 					<h1 class="-text-center"><img src="{{ "images/Title.png" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
@@ -23,16 +23,12 @@ layout: default
 					
 					
 					<ul class="--horizontal -text-center">
-						<li><a href="{{ site.documentation-url }}" class="button"><i class="material-icons">book</i> Documentation</a></li>
-						<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button"><i class="material-icons">get_app</i> Install (v{{ site.data.elektronn.version }})</a></li>
+						<li><a href="{{ site.documentation-url }}" class="button button--primary"><i class="material-icons">book</i> Documentation</a></li>
+						<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button button--primary"><i class="material-icons">get_app</i> Install (v{{ site.data.elektronn.version }})</a></li>
 					</ul>
 					
 					
-					<div class="popover">
-						<h6>About Machine Learning</h6>
-				
-						<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes). This mapping is found by training on a set of exemplary “input-output pairs” — <em>training examples</em> — that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
-					</div>
+					
 				</div>
 				
 				<div class="row__col row__col--auto">
@@ -50,6 +46,12 @@ layout: default
 								<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
 							</div>
 						</div>
+					</div>
+					
+					<div class="popover">
+						<h6>About Machine Learning</h6>
+				
+						<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes). This mapping is found by training on a set of exemplary “input-output pairs” — <em>training examples</em> — that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
 					</div>
 				</div>
 			</div>
