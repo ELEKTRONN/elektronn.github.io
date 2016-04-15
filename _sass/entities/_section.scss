@@ -18,14 +18,15 @@
 	flex-direction: column;
 	min-height: 100vh;
 	background: url("/images/background.png") 50% 50% no-repeat;
+	margin-top: 0;
 	
 	&__header {
-		margin-top: 1em;
+		margin-top: 2em;
 		text-align: center;
 		
-		&__heading {
-			margin-bottom: 4em;
-		}
+		hr {
+			margin-top: 1em;
+		} 
 	}
 	
 	&__body {
@@ -45,7 +46,6 @@
 				position: absolute;
 				width: 64px;
 				height: 64px;
-				background: red;
 				top: -4px;
 				left: -92px;
 				color: white;
