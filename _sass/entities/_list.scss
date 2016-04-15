@@ -1,12 +1,26 @@
 ul {
 	&.--horizontal {
-		@extend .-no-rhythm;
+		
 		margin-left: 0;
 		list-style: none;
 		
 		li {
-			display: inline-block;
+			display: block;
 			text-align: center;
+		}
+		
+		@include breakpoint($on-mobile) {
+			* + * {
+				margin-top: 0;
+			}
+			
+			li {
+				display: inline-block;
+			}
+			
+			li > .button {
+				margin: .5em .5em;
+			}
 		}
 	}
 }
@@ -14,7 +28,9 @@ ul {
 ul {
 	margin-left: 2em;
 	
-	* + * {
-		margin-top: .25em;
+	@include breakpoint($on-mobile) {
+		* + * {
+			margin-top: .25em;
+		}
 	}
 }
