@@ -3,16 +3,10 @@ layout: default
 ---
 
 <section class="banner">
-	<header class="banner__header">
-		<!--
-		<div class="container--medium -center">
-					<a class="notification" href="{{ site.github-url }}">Current version: <strong>{{ site.data.elektronn.version }}</strong>. Go to our GitHub site to follow our development!</a>
-				</div>-->
-		
-		
+	<header class="banner__header">		
 		<div class="container--large -center">
 			<div class="row row--gutter row--middle row--center row--wrap">
-				<div class="row__col -min-width">
+				<div class="row__col">
 					<img class="-block -center" width="64" height="64" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
 
 					<h1 class="-text-center"><img src="{{ "images/Title.png" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
@@ -25,6 +19,7 @@ layout: default
 					<ul class="--horizontal -text-center">
 						<li><a href="{{ site.documentation-url }}" class="button button--primary"><i class="material-icons">book</i> Documentation</a></li>
 						<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button button--primary"><i class="material-icons">get_app</i> Install (v{{ site.data.elektronn.version }})</a></li>
+						<li><a href="{{ site.data.elektronn.github-url }}" class="button button--primary"><i class="material-icons">code</i> GitHub Repository</a></li>
 					</ul>
 					
 					<div class="popover">
@@ -37,15 +32,15 @@ layout: default
 				<div class="row__col row__col--auto">
 					<div class="shadow">
 						<div class="comparison-card">
-							<div class='alfa' title='Propability Map'>
-								<div class='bravo' title='Original Image'>
-									<textarea readonly cols='0' rows='0' class='charly'></textarea>
+							<div class='comparison-card__left' title='Propability Map'>
+								<div class='comparison-card__right' title='Original Image'>
+									<textarea readonly cols='0' rows='0' class='comparison-card__handle'></textarea>
 								</div>
 							</div>
-						
+
 							<div class="comparison-card__caption">
 								<p><strong>Membrane and mitochondria probability maps.</strong> Predicted with a CNN with recursive training.</p>
-						
+
 								<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
 							</div>
 						</div>
@@ -73,7 +68,7 @@ layout: default
 			<div class="row__col">
 				<h3>Open Source</h3>
 	
-				<p><strong>ELEKTRONN</strong> is a scientific open source project and licensed under the GPL. The code is available at <a href="https://github.com/ELEKTRONN/ELEKTRONN">our GitHub repository</a> or can be installed with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>.</p>
+				<p><strong>ELEKTRONN</strong> is a scientific open source project and licensed under the GPL. The code is available at <a href="{{ site.data.elektronn.github-url }}">our GitHub repository</a> or can be installed with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>.</p>
 			</div>
 		</div>
 	</article>
