@@ -45,7 +45,7 @@ a {
 	text-decoration: none;
 }
 
-a:not(.tag):not(.button):not(.nav__toggle):not(.notification) {
+a:not(.tag):not(.button):not(.nav__toggle):not(.notification):not(.snackbar__item) {
 	color: #5BA4FF;
 	border-bottom: .175em solid #e3e3e3;
 	transition: all 0.2s ease-in-out;
