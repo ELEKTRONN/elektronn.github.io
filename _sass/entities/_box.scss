@@ -1,0 +1,53 @@
+.box {
+	display: inline-block;
+	border-radius: 3px;
+	color: rgba(#2E435F, .8);
+	text-align: center;
+	position: relative;
+
+	.material-icons {
+		font-size: 96px;
+	}
+
+	
+	&::after, &::before {
+		font-family: 'Material Icons';
+		position: absolute;
+		z-index: -1;
+		font-size: 96px;
+	}
+	
+	&::after {
+		top: -35px;
+		right: -5px;
+		color: rgba(#5BA4FF, .5);
+	}
+	
+	&::before {
+		bottom: -30px;
+		left: -5px;
+		color: rgba(#FF6100, .5);
+	}
+	
+	&--about {
+		&::after, &::before {
+			content: "people";
+		}
+	}
+	
+	&--development {
+		&::after, &::before {
+			content: "code";
+		}
+	}
+	
+	&--start {
+		&::after, &::before {
+			content: "explore";
+		}
+	}
+}
+
+.box + h2 {
+	margin-top: 0;
+}

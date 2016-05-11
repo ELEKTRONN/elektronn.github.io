@@ -1,0 +1,15 @@
+.notification {
+	background: #d1ecfe;
+	background-image: linear-gradient(to bottom, #dff2fe, #b0dcfe);
+	border: 1px solid #e8c6a0;
+	border-color: #a0c9f5 #95bfe5 #91b6dd;
+	border-radius: 3px;
+	box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.05);
+	color: #465a6b;
+	display: block;
+	line-height: 29px;
+	padding: 0 10px;
+	text-decoration: none;
+	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+	font-size: 1.4rem;
+}

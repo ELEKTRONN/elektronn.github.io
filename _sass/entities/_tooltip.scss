@@ -1,0 +1,131 @@
+$tooltipTipSize: 7px;
+
+
+.tooltip {
+	@extend .-no-rhythm;
+	position: relative;
+	padding: 3px 10px 4px;
+	font-size: 13px;
+	color: white;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+	background: #575757;
+	border: 1px solid #222;
+	border-bottom-color: #111;
+	border-radius: 3px;
+	background-image: linear-gradient(to bottom, #727272, #4c4c4c 90%, #404040);
+	box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 1px 1px rgba(0, 0, 0, 0.2);
+	
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: $tooltipTipSize solid transparent;
+    }
+	
+	h1, h2, h3, h4, h5, h6 {
+		color: white;
+	}
+	
+	a {
+		color: rgba(#fff, .8);
+		
+		&:hover {
+			color: rgba(#fff, 1);
+		}
+	}
+	
+	li a {
+		border: 0;
+	}
+}
+
+
+.tooltip-up {
+  &:before,
+  &:after,
+  > p:before {
+    left: 50%;
+    margin-left: - $tooltipTipSize;
+  }
+
+  > p:before { // Outer shadow
+    bottom: - $tooltipTipSize * 2 - 1px;
+    border-top-color: rgba(black, .2);
+    @extend .tooltip:before;
+  }
+
+  &:before { // Border
+    bottom: - $tooltipTipSize * 2;
+    border-top-color: black;
+  }
+
+  &:after { // Background
+    z-index: 2;
+    bottom: - $tooltipTipSize * 2 + 1px;
+    border-top-color: #404040;
+  }
+}
+
+.tooltip-down {
+  &:before,
+  &:after,
+  > p:before {
+    left: 50%;
+    margin-left: - $tooltipTipSize;
+  }
+
+  &:before { // Border
+    top: - $tooltipTipSize * 2;
+    border-bottom-color: black;
+  }
+
+  > p:before { // Inner shadow
+    top: - $tooltipTipSize * 2 + 1px;
+    border-bottom-color: #7d7d7d;
+    @extend .tooltip:before;
+  }
+
+  &:after { // Background
+    z-index: 2;
+    top: - $tooltipTipSize * 2 + 2px;
+    border-bottom-color: #707070;
+  }
+}
+
+.tooltip-left {
+  &:before,
+  &:after {
+    top: 50%;
+    margin-top: - $tooltipTipSize;
+  }
+
+  &:before { // Border
+    left: - $tooltipTipSize * 2;
+    border-right-color: black;
+  }
+
+  &:after { // Background
+    left: - $tooltipTipSize * 2 + 1px;
+    border-right-color: #5c5c5c;
+  }
+}
+
+.tooltip-right {
+  &:before,
+  &:after {
+    top: 50%;
+    margin-top: - $tooltipTipSize;
+  }
+
+  &:before { // Border
+    right: - $tooltipTipSize * 2;
+    border-left-color: black;
+  }
+
+  &:after { // Background
+    right: - $tooltipTipSize * 2 + 1px;
+    border-left-color: #5C5C5C;
+  }
+}

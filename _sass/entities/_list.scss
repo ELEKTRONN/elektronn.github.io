@@ -1,28 +1,36 @@
 ul {
-	list-style: square;
-	padding-left: 1.65em;
-
-	li * + * {
-		margin-top: .5em;
-	}
-
-	ul {
-	}
-
-	li + li {
-		margin-top: .5em;
-	}
-
-	&.-no-bullets { list-style: none; }
-	&.-horizontal {
-		@extend .-no-bullets;
-		padding-left: 0;
-
-		> li {
+	&.--horizontal {
+		
+		margin-left: 0;
+		list-style: none;
+		
+		li {
 			display: block;
-			margin: 4px;
-			@include breakpoint($on-notebook) { display: inline-block }
+			text-align: center;
+		}
+		
+		@include breakpoint($on-mobile) {
+			* + * {
+				margin-top: 0;
+			}
+			
+			li {
+				display: inline-block;
+			}
+			
+			li > .button {
+				margin: .5em .5em;
+			}
 		}
 	}
 }
 
+ul {
+	margin-left: 2em;
+	
+	@include breakpoint($on-mobile) {
+		* + * {
+			margin-top: .25em;
+		}
+	}
+}

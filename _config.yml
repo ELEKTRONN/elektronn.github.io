@@ -6,10 +6,18 @@
 # 'jekyll serve'. If you change this file, please restart the server process.
 
 # Site settings
-title: ELEKTRONN - Convolutional Neural Network Toolkit in Python. Fast GPU acceleration and easy usage.
+title: >
+  ELEKTRONN - Convolutional Neural Network Toolkit in Python. Fast GPU
+  acceleration and easy usage.
 email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
-  A configurable toolkit for 3d/2d Convolutional Neural Networks (CNN). CNNs are used in Machine Learning to solve difficult classification and regression tasks. ELEKTRONN is based on Theano and benefits from fast GPU implementations. This toolkit was created by Marius Killinger and Gregor Urban at the Max Planck Institute For Medical Research For Medical Research to solve connectomics tasks. We provide a ready-made flexible training pipeline and comprehensive documentation. 
+  A configurable toolkit for 3D/2D Convolutional Neural Networks (CNN). CNNs are
+  used in Machine Learning to solve difficult classification and regression
+  tasks. ELEKTRONN is based on Theano and benefits from fast GPU
+  implementations. This toolkit was created by Marius Killinger and Gregor Urban
+  at the Max Planck Institute For Medical Research For Medical Research to solve
+  connectomics tasks. We provide a ready-made flexible training pipeline and
+  comprehensive documentation. 
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "http://elektronn.org" # the base hostname & protocol for your site
 github_username: ELEKTRONN
@@ -33,18 +41,13 @@ include:
 navigation:
  - text: Home
    url: /
-   icon: ion-android-home
+   icon: home
  - text: Getting Started
    url: /getting-started/
-   icon: ion-ios-lightbulb
-# - text: Use Cases
-#   url: /use-cases/
+   icon: explore
  - text: Development
    url: /development/
-   icon: ion-ios-flask
+   icon: code
  - text: About
    url: /about/
-   icon: ion-ios-people
-# - text: Links
-#   url: /links/
-#   icon: fa-bookmark
+   icon: people
