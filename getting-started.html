@@ -20,15 +20,15 @@ permalink: /getting-started/
 			<div class="row__col">
 				<h3>Installation</h3>
 			
-				<p><strong>ELEKTRONN</strong> is a Python 2.7 package that can be installed with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>. <a href="#Installation">Installation instructions.</a></p>
+				<p><strong>ELEKTRONN</strong> is a Python 2.7 package that can be installed with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>. <!--<a href="#Installation">Installation instructions.</a>--> </p>
 
-				<p><a class="tag" href="https://github.com/ELEKTRONN/ELEKTRONN"><i class="material-icons">code</i>Source Code</a></p>
+				
 			</div>
 
 			<div class="row__col">
 				<h3>Getting Started</h3>
 
-				<p>Learn how to use <strong>ELEKTRONN</strong> for your data analysis task: read our <a href="#BasicRecipe">basic recipe</a> or try out one of the <a href="http://elektronn.github.io/documentation/Examples.html">examples</a>.</p>
+				<p>How to use <strong>ELEKTRONN</strong> for your data analysis task? Read our <a href="#BasicRecipe">basic recipe</a> or try out one of the <a href="http://elektronn.github.io/documentation/Examples.html">examples</a>.</p>
 			</div>
 		
 			<div class="row__col">
@@ -60,23 +60,25 @@ permalink: /getting-started/
 			
 			<ul>
 				<li>
-					<p>A comfortable way to setup a python environment with common scientific python packages, as needed by <strong>ELEKTRONN</strong>, is the <a href="https://store.continuum.io/cshop/anaconda/">Anaconda distribution by Continuum</a> (make sure to use the Python 2.7 version). If you don't want to install the whole Anaconda distribution you can use Miniconda instead. Install <strong>ELEKTRONN</strong> using conda:</p>
+					<p>A comfortable way to setup a python environment with common scientific python packages, as needed by <strong>ELEKTRONN</strong>, is the <a href="https://store.continuum.io/cshop/anaconda/">Anaconda distribution</a> by Continuum (make sure to use the Python 2.7 version). If you don't want to install the whole Anaconda distribution you can use Miniconda instead. Install <strong>ELEKTRONN</strong> using conda:</p>
 
 					<pre><code>conda config --add channels elektronn</code><br><code>conda install elektronn</code></pre>
 
 				</li>
 
 				<li>
-					<p>This resolves all dependencies and installs <strong>ELEKTRONN</strong>, but you still need to configure Theano (which will be installed as a dependency). The configuration is <a href="http://elektronn.github.io/documentation/Installation.html#theano">described</a> in the in the documentation.</p>
+					<p>This resolves all dependencies and installs <strong>ELEKTRONN</strong>, but you still need to <a href="http://elektronn.github.io/documentation/Installation.html#theano">configure Theano</a> (which will be installed as a dependency).</p>
 				</li>
 
-				<li>[Optionally:  create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/examples/config_template.py">examples/config_template.py</a> and put it into your home directory as <code>elektronn.config</code> (see <a href="http://elektronn.github.io/documentation/Pipeline.html#configuration-of-parameters">configuration</a>).]</li> 
+				<li>[Optionally:  create a user configuration file by editing the file <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> and put it into your home directory as <code>elektronn.config</code> (see <a href="http://elektronn.github.io/documentation/Pipeline.html#configuration-of-parameters">configuration</a>).]</li> 
 
 				<li>[Optionally: try out one of the <a href="http://elektronn.github.io/documentation/Examples.html">examples</a> to confirm everything works.]</li>
 
 				<li>Users of <em>Arch Linux</em> can install the <a href="https://aur.archlinux.org/packages/elektronn/">AUR package elektronn</a> instead.</li>
 
 				<li>For installation without Anaconda (pip or manually) please refer to the <a href="http://elektronn.github.io/documentation/Installation.html">instructions</a> in the documentation.</li>
+				
+				<li><p><a class="tag" href="https://github.com/ELEKTRONN/ELEKTRONN"><i class="material-icons">code</i>GitHub Repository</a></p></li>
 			</ul>
 		</div>
 		
@@ -89,7 +91,7 @@ permalink: /getting-started/
 				<h2>Get started with <strong>ELEKTRONN</strong> <span class="heading-icon"><i class="material-icons">trending_up</i></span></h2>
 				<p>For people new to Neural Networks and CNNs we recommend reading the practical <a href="http://elektronn.github.io/documentation/IntroNN.html">introduction</a> in our documentation.</p>
 
-				<p>An more theoretical introduction, including formulae and references can be found <a href="/downloads/Intro-ANN.pdf">here</a>.</p>
+				<p>A more theoretical introduction, including formulae and references can be found <a href="/downloads/Intro-ANN.pdf">here</a>.</p>
 			</div>
 
 			<div class="row__col popover">
@@ -108,29 +110,31 @@ permalink: /getting-started/
 		
 		<hr>
 		
-		<h2>Your First Training with MNIST <span class="heading-icon"><i class="material-icons">build</i></span></h2>
+		<h3>Your First Training with MNIST <span class="heading-icon"><i class="material-icons">school</i></span></h3>
 		
-		<p>MNIST is a famous benchmark data set for handwritten digit recognition. To try out the example training:</p>
+		<p>MNIST is a famous benchmark data set for the task of handwritten digit recognition. To try out the example training:</p>
 
-		<pre><code>elektronn-train MNIST_CNN_warp_config.py</code></pre>
+		<pre><code>elektronn-train MNIST_CNN_warp_config.py [--gpu=0]</code></pre>
 
-		<p>The first argument is the path to a config file, which is within the package’s examples directory. You can also copy the file, edit it and use your modified version. If you have an NVIDIA GPU add the option <code>--gpu=0</code> which will make the execution significantly faster (make sure you have configured theano when installing <strong>ELEKTRONN</strong>). The plots of the training are saved to <code>~/CNN_Training/2D/MNIST_example_warp</code> (the path can be changed in the config file). For more details read through our <a href="http://elektronn.github.io/documentation">documentation.</a></p>
+		<p>The first argument to the script is the path to a config file which is within the package’s examples directory. You can alternatively copy the file, edit it and use your modified version. If you have an NVIDIA GPU add the option <code>--gpu=0</code> which will make the execution significantly faster (make sure you have <a href="http://elektronn.github.io/documentation/Installation.html#theano">configured theano</a> when installing <strong>ELEKTRONN</strong>). Plots of the training progress are saved to <code>~/CNN_Training/2D/MNIST_example_warp</code> (the destination can be changed in the config file).</p>
+		
+		
+		<p>This is an example of "img-scalar" training: the input data is image like but the output is a scalar (namely the class prediction) describing the whole image. The main focus of <strong>ELEKTRONN</strong> lies however on "img-img" traing which is described in the next section/</p>
 		
 		
 		
 		<hr>
 		
-		<h2>Basic recipe for CNN training with images <span class="heading-icon"><i class="material-icons">code</i></span></h2>
+		<h3>Basic recipe for CNN training with images <span class="heading-icon"><i class="material-icons">format_list_numbered</i></span></h3>
 		
 		
 		<ul>
 			<li>CNN training requires a training data set of spatial input data
 				(2d/3d, optional with a fourth axis for (colour) channels) and
 				labels (also called: ground truth, annotations, targets) that
-				correspond to the individual pixels in the images or to an image as
-				a whole. The labels can be classes - then each pixel contains an
+				correspond to the individual pixels in the images. The labels can be classes - then each pixel contains an
 				integer number encoding the class membership - or alternatively
-				floats for regression targets (<a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">More information</a>).</li>
+				floats for regression targets.</li>
 
 			<li>
 				<p>Convert your data arrays to h5 data sets in separate files for images and labels:</p>
@@ -141,6 +145,7 @@ permalink: /getting-started/
 					<li>for classification: labels contain integer numbers, ranging from 0 to (#classes-1)</li>
 					<li>for regression: labels contain float numbers</li>
 					<li>for 2d images the z-dimension can be viewed as the axis along which the instances of the training set are stacked</li>
+					<li><a href="http://elektronn.github.io/documentation/Pipeline.html#data-format">details on data format</a><\li>
 				</ul>
 			</li>
 
@@ -159,7 +164,7 @@ permalink: /getting-started/
 				settings or detect misconfigurations. Training neural networks is
 				work and needs time. For a better understanding of how they should
 				be trained and which architecture you should pick, refer to the
-				resources in the documentation and the links above.</li>
+				resources in the <a href="http://elektronn.github.io/documentation">documentation.</a>.</li>
 		</ul>
 		
 	</article>
