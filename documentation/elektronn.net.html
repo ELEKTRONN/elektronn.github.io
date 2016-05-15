@@ -60,7 +60,6 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">elektronn.net package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-elektronn.net.convlayer2d">elektronn.net.convlayer2d module</a></li>
 <li><a class="reference internal" href="#module-elektronn.net.convlayer3d">elektronn.net.convlayer3d module</a></li>
 <li><a class="reference internal" href="#module-elektronn.net.convnet">elektronn.net.convnet module</a></li>
@@ -112,9 +111,6 @@
             
   <div class="section" id="elektronn-net-package">
 <span id="netpack"></span><h1>elektronn.net package<a class="headerlink" href="#elektronn-net-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="module-elektronn.net.convlayer2d">
 <span id="elektronn-net-convlayer2d-module"></span><h2>elektronn.net.convlayer2d module<a class="headerlink" href="#module-elektronn.net.convlayer2d" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -139,7 +135,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>theano.tensor.dtensor4 (&#8216;batch&#8217;, &#8216;channel&#8217;, x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
+<li><strong>input</strong> (<em>theano.tensor.dtensor4 ('batch', 'channel', x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
 <li><strong>input_shape</strong> (<em>tuple or list of length 4</em>) &#8211; (batch size, num input feature maps, image height, image width)</li>
 <li><strong>filter_shape</strong> (<em>tuple or list of length 4</em>) &#8211; (number of filters, input_channels, filter height,filter width)</li>
 <li><strong>pool</strong> (<em>int 2-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
@@ -312,7 +308,7 @@ correct label</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>theano.tensor.dtensor5 (&#8216;batch&#8217;, z, &#8216;channel&#8217;, x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
+<li><strong>input</strong> (<em>theano.tensor.dtensor5 ('batch', z, 'channel', x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
 <li><strong>input_shape</strong> (<em>tuple or list of length 5</em>) &#8211; (batch size, z, num input feature maps,  y, x)</li>
 <li><strong>filter_shape</strong> (<em>tuple or list of length 5</em>) &#8211; (number of filters, filter z, num input feature maps, filter y,filter x)</li>
 <li><strong>pool</strong> (<em>int 3-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
@@ -551,11 +547,11 @@ If unrestricted the predictions are used directly.</p>
 <p class="rubric">Examples</p>
 <p>Note that image data must have at least 1 channel, e.g. a 2d image (1,x,y). 3d requires data in the
 format (z,ch,x,y). E.g. to create an isotropic 3d CNN with 5 channels (total input shape is (1,30,5,30,30)):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span> <span class="n">input_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span> <span class="n">input_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>A non-convolutional MLP can be created as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">100</span><span class="p">,),</span> <span class="n">input_depth</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">100</span><span class="p">,),</span> <span class="n">input_depth</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -1266,7 +1262,7 @@ Useful is also to simply print &#8216;d&#8217; as in the example.</p>
 </table>
 <p class="rubric">Examples</p>
 <p>Calculation for anisotropic &#8220;flat&#8221; 3d CNN with MFP in the first layers only:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span>         <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pool</span>            <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">MFP</span>             <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>   <span class="p">]</span>
@@ -1667,8 +1663,8 @@ The pooling can either be done as <code class="docutils literal"><span class="pr
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &copy; Copyright Marius F Killinger, Gregor Urban, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

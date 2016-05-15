@@ -107,8 +107,8 @@
 <ul class="simple">
 <li>Python 2.7</li>
 <li>The whole toolkit was designed and tested on Linux systems (in particular Debian, Ubuntu, CentOS, Arch)</li>
-<li>Theano creates CUDA binaries. Hence only Nvidia-GPUs will work (alternatively it can use the CPU, but this might be too slow for large nets and CNNs).</li>
-<li>If you wish to use ELEKTRONN on Windows or with Python 3 (or if you want to help making it portable) please contact us.</li>
+<li>Theano creates CUDA binaries. Hence only Nvidia-GPUs will work (as a fallback it can use any CPU, but this might be too slow for large nets and CNNs).</li>
+<li>Windows and Python3 support is planned for a major update.</li>
 </ul>
 <p>For installation instructions see <a class="reference internal" href="Installation.html#installation"><span>installation</span></a>.</p>
 </div>
@@ -130,7 +130,7 @@
 <p class="last">This section is addressed to people interested into large scale image processing tasks (such as found in connectomics). For smaller toy examples and processing of non-image data have a look at the <a class="reference internal" href="Examples.html#examples"><span>examples</span></a>.</p>
 </div>
 <ul>
-<li><p class="first">CNN training requires a data set of spatial input data (2D/3D, with an optional fourth axis for (colour) channels) and <em>labels</em> (also called: ground truth, annotations, targets). The labels correspond to the individual pixels in the images or to whole images. The labels can be integers encoding class membership - or alternatively floats for regression targets. Illustrations of training labels can be found <a class="reference internal" href="IntroNN.html#modes"><span>here</span></a>.</p>
+<li><p class="first">CNN training requires a training data set of spatial input data (2D/3D, optional with a fourth axis for (colour) channels) and <em>labels</em> (also called: ground truth, annotations, targets) that correspond to the individual pixels in the images. The labels can be classes - then each pixel contains an integer number encoding the class membership - or alternatively floats for regression targets. Illustrations of training labels can be found <a class="reference internal" href="IntroNN.html#modes"><span>here</span></a></p>
 </li>
 <li><dl class="first docutils">
 <dt>Transform your data arrays to h5 data sets in separate files for images and labels.</dt>
@@ -145,12 +145,12 @@
 </dd>
 </dl>
 </li>
-<li><p class="first">Find a valid CNN architecture by using <code class="xref py py-func docutils literal"><span class="pre">net.netutils.CNNCalculator()</span></code>.</p>
+<li><p class="first">Find a valid CNN architecture by using <a class="reference internal" href="elektronn.net.html#elektronn.net.netutils.CNNCalculator" title="elektronn.net.netutils.CNNCalculator"><code class="xref py py-func docutils literal"><span class="pre">elektronn.net.netutils.CNNCalculator()</span></code></a>.</p>
 </li>
 <li><p class="first">Edit <code class="docutils literal"><span class="pre">config_template.py</span></code> as a new file to specify your <a class="reference internal" href="Pipeline.html#configuration"><span>training scenario</span></a>.</p>
 </li>
-<li><p class="first">Run the script <code class="docutils literal"><span class="pre">elektronn-train</span></code> from command line (or from an IDE like spyder):</p>
-<div class="highlight-python"><div class="highlight"><pre>elektronn-train &lt;/path/to_config_file&gt; [ --gpu={Auto|False|&lt;int&gt;}]
+<li><p class="first">Run the script <code class="docutils literal"><span class="pre">elektronn-train</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>elektronn-train &lt;/path/to_config_file&gt; [ --gpu={Auto|False|&lt;int&gt;}]
 </pre></div>
 </div>
 </li>
@@ -192,8 +192,8 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &copy; Copyright Marius F Killinger, Gregor Urban, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>

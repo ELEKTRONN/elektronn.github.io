@@ -56,7 +56,6 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">elektronn.training package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.CNNData">elektronn.training.CNNData module</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.config">elektronn.training.config module</a></li>
 <li><a class="reference internal" href="#module-elektronn.training.parallelisation">elektronn.training.parallelisation module</a></li>
@@ -103,9 +102,6 @@
             
   <div class="section" id="elektronn-training-package">
 <span id="trainpack"></span><h1>elektronn.training package<a class="headerlink" href="#elektronn-training-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
 <div class="section" id="module-elektronn.training.CNNData">
 <span id="elektronn-training-cnndata-module"></span><h2>elektronn.training.CNNData module<a class="headerlink" href="#module-elektronn.training.CNNData" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -595,7 +591,7 @@ has finished.</p>
 <dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
 <p>FIFO Queue to process np.ndarrays in the background (also pre-loading of data from disk)</p>
 <p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,    for this the shapes are required as too. The target requires the signature:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Whereas mp_array and shape are <em>automatically</em> added internally</p>
@@ -630,13 +626,13 @@ has finished.</p>
 </table>
 <p class="rubric">Examples</p>
 <p>Automatic use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span> <span class="o">=</span> <span class="n">SharedQ</span><span class="p">(</span><span class="n">n_proc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span> <span class="o">=</span> <span class="n">SharedQ</span><span class="p">(</span><span class="n">n_proc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
 <span class="gp">&gt;&gt;&gt; </span>  <span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="n">item</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="c"># starts as many new jobs as to maintain n_proc</span>
-<span class="gp">&gt;&gt;&gt; </span>  <span class="n">dosomehtingelse</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="c"># processes work in background to pre-fetch data for next iteration</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">item</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="c1"># starts as many new jobs as to maintain n_proc</span>
+<span class="gp">&gt;&gt;&gt; </span>  <span class="n">dosomehtingelse</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="c1"># processes work in background to pre-fetch data for next iteration</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -644,7 +640,7 @@ has finished.</p>
 <code class="descname">startproc</code><span class="sig-paren">(</span><em>dtypes</em>, <em>shapes</em>, <em>target=None</em>, <em>target_args=()</em>, <em>target_kwargs={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ.startproc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ.startproc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts a new process</p>
 <p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,        for this the shapes are required as too. The target requires the signature:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Whereas mp_array  and shape are <em>automatically</em> added internally</p>
@@ -881,16 +877,16 @@ This is useful for prediction using a config file from training. (only for CNN)<
 </table>
 <p class="rubric">Examples</p>
 <p>All necessary configuration information is contained in cofig:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">loadData</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">createNet</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c"># The Training loop</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># The Training loop</span>
 </pre></div>
 </div>
 <p>If the config options <code class="docutils literal"><span class="pre">print_status</span></code> and <code class="docutils literal"><span class="pre">plot_on</span></code> are set the CNN progress can be supervised.</p>
 <p>Control during iteration can be exercised by ctrl+c which evokes a commandline.
 There are various shortcuts displayed but in principle all attributes of the CNN can be accessed:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
 <span class="go">&gt;&gt; Debug_Run &lt;&lt;</span>
 <span class="go">Shortcuts:</span>
 <span class="go">&#39;q&#39; (leave interface),          &#39;abort&#39; (saving params),</span>
@@ -900,16 +896,16 @@ There are various shortcuts displayed but in principle all attributes of the CNN
 <span class="go">&#39;setmom &lt;float&gt;&#39; ,      &#39;params&#39; print info,</span>
 <span class="go">Change Training mode :(&#39;SGD&#39;,&#39;CG&#39;, &#39;RPROP&#39;, &#39;LBFGS&#39;)</span>
 <span class="go">For EVERYTHING else enter your command in the command line</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">setlr</span> <span class="mf">0.01</span> <span class="c"># Change learning rate of SGD</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">CG</span> <span class="c"># Change Training mode CG (Optimizer will be compiled on demand)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">setlr</span> <span class="mf">0.01</span> <span class="c1"># Change learning rate of SGD</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">CG</span> <span class="c1"># Change Training mode CG (Optimizer will be compiled on demand)</span>
 <span class="go">Changing Training mode...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">savename</span> <span class="c"># Access an attribute of ``trainerInstance``.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">savename</span> <span class="c1"># Access an attribute of ``trainerInstance``.</span>
 <span class="go"># Inputs containing &#39;(&#39; or &#39;=&#39; will result in a print of the value</span>
 <span class="go">&#39;Debug_Run&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="k">print</span> <span class="n">cnn</span><span class="o">.</span><span class="n">getDropoutRates</span><span class="p">()</span> <span class="c"># To see the return of function add &#39;print&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="k">print</span> <span class="n">cnn</span><span class="o">.</span><span class="n">getDropoutRates</span><span class="p">()</span> <span class="c1"># To see the return of function add &#39;print&#39;</span>
 <span class="go">[0.5, 0.5]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">setOptimizerParams</span><span class="p">(</span><span class="n">CG</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;max_step&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span> <span class="c"># change CG-&#39;max_step&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">q</span> <span class="c"># leave interface</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">setOptimizerParams</span><span class="p">(</span><span class="n">CG</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;max_step&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span> <span class="c1"># change CG-&#39;max_step&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">q</span> <span class="c1"># leave interface</span>
 <span class="go">Continuing Training</span>
 <span class="go">Compiling CG</span>
 <span class="go">  Compiling done - in 7.206 s!</span>
@@ -930,7 +926,7 @@ evokes a commandline. There are various shortcuts displayed but in principle all
 CNN can be accessed:</p>
 <p class="rubric">Examples</p>
 <p>Using the command line</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
 <span class="go">&gt;&gt; Debug_Run &lt;&lt;</span>
 <span class="go">Shortcuts:</span>
 <span class="go">&#39;q&#39; (leave interface),            &#39;abort&#39; (saving params),</span>
@@ -940,16 +936,16 @@ CNN can be accessed:</p>
 <span class="go">&#39;setmom &lt;float&gt;&#39; ,        &#39;params&#39; print info,</span>
 <span class="go">Change Training mode :(&#39;SGD&#39;,&#39;CG&#39;, &#39;RPROP&#39;, &#39;LBFGS&#39;)</span>
 <span class="go">For EVERYTHING else enter your command in the command line</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">setlr</span> <span class="mf">0.01</span> <span class="c"># Change learning rate of SGD</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">CG</span> <span class="c"># Change Training mode CG (Optimizer will be compiled on demand)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">setlr</span> <span class="mf">0.01</span> <span class="c1"># Change learning rate of SGD</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">CG</span> <span class="c1"># Change Training mode CG (Optimizer will be compiled on demand)</span>
 <span class="go">Changing Training mode...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">savename</span> <span class="c"># Access an attribute of ``trainerInstance``.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">savename</span> <span class="c1"># Access an attribute of ``trainerInstance``.</span>
 <span class="go"># Inputs containing &#39;(&#39; or &#39;=&#39; will result in a print of the value</span>
 <span class="go">&#39;Debug_Run&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="k">print</span> <span class="n">cnn</span><span class="o">.</span><span class="n">getDropoutRates</span><span class="p">()</span> <span class="c"># To see the return of function add &#39;print&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="k">print</span> <span class="n">cnn</span><span class="o">.</span><span class="n">getDropoutRates</span><span class="p">()</span> <span class="c1"># To see the return of function add &#39;print&#39;</span>
 <span class="go">[0.5, 0.5]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">setOptimizerParams</span><span class="p">(</span><span class="n">CG</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;max_step&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span> <span class="c"># change CG-&#39;max_step&#39;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">q</span> <span class="c"># leave interface</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">cnn</span><span class="o">.</span><span class="n">setOptimizerParams</span><span class="p">(</span><span class="n">CG</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;max_step&#39;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span> <span class="c1"># change CG-&#39;max_step&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="nd">@cnn</span><span class="p">:</span> <span class="n">q</span> <span class="c1"># leave interface</span>
 <span class="go">Continuing Training</span>
 <span class="go">Compiling CG</span>
 <span class="go">  Compiling done - in 7.206 s!</span>
@@ -1442,8 +1438,8 @@ return required size for warping input patch</p>
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2015, Gregor Urban, Marius F Killinger.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+        &copy; Copyright Marius F Killinger, Gregor Urban, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
     </div>
   </body>
 </html>
