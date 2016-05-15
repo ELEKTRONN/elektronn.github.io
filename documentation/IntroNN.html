@@ -59,7 +59,7 @@
   <ul>
 <li><a class="reference internal" href="#">Practical Introduction to Neural Networks</a><ul>
 <li><a class="reference internal" href="#general">General</a></li>
-<li><a class="reference internal" href="#classification-modes-in-elektronn">Classification Modes in ELEKTRONN</a></li>
+<li><a class="reference internal" href="#operation-modes-in-elektronn">Operation Modes in ELEKTRONN</a></li>
 <li><a class="reference internal" href="#data-considerations">Data Considerations</a><ul>
 <li><a class="reference internal" href="#preprocessing">Preprocessing</a></li>
 <li><a class="reference internal" href="#label-quality">Label Quality</a></li>
@@ -133,7 +133,7 @@
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#general" id="id5">General</a></li>
-<li><a class="reference internal" href="#classification-modes-in-elektronn" id="id6">Classification Modes in ELEKTRONN</a></li>
+<li><a class="reference internal" href="#operation-modes-in-elektronn" id="id6">Operation Modes in ELEKTRONN</a></li>
 <li><a class="reference internal" href="#data-considerations" id="id7">Data Considerations</a><ul>
 <li><a class="reference internal" href="#preprocessing" id="id8">Preprocessing</a></li>
 <li><a class="reference internal" href="#label-quality" id="id9">Label Quality</a></li>
@@ -169,13 +169,13 @@
 <p>NNs are typically models for <em>supervised</em> training (excluding <a class="reference internal" href="Examples.html#autoencoder"><span>auto encoders</span></a>, which can be used for <em>unsupervised</em> tasks). This means the user must provide input <em>examples</em> and corresponding desired outputs, called <em>labels</em>. Together they form a <em>training set</em>. The deviation between current output and desired output is called <em>loss</em>. The parameters of the NN (also called synaptic <em>weights</em>) are optimised by gradient descent techniques in order to minimise the loss. Provided the training has been successful in minimising the training loss <strong>and</strong> the training examples cover a representative variety of input data, the NN will <em>generalise</em> i.e. it is able to produce good output <em>predictions</em> for <strong>unseen</strong> input data. The loss (or classification accuracy) should be evaluated on a hold out <em>validation</em> data set to give an estimate of the generalisation capability and to detect over-fitting.</p>
 <p>NNs can outperform many other models but they are rather difficult to handle. In particular they demand many training examples and precise labels with little noise. Furthermore they might require a high number of trial runs with different architectures and meta-parameters until a good model is found. The reward is the prospect of state-of-the-art results that often outperform other methods.</p>
 </div>
-<div class="section" id="classification-modes-in-elektronn">
-<span id="modes"></span><h2><a class="toc-backref" href="#id6">Classification Modes in ELEKTRONN</a><a class="headerlink" href="#classification-modes-in-elektronn" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="operation-modes-in-elektronn">
+<span id="modes"></span><h2><a class="toc-backref" href="#id6">Operation Modes in ELEKTRONN</a><a class="headerlink" href="#operation-modes-in-elektronn" title="Permalink to this headline">¶</a></h2>
 <p>Generally there are three <em>modes</em> of training set ups, supported by the built-in pipeline:</p>
 <blockquote>
 <div><blockquote>
 <div><ul class="simple">
-<li><strong>img-img</strong>: input data <strong>and</strong> output data are image-like (i.e. there exist neighbourhood relations between adjacent elements (pixels) in the data arrays. This property is irrespective of dimensionality and can also be seen as neighbourhoods of temporal nature). E.g. for connectomic membrane segmentation the inputs are 3D EM-images and the labels images too, that have <code class="docutils literal"><span class="pre">1</span></code> for pixels in which a membrane is present and <code class="docutils literal"><span class="pre">0</span></code> for background.</li>
+<li><strong>img-img</strong>: input data <strong>and</strong> output data are image-like (i.e. there exist neighbourhood relations between adjacent elements (pixels) in the data arrays. This property is irrespective of dimensionality and can also be seen as neighbourhoods of temporal nature). E.g. for neuron membrane segmentation the inputs are 3D EM-images and the labels images too, that have <code class="docutils literal"><span class="pre">1</span></code> for pixels in which a membrane is present and <code class="docutils literal"><span class="pre">0</span></code> for background.</li>
 </ul>
 </div></blockquote>
 <div class="figure align-center" id="id1">

@@ -142,6 +142,7 @@ permalink: /getting-started/
 				<ul>
 					<li>images: shape (x,y,z) or (ch,x,y,z)</li>
 					<li>labels: shape (x,y,z)</li>
+					<li>do not cut image patches manually. If the shape of the training data is greater than the CNN input patch size, the pipeline automatically cuts patches from random locations in the images.</li>
 					<li>for classification: labels contain integer numbers, ranging from 0 to (#classes-1)</li>
 					<li>for regression: labels contain float numbers</li>
 					<li>for 2d images the z-dimension can be viewed as the axis along which the instances of the training set are stacked</li>
@@ -149,7 +150,7 @@ permalink: /getting-started/
 				</ul>
 			</li>
 
-			<li>Find a valid CNN architecture by using <a href="http://elektronn.github.io/documentation/elektronn.net.html#elektronn.net.netutils.CNNCalculator">elektronn.net.netutils.CNNCalculator()</a>.</li>
+			<li>Find a valid CNN architecture by using <a href="http://elektronn.github.io/documentation/elektronn.net.html#elektronn.net.netutils.CNNCalculator">elektronn.net.netutils.CNNCalculator()</a>. For img-img tasks it advisable to make select an input patch size such that in the final layer a few 100 - 1000 output neurons/pixel remain, this is a good trade-off between gradient noise and iteration speed.</li>
 
 			<li>Edit <a href="https://github.com/ELEKTRONN/ELEKTRONN/blob/master/elektronn/examples/config_template.py">examples/config_template.py</a> as a new file to specify your training scenario.</li>
 

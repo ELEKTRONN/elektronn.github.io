@@ -137,6 +137,7 @@
 <dd><ul class="first last simple">
 <li>images: shape (x,y,z)  or (ch,x,y,z)</li>
 <li>labels: shape (x,y,z)</li>
+<li>do not cut image patches manually. If the shape of the training data is greater than the CNN input patch size, the pipeline automatically cuts patches from random locations in the images.</li>
 <li>for classification: labels contain integer numbers, ranging from 0 to (#classes-1)</li>
 <li>for regression: labels contain float numbers</li>
 <li>for 2D images the dimension <code class="docutils literal"><span class="pre">z</span></code> can be viewed as the axis along which the instances of the training set are stacked</li>
@@ -145,7 +146,7 @@
 </dd>
 </dl>
 </li>
-<li><p class="first">Find a valid CNN architecture by using <a class="reference internal" href="elektronn.net.html#elektronn.net.netutils.CNNCalculator" title="elektronn.net.netutils.CNNCalculator"><code class="xref py py-func docutils literal"><span class="pre">elektronn.net.netutils.CNNCalculator()</span></code></a>.</p>
+<li><p class="first">Find a valid CNN architecture by using <a class="reference internal" href="elektronn.net.html#elektronn.net.netutils.CNNCalculator" title="elektronn.net.netutils.CNNCalculator"><code class="xref py py-func docutils literal"><span class="pre">elektronn.net.netutils.CNNCalculator()</span></code></a>. For <em>img-img</em> tasks it advisable to make select an input patch size such that in the final layer a few 100 - 1000 output neurons/pixel remain, this is a good trade-off between gradient noise and iteration speed.</p>
 </li>
 <li><p class="first">Edit <code class="docutils literal"><span class="pre">config_template.py</span></code> as a new file to specify your <a class="reference internal" href="Pipeline.html#configuration"><span>training scenario</span></a>.</p>
 </li>

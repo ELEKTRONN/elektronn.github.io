@@ -177,25 +177,25 @@ export LD_LIBRARY_PATH=/usr/local/cuda-7.5/lib64:$LD_LIBRARY_PATH
 </div>
 </li>
 <li><p class="first">Configure your <code class="docutils literal"><span class="pre">.theanorc</span></code>-file. E.g. create a new file named <code class="docutils literal"><span class="pre">~/.theanorc</span></code> and put the following into it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>        [global]
-        floatX = float32
-        device = gpu # or gpu0, gpu1,...
-        exception_verbosity=high
-        linker = cvm_nogc
+<div class="highlight-python"><div class="highlight"><pre><span></span>[global]
+floatX = float32
+device = gpu # or gpu0, gpu1,...
+exception_verbosity=high
+linker = cvm_nogc
 
-        [nvcc]
-        fastmath = True
+[nvcc]
+fastmath = True
 
-        [cuda]
-        root = /usr/local/cuda-7.5/
-
-
-The linker option disables garbage collection. This increases GPU-RAM usage but gives a significant performance boost. If you run out of GPU-RAM, remove this option (or set it to ``cvm``).
+[cuda]
+root = /usr/local/cuda-7.5/
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you want to use the command line option of <code class="docutils literal"><span class="pre">elektronn-train</span></code> to select a GPU device you can leave out setting a device value here</p>
+<ol class="last arabic simple">
+<li>If you want to use the command line option of <code class="docutils literal"><span class="pre">elektronn-train</span></code> to select a GPU device you can leave out setting a device value here</li>
+<li>The linker option disables garbage collection. This increases GPU-RAM usage but gives a significant performance boost. If you run out of GPU-RAM, remove this option (or set it to <code class="docutils literal"><span class="pre">cvm</span></code>).</li>
+</ol>
 </div>
 </li>
 <li><p class="first">You might be interested into using cuDNN which is an optimised CUDA library for CNNs (<a class="reference external" href="http://www.deeplearning.net/software/theano/library/sandbox/cuda/dnn.html?highlight=cudnn">theano&#8217;s instructions</a>).</p>
