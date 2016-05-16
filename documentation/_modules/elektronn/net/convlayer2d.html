@@ -207,7 +207,7 @@
                             <span class="n">scale</span><span class="o">=</span><span class="s1">&#39;glorot&#39;</span><span class="p">,</span>
                             <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">,</span>
                             <span class="n">pool</span><span class="o">=</span><span class="n">pool</span><span class="p">),</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">W_values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;W_conv&#39;</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -228,21 +228,21 @@
                         <span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="p">),</span>
                         <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">norm</span><span class="p">,</span>
                         <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;const&#39;</span><span class="p">),</span>
-                    <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">activation_func</span> <span class="o">==</span> <span class="s1">&#39;sigmoid&#39;</span><span class="p">:</span>
                 <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
                     <span class="n">initWeights</span><span class="p">(</span>
                         <span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="p">),</span>
                         <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                         <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;const&#39;</span><span class="p">),</span>
-                    <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>  <span class="c1"># activation_func==&#39;tanh&#39;:</span>
                 <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
                     <span class="n">initWeights</span><span class="p">(</span>
                         <span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="p">),</span>
                         <span class="n">scale</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
                         <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;fix-uni&#39;</span><span class="p">),</span>
-                    <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                    <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">theano</span><span class="o">.</span><span class="n">shared</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">b_values</span><span class="p">,</span> <span class="n">borrow</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;b_conv&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -287,7 +287,7 @@
                 <span class="p">(</span><span class="n">pooled_out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">pooled_out</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
                 <span class="mi">1</span><span class="p">,</span>
                 <span class="n">p</span><span class="p">,</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
             <span class="n">pooled_out</span> <span class="o">=</span> <span class="n">pooled_out</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropout_gate</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">((</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 
         <span class="c1"># add the bias term. Since the bias is a vector (1D array), we first</span>
@@ -368,7 +368,7 @@
 <div class="viewcode-block" id="ConvLayer2d.fragmentstodense"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.fragmentstodense">[docs]</a>    <span class="k">def</span> <span class="nf">fragmentstodense</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sh</span><span class="p">):</span>
         <span class="n">mfp_strides</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mfp_strides</span>
         <span class="n">example_stride</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">mfp_strides</span><span class="p">)</span>  <span class="c1"># This stride is conceptually unneeded but theano-grad fails otherwise</span>
-        <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+        <span class="n">zero</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">0</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
         <span class="n">embedding</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="n">zero</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">sh</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sh</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">mfp_strides</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">ix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mfp_offsets</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ix</span><span class="p">):</span>
@@ -386,28 +386,28 @@
                     <span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="p">),</span>
                     <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">norm</span><span class="p">,</span>
                     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;const&#39;</span><span class="p">),</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation_func</span> <span class="o">==</span> <span class="s1">&#39;sigmoid&#39;</span><span class="p">:</span>
             <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
                 <span class="n">initWeights</span><span class="p">(</span>
                     <span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="p">),</span>
                     <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
                     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;const&#39;</span><span class="p">),</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>  <span class="c1">#self.activation_func==&#39;tanh&#39;:</span>
             <span class="n">b_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
                 <span class="n">initWeights</span><span class="p">(</span>
                     <span class="p">(</span><span class="n">n_out</span><span class="p">,</span> <span class="p">),</span>
                     <span class="n">scale</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">,</span>
                     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;fix-uni&#39;</span><span class="p">),</span>
-                <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+                <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
 
         <span class="n">W_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
             <span class="n">initWeights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filter_shape</span><span class="p">,</span>
                         <span class="n">scale</span><span class="p">,</span>
                         <span class="n">mode</span><span class="p">,</span>
                         <span class="n">pool</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">),</span>
-            <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">)</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">W_values</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">b_values</span><span class="p">)</span></div>
@@ -432,7 +432,7 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>  <span class="c1"># replicate filters for all colour channels</span>
             <span class="n">filters</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">ga</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">theano</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">floatX</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">))</span></div>
 
 <span class="c1">#  def negative_log_likelihood(self, y):</span>
 <span class="c1">#    &quot;&quot;&quot;</span>
@@ -696,7 +696,10 @@
 <span class="sd">        :param y: corresponds to a vector that gives for each example the</span>
 <span class="sd">                      correct label</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></div>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">dimshuffle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,)</span> <span class="c1"># add &quot;class&quot; axis</span>
+        <span class="n">se_inst</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">mse</span> <span class="o">=</span> <span class="n">T</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">se_inst</span><span class="p">)</span>        
+        <span class="k">return</span> <span class="n">mse</span><span class="p">,</span> <span class="n">se_inst</span></div>
 
 <div class="viewcode-block" id="ConvLayer2d.errors"><a class="viewcode-back" href="../../../elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.errors">[docs]</a>    <span class="k">def</span> <span class="nf">errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>

@@ -127,15 +127,15 @@
 <p>This page gives further details about the steps described in <a class="reference internal" href="GettingStarted.html#basic-recipe"><span>the basic recipe</span></a> and describes the all configurable options for the pipeline of the <code class="docutils literal"><span class="pre">training</span></code> package.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#how-it-works" id="id5">How it works</a></li>
-<li><a class="reference internal" href="#data-format" id="id6">Data Format</a></li>
-<li><a class="reference internal" href="#configuration-of-parameters" id="id7">Configuration of Parameters</a></li>
-<li><a class="reference internal" href="#running-elektronn-train" id="id8">Running elektronn-train</a></li>
-<li><a class="reference internal" href="#cnn-command-line" id="id9">CNN Command Line</a></li>
+<li><a class="reference internal" href="#how-it-works" id="id6">How it works</a></li>
+<li><a class="reference internal" href="#data-format" id="id7">Data Format</a></li>
+<li><a class="reference internal" href="#configuration-of-parameters" id="id8">Configuration of Parameters</a></li>
+<li><a class="reference internal" href="#running-elektronn-train" id="id9">Running elektronn-train</a></li>
+<li><a class="reference internal" href="#cnn-command-line" id="id10">CNN Command Line</a></li>
 </ul>
 </div>
 <div class="section" id="how-it-works">
-<h2><a class="toc-backref" href="#id5">How it works</a><a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">How it works</a><a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
 <p>After you set up the configuration and run <code class="docutils literal"><span class="pre">elektronn-train</span></code>:</p>
 <blockquote>
 <div><ul>
@@ -168,10 +168,9 @@
 </div></blockquote>
 </div>
 <div class="section" id="data-format">
-<span id="id1"></span><h2><a class="toc-backref" href="#id6">Data Format</a><a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id7">Data Format</a><a class="headerlink" href="#data-format" title="Permalink to this headline">¶</a></h2>
 <p>Transform your data arrays to h5 data sets in separate files for images and labels.</p>
 <blockquote>
-<div><blockquote>
 <div><ul class="simple">
 <li>images: shape (x,y,z)  or (channel,x,y,z), either <code class="docutils literal"><span class="pre">float</span></code> (0,1) or <code class="docutils literal"><span class="pre">uint8</span></code> (0,255)</li>
 <li>labels: shape (x,y,z)</li>
@@ -179,9 +178,6 @@
 <li>for regression: labels contain float numbers</li>
 <li>for 2D images the dimension <code class="docutils literal"><span class="pre">z</span></code> can be viewed as the axis along which the instances of the training set are stacked</li>
 <li>for whole image classification the labels must be 1d</li>
-</ul>
-</div></blockquote>
-<ul class="simple">
 <li>The z-axis is the the axis which has different units than x and y (e.g. different spatial resolution, or time).</li>
 </ul>
 </div></blockquote>
@@ -210,7 +206,7 @@ The only important condition is that the labels and images must be symmetrically
 </div>
 </div>
 <div class="section" id="configuration-of-parameters">
-<span id="configuration"></span><h2><a class="toc-backref" href="#id7">Configuration of Parameters</a><a class="headerlink" href="#configuration-of-parameters" title="Permalink to this headline">¶</a></h2>
+<span id="configuration"></span><h2><a class="toc-backref" href="#id8">Configuration of Parameters</a><a class="headerlink" href="#configuration-of-parameters" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>There are three levels of parameter configuration, <strong>higher levels override previous levels</strong>:</dt>
 <dd><ol class="first last arabic simple">
@@ -454,11 +450,11 @@ The only important condition is that the labels and images must be symmetrically
 <h4>Multi Layer Perceptron (MLP) and Others<a class="headerlink" href="#multi-layer-perceptron-mlp-and-others" title="Permalink to this headline">¶</a></h4>
 <table border="1" class="docutils">
 <colgroup>
-<col width="10%" />
+<col width="9%" />
 <col width="3%" />
-<col width="10%" />
+<col width="9%" />
 <col width="6%" />
-<col width="72%" />
+<col width="73%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Name</th>
@@ -473,7 +469,7 @@ The only important condition is that the labels and images must be symmetrically
 <td>$</td>
 <td><code class="docutils literal"><span class="pre">dict</span></code>/<code class="docutils literal"><span class="pre">None</span></code></td>
 <td><code class="docutils literal"><span class="pre">None</span></code></td>
-<td>This can install a recurrent layer before MLP-layers, the kwargs are passed to <code class="xref py py-meth docutils literal"><span class="pre">elektronn.net.MixedConvNN.addRecurrentLayer()</span></code>. It does not together with conv-layers.</td>
+<td>This can install a recurrent layer before MLP-layers, the kwargs are passed to <a class="reference internal" href="elektronn.net.html#elektronn.net.convnet.MixedConvNN.addRecurrentLayer" title="elektronn.net.convnet.MixedConvNN.addRecurrentLayer"><code class="xref py py-meth docutils literal"><span class="pre">elektronn.net.convnet.MixedConvNN.addRecurrentLayer()</span></code></a>. It does not together with conv-layers.</td>
 </tr>
 <tr class="row-odd"><td>MLP_layers</td>
 <td>!</td>
@@ -675,7 +671,7 @@ The only important condition is that the labels and images must be symmetrically
 <td>&nbsp;</td>
 <td><code class="docutils literal"><span class="pre">dict</span></code></td>
 <td>&nbsp;</td>
-<td>Specification of preview to create, see <code class="xref py py-meth docutils literal"><span class="pre">training.trainer.Trainer.previewSlice()</span></code>, only specify <code class="docutils literal"><span class="pre">export_class</span></code> and <code class="docutils literal"><span class="pre">max_z_pred</span></code>, the <code class="docutils literal"><span class="pre">number</span></code> is generated automatically.</td>
+<td>Specification of preview to create, see <a class="reference internal" href="elektronn.training.html#elektronn.training.trainer.Trainer.previewSlice" title="elektronn.training.trainer.Trainer.previewSlice"><code class="xref py py-meth docutils literal"><span class="pre">elektronn.training.trainer.Trainer.previewSlice()</span></code></a>, only specify <code class="docutils literal"><span class="pre">export_class</span></code> and <code class="docutils literal"><span class="pre">max_z_pred</span></code>, the <code class="docutils literal"><span class="pre">number</span></code> is generated automatically.</td>
 </tr>
 </tbody>
 </table>
@@ -861,7 +857,7 @@ If the training or validation errors are estimated on many examples (<code class
 </div>
 </div>
 <div class="section" id="running-elektronn-train">
-<h2><a class="toc-backref" href="#id8">Running elektronn-train</a><a class="headerlink" href="#running-elektronn-train" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">Running elektronn-train</a><a class="headerlink" href="#running-elektronn-train" title="Permalink to this headline">¶</a></h2>
 <p>Once the parameter file is set up, the training script can be started. Run the script <code class="docutils literal"><span class="pre">elektronn-train</span></code> from command line:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>elektronn-train &lt;/path/to_config_file&gt; [ --gpu={Auto|False|&lt;int&gt;}]
 </pre></div>
@@ -873,18 +869,18 @@ If the training or validation errors are estimated on many examples (<code class
 </div>
 </div>
 <div class="section" id="cnn-command-line">
-<span id="console"></span><h2><a class="toc-backref" href="#id9">CNN Command Line</a><a class="headerlink" href="#cnn-command-line" title="Permalink to this headline">¶</a></h2>
+<span id="console"></span><h2><a class="toc-backref" href="#id10">CNN Command Line</a><a class="headerlink" href="#cnn-command-line" title="Permalink to this headline">¶</a></h2>
 <p>During training various changes to the setup can be made using the console which is accessible via <code class="docutils literal"><span class="pre">ctrl+c</span></code>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>ELEKTRONN MENU
 ==============
 
     &gt;&gt; MNIST &lt;&lt;
     Shortcuts:
-    &#39;q&#39; (leave menu),               &#39;abort&#39; (saving params),
-    &#39;kill&#39;(no saving),              &#39;save&#39;/&#39;load&#39; (opt:filename),
-    &#39;sf&#39;/&#39; (show filters)&#39;,         &#39;smooth&#39; (smooth filters),
-    &#39;sethist &lt;int&gt;&#39;,                &#39;setlr &lt;float&gt;&#39;,
-    &#39;setmom &lt;float&gt;&#39; ,              &#39;params&#39; print info,
+    &#39;q&#39; (leave menu),                   &#39;abort&#39; (saving params),
+    &#39;kill&#39;(no saving),                  &#39;save&#39;/&#39;load&#39; (opt:filename),
+    &#39;sf&#39;/&#39; (show filters)&#39;,     &#39;smooth&#39; (smooth filters),
+    &#39;sethist &lt;int&gt;&#39;,                    &#39;setlr &lt;float&gt;&#39;,
+    &#39;setmom &lt;float&gt;&#39; ,                  &#39;params&#39; print info,
     Change Training Optimizer :(&#39;SGD&#39;,&#39;CG&#39;, &#39;RPROP&#39;, &#39;LBFGS&#39;)
     For everything else enter a command in the command line
 
@@ -922,7 +918,7 @@ mfk@ELEKTRONN:
 <dd><ul class="first last simple">
 <li>The trainer object by <code class="docutils literal"><span class="pre">self</span></code></li>
 <li>An instance of <a class="reference internal" href="elektronn.net.html#elektronn.net.convnet.MixedConvNN" title="elektronn.net.convnet.MixedConvNN"><code class="xref py py-func docutils literal"><span class="pre">elektronn.net.convnet.MixedConvNN()</span></code></a> by <code class="docutils literal"><span class="pre">cnn</span></code></li>
-<li>An instance of <code class="xref py py-func docutils literal"><span class="pre">elektronn.training.trainutils.Config()</span></code> by <code class="docutils literal"><span class="pre">config</span></code></li>
+<li>An instance of <a class="reference internal" href="elektronn.training.html#elektronn.training.config.Config" title="elektronn.training.config.Config"><code class="xref py py-func docutils literal"><span class="pre">elektronn.training.config.Config()</span></code></a> by <code class="docutils literal"><span class="pre">config</span></code></li>
 <li>An instance of <a class="reference internal" href="elektronn.training.html#elektronn.training.CNNData.CNNData" title="elektronn.training.CNNData.CNNData"><code class="xref py py-func docutils literal"><span class="pre">elektronn.training.CNNData.CNNData()</span></code></a> by <code class="docutils literal"><span class="pre">data</span></code></li>
 </ul>
 </dd>
@@ -937,12 +933,10 @@ mfk@ELEKTRONN:
 </pre></div>
 </div>
 <p>This fetches a in exactly the same way as is done for every training iteration. The <code class="docutils literal"><span class="pre">info</span></code> variables are for internal use when lazy labels are active, and not of interest here. Besides returning the data and label array this function also prints an image into the save directory name <code class="docutils literal"><span class="pre">debugGetCNNBatch.png</span></code>:</p>
-<blockquote>
-<div><div class="figure align-center">
-<img alt="_images/Batch.png" src="_images/Batch.png" />
+<div class="figure" id="id5">
+<img alt="images/Batch.png:align:center" src="images/Batch.png:align:center" />
+<p class="caption"><span class="caption-text">Left: the input data. Centre: the labels, note the large offset, this CNN has a very larger field of view it needs 63 pixels on either side to make a prediction for the central pixel. Right: overlay of data with labels, here you can check whether they are properly registered.</span></p>
 </div>
-<p>Left: the input data. Middle the labels, note the large offset, this CNN has a very larger field of view it needs 63 pixels on either side to make a prediction for the central pixel. Right: overlay of data with labels, here you can check whether they are properly registered.</p>
-</div></blockquote>
 <p>For 3D CNNs the image shows a slice along the z-axis of the data.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
