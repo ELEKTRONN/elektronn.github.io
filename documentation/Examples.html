@@ -121,29 +121,29 @@
 <p>This page gives examples for different use cases of ELELKTRONN. Besides, the examples are intended to give an idea of how custom network architectures could be created and trained without the built-in pipeline. To understand the examples, basic knowledge of neural networks (e.g. from <a class="reference internal" href="IntroNN.html#training"><span>Practical Introduction to Neural Networks</span></a>) is recommended. The details of the configuration parameters are described <a class="reference internal" href="Pipeline.html#pipeline"><span>here</span></a>.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#d-neuro-data" id="id9">3D Neuro Data</a><ul>
-<li><a class="reference internal" href="#getting-started" id="id10">Getting Started</a></li>
-<li><a class="reference internal" href="#data-set" id="id11">Data Set</a></li>
-<li><a class="reference internal" href="#cnn-design" id="id12">CNN design</a></li>
-<li><a class="reference internal" href="#training-data-options" id="id13">Training Data Options</a></li>
+<li><a class="reference internal" href="#d-neuro-data" id="id8">3D Neuro Data</a><ul>
+<li><a class="reference internal" href="#getting-started" id="id9">Getting Started</a></li>
+<li><a class="reference internal" href="#data-set" id="id10">Data Set</a></li>
+<li><a class="reference internal" href="#cnn-design" id="id11">CNN design</a></li>
+<li><a class="reference internal" href="#training-data-options" id="id12">Training Data Options</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#mnist-examples" id="id14">MNIST Examples</a><ul>
-<li><a class="reference internal" href="#cnn-with-built-in-pipeline" id="id15">CNN with built-in Pipeline</a></li>
-<li><a class="reference internal" href="#mlp-with-built-in-pipeline" id="id16">MLP with built-in Pipeline</a></li>
-<li><a class="reference internal" href="#standalone-cnn" id="id17">Standalone CNN</a></li>
-<li><a class="reference internal" href="#auto-encoder-example" id="id18">Auto encoder Example</a></li>
+<li><a class="reference internal" href="#mnist-examples" id="id13">MNIST Examples</a><ul>
+<li><a class="reference internal" href="#cnn-with-built-in-pipeline" id="id14">CNN with built-in Pipeline</a></li>
+<li><a class="reference internal" href="#mlp-with-built-in-pipeline" id="id15">MLP with built-in Pipeline</a></li>
+<li><a class="reference internal" href="#standalone-cnn" id="id16">Standalone CNN</a></li>
+<li><a class="reference internal" href="#auto-encoder-example" id="id17">Auto encoder Example</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="d-neuro-data">
-<h2><a class="toc-backref" href="#id9">3D Neuro Data</a><a class="headerlink" href="#d-neuro-data" title="Permalink to this headline">¶</a></h2>
-<p>This task is about detecting neuron cell boundaries in 3D electron microscopy image volumes. The more general goal is to find a segmentation by assigning each voxel a cell ID. Predicting boundaries is surrogate target for which a CNN can be trained (see also the note about target formulation <a class="reference internal" href="Pipeline.html#data-format"><span>here</span></a>) - the actual segmentation would be made by e.g. running a watershed on the predicted boundary map. This is a typical <em>img-img</em> task.</p>
-<p>For demonstration purpose a very small CNN with only 70k parameters and 5 layers is used. This trains fast but is obviously limited in accuracy. Besides, to solve this task well, more training data would be required.</p>
-<p>The full configuration file can be found in ELEKTRONN&#8217;s <code class="docutils literal"><span class="pre">examples</span></code> folder as  <code class="docutils literal"><span class="pre">neuro_3d_config.py</span></code>. Here only selected settings will be mentioned.</p>
+<h2><a class="toc-backref" href="#id8">3D Neuro Data</a><a class="headerlink" href="#d-neuro-data" title="Permalink to this headline">¶</a></h2>
+<p>This task is about detecting neuron cell boundaries in 3D electron microscopy image volumes. The more general goal is to find a volume segmentation by assigning each voxel a cell ID. Predicting boundaries is a surrogate target for which a CNN can be trained (see also the note about target formulation <a class="reference internal" href="Pipeline.html#data-format"><span>here</span></a>) - the actual segmentation would be made by e.g. running a watershed on the predicted boundary map. This is a typical <em>img-img</em> task.</p>
+<p>For demonstration purpose, a very small CNN with only 70k parameters and 5 layers is used. This trains fast but is obviously limited in accuracy. To solve this task well, more training data would be required in addition.</p>
+<p>The full configuration file can be found in ELEKTRONN&#8217;s <code class="docutils literal"><span class="pre">examples</span></code> folder as <code class="docutils literal"><span class="pre">neuro_3d_config.py</span></code>. Here only selected settings will be mentioned.</p>
 <div class="section" id="getting-started">
-<h3><a class="toc-backref" href="#id10">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">Getting Started</a><a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
 <li><p class="first">Download <a class="reference external" href="http://elektronn.org/downloads/neuro_data.zip">example training data</a>  (~100MB):</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>wget http://elektronn.org/downloads/neuro_data.zip
@@ -151,7 +151,7 @@ unzip neuro_data.zip
 </pre></div>
 </div>
 </li>
-<li><p class="first">In the config file <code class="docutils literal"><span class="pre">neuro_3d_config.py</span></code> edit <code class="docutils literal"><span class="pre">save_path,</span> <span class="pre">data_path,</span> <span class="pre">label_path,</span> <span class="pre">preview_data_path</span></code></p>
+<li><p class="first">Edit <code class="docutils literal"><span class="pre">save_path,</span> <span class="pre">data_path,</span> <span class="pre">label_path,</span> <span class="pre">preview_data_path</span></code> in the config file <code class="docutils literal"><span class="pre">neuro_3d_config.py</span></code> in ELEKTRONN&#8217;s <code class="docutils literal"><span class="pre">examples</span></code> folder</p>
 </li>
 <li><p class="first">Run:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span>elektronn-train &lt;/path/to_config_file&gt; [ --gpu={Auto|False|&lt;int&gt;}]
@@ -163,18 +163,19 @@ unzip neuro_data.zip
 </ol>
 </div>
 <div class="section" id="data-set">
-<h3><a class="toc-backref" href="#id11">Data Set</a><a class="headerlink" href="#data-set" title="Permalink to this headline">¶</a></h3>
-<p>There are 3 volumes that contain &#8220;barrier&#8221; labels (union of cell boundaries and extra cellular space) of shape <code class="docutils literal"><span class="pre">(150,150,150)</span></code> in <code class="docutils literal"><span class="pre">(x,y,z)</span></code> axis order . Correspondingly there are 3 volumes that contain the raw electron microscopy images. Because a CNN can only make predictions within some offset from the input image extent, the size of the image cubes is larger <code class="docutils literal"><span class="pre">(350,350,250)</span></code> in order to be able to make predictions (and to train!) for every labelled voxel. The margin in this examples allows to make predictions for the labelled region with a maximal field of view of <code class="docutils literal"><span class="pre">201</span></code> in  <code class="docutils literal"><span class="pre">x,y</span></code> and <code class="docutils literal"><span class="pre">101</span></code> in <code class="docutils literal"><span class="pre">z</span></code>.</p>
+<h3><a class="toc-backref" href="#id10">Data Set</a><a class="headerlink" href="#data-set" title="Permalink to this headline">¶</a></h3>
+<p>This data set is a subset of the zebra finch area X dataset j0126 by <a class="reference external" href="http://www.neuro.mpg.de/mitarbeiter/43611/3242756">Jörgen Kornfeld</a>.
+There are 3 volumes which contain &#8220;barrier&#8221; labels (union of cell boundaries and extra cellular space) of shape <code class="docutils literal"><span class="pre">(150,150,150)</span></code> in <code class="docutils literal"><span class="pre">(x,y,z)</span></code> axis order. Correspondingly, there are 3 volumes which contain raw electron microscopy images. Because a CNN can only make predictions within some offset from the input image extent, the size of the image cubes is larger <code class="docutils literal"><span class="pre">(350,350,250)</span></code> in order to be able to make predictions (and to train!) for every labelled voxel. The margin in this examples allows to make predictions for the labelled region with a maximal field of view of <code class="docutils literal"><span class="pre">201</span></code> in  <code class="docutils literal"><span class="pre">x,y</span></code> and <code class="docutils literal"><span class="pre">101</span></code> in <code class="docutils literal"><span class="pre">z</span></code>.</p>
 <p>There is a difference in the lateral dimensions and in <code class="docutils literal"><span class="pre">z</span></code> - direction because this data set is anisotropic: lateral voxels have a spacing of <img class="math" src="_images/math/a61b546602c6a67adddca70ab5042bfd4820f7e3.png" alt="10 \mu m"/> in contrast to <img class="math" src="_images/math/3b86097c6ed1d01c713f7a98e7877647afe857c8.png" alt="20 \mu m"/> vertically. Snapshots of images and labels are depicted below.</p>
-<p>During training the pipeline cuts image and target patches from the loaded data cubes at randomly sampled locations and feeds them to the CNN. Therefore the CNN input size should be smaller than the size of the cubes, to leave enough space to cut from many different positions. Otherwise it will always use the same patch (more or less) and soon over-fit to that one.</p>
+<p>During training, the pipeline cuts image and target patches from the loaded data cubes at randomly sampled locations and feeds them to the CNN. Therefore the CNN input size should be smaller than the size of the cubes, to leave enough space to cut from many different positions. Otherwise it will always use the same patch (more or less) and soon over-fit to that one.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last"><strong>Implementation details:</strong> When the cubes are read into the pipeline it is implicitly assumed that the smaller label cube is spatially centered w.r.t the larger image cube (hence the size surplus of the image cube must be even). Furthermore the cubes are for performance reasons internally axis swapped to <code class="docutils literal"><span class="pre">(z,</span> <span class="pre">(ch,)</span> <span class="pre">x,</span> <span class="pre">y)</span></code> order, zero-padded to the same size and cropped such that only the area in which labels and images are both available after considering the CNN offset. If labels cannot be effectively used for training (because either the image surplus is to small or your FOV is to larger) a note will be printed.</p>
+<p class="last"><strong>Implementation details:</strong> When the cubes are read into the pipeline, it is implicitly assumed that the smaller label cube is spatially centered w.r.t the larger image cube (hence the size surplus of the image cube must be even). Furthermore, the cubes are for performance reasons internally axis swapped to <code class="docutils literal"><span class="pre">(z,</span> <span class="pre">(ch,)</span> <span class="pre">x,</span> <span class="pre">y)</span></code> order, zero-padded to the same size and cropped such that only the area in which labels and images are both available after considering the CNN offset. If labels cannot be effectively used for training (because either the image surplus is too small or your FOV is too large) a note will be printed.</p>
 </div>
-<p>Additionally to the 3 pairs of images and labels, 2 image cubes for live previews are included. Note that preview data must be a <strong>list</strong> of one or several cubes in a <code class="docutils literal"><span class="pre">h5</span></code>-file.</p>
+<p>Additionally to the 3 pairs of images and labels, 2 small image cubes for live previews are included. Note that preview data must be a <strong>list</strong> of one or several cubes stored in a <code class="docutils literal"><span class="pre">h5</span></code>-file.</p>
 </div>
 <div class="section" id="cnn-design">
-<h3><a class="toc-backref" href="#id12">CNN design</a><a class="headerlink" href="#cnn-design" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">CNN design</a><a class="headerlink" href="#cnn-design" title="Permalink to this headline">¶</a></h3>
 <p>The architecture of the CNN is determined by:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">n_dim</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">filters</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
@@ -195,7 +196,7 @@ unzip neuro_data.zip
 </ul>
 </div>
 <div class="section" id="training-data-options">
-<h3><a class="toc-backref" href="#id13">Training Data Options</a><a class="headerlink" href="#training-data-options" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">Training Data Options</a><a class="headerlink" href="#training-data-options" title="Permalink to this headline">¶</a></h3>
 <p>Config:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">valid_cubes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,]</span>
 <span class="n">grey_augment_channels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -234,31 +235,27 @@ Therefore, this setup can be used for actual 2D images if they are stacked to fo
 <div class="section" id="results-comments">
 <h4>Results &amp; Comments<a class="headerlink" href="#results-comments" title="Permalink to this headline">¶</a></h4>
 <ul class="simple">
-<li>When running this example, commonly the NLL-loss stagnates for about <code class="docutils literal"><span class="pre">15k</span></code> iterations around <code class="docutils literal"><span class="pre">0.7</span></code>. After that you should observe a clear decrease. On a desktop with a high-end GPU, with latest theano and cuDNN versions and using background processes for the batch creation the training should run <code class="docutils literal"><span class="pre">at</span> <span class="pre">15-10</span> <span class="pre">it/s</span></code>.</li>
+<li>When running this example, commonly the NLL-loss stagnates for about <code class="docutils literal"><span class="pre">15k</span></code> iterations around <code class="docutils literal"><span class="pre">0.7</span></code>. After that you should observe a clear decrease. On a desktop with a high-end GPU, with latest theano and cuDNN versions and using background processes for the batch creation the training should run <code class="docutils literal"><span class="pre">at</span> <span class="pre">15-20</span> <span class="pre">it/s</span></code>.</li>
 <li>Because of the (too) small training data size the validation error should stagnate soon and even go up later.</li>
 <li>Because the model has too few parameters, predictions are typically not smooth and exhibit grating-like patterns - using a more complex model mitigates this effect.</li>
 <li>Because the model has a small FOV (which for this task should rather be increase by more layers than more maxpooling) predictions contain a lot of &#8220;clutter&#8221; within wide cell bodies: there the CNN does not see the the cell outline which is apparently an important clue to solve this task.</li>
 </ul>
 <div class="figure align-center" id="id4">
-<img alt="_images/barrier_training_example.gif" src="_images/barrier_training_example.gif" />
-<p class="caption"><span class="caption-text">Preview predictions of this example model trained over 2h.</span></p>
-</div>
-<div class="figure align-center" id="id5">
-<img alt="_images/barrier_training.gif" src="_images/barrier_training.gif" />
-<p class="caption"><span class="caption-text">Preview predictions of a more complex model composed of 9 convolutional layers, <code class="docutils literal"><span class="pre">1.5M</span></code> parameters and <code class="docutils literal"><span class="pre">83</span></code> lateral FOV, trained on 9 cubes for 16h.</span></p>
+<img alt="_images/barrier_training_dual.gif" src="_images/barrier_training_dual.gif" />
+<p class="caption"><span class="caption-text">Left: preview predictions of this example model trained over 2h. Right: a more complex model composed of 9 convolutional layers, <code class="docutils literal"><span class="pre">1.5M</span></code> parameters and <code class="docutils literal"><span class="pre">83</span></code> lateral FOV, trained on 9 cubes for 16h.</span></p>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="mnist-examples">
-<span id="mnist"></span><h2><a class="toc-backref" href="#id14">MNIST Examples</a><a class="headerlink" href="#mnist-examples" title="Permalink to this headline">¶</a></h2>
+<span id="mnist"></span><h2><a class="toc-backref" href="#id13">MNIST Examples</a><a class="headerlink" href="#mnist-examples" title="Permalink to this headline">¶</a></h2>
 <p>MNIST is a benchmark data set for handwritten digit recognition/classification. State of the art benchmarks for comparison can be found <a class="reference external" href="http://yann.lecun.com/exdb/mnist/">here</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The data will be automatically downloaded but can also be downloaded manually from <a class="reference external" href="http://www.elektronn.org/downloads/mnist.pkl.gz">here</a>.</p>
 </div>
 <div class="section" id="cnn-with-built-in-pipeline">
-<h3><a class="toc-backref" href="#id15">CNN with built-in Pipeline</a><a class="headerlink" href="#cnn-with-built-in-pipeline" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">CNN with built-in Pipeline</a><a class="headerlink" href="#cnn-with-built-in-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>In ELEKTRONN&#8217;s <code class="docutils literal"><span class="pre">examples</span></code> folder is a file <code class="docutils literal"><span class="pre">MNIST_CNN_warp_config.py</span></code>. This is a configuration for <em>img-scalar</em> training and it uses a different data class than the &#8220;big&#8221; pipeline for neuro data. When using an alternative data pipeline, the options for data loading and batch creation are given given by keyword argument dictionaries in the <code class="docutils literal"><span class="pre">Data</span> <span class="pre">Alternative</span></code> section of the config file:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">data_class_name</span>      <span class="o">=</span> <span class="s1">&#39;MNISTData&#39;</span>
 <span class="n">data_load_kwargs</span>     <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">convert2image</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">warp_on</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">shift_augment</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -355,7 +352,7 @@ Compiling output functions for nll target:
 <h4>Results &amp; Comments<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p>The values in the example file should give a good result after about 10-15 minutes on a recent GPU, but you are invited to play around with the network architecture and meta-parameters such as the learning rate. To watch the progress (in a nicer way than the reading the printed numbers on the console) go to the save directory and have a look at the plots. Every time a new line is printed in the console, the plot gets updated as well.</p>
 <p><strong>If you had not used warping</strong> the progress of the training would look like this:</p>
-<div class="figure align-center" id="id6">
+<div class="figure align-center" id="id5">
 <img alt="_images/MNIST_Nowarp.Errors.png" src="_images/MNIST_Nowarp.Errors.png" />
 <p class="caption"><span class="caption-text">Withing a few minutes the <em>training</em> error goes to 0 whereas the <em>validation</em> error  stays on a higher level.</span></p>
 </div>
@@ -370,7 +367,7 @@ Compiling output functions for nll target:
 </div>
 <p>This stops the warping for further training and lowers the learning rate.
 The resulting training progress would look like this:</p>
-<div class="figure align-center" id="id7">
+<div class="figure align-center" id="id6">
 <img alt="_images/MNIST_warp.Errors.png" src="_images/MNIST_warp.Errors.png" />
 <p class="caption"><span class="caption-text">The training was interrupted after ca. 130000 iterations. Turning off warping reduced both errors to their final level (after the gradient is 0 again, no progress can be made).</span></p>
 </div>
@@ -384,11 +381,11 @@ The resulting training progress would look like this:</p>
 </div>
 </div>
 <div class="section" id="mlp-with-built-in-pipeline">
-<h3><a class="toc-backref" href="#id16">MLP with built-in Pipeline</a><a class="headerlink" href="#mlp-with-built-in-pipeline" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id15">MLP with built-in Pipeline</a><a class="headerlink" href="#mlp-with-built-in-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>In the spirit of the above example, MNIST can also be trained with a pure multi layer perceptron (MLP) without convolutions. The images are then just flattened vectors (&#8211;&gt; <em>vect-scalar</em> mode). There is a config file <code class="docutils literal"><span class="pre">MNIST_MLP_config.py</span></code> in the <code class="docutils literal"><span class="pre">Examples</span></code> folder. This method can also be applied for any other non-image data, e.g. predicting income from demographic features.</p>
 </div>
 <div class="section" id="standalone-cnn">
-<h3><a class="toc-backref" href="#id17">Standalone CNN</a><a class="headerlink" href="#standalone-cnn" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Standalone CNN</a><a class="headerlink" href="#standalone-cnn" title="Permalink to this headline">¶</a></h3>
 <p>If you think the big pipeline and long configuration file is a bit of an overkill for good old MNIST we have an alternative lightweight example in the file <code class="docutils literal"><span class="pre">MNIST_CNN_standalone.py</span></code> of the <code class="docutils literal"><span class="pre">Examples</span></code> folder. This example illustrates what (in a slightly more elaborate way) happens under the hood of the big pipeline.</p>
 <p>First we import the required classes and initialise a training data object from <a class="reference internal" href="elektronn.training.html#module-elektronn.training.traindata" title="elektronn.training.traindata"><code class="xref py py-mod docutils literal"><span class="pre">elektronn.training.traindata</span></code></a> (which we actually used above, too). It does not more than loading the training, validation and testing data and sample batches randomly - all further options e.g. for augmentation are not used here:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">elektronn.training.traindata</span> <span class="kn">import</span> <span class="n">MNISTData</span>
@@ -425,7 +422,7 @@ The resulting training progress would look like this:</p>
 <p>Of course the performance of this setup is not as good of the model above, but feel free tweak - how about dropout? Simply add <code class="docutils literal"><span class="pre">enable_dropout=True</span></code> to the cnn initialisation: all layers have by default a dropout rate of 0.5 - unless it is suppressed with <code class="docutils literal"><span class="pre">force_no_dropout=True</span></code> when adding a particular layer (it should not be used in the last layer). Don&#8217;t forget to set the dropout rates to 0 while estimating the performance and to their old value afterwards (the methods <code class="docutils literal"><span class="pre">cnn.getDropoutRates</span></code> and <code class="docutils literal"><span class="pre">cnn.setDropoutRates</span></code> might be useful). Hint: for dropout, a different activation function than <code class="docutils literal"><span class="pre">abs</span></code>, more neurons per layer and more training iterations might perform better... you can try adapting it yourself or find a ready setup with drop out in the <code class="docutils literal"><span class="pre">examples</span></code> folder.</p>
 </div>
 <div class="section" id="auto-encoder-example">
-<span id="autoencoder"></span><h3><a class="toc-backref" href="#id18">Auto encoder Example</a><a class="headerlink" href="#auto-encoder-example" title="Permalink to this headline">¶</a></h3>
+<span id="autoencoder"></span><h3><a class="toc-backref" href="#id17">Auto encoder Example</a><a class="headerlink" href="#auto-encoder-example" title="Permalink to this headline">¶</a></h3>
 <p>This examples also uses MNIST data, but this time the task is not classification but compression. The input images have shape <code class="docutils literal"><span class="pre">28</span> <span class="pre">x</span> <span class="pre">28</span></code> but we will regard them as 784 dimensional vectors. The NN is shaped like an hourglass: the number of neurons decreases from 784 input neurons to 50 internal neurons in the central layer. Then the number increases symmetrically to 784 for the output. The training target is to reproduce the input in the output layer (i.e. the labels are identical to the data). Because the inputs are float numbers, so is the output and this is a regression problem. The first part of the auto encoder compresses the information and the second part decompresses it. The weights of both parts are shared, i.e. the weight matrix of each decompression layer is the transposed weight matrix of the corresponding compression layer, and updates are made simultaneously in both layers. For constructing an auto encoder the method <code class="docutils literal"><span class="pre">cnn.addTiedAutoencoderChain</span></code> is used.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
@@ -474,7 +471,7 @@ The resulting training progress would look like this:</p>
 </pre></div>
 </div>
 <p>The above NN learns to compress the 784 pixels of an image to a 50 dimensional code (ca. 15x). The quality of the reconstruction can be inspected from plotting the images and comparing them to the original input:</p>
-<div class="figure align-center" id="id8">
+<div class="figure align-center" id="id7">
 <img alt="_images/DAE.png" src="_images/DAE.png" />
 <p class="caption"><span class="caption-text">Left input data (from validation set) and right reconstruction. The reconstruction values have been slightly rescaled for better visualisation.</span></p>
 </div>
