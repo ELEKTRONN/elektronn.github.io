@@ -1,5 +1,3 @@
-$popoverTipSize: 8px;
-
 .comparison-card {
 	@extend .-no-rhythm;
 	overflow: hidden;
@@ -10,7 +8,7 @@ $popoverTipSize: 8px;
 	border-radius: 3px;
 	position: relative;
 	box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-	
+
 	&__caption {
 		margin-top: 0;
 		padding: 4px 8px;
@@ -21,65 +19,11 @@ $popoverTipSize: 8px;
 		background: #f6f6f6;
 		box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 1px rgba(255, 255, 255, 0.6);
 	}
-	
-	&__left {
-		background-image: url("/images/combined.jpg");
-		background-size: 500px 500px;
-		width: 500px;
-		height: 500px;
-		position: relative;
-		overflow: hidden;
-	}
-
-	&__right {
-		background-image: url("/images/7000_2011_139_raw.jpg");
-		background-size: 500px 500px;
-		height: 500px;
-		resize: horizontal; 
-		position: absolute; 
-		top: 0; left: 0; 
-		min-width: 0;
-		max-width: 500px; 
-	}
-	
-	&__right:before {
-		content: '↔';
-		background: rgba(0,0,0,.7);
-		color: white; 
-		top: 0; right: 0px;
-		height: 100%;
-		line-height: 500px;
-		position: absolute;
-	}
-
-	&__handle {  
-		resize: horizontal; 
-		opacity: 0; 
-		position: relative; 
-		top: 50%;
-		left: 0px; 
-		width: 0px;
-		height: 16px; 
-		max-width: 500px;
-		min-width: 16px; 
-		outline: 0 solid transparent; 
-		cursor: move;
-		cursor: all-scroll;
-		transform: scaley(35);
-		transform-origin: center center;
-		animation: delta 2s 1 normal ease-in-out 1s;
-	}
-	
-	@keyframes delta {
-		0% {width: 0px}
-		70% {width: 70px}
-		100% {width: 0px}
-	}
 }
 
 .shadow {
 	position: relative;
-	
+
 	&::after {
 		position: absolute;
 		width: 100%;
@@ -95,31 +39,51 @@ $popoverTipSize: 8px;
 }
 
 .banner {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-	
-	.notification {
-		margin-bottom: 4em;
+	padding-top: 4em;
+
+	nav {
+		padding-bottom: 2em;
 	}
-	
-	&__header {
-		flex: 1;
-		padding: 4em 1em;
-		background: url("/images/background.png") 50% 0% no-repeat;
-	
-		.row__col + .row__col {
-			align-self: flex-end;
+
+	.cocoen__drag {
+		background: #FF6100 !important;
+
+		&::before {
+			background: #FF6100 !important;
+			border-color: #FF6100 !important;
 		}
 	}
 
-	&__content {
-		@extend .-no-rhythm;
-		margin-top: 0;
+	.row.-wide {
+		display: block;
+
+		.col + .col {
+			margin-top: 2em;
+		}
+
+		@include breakpoint(960px) {
+			display: flex;
+
+			.col + .col {
+				margin-top: 0;
+			}
+		}
+	}
+
+	.banner-header {
+		text-align: center;
+		h1 {
+			margin-top: .5em;
+		}
+	}
+
+	.banner-content {
+		margin-top: 4em;
+		font-size: 1.4rem;
 		background: #fff;
 		font-size: 1.4rem;
 		border-top: 6px solid #e0e3e8;
-		padding: 4em 4em 7em;
+		padding: 4em 4em 4em;
 		color: rgba(#5d6778, .8);
 	}
 }

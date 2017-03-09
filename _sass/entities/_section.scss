@@ -1,76 +1,185 @@
-.container {
-	&--small {
-		max-width: 480px;
+.page-article {
+	background-color: #fff;
+	border: 6px solid #e0e3e8;
+	border-radius: 4px;
+	border-top: 0;
+	border-bottom: 0;
+	padding: 3em 2em 6em;
+	color: rgba(#5d6778, .8);
+	min-height: 100vh;
+
+	section + section {
+		margin-top: 4em;
 	}
-	
-	&--medium {
+}
+
+.article-header {
+	margin-left: auto;
+	margin-right: auto;
+	display: table;
+	margin-top: 4em;
+	margin-bottom: 4em;
+
+	> span, div {
+		display: table-cell;
+		vertical-align: middle;
+	}
+
+	h1 + p {
+		margin-top: 0;
+		color: #5d6778;
+	}
+
+	div {
+		padding-left: 2em;
+	}
+}
+
+.section-heading {
+	position: relative;
+	margin-bottom: 1em;
+	left: 50px;
+
+	> .heading-icon {
+		position: absolute;
+		width: 64px;
+		border-left: 6px solid darken(#2e435f, 10);
+		height: 64px;
+		top: -4px;
+		left: calc(-2em - 50px + 27px);
+		color: white;
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
+		background: #2E435F;
+		text-align: center;
+		line-height: 64px;
+	}
+
+	@include breakpoint(640px) {
+		left: 0;
+
+		> .heading-icon {
+			left: calc(-2em - 32px);
+			border-right: 6px solid darken(#2e435f, 10);
+			border-left: 0;
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+			border-bottom-left-radius: 3px;
+			border-top-left-radius: 3px;
+		}
+	}
+}
+
+.container {
+	width: 90%;
+
+	&.-medium {
 		max-width: 960px;
 	}
-	
-	&--large {
+
+	&.-large {
 		max-width: 1120px;
 	}
 }
 
-.page {
-	background: #e6e8ed;
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-	background: url("/images/background.png") 50% 50% no-repeat;
-	margin-top: 0;
-	
-	&__header {
-		margin-top: 2em;
-		text-align: center;
-		
-		hr {
+._center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+._text-center {
+	text-align: center;
+}
+
+.member-gallery {
+	@media (max-width: 640px) {
+		.col + .col {
 			margin-top: 1em;
-		} 
-	}
-	
-	&__body {
-		flex: 1;
-		background: #fff;
-		border: 6px solid #e0e3e8;
-		border-radius: 4px;
-		padding: 4em 2em 6em;
-		font-size: 1.4rem;
-		color: rgba(#5d6778, .8);
-		
-		h2 {
-			position: relative;
-			
-			.heading-icon {
-				margin-top: 0;
-				position: absolute;
-				width: 64px;
-				height: 64px;
-				top: -4px;
-				left: -92px;
-				color: white;
-				border-top-left-radius: 3px;
-				border-bottom-left-radius: 3px;
-				background: #2E435F;
-				text-align: center;
-				line-height: 64px;
-			}
 		}
 	}
 }
 
-.member-gallery {
-	&__photo {
-		@extend .-center;
-		width: 196px;
-		height: 196px;
-		overflow: hidden;
+.member-photo {
+	& + & {
+		margin-top: 1em;
+	}
+
+	min-height: 320px;
+
+	> img {
+		@extend ._center;
+		display: block;
+		width: 100%;
+		max-width: 200px;
 		border-radius: 50%;
-	    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 		border: 1px solid #ccc;
-		
-		img {
-			display: block;
-		}
+	}
+
+	> figcaption {
+		margin-top: 1em;
 	}
 }
+
+// .page {
+// 	background: #e6e8ed;
+// 	display: flex;
+// 	flex-direction: column;
+// 	min-height: 100vh;
+// 	background: url("/images/background.png") 50% 50% no-repeat;
+// 	margin-top: 0;
+
+// 	&__header {
+// 		margin-top: 2em;
+// 		text-align: center;
+
+// 		hr {
+// 			margin-top: 1em;
+// 		}
+// 	}
+
+// 	&__body {
+// 		flex: 1;
+// 		background: #fff;
+// 		border: 6px solid #e0e3e8;
+// 		border-radius: 4px;
+// 		padding: 4em 2em 6em;
+// 		font-size: 1.4rem;
+// 		color: rgba(#5d6778, .8);
+
+// 		h2 {
+// 			position: relative;
+
+// 			.heading-icon {
+// 				margin-top: 0;
+// 				position: absolute;
+// 				width: 64px;
+// 				height: 64px;
+// 				top: -4px;
+// 				left: -92px;
+// 				color: white;
+// 				border-top-left-radius: 3px;
+// 				border-bottom-left-radius: 3px;
+// 				background: #2E435F;
+// 				text-align: center;
+// 				line-height: 64px;
+// 			}
+// 		}
+// 	}
+// }
+
+// .member-gallery {
+// 	&__photo {
+// 		@extend .-center;
+// 		width: 196px;
+// 		height: 196px;
+// 		overflow: hidden;
+// 		border-radius: 50%;
+// 	    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+// 		border: 1px solid #ccc;
+
+// 		img {
+// 			display: block;
+// 		}
+// 	}
+// }

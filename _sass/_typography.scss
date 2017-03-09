@@ -9,15 +9,25 @@ body, input, select, textarea {
 	color: #5d6778;
 }
 
-* + * {
+p + p {
 	margin-top: 1em;
 }
 
+li ~ li {
+	margin-top: .5em;
+}
+
 strong, b {
+	font-weight: 600;
 }
 
 h1, h2, h3, h4, h5, h6 {
+	font-family: "Source Sans Pro", sans-serif;
 	color: #4C5B76;
+}
+
+h1 {
+	font-size: 4.0rem;
 }
 
 h2 {
@@ -43,19 +53,12 @@ hr {
 
 a {
 	text-decoration: none;
-}
-
-a:not(.tag):not(.button):not(.nav__toggle):not(.notification):not(.snackbar__item) {
 	color: #5BA4FF;
-	border-bottom: .175em solid #e3e3e3;
-	transition: all 0.2s ease-in-out;
-	
+	border-bottom: 2px solid #e3e3e3;
+	transition: border-bottom .2s ease-in-out;
+
 	&:hover {
-		color: darken(#5BA4FF, 20);
+		color: darken(#5BA4FF, 10);
 		border-color: #5BA4FF;
 	}
-}
-
-.popover ul a {
-	border-bottom: 0 !important;
 }

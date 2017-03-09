@@ -13,14 +13,16 @@ button, .button {
 	cursor: pointer;
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0) 51%, rgba(0, 0, 0, 0.05));
 	box-shadow: inset 0 1px #fcfcfc, 0 1px 1px rgba(0, 0, 0, 0.05);
-	
+
 	@include breakpoint($on-mobile) {
 		display: inline-block;
 	}
-	
+
 	&:hover {
 		color: #555;
 		background-color: #f6f6f6;
+		border: 1px solid;
+		border-color: #ccc #c5c5c5 #bbb;
 	}
 
 	&:focus,
@@ -39,10 +41,10 @@ button, .button {
 		background-image: linear-gradient(to bottom, #717171, #9a9a9a);
 		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), 0 1px rgba(255, 255, 255, 0.8);
 	}
-	
+
 	&--primary {
 		position: relative;
-		
+
 		&::after, &::before {
 			width: 100%;
 			height: 100%;
@@ -52,24 +54,24 @@ button, .button {
 			z-index: -1;
 			transition: all .2s ease-in-out;
 		}
-		
+
 		&::after {
 			background: rgba(#5BA4FF, .5);
 			right: -5px;
 			top: -5px;
 		}
-		
+
 		&::before {
 			background: rgba(#FF6100, .5);
 			left: -5px;
 			bottom: -5px;
 		}
-		
+
 		&:hover::after {
 			top: 0;
 			right: 0;
 		}
-		
+
 		&:hover::before {
 			bottom: 0;
 			left: 0;
@@ -77,11 +79,7 @@ button, .button {
 	}
 }
 
-a.button:hover {
-	transition-property: none;
-	border-bottom: 1px solid #bbb;
-}
-
+button .material-icons,
 .button .material-icons {
 	font-size: 1.6rem;
 	vertical-align: middle;

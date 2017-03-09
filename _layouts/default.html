@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en-us">
 
-	{% include head.html %}
+{% include head.html %}
 
-	<body>
-		{% include header.html %}
-		
-		{{ content }}
-	
-		<script src="{{ "js/main.js" | prepend: site.baseurl }}"></script>
-	</body>
+<body>
+
+	{{ content }}
+
+	<script src="{{ "js/jquery-3.1.1.min.js" | prepend: site.baseurl }}"></script>
+	<script src="{{ "js/jquery.mobile-events.min.js" | prepend: site.baseurl }}"></script>
+	<script src="{{ "js/cocoen.min.js" | prepend: site.baseurl }}"></script>
+	<script>
+		$(document).ready(function(){
+			$('.cocoen').cocoen();
+		});
+	</script>
+</body>
 
 </html>

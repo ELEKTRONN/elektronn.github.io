@@ -8,8 +8,9 @@ body { -ms-overflow-style: scrollbar; }
 html, body { min-width: 320px }
 
 body {
-	background: #e6e8ed;
+	background-color: #eceff4;
 	margin-top: 0;
+	background: #eceff4 url("/images/background.png") 50% 0 no-repeat;
 
 	&.is-loading {
 		*, *:before, *:after {

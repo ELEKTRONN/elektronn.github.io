@@ -5,43 +5,46 @@
 	text-align: center;
 	position: relative;
 
+	i {
+		position: relative;
+		z-index: 3;
+	}
+
 	.material-icons {
 		font-size: 96px;
 	}
 
-	
 	&::after, &::before {
 		font-family: 'Material Icons';
 		position: absolute;
-		z-index: -1;
 		font-size: 96px;
 	}
-	
+
 	&::after {
-		top: -35px;
-		right: -5px;
+		top: -30px;
+		right: -3px;
 		color: rgba(#5BA4FF, .5);
 	}
-	
+
 	&::before {
-		bottom: -30px;
-		left: -5px;
+		bottom: -25px;
+		left: -3px;
 		color: rgba(#FF6100, .5);
 	}
-	
-	&--about {
+
+	&.-about {
 		&::after, &::before {
 			content: "people";
 		}
 	}
-	
-	&--development {
+
+	&.-development {
 		&::after, &::before {
 			content: "code";
 		}
 	}
-	
-	&--start {
+
+	&.-explore {
 		&::after, &::before {
 			content: "explore";
 		}

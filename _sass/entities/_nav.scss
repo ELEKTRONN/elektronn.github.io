@@ -1,0 +1,37 @@
+nav {
+	text-align: center;
+	margin-bottom: 3em;
+	font-size: 1.4rem;
+
+	> .nav-item {
+		display: inline-block;
+		padding: .5em 1em;
+		border: 1px solid transparent;
+		color: #5d6778;
+		border-radius: 25px;
+		transition: border .2s ease-in-out, color .2s ease-in-out;
+
+		> i, span {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		> i {
+			margin-right: .5em;
+		}
+
+		&:hover {
+			border: 1px solid rgba(#FF6100, .5);
+			color: rgba(#FF6100, .5);
+		}
+
+		&.-active {
+			color: #5BA4FF;
+			border: 1px solid #5BA4FF;
+		}
+	}
+
+	> .nav-item + .nav-item {
+		margin-left: 2em;
+	}
+}

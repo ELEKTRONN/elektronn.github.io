@@ -1,36 +1,24 @@
-@media (min-width: $on-mobile) {
+@media (min-width: 640px) {
 	.row {
 		display: flex;
 		flex-direction: row;
-	}
-	
-	.row--gutter {
-		.row__col {
-			margin: 1em .5em !important;
+		flex-wrap: nowrap;
+
+		&.-wrap {
+			flex-wrap: wrap;
 		}
-		
-		//.row__col + .row__col {
-//			margin-left: 2em;
-//		}
+
+		> .col {
+			flex: 1;
+		}
+
+		> .col + .col {
+			margin-left: 1em;
+			margin-top: 0;
+		}
 	}
-	.row--wrap { flex-wrap: wrap }
-	.row--no-wrap { flex-wrap: nowrap }
-	.row--middle {
-		align-items: center;
-		align-content: center;
-	}
-	.row--center {
-		justify-content: center;
-	}
-	
-	.row__col { flex: 1 }
-	.row__col--auto { flex-grow: 0 }
-	.row__col + .row__col {
-		margin-top: 0;
-	}
-	
-	.row__col--fixed-width {
-		flex-grow: 0;
-		flex-basis: auto;
-	}
+}
+
+.col + .col {
+	margin-top: 2em;
 }

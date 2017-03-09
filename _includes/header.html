@@ -1,12 +1,20 @@
-<header class="nav -animated -animated__fadeUp">
-	<nav class="snackbar">
-		{% assign url = page.url | remove: 'index.html' %}
-		{% for link in site.navigation %}
-			<a class="snackbar__item {% if url == link.url %}snackber__item--active{% endif %}" href="{{ link.url }}"><i class="material-icons">{{ link.icon }}</i>{{ link.text }}</a>
-		{% endfor %}
-	</nav>
-	
-	<nav class="nav__toggle -text-center">
-		<a class="snackbar__item" href="#nav"><i class="material-icons">menu</i>Navigation</a>
-	</nav>
+<!-- <header class="nav -animated -animated__fadeUp">
+<nav class="snackbar">
+	{% assign url = page.url | remove: 'index.html' %}
+	{% for link in site.navigation %}
+		<a class="snackbar__item {% if url == link.url %}snackber__item--active{% endif %}" href="{{ link.url }}"><i class="material-icons">{{ link.icon }}</i>{{ link.text }}</a>
+	{% endfor %}
+</nav>
+
+<nav class="nav__toggle -text-center">
+	<a class="snackbar__item" href="#nav"><i class="material-icons">menu</i>Navigation</a>
+</nav>
 </header>
+-->
+
+<nav>
+	{% assign url = page.url | remove: 'index.html' %}
+	{% for link in site.navigation %}
+		<a class="nav-item {% if url == link.url %}-active{% endif %}" href="{{ link.url }}"><i class="material-icons">{{ link.icon }}</i><span>{{ link.text }}</span></a>
+	{% endfor %}
+</nav>
