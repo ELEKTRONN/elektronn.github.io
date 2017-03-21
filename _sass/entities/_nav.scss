@@ -4,6 +4,7 @@ nav {
 	font-size: 1.4rem;
 
 	> .nav-item {
+		margin: 0 1em;
 		display: inline-block;
 		padding: .5em 1em;
 		border: 1px solid transparent;
@@ -29,9 +30,5 @@ nav {
 			color: #5BA4FF;
 			border: 1px solid #5BA4FF;
 		}
-	}
-
-	> .nav-item + .nav-item {
-		margin-left: 2em;
 	}
 }
