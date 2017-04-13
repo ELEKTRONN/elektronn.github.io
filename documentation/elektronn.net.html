@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>elektronn.net package &mdash; ELEKTRONN</title>
+    <title>elektronn.net package &#8212; ELEKTRONN</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,15 +17,16 @@
         VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
-    <link rel="top" title="ELEKTRONN" href="index.html" />
-    <link rel="up" title="ELEKTRONN API Documentation" href="modules.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="elektronn.training package" href="elektronn.training.html" />
     <link rel="prev" title="ELEKTRONN API Documentation" href="modules.html" /> 
   </head>
@@ -50,8 +51,8 @@
         <li class="right" >
           <a href="modules.html" title="ELEKTRONN API Documentation"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ELEKTRONN API Documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">ELEKTRONN API Documentation</a> &#187;</li> 
       </ul>
     </div>
 
@@ -84,21 +85,18 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/elektronn.net.txt"
+      <li><a href="_sources/elektronn.net.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -135,9 +133,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>theano.tensor.dtensor4 ('batch', 'channel', x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
-<li><strong>input_shape</strong> (<em>tuple or list of length 4</em>) &#8211; (batch size, num input feature maps, image height, image width)</li>
-<li><strong>filter_shape</strong> (<em>tuple or list of length 4</em>) &#8211; (number of filters, input_channels, filter height,filter width)</li>
+<li><strong>input</strong> (<em>theano.tensor.dtensor4</em><em> (</em><em>'batch'</em><em>, </em><em>'channel'</em><em>, </em><em>x</em><em>, </em><em>y</em><em>)</em><em></em>) &#8211; symbolic image tensor, of shape input_shape</li>
+<li><strong>input_shape</strong> (<em>tuple</em><em> or </em><em>list of length 4</em>) &#8211; (batch size, num input feature maps, image height, image width)</li>
+<li><strong>filter_shape</strong> (<em>tuple</em><em> or </em><em>list of length 4</em>) &#8211; (number of filters, input_channels, filter height,filter width)</li>
 <li><strong>pool</strong> (<em>int 2-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
 <li><strong>activation_func</strong> (<em>string</em>) &#8211; Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
 <li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
@@ -149,10 +147,10 @@ to dense images if MFP was enabled. Use this in for the last layer.</li>
 Only needed if MFP is enabled.</li>
 <li><strong>mfp_strides</strong> (<em>list of int</em>) &#8211; the strides of the output in each dimension</li>
 <li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
-<li><strong>W</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>b</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
 <li><strong>pooling_mode</strong> (<em>str</em>) &#8211; &#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains
@@ -308,9 +306,9 @@ correct label</td>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>theano.tensor.dtensor5 ('batch', z, 'channel', x, y)</em>) &#8211; symbolic image tensor, of shape input_shape</li>
-<li><strong>input_shape</strong> (<em>tuple or list of length 5</em>) &#8211; (batch size, z, num input feature maps,  y, x)</li>
-<li><strong>filter_shape</strong> (<em>tuple or list of length 5</em>) &#8211; (number of filters, filter z, num input feature maps, filter y,filter x)</li>
+<li><strong>input</strong> (<em>theano.tensor.dtensor5</em><em> (</em><em>'batch'</em><em>, </em><em>z</em><em>, </em><em>'channel'</em><em>, </em><em>x</em><em>, </em><em>y</em><em>)</em><em></em>) &#8211; symbolic image tensor, of shape input_shape</li>
+<li><strong>input_shape</strong> (<em>tuple</em><em> or </em><em>list of length 5</em>) &#8211; (batch size, z, num input feature maps,  y, x)</li>
+<li><strong>filter_shape</strong> (<em>tuple</em><em> or </em><em>list of length 5</em>) &#8211; (number of filters, filter z, num input feature maps, filter y,filter x)</li>
 <li><strong>pool</strong> (<em>int 3-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
 <li><strong>activation_func</strong> (<em>string</em>) &#8211; Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
 <li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
@@ -322,10 +320,10 @@ to dense images if MFP was enabled. Use this in for the last layer.</li>
 Only needed if MFP is enabled.</li>
 <li><strong>mfp_strides</strong> (<em>list of int</em>) &#8211; the strides of the output in each dimension</li>
 <li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
-<li><strong>W</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>b</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
 <li><strong>pooling_mode</strong> (<em>str</em>) &#8211; &#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains
@@ -547,11 +545,11 @@ If unrestricted the predictions are used directly.</p>
 <p class="rubric">Examples</p>
 <p>Note that image data must have at least 1 channel, e.g. a 2d image (1,x,y). 3d requires data in the
 format (z,ch,x,y). E.g. to create an isotropic 3d CNN with 5 channels (total input shape is (1,30,5,30,30)):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span> <span class="n">input_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span> <span class="n">input_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>A non-convolutional MLP can be created as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">100</span><span class="p">,),</span> <span class="n">input_depth</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">100</span><span class="p">,),</span> <span class="n">input_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -774,7 +772,7 @@ gradient (which is not compiled)</p>
 <blockquote>
 <div><p>whether to activate label propagation on unlabelled (-1) examples</p>
 </div></blockquote>
-<p><strong>only_forwad: Bool</strong></p>
+<p><strong>only_forward: Bool</strong></p>
 <blockquote>
 <div><p>This exlcudes the building of the gradient (faster)</p>
 </div></blockquote>
@@ -848,11 +846,10 @@ Any source of noise leads to failure of convergence (at all).</p>
 </li>
 </ul>
 <blockquote>
-<div><ul>
+<div><ul class="simple">
 <li><dl class="first docutils">
 <dt>update_loss: Bool</dt>
-<dd><p class="first last">determine current loss <em>after</em> update step (e.g. needed for queue, but <code class="docutils literal"><span class="pre">get_loss</span></code> can also be               called explicitly)</p>
-</dd>
+<dd>determine current loss <em>after</em> update step (e.g. needed for queue, but <code class="docutils literal"><span class="pre">get_loss</span></code> can also be               called explicitly)</dd>
 </dl>
 </li>
 </ul>
@@ -1262,16 +1259,16 @@ Useful is also to simply print &#8216;d&#8217; as in the example.</p>
 </table>
 <p class="rubric">Examples</p>
 <p>Calculation for anisotropic &#8220;flat&#8221; 3d CNN with MFP in the first layers only:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span>         <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pool</span>            <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">MFP</span>             <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>   <span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_dim</span><span class="o">=</span><span class="mi">3</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">CNNCalculator</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">desired_input</span><span class="p">,</span> <span class="n">MFP</span><span class="o">=</span><span class="n">MFP</span><span class="p">,</span> <span class="n">force_center</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">desired_output</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">n_dim</span><span class="o">=</span><span class="n">n_dim</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="n">CNNCalculator</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="n">desired_input</span><span class="p">,</span> <span class="n">MFP</span><span class="o">=</span><span class="n">MFP</span><span class="p">,</span> <span class="n">force_center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">desired_output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_dim</span><span class="o">=</span><span class="n">n_dim</span><span class="p">)</span>
 <span class="go">Info: input (211) changed to (210) (size not possible)</span>
 <span class="go">Info: input (211) changed to (210) (size not possible)</span>
 <span class="go">Info: input (20) changed to (22) (size too small)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">d</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">d</span>
 <span class="go">Input: [210, 210, 22]</span>
 <span class="go">Layer/Fragment sizes:     [[102, 49, 24, 24], [102, 49, 24, 24], [22, 9, 4, 4]]</span>
 <span class="go">Unpooled Layer sizes:     [[205, 99, 48, 24], [205, 99, 48, 24], [22, 19, 8, 4]]</span>
@@ -1443,15 +1440,15 @@ Weight matrix W is of shape (n_in,n_out), the bias vector b is of shape (n_out,)
 <li><strong>n_in</strong> (<em>int</em>) &#8211; dimensionality of input</li>
 <li><strong>n_out</strong> (<em>int</em>) &#8211; number of hidden units</li>
 <li><strong>batch_size</strong> (<em>int</em>) &#8211; batch_size</li>
-<li><strong>pool</strong> &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
+<li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
 self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</li>
 <li><strong>activation_func</strong> (<em>string</em>) &#8211; {&#8216;relu&#8217;,&#8217;sigmoid&#8217;,&#8217;tanh&#8217;,&#8217;abs&#8217;, &#8216;maxout &lt;i&gt;&#8217;}</li>
 <li><strong>input_noise</strong> (<em>theano.shared float32</em>) &#8211; std of gaussian (centered) input noise. 0 or None &#8211;&gt; no noise</li>
 <li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
-<li><strong>W</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>b</strong> (<em>np.ndarray or T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
 </ul>
@@ -1576,7 +1573,7 @@ the output is of length: &lt;batchsize&gt;, Use cross_entropy() to get a scalar 
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>symbolic input carrying [time, batch, feat]</em>) &#8211; theano.tensor.ftensor3</li>
+<li><strong>input</strong> (<em>symbolic input carrying</em><em> [</em><em>time</em><em>, </em><em>batch</em><em>, </em><em>feat</em><em>]</em><em></em>) &#8211; theano.tensor.ftensor3</li>
 <li><strong>n_in</strong> (<em>int</em>) &#8211; dimensionality of input</li>
 <li><strong>n_hid</strong> (<em>int</em>) &#8211; number of hidden units</li>
 <li><strong>activation_func</strong> (<em>string</em>) &#8211; {&#8216;relu&#8217;,&#8217;sigmoid&#8217;,&#8217;tanh&#8217;,&#8217;abs&#8217;}</li>
@@ -1658,13 +1655,13 @@ The pooling can either be done as <code class="docutils literal"><span class="pr
         <li class="right" >
           <a href="modules.html" title="ELEKTRONN API Documentation"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="modules.html" >ELEKTRONN API Documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="modules.html" >ELEKTRONN API Documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
     </div>
   </body>
 </html>

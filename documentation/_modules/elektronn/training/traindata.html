@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>elektronn.training.traindata &mdash; ELEKTRONN</title>
+    <title>elektronn.training.traindata &#8212; ELEKTRONN</title>
     
     <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,15 +17,16 @@
         VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../../_static/elektronnfavicon.ico"/>
-    <link rel="top" title="ELEKTRONN" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" /> 
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
   </head>
   <body role="document">
 
@@ -42,8 +43,8 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
 
@@ -52,14 +53,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -78,20 +76,20 @@
 <span class="c1"># Max-Planck-Institute for Medical Research, Heidelberg, Germany</span>
 <span class="c1"># Authors: Marius Killinger, Gregor Urban</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">urllib2</span>
 <span class="kn">import</span> <span class="nn">cPickle</span>
 <span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">re</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">sklearn_avail</span> <span class="o">=</span> <span class="bp">True</span>
-    <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">cross_validation</span>
+    <span class="n">sklearn_avail</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">cross_validation</span>
 <span class="k">except</span><span class="p">:</span>
-    <span class="n">sklearn_avail</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">sklearn_avail</span> <span class="o">=</span> <span class="kc">False</span>
 
 <span class="kn">import</span> <span class="nn">warping</span>
-<span class="kn">import</span> <span class="nn">trainutils</span> <span class="kn">as</span> <span class="nn">ut</span>
+<span class="kn">import</span> <span class="nn">trainutils</span> <span class="k">as</span> <span class="nn">ut</span>
 
 
 <div class="viewcode-block" id="sort_human"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.sort_human">[docs]</a><span class="k">def</span> <span class="nf">sort_human</span><span class="p">(</span><span class="n">file_names</span><span class="p">):</span>
@@ -106,17 +104,17 @@
 <span class="sd">    Load and prepare data, Base-Obj</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pos</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">n_lab</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n_lab</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">)</span><span class="o">.</span><span class="n">size</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="n">n_lab</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">n_lab</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">n_lab</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">unique</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">unique</span><span class="p">))</span><span class="o">.</span><span class="n">size</span>
             <span class="k">else</span><span class="p">:</span>
@@ -127,7 +125,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.0001</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.0001</span><span class="p">))</span> <span class="o">*</span> <span class="mi">4294967295</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">()</span>
-        <span class="k">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">__repr__</span><span class="p">()</span>
+        <span class="nb">print</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_perm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_reseed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -136,7 +134,7 @@
         <span class="k">if</span> <span class="n">current_pid</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">pid</span> <span class="o">=</span> <span class="n">current_pid</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.0001</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.0001</span><span class="p">))</span> <span class="o">*</span> <span class="mi">4294967295</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid</span><span class="p">))</span>
-            <span class="k">print</span> <span class="s2">&quot;Reseeding RNG in Process with PID:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid</span>
+            <span class="nb">print</span> <span class="s2">&quot;Reseeding RNG in Process with PID:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pid</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2">-class Data Set: #training examples: </span><span class="si">%i</span><span class="s2"> and #validing: </span><span class="si">%i</span><span class="s2">&quot;</span> \
@@ -170,15 +168,15 @@
             <span class="n">label</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_l</span><span class="p">[:</span><span class="n">batch_size</span><span class="p">]</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Data.createSplitPerm"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.createSplitPerm">[docs]</a>    <span class="k">def</span> <span class="nf">createSplitPerm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.createSplitPerm"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.createSplitPerm">[docs]</a>    <span class="k">def</span> <span class="nf">createSplitPerm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())))</span>
-        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">rng</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">(</span><span class="n">seed</span><span class="p">))</span>
         <span class="n">perm</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
         <span class="n">k</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="n">subset_ratio</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">perm</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Data.createCVSplit"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.createCVSplit">[docs]</a>    <span class="k">def</span> <span class="nf">createCVSplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">use_fold</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.createCVSplit"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.createCVSplit">[docs]</a>    <span class="k">def</span> <span class="nf">createCVSplit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">n_folds</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">use_fold</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">sklearn_avail</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Please install sklearn to create CV splits&quot;</span><span class="p">)</span>
 
@@ -198,14 +196,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">valid_size</span><span class="p">:]]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">=</span> <span class="n">label</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">valid_size</span><span class="p">:]]</span></div>
 
-<div class="viewcode-block" id="Data.makeExampleSubset"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.makeExampleSubset">[docs]</a>    <span class="k">def</span> <span class="nf">makeExampleSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.makeExampleSubset"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.makeExampleSubset">[docs]</a>    <span class="k">def</span> <span class="nf">makeExampleSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">ix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createSplitPerm</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">),</span> <span class="n">subset_ratio</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">[</span><span class="n">ix</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_perm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Data.makeFeatureSubset"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.makeFeatureSubset">[docs]</a>    <span class="k">def</span> <span class="nf">makeFeatureSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Data.makeFeatureSubset"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.Data.makeFeatureSubset">[docs]</a>    <span class="k">def</span> <span class="nf">makeFeatureSubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset_ratio</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">ix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">createSplitPerm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">subset_ratio</span><span class="p">,</span> <span class="n">seed</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">[:,</span> <span class="n">ix</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">[:,</span> <span class="n">ix</span><span class="p">]</span>
@@ -216,27 +214,27 @@
 
 <div class="viewcode-block" id="BalancedData"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.BalancedData">[docs]</a><span class="k">class</span> <span class="nc">BalancedData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">BalancedData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_splitted</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BalancedData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_splitted</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="BalancedData.getbatch"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.BalancedData.getbatch">[docs]</a>    <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">balanced</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="BalancedData.getbatch"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.BalancedData.getbatch">[docs]</a>    <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">balanced</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">balanced</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getbatch_balanced</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>  <span class="c1"># only train</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">BalancedData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_init_balanced</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_b_mask</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">None</span><span class="p">)]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_b_mask</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_b_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_b_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_b_perm</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">None</span><span class="p">)]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span>
-        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_b_perm</span> <span class="o">=</span> <span class="p">[(</span><span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span><span class="p">):</span>
             <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_b_mask</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_b_count</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_b_perm</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_b_count</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_splitted</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_splitted</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_get_save_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">pos</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">perm</span><span class="p">):</span>
@@ -274,16 +272,16 @@
 
 <div class="viewcode-block" id="QueueData"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.QueueData">[docs]</a><span class="k">class</span> <span class="nc">QueueData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">QueueData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">QueueData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="c1">### Queue stuff ###</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_prio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_last</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>  <span class="c1"># Initialise to one s.t. 1/count is possible</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="QueueData.queueget"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.QueueData.queueget">[docs]</a>    <span class="k">def</span> <span class="nf">queueget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">,</span> <span class="s2">&quot;Update Priorities first before requesting new batch&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Update Priorities first before requesting new batch&quot;</span>
         <span class="nb">slice</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue_ix</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>  <span class="c1"># indices of n highest elements</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="nb">slice</span>  <span class="c1"># store for updates</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
@@ -306,13 +304,13 @@
         <span class="c1">#      self._queue_prio[i] = p</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_queue_prio</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># restore order, high prios first</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="bp">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 <div class="viewcode-block" id="QueueData.queuereset"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.QueueData.queuereset">[docs]</a>    <span class="k">def</span> <span class="nf">queuereset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_prio</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_training_count</span><span class="p">)</span>  <span class="c1"># Initialise to one s.t. 1/count is possible</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="bp">None</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_batch_ix</span> <span class="o">=</span> <span class="kc">None</span></div>
 
     <span class="k">def</span> <span class="nf">_getdata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_l</span><span class="p">)</span>
@@ -328,7 +326,7 @@
 <span class="c1">#    self._queue_count= np.ones(self._training_count) # Initialise to one s.t. 1/count is possible</span>
 
 <div class="viewcode-block" id="QueueData.save"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.QueueData.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;data&quot;</span><span class="p">):</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="nb">file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">file</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
             <span class="n">cPickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_getdata</span><span class="p">(),</span> <span class="n">f</span><span class="p">,</span> <span class="n">protocol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
@@ -342,20 +340,20 @@
 
 <span class="c1">### Toy Data Sets ############################################################################################</span>
 <div class="viewcode-block" id="AdultData"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.AdultData">[docs]</a><span class="k">class</span> <span class="nc">AdultData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;~/devel/data/adult.pkl&#39;</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;~/devel/data/adult.pkl&#39;</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">create</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_fields</span> <span class="o">=</span> <span class="s1">&#39;age,workclass,fnlwgt,education,educationnum,maritalstatus,occupation,relationship,race,sex,capitalgain,capitalloss,hoursperweek,nativecountry,target&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_kinds</span> <span class="o">=</span> <span class="s1">&#39;cont,cat,cat,cat,cont,cat,cat,cat,cat,cat,cont,cont,cont,cat,cat&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
             <span class="n">data_socket</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.data&#39;</span><span class="p">)</span>
-            <span class="n">train_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">data_socket</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">train_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">data_socket</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="n">train_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalise_adult</span><span class="p">(</span><span class="n">train_d</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">=</span> <span class="n">train_d</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>  <span class="c1"># np.expand_dims(train_d[:,-1].astype(&#39;int16&#39;), 1)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span> <span class="o">=</span> <span class="n">train_d</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
             <span class="n">test_socket</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s1">&#39;http://archive.ics.uci.edu/ml/machine-learning-databases/adult/adult.test&#39;</span><span class="p">)</span>
-            <span class="n">valid_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">test_socket</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+            <span class="n">valid_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="n">test_socket</span><span class="p">,</span> <span class="n">skip_header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
             <span class="n">valid_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_normalise_adult</span><span class="p">(</span><span class="n">valid_d</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">valid_l</span> <span class="o">=</span> <span class="n">valid_d</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int16&#39;</span><span class="p">)</span>  <span class="c1">#np.expand_dims(valid_d[:,-1].astype(&#39;int16&#39;), 1)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span> <span class="o">=</span> <span class="n">valid_d</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -365,7 +363,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_l</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">pickleLoad</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">AdultData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AdultData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_normalise_adult</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">data</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_fields</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
@@ -379,15 +377,15 @@
                 <span class="n">ret</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
                 <span class="n">ret</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">ret</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">print</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has no kind specified&#39;</span>
+                <span class="nb">print</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39; has no kind specified&#39;</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
 <span class="c1">##########################################################################################</span>
 
 
 <div class="viewcode-block" id="MNISTData"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.MNISTData">[docs]</a><span class="k">class</span> <span class="nc">MNISTData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">convert2image</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">warp_on</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">shift_augment</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">convert2image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">warp_on</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shift_augment</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_l</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_l</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">download</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
@@ -410,11 +408,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_stripborder</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_augmentMNIST</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_l</span><span class="p">,</span> <span class="n">crop</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">MNISTData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MNISTData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">convert2image</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
 
-        <span class="k">print</span> <span class="s2">&quot;MNIST data is converted/augmented to shape&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span>
+        <span class="nb">print</span> <span class="s2">&quot;MNIST data is converted/augmented to shape&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span>
 
 
 <div class="viewcode-block" id="MNISTData.download"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.MNISTData.download">[docs]</a>    <span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -429,14 +427,14 @@
         <span class="n">dest</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s1">&#39;mnist.pkl.gz&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dest</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s2">&quot;Found existing mnist data&quot;</span>
+            <span class="nb">print</span> <span class="s2">&quot;Found existing mnist data&quot;</span>
             <span class="k">return</span> <span class="n">ut</span><span class="o">.</span><span class="n">pickleLoad</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s2">&quot;Downloading mnist data from&quot;</span>
-            <span class="k">print</span> <span class="s2">&quot;http://www.elektronn.org/downloads/mnist.pkl.gz&quot;</span>
+            <span class="nb">print</span> <span class="s2">&quot;Downloading mnist data from&quot;</span>
+            <span class="nb">print</span> <span class="s2">&quot;http://www.elektronn.org/downloads/mnist.pkl.gz&quot;</span>
             <span class="n">f</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s2">&quot;http://www.elektronn.org/downloads/mnist.pkl.gz&quot;</span><span class="p">)</span>
             <span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="k">print</span> <span class="s2">&quot;Saving data to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">dest</span><span class="p">,)</span>
+            <span class="nb">print</span> <span class="s2">&quot;Saving data to </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">dest</span><span class="p">,)</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">code</span><span class="p">:</span>
                 <span class="n">code</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
@@ -505,10 +503,10 @@
         <span class="n">new_size</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">crop</span><span class="p">)</span>
         <span class="n">new_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">new_size</span><span class="p">,</span> <span class="n">new_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># store new data in here</span>
         <span class="n">new_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span> <span class="o">%</span> <span class="n">crop</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">crop</span><span class="p">)</span> <span class="o">%</span> <span class="n">crop</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">crop</span><span class="o">**</span><span class="mi">2</span><span class="p">)]</span>  <span class="c1"># offests of different positions</span>
-        <span class="n">perm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="n">crop</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span> <span class="o">%</span> <span class="n">crop</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span> <span class="o">/</span> <span class="n">crop</span><span class="p">)</span> <span class="o">%</span> <span class="n">crop</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">crop</span><span class="o">**</span><span class="mi">2</span><span class="p">)]</span>  <span class="c1"># offests of different positions</span>
+        <span class="n">perm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">xrange</span><span class="p">(</span><span class="n">crop</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
 
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">factor</span><span class="p">):</span>  <span class="c1"># create &lt;factor&gt; new version of data</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">factor</span><span class="p">):</span>  <span class="c1"># create &lt;factor&gt; new version of data</span>
             <span class="n">ix</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="n">perm</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
             <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">ix</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">ix</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_size</span><span class="p">,</span> <span class="n">ix</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">ix</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">new_size</span><span class="p">])</span>
             <span class="n">new_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">new_data</span><span class="p">,</span> <span class="n">new</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -518,7 +516,7 @@
 
 
 <div class="viewcode-block" id="BuzzData"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.BuzzData">[docs]</a><span class="k">class</span> <span class="nc">BuzzData</span><span class="p">(</span><span class="n">Data</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;~/devel/data/Buzz/Twitter/twitter.pkl&#39;</span><span class="p">,</span> <span class="n">norm_targets</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">target_scale</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">fold_no</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;~/devel/data/Buzz/Twitter/twitter.pkl&#39;</span><span class="p">,</span> <span class="n">norm_targets</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">target_scale</span><span class="o">=</span><span class="mi">9999</span><span class="p">,</span> <span class="n">fold_no</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">pickleLoad</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="c1">#    N = len(data)</span>
@@ -527,18 +525,18 @@
         <span class="c1">#    target = target[:8000]</span>
         <span class="k">if</span> <span class="n">norm_targets</span><span class="p">:</span>
             <span class="n">target</span> <span class="o">/=</span> <span class="n">target</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">target_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">target_scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">target</span> <span class="o">*</span> <span class="n">target_scale</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">BuzzData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">createCVSplit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">use_fold</span><span class="o">=</span><span class="n">fold_no</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">BuzzData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BuzzData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_taps</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="BuzzData.getbatch"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.BuzzData.getbatch">[docs]</a>    <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">):</span>
         <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">BuzzData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span></div></div>
 
 
@@ -546,7 +544,7 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;~/devel/data/PianoRoll/Nottingham_enc.pkl&#39;</span><span class="p">,</span> <span class="n">n_tap</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_lab</span><span class="o">=</span><span class="mi">58</span><span class="p">):</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_d</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_d</span><span class="p">)</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">pickleLoad</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">PianoData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">n_lab</span><span class="o">=</span><span class="n">n_lab</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PianoData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_lab</span><span class="o">=</span><span class="n">n_lab</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_d</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_taps</span> <span class="o">=</span> <span class="n">n_tap</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="n">n_lab</span>
@@ -581,24 +579,24 @@
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="n">data</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="n">pickleLoad</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">GeneData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">createCVSplit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">use_fold</span><span class="o">=</span><span class="n">fold_no</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">GeneData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GeneData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">example_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="mi">1</span>
 
 <div class="viewcode-block" id="GeneData.getbatch"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.traindata.GeneData.getbatch">[docs]</a>    <span class="k">def</span> <span class="nf">getbatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">):</span>
         <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">GeneData</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">)</span>
-        <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">]</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">d</span><span class="p">,</span> <span class="n">l</span></div></div>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="c1">#  from matplotlib import pyplot as plt</span>
     <span class="c1">#  from Net.introspection import embedMatricesInGray   </span>
     <span class="c1">#  data = MNISTData( warp_on=True)  </span>
     <span class="c1">#  d, l = data.getbatch(200, &#39;train&#39;)</span>
     <span class="c1">#  m = embedMatricesInGray(d[:,0])</span>
     <span class="c1">#  plt.imshow(m, interpolation=&#39;none&#39;, cmap=&#39;gray&#39;)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">MNISTData</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">convert2image</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">shift_augment</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">MNISTData</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">convert2image</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">shift_augment</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="c1">#  data = PianoData(n_tap=20, n_lab=58)</span>
     <span class="n">d</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">getbatch</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
@@ -619,13 +617,13 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
     </div>
   </body>
 </html>

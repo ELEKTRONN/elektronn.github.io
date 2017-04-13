@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installation &mdash; ELEKTRONN</title>
+    <title>Installation &#8212; ELEKTRONN</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,14 +17,16 @@
         VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="shortcut icon" href="_static/elektronnfavicon.ico"/>
-    <link rel="top" title="ELEKTRONN" href="index.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Examples" href="Examples.html" />
     <link rel="prev" title="Getting Started" href="GettingStarted.html" /> 
   </head>
@@ -49,7 +51,7 @@
         <li class="right" >
           <a href="GettingStarted.html" title="Getting Started"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &#187;</li> 
       </ul>
     </div>
 
@@ -78,21 +80,18 @@
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/Installation.txt"
+      <li><a href="_sources/Installation.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -111,19 +110,19 @@
 <h3>Anaconda<a class="headerlink" href="#anaconda" title="Permalink to this headline">¶</a></h3>
 <p>A comfortable way to setup a python environment with common scientific python packages is the <a class="reference external" href="https://store.continuum.io/cshop/anaconda/">Anaconda distribution</a> by Continuum  (make sure to use the Python 2.7 version). If you don&#8217;t want to install the whole Anaconda distribution you can use Miniconda instead.</p>
 <ul>
-<li><p class="first">Install ELEKTRONN using  <code class="docutils literal"><span class="pre">conda</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>conda config --add channels elektronn
-conda install elektronn
+<li><p class="first">Install ELEKTRONN using  <code class="docutils literal"><span class="pre">conda</span></code> (via <a class="reference external" href="https://github.com/conda-forge/elektronn-feedstock">conda-forge</a>):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">channels</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="n">elektronn</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This resolves all dependencies, but you still need to <em>configure</em> theano (which will be installed as a dependency) as described <a class="reference internal" href="#theano"><span>below</span></a></p>
+<p class="last">This resolves all dependencies, but you still need to <em>configure</em> theano (which will be installed as a dependency) as described <a class="reference internal" href="#theano"><span class="std std-ref">below</span></a></p>
 </div>
 </li>
-<li><p class="first">After installation you can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and put it into your home directory as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span>Configuration of Parameters</span></a>)</p>
+<li><p class="first">After installation you can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and put it into your home directory as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span class="std std-ref">Configuration of Parameters</span></a>)</p>
 </li>
-<li><p class="first">Try out one of the <a class="reference internal" href="Examples.html#examples"><span>examples</span></a> to confirm everything works</p>
+<li><p class="first">Try out one of the <a class="reference internal" href="Examples.html#examples"><span class="std std-ref">examples</span></a> to confirm everything works</p>
 </li>
 </ul>
 </div>
@@ -136,11 +135,11 @@ conda install elektronn
 <p>If you don&#8217;t want to use Anaconda you can use <code class="docutils literal"><span class="pre">pip</span></code> instead. Then you must take care of the dependencies yourself to some degree:</p>
 <ul>
 <li><p class="first">Install ELEKTRONN using python <code class="docutils literal"><span class="pre">pip</span></code> (options can specify target locations, editable installs etc., see <code class="docutils literal"><span class="pre">man</span> <span class="pre">pip</span></code>):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>pip install [options] elektronn
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="n">elektronn</span>
 </pre></div>
 </div>
 <p>In the likely case that this gives you errors (amongst other reasons because pip does not install system-level dependencies), you must install missing dependencies with your system package manager e.g:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>apt-get install python-numpy python-scipy python-matplotlib python-h5py
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">numpy</span> <span class="n">python</span><span class="o">-</span><span class="n">scipy</span> <span class="n">python</span><span class="o">-</span><span class="n">matplotlib</span> <span class="n">python</span><span class="o">-</span><span class="n">h5py</span>
 </pre></div>
 </div>
 </li>
@@ -157,9 +156,9 @@ conda install elektronn
 </div>
 </div></blockquote>
 <ul class="simple">
-<li>Configure theano as explained <a class="reference internal" href="#theano"><span>below</span></a></li>
-<li>After installation you can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and putting it into your home as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span>Configuration of Parameters</span></a>)</li>
-<li>Try out one of the <a class="reference internal" href="Examples.html#examples"><span>examples</span></a> to confirm everything works</li>
+<li>Configure theano as explained <a class="reference internal" href="#theano"><span class="std std-ref">below</span></a></li>
+<li>After installation you can optionally create a user configuration file by editing the file <code class="docutils literal"><span class="pre">examples/config_template.py</span></code> and putting it into your home as <code class="docutils literal"><span class="pre">elektronn.config</span></code> (see <a class="reference internal" href="Pipeline.html#configuration"><span class="std std-ref">Configuration of Parameters</span></a>)</li>
+<li>Try out one of the <a class="reference internal" href="Examples.html#examples"><span class="std std-ref">examples</span></a> to confirm everything works</li>
 </ul>
 </div>
 </div>
@@ -171,23 +170,23 @@ conda install elektronn
 <li><p class="first">Install Nvidia&#8217;s CUDA toolkit, e.g. <code class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">nvidia-cuda-toolkit</span></code> or manually from the <a class="reference external" href="https://developer.nvidia.com/cuda-downloads">Nvidia website</a>. The next two points assume for illustration purpose that you have installed the toolkit in the path <code class="docutils literal"><span class="pre">/usr/local/cuda-7.5</span></code>.</p>
 </li>
 <li><p class="first">Set the paths to the toolkit, e.g. by adding to you <code class="docutils literal"><span class="pre">.bashrc</span></code>-file:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>export PATH=/usr/local/cuda-7.5/bin:$PATH
+<div class="highlight-default"><div class="highlight"><pre><span></span>export PATH=/usr/local/cuda-7.5/bin:$PATH
 export LD_LIBRARY_PATH=/usr/local/cuda-7.5/lib64:$LD_LIBRARY_PATH
 </pre></div>
 </div>
 </li>
 <li><p class="first">Configure your <code class="docutils literal"><span class="pre">.theanorc</span></code>-file. E.g. create a new file named <code class="docutils literal"><span class="pre">~/.theanorc</span></code> and put the following into it:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>[global]
-floatX = float32
-device = gpu # or gpu0, gpu1,...
-exception_verbosity=high
-linker = cvm_nogc
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="k">global</span><span class="p">]</span>
+<span class="n">floatX</span> <span class="o">=</span> <span class="n">float32</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">gpu</span> <span class="c1"># or gpu0, gpu1,...</span>
+<span class="n">exception_verbosity</span><span class="o">=</span><span class="n">high</span>
+<span class="n">linker</span> <span class="o">=</span> <span class="n">cvm_nogc</span>
 
-[nvcc]
-fastmath = True
+<span class="p">[</span><span class="n">nvcc</span><span class="p">]</span>
+<span class="n">fastmath</span> <span class="o">=</span> <span class="kc">True</span>
 
-[cuda]
-root = /usr/local/cuda-7.5/
+<span class="p">[</span><span class="n">cuda</span><span class="p">]</span>
+<span class="n">root</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">-</span><span class="mf">7.5</span><span class="o">/</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -226,12 +225,12 @@ root = /usr/local/cuda-7.5/
         <li class="right" >
           <a href="GettingStarted.html" title="Getting Started"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">ELEKTRONN</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
     </div>
   </body>
 </html>

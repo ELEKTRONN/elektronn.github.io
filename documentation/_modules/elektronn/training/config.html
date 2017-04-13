@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>elektronn.training.config &mdash; ELEKTRONN</title>
+    <title>elektronn.training.config &#8212; ELEKTRONN</title>
     
     <link rel="stylesheet" href="../../../_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -17,15 +17,16 @@
         VERSION:     '0.1rc',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <link rel="shortcut icon" href="../../../_static/elektronnfavicon.ico"/>
-    <link rel="top" title="ELEKTRONN" href="../../../index.html" />
-    <link rel="up" title="Module code" href="../../index.html" /> 
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
   </head>
   <body role="document">
 
@@ -42,8 +43,8 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" accesskey="U">Module code</a> &#187;</li> 
       </ul>
     </div>
 
@@ -52,14 +53,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -81,9 +79,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">elektronn.net</span> <span class="kn">import</span> <span class="n">netutils</span>
+<span class="kn">from</span> <span class="nn">elektronn.net</span> <span class="k">import</span> <span class="n">netutils</span>
 <span class="kn">import</span> <span class="nn">trainutils</span>
 <span class="kn">import</span> <span class="nn">elektronn.examples</span>
 
@@ -95,18 +93,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">### Toolkit Setup ### ------------------------------------------------------------------------------------------------------------</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">=</span> <span class="s2">&quot;~/CNN_Training/&quot;</span>  <span class="c1"># (*) &lt;String&gt;: where to create the CNN directory. In this directory a new folder is created with the name of the model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">plot_on</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># &lt;Bool&gt;: whether to create plots of the errors etc.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">print_status</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># &lt;Bool&gt;: whether to print Training status to std.out</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># False (use .theanorc value) or int (use gpu&lt;i&gt;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_on</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># &lt;Bool&gt;: whether to create plots of the errors etc.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_status</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># &lt;Bool&gt;: whether to print Training status to std.out</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># False (use .theanorc value) or int (use gpu&lt;i&gt;)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">param_save_h</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># hours: frequency to save a permanent parameter snapshot</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_prev_h</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># hours: time after which first preview is made</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">prev_save_h</span> <span class="o">=</span> <span class="mf">3.0</span>  <span class="c1"># hours: frequency to create previews</span>
 
         <span class="c1">### Paths and General ### ------------------------------------------------------------------------------------------------------------</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_name</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span>  <span class="c1"># (*) &lt;String&gt;: with the save_name.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># &lt;Bool&gt;: whether to delete/overwrite existing directory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># &lt;Bool&gt;: whether to delete/overwrite existing directory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_name</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">param_file</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># &lt;String&gt;/&lt;None&gt;: optional parameter file to initialise weights from</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param_file</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># &lt;String&gt;/&lt;None&gt;: optional parameter file to initialise weights from</span>
 
         <span class="c1">### Network Architecture ### ------------------------------------------------------------------------------------------------------------</span>
         <span class="c1"># Note: the last layer is added automatically (with n_lab outputs)</span>
@@ -125,7 +123,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># (*) &lt;List&gt; of &lt;Int&gt;{0,1}/False: whether to apply Max-Fragment-Pooling (globally or per layer)</span>
 
         <span class="c1"># Other</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">rnn_layer_kwargs</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># ($) &lt;Dict&gt;/&lt;None&gt;: if in use: dict(n_hid=Int,  activation_func=&#39;tanh&#39;, iterations=None/Int)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rnn_layer_kwargs</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># ($) &lt;Dict&gt;/&lt;None&gt;: if in use: dict(n_hid=Int,  activation_func=&#39;tanh&#39;, iterations=None/Int)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">MLP_layers</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># (*) &lt;List&gt; of &lt;Int&gt;: numbers of filters for fully connected layers (after conv layers)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;nll&#39;</span>  <span class="c1"># &lt;String&gt;: &#39;nll&#39; or &#39;regression&#39;</span>
 
@@ -134,7 +132,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">label_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>  <span class="c1"># (*) &lt;String&gt;: Path to label dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">d_files</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># (*) &lt;List&gt; of tuples: (file name, key of h5 data set)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">l_files</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># (*) &lt;List&gt; of tuples: (file name, key of h5 data set)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cube_prios</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># &lt;List&gt;/&lt;None&gt;: sampling priorities for cubes or None, then: sampling ~ example_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cube_prios</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># &lt;List&gt;/&lt;None&gt;: sampling priorities for cubes or None, then: sampling ~ example_size</span>
         <span class="c1"># will be normalised internally</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">valid_cubes</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># &lt;List&gt;: of cube indices (from the file-lists) to use as validation data,</span>
         <span class="c1"># may be empty</span>
@@ -142,11 +140,11 @@
         <span class="c1"># this threshold this example is discarded</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grey_augment_channels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># (*) &lt;List&gt;:  of integer channel-indices to apply grey augmentation, use [] to disable.</span>
         <span class="c1"># It distorts the histogram of the raw images (darker, lighter, more/less contrast)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">use_example_weights</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># ($) &lt;Bool&gt;: Whether to use weights for the examples (e.g. for Boosting-like training)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">flip_data</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># &lt;Bool&gt;: whether to flip/rotate/mirror data randomly (augmentation)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">anisotropic_data</span> <span class="o">=</span> <span class="bp">True</span>  <span class="c1"># (*) &lt;Bool&gt;: if True 2D slices are only cut in z-direction, otherwise all 3 alignments are used</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lazy_labels</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># ($) &lt;Bool&gt;: Special Training with lazy annotations</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">warp_on</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># &lt;Bool&gt;/&lt;Float&gt;(0,1): Warping augmentations (CPU-intense, use background processes!)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">use_example_weights</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># ($) &lt;Bool&gt;: Whether to use weights for the examples (e.g. for Boosting-like training)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flip_data</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># &lt;Bool&gt;: whether to flip/rotate/mirror data randomly (augmentation)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anisotropic_data</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># (*) &lt;Bool&gt;: if True 2D slices are only cut in z-direction, otherwise all 3 alignments are used</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lazy_labels</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># ($) &lt;Bool&gt;: Special Training with lazy annotations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warp_on</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># &lt;Bool&gt;/&lt;Float&gt;(0,1): Warping augmentations (CPU-intense, use background processes!)</span>
         <span class="c1"># If &lt;Float&gt;: warping is applied to this fraction of examples e.g. 0.5 --&gt; every 2nd example</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">border_mode</span> <span class="o">=</span> <span class="s2">&quot;crop&quot;</span>  <span class="c1"># &lt;String&gt;: Only applicable for *img-scalar*. If the CNN does not allow the original size of</span>
         <span class="c1"># the images the following options are available:</span>
@@ -155,24 +153,24 @@
         <span class="c1"># &quot;0-pad&quot; : if img to small, padd to the next bigger valid input with zeros,</span>
         <span class="c1"># &quot;mirror&quot;: if img to small, padd to the next bigger valid input by mirroring along border</span>
         <span class="c1"># &quot;reject&quot;: if img size too small/big, throw exception</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1">#  &quot;standardise&quot;/None: (0-mean, 1-std) (over all pixels)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">zchxy_order</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># &lt;Bool&gt;: set to True if data is in (z, (ch,) x, y) order, otherwise (ch, x, y, z) is assume</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">upright_x</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># &lt;Bool&gt;: If true, mirroring is only applied horizontally (e.g. for outdoor images or handwriting)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">downsample_xy</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># &lt;Bool&gt;/&lt;Int&gt; downsample by this factor, or not at all if False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1">#  &quot;standardise&quot;/None: (0-mean, 1-std) (over all pixels)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zchxy_order</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># &lt;Bool&gt;: set to True if data is in (z, (ch,) x, y) order, otherwise (ch, x, y, z) is assume</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upright_x</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># &lt;Bool&gt;: If true, mirroring is only applied horizontally (e.g. for outdoor images or handwriting)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downsample_xy</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># &lt;Bool&gt;/&lt;Int&gt; downsample by this factor, or not at all if False</span>
 
         <span class="c1">### Data Preview ### (only for img-img) -------------------------------------------------------------------------------------------------</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">preview_data_path</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># &lt;String&gt;/&lt;None&gt;: path to a h5-file that contains data to make preview predictions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">preview_data_path</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># &lt;String&gt;/&lt;None&gt;: path to a h5-file that contains data to make preview predictions</span>
         <span class="c1"># it must contain a list of image cubes (normalised between 0 and 255) in the shape ((ch,) x,y,z)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preview_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">export_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_z_pred</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># &lt;Dict&gt;: specification of preview to create</span>
 
         <span class="c1">### Data Common ### ---------------------------------------------------------------------------------------------------------------------</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="s1">&#39;img-img&#39;</span>  <span class="c1"># (*) &lt;String&gt;: combination of data and label types: &#39;img-img&#39;, &#39;img-scalar&#39;, vect-scalar&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># (*) &lt;Int&gt;/&lt;None&gt;: (None means auto detect, very slow, don&#39;t do this!)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">background_processes</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># &lt;Bool&gt;/&lt;Int&gt;: whether to &quot;pre-fetch&quot; batches in separate background</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_lab</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (*) &lt;Int&gt;/&lt;None&gt;: (None means auto detect, very slow, don&#39;t do this!)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_processes</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># &lt;Bool&gt;/&lt;Int&gt;: whether to &quot;pre-fetch&quot; batches in separate background</span>
         <span class="c1"># process, &lt;Bool&gt; or number of processes (True--&gt;2)</span>
 
         <span class="c1">### Data Alternative / vect-scalar ### (this may replace the above CNN block) ### -------------------------------------------------------</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_class_name</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># &lt;String&gt;: Name of Data Class in TrainData</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_class_name</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># &lt;String&gt;: Name of Data Class in TrainData</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_load_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># &lt;Dict&gt;: Arguments to init Data Class</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_batch_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># &lt;Dict&gt;: Arguments for getbach method of Data Class (for training set only!)</span>
         <span class="c1"># The batch_size argument is added internally and needn&#39;t be specified here</span>
@@ -183,15 +181,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">history_freq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">]</span>  <span class="c1"># (*) &lt;List&gt; of single &lt;Int&gt;: create plots, print status and test model after x steps</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">monitor_batch_size</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># (*) &lt;Int&gt;: number of patches to test model on (valid and train subset)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">weight_decay</span> <span class="o">=</span> <span class="bp">False</span>  <span class="c1"># ($) False/&lt;Float&gt;: weighting of L2-norm on weights (&quot;lambda&quot;), False is equal to 0.0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># ($) &lt;None&gt; or &lt;List&gt; of &lt;Float&gt;: weights for the classes, will be normalised internally</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">label_prop_thresh</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># ($) &lt;None&gt;/&lt;Float&gt;: if &lt;Float&gt; value is set, unlabelled examples (-1) will be trained on the</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight_decay</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># ($) False/&lt;Float&gt;: weighting of L2-norm on weights (&quot;lambda&quot;), False is equal to 0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># ($) &lt;None&gt; or &lt;List&gt; of &lt;Float&gt;: weights for the classes, will be normalised internally</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_prop_thresh</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># ($) &lt;None&gt;/&lt;Float&gt;: if &lt;Float&gt; value is set, unlabelled examples (-1) will be trained on the</span>
         <span class="c1"># current prediction if the predicted probability exceeds this threshold.</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="s1">&#39;SGD&#39;</span>  <span class="c1"># ($) &lt;String&gt;: [SGD]/CG/RPORP/LBFGS method for training</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">LR_decay</span> <span class="o">=</span> <span class="mf">0.993</span>  <span class="c1"># (*) &lt;Float&gt;: decay of SGD learning rate w.r.t to an interval of 1000 update steps</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">LR_schedule</span> <span class="o">=</span> <span class="bp">None</span>  <span class="c1"># (*) &lt;List&gt; of tuples/&lt;None&gt;: (#iteration, new_LR), if used this sets the LR</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">LR_schedule</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># (*) &lt;List&gt; of tuples/&lt;None&gt;: (#iteration, new_LR), if used this sets the LR</span>
         <span class="c1"># at the specified iteration steps to the specified value. This is independent of the decay.</span>
 
         <span class="c1"># ---------------------------------------------------------------------------------------------------------------------------------------</span>
@@ -231,7 +229,7 @@
                                <span class="n">pgtol</span><span class="o">=</span> <span class="mf">1e-9</span><span class="p">,</span>          <span class="c1"># projected gradient tolerance</span>
                                <span class="n">iprint</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>           <span class="c1"># set to 0 for direct printing of steps</span>
         <span class="c1"># ---------------------------------------------------------------------------------------------------------------------------------------</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># Just a hack</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># Just a hack</span></div>
 
 
 <div class="viewcode-block" id="DefaultConfig"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.config.DefaultConfig">[docs]</a><span class="k">class</span> <span class="nc">DefaultConfig</span><span class="p">(</span><span class="n">MasterConfig</span><span class="p">):</span>
@@ -240,7 +238,7 @@
 <span class="sd">        This class overwrites the master values with values from a user file (if present)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DefaultConfig</span><span class="p">,</span>
-              <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>  <span class="c1"># gives initiall values for all attributes</span>
+              <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>  <span class="c1"># gives initiall values for all attributes</span>
 
         <span class="n">config_dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">user_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~/.elektronn.config&#39;</span><span class="p">)</span>
@@ -248,8 +246,8 @@
             <span class="k">pass</span>  <span class="c1"># Maybe message that user should create own file</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s2">&quot;Reading User Default Config&quot;</span>
-                <span class="nb">execfile</span><span class="p">(</span><span class="n">user_path</span><span class="p">,</span> <span class="p">{},</span> <span class="n">config_dict</span><span class="p">)</span>
+                <span class="nb">print</span> <span class="s2">&quot;Reading User Default Config&quot;</span>
+                <span class="n">execfile</span><span class="p">(</span><span class="n">user_path</span><span class="p">,</span> <span class="p">{},</span> <span class="n">config_dict</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;The user config file </span><span class="si">%s</span><span class="s2"> does exist, but an error happend during reading, it might contain invalid code. Error: </span><span class="se">\n</span><span class="s2">  </span><span class="si">%s</span><span class="s2">&quot;</span>
                                    <span class="o">%</span><span class="p">(</span><span class="n">user_path</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
@@ -318,11 +316,11 @@
                  <span class="n">config_file</span><span class="p">,</span>
                  <span class="n">gpu</span><span class="p">,</span>
                  <span class="n">trainer_file</span><span class="p">,</span>
-                 <span class="n">use_existing_dir</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">override_MFP_to_active</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                 <span class="n">imposed_input_size</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+                 <span class="n">use_existing_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">override_MFP_to_active</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">imposed_input_size</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 
-        <span class="nb">super</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Config</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">imposed_input_size</span> <span class="o">=</span> <span class="n">imposed_input_size</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">override_MFP_to_active</span> <span class="o">=</span> <span class="n">override_MFP_to_active</span>
@@ -333,7 +331,7 @@
 
         <span class="c1"># If file is not found, look if it&#39;s an example file:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">):</span>
-            <span class="n">example_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">elektronn</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="n">__file__</span><span class="p">),</span> <span class="n">config_file</span><span class="p">)</span>
+            <span class="n">example_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">elektronn</span><span class="o">.</span><span class="n">examples</span><span class="o">.</span><span class="vm">__file__</span><span class="p">),</span> <span class="n">config_file</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">example_path</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="n">example_path</span>
             <span class="k">else</span><span class="p">:</span>
@@ -346,7 +344,7 @@
 
         <span class="c1"># for image data handle the architecutre / input sizes</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s1">&#39;vect-scalar&#39;</span><span class="p">:</span>
-            <span class="n">force_center</span> <span class="o">=</span> <span class="bp">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;img-img&#39;</span> <span class="k">else</span> <span class="bp">False</span>
+            <span class="n">force_center</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;img-img&#39;</span> <span class="k">else</span> <span class="kc">False</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span> <span class="o">=</span> <span class="n">netutils</span><span class="o">.</span><span class="n">CNNCalculator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">,</span>
                                                      <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">,</span>
                                                      <span class="bp">self</span><span class="o">.</span><span class="n">desired_input</span><span class="p">,</span>
@@ -370,7 +368,7 @@
 <span class="s2">padding was disabled. Use an architecture that has matching input size, change the image sizes </span><span class="se">\</span>
 <span class="s2">or use a different boarder mode.&quot;</span><span class="p">)</span>
 
-            <span class="k">print</span> <span class="s2">&quot;Selected patch-size for CNN input:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span>
+            <span class="nb">print</span> <span class="s2">&quot;Selected patch-size for CNN input:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">input</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span><span class="p">,</span> <span class="s1">&#39;__len__&#39;</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">patch_size</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_dim</span>
@@ -381,11 +379,11 @@
         <span class="n">trainutils</span><span class="o">.</span><span class="n">initGPU</span><span class="p">(</span><span class="n">gpu</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Config.parseConfig"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.config.Config.parseConfig">[docs]</a>    <span class="k">def</span> <span class="nf">parseConfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span> <span class="s2">&quot;Reading config-file </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="p">)</span>
-        <span class="n">config_dict</span> <span class="o">=</span> <span class="n">default_config</span><span class="o">.</span><span class="n">__dict__</span>  <span class="c1"># take attributes from default config</span>
+        <span class="nb">print</span> <span class="s2">&quot;Reading config-file </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">config_dict</span> <span class="o">=</span> <span class="n">default_config</span><span class="o">.</span><span class="vm">__dict__</span>  <span class="c1"># take attributes from default config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_allowed</span> <span class="o">=</span> <span class="n">config_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
         <span class="n">custom_dict</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="nb">execfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="p">{},</span> <span class="n">custom_dict</span><span class="p">)</span>
+        <span class="n">execfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="p">{},</span> <span class="n">custom_dict</span><span class="p">)</span>
         <span class="n">config_dict</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">custom_dict</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">config_dict</span><span class="p">:</span>
@@ -421,16 +419,16 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">desired_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_input</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">desired_input</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
 
         <span class="c1"># Fix various configuration parameter so standard format</span>
-        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">==</span> <span class="bp">False</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">==</span> <span class="p">[]):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">==</span> <span class="p">[]):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">override_MFP_to_active</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">MFP</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">),</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># activate in all layers that have a pool factor &gt; 1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">1</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">imposed_input_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">imposed_input_size</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">desired_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imposed_input_size</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pooling_mode</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pooling_mode</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
@@ -442,20 +440,20 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout_rates</span><span class="p">,</span> <span class="s1">&#39;__len__&#39;</span><span class="p">):</span>  <span class="c1"># may also be None --&gt; list of Nones</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dropout_rates</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout_rates</span><span class="p">,</span> <span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_layers</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_weights</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
             <span class="c1">#self.class_weights /= np.sum(self.class_weights) # normalise weights</span>
-            <span class="k">print</span> <span class="s2">&quot;WARNING: weight normalisation is suspendend but this contradicts doc!&quot;</span>
+            <span class="nb">print</span> <span class="s2">&quot;WARNING: weight normalisation is suspendend but this contradicts doc!&quot;</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_ignore_threshold</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">example_ignore_threshold</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">example_ignore_threshold</span> <span class="o">=</span> <span class="mf">0.0</span></div>
 
 <div class="viewcode-block" id="Config.typeChecks"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.config.Config.typeChecks">[docs]</a>    <span class="k">def</span> <span class="nf">typeChecks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">is_string</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">is_string</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
         <span class="n">is_int</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
-        <span class="n">is_list</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">is_dict</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="n">is_float</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="n">is_list</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">is_int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">is_dict</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">is_float</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;save_path&#39;</span><span class="p">,</span> <span class="s1">&#39;save_name&#39;</span><span class="p">,</span> <span class="s1">&#39;data_path&#39;</span><span class="p">,</span> <span class="s1">&#39;label_path&#39;</span><span class="p">,</span>
                       <span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;border_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;optimizer&#39;</span><span class="p">,</span>
@@ -498,7 +496,7 @@
             <span class="n">mandatory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mandatory_cnn</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;vect-scalar&#39;</span><span class="p">:</span>
             <span class="n">mandatory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mandatory_mlp</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_class_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_class_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">mandatory</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mandatory_data</span><span class="p">)</span>
         <span class="n">undefined_vars</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">var_name</span> <span class="ow">in</span> <span class="n">mandatory</span><span class="p">:</span>
@@ -506,7 +504,7 @@
                 <span class="n">undefined_vars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">var_name</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">undefined_vars</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">WARNING: the following important CNN config variables were not found in the configuration file. The MASTER configuration value is in their place but further execution might fail. Undefined variables:</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">undefined_vars</span><span class="p">)</span>
+            <span class="nb">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">WARNING: the following important CNN config variables were not found in the configuration file. The MASTER configuration value is in their place but further execution might fail. Undefined variables:</span><span class="se">\n</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">undefined_vars</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">n_layers</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MLP_layers</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_layers</span><span class="o">==</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout_rates</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dropout_rates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;If dropout_rates is a list, there must be a dropout rate for every layer or it must be an empty list to disable dropout&quot;</span>
@@ -516,7 +514,7 @@
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s1">&#39;vect-scalar&#39;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">!=</span><span class="s1">&#39;vect-scalar&#39;</span><span class="p">,</span> <span class="s2">&quot;No ConvLayers allowed for &#39;vect-scalar&#39; training&quot;</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pool</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nof_filters</span><span class="p">),</span> <span class="s2">&quot;All config lists for conv layers must have the same lenght&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;img-img&#39;</span><span class="p">,</span> <span class="s1">&#39;img-scalar&#39;</span><span class="p">,</span> <span class="s1">&#39;vect-scalar&#39;</span><span class="p">],</span> <span class="s2">&quot;Unknown mode&quot;</span>
-        <span class="k">assert</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rnn_layer_kwargs</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;img-img&#39;</span><span class="p">,</span> <span class="s1">&#39;img-scalar&#39;</span><span class="p">])</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s1">&#39;vect-scalar&#39;</span><span class="p">,</span> <span class="s2">&quot;RNN layers can only be used in &#39;vect-scalar&#39; mode&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rnn_layer_kwargs</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;img-img&#39;</span><span class="p">,</span> <span class="s1">&#39;img-scalar&#39;</span><span class="p">])</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span><span class="o">==</span><span class="s1">&#39;vect-scalar&#39;</span><span class="p">,</span> <span class="s2">&quot;RNN layers can only be used in &#39;vect-scalar&#39; mode&quot;</span>
         <span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nll&#39;</span><span class="p">,</span> <span class="s1">&#39;regression&#39;</span><span class="p">,</span> <span class="s1">&#39;nll_mutiple_binary&#39;</span><span class="p">,</span> <span class="s1">&#39;nll_weak&#39;</span><span class="p">,</span> <span class="s1">&#39;affinity&#39;</span><span class="p">,</span> <span class="s1">&#39;malis&#39;</span><span class="p">]</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">,</span> <span class="s2">&quot;Invalid target functions, must be in </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">targets</span><span class="p">)</span></div>
 
@@ -527,7 +525,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">:</span>
-                <span class="k">print</span> <span class="s2">&quot;Overwriting existing save directory: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span>
+                <span class="nb">print</span> <span class="s2">&quot;Overwriting existing save directory: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span>
                 <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">!=</span> <span class="s1">&#39;./&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;Cannot delete current directory&#39;</span><span class="p">)</span>
                 <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
@@ -537,7 +535,7 @@
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="s1">&#39;Backup/&#39;</span><span class="p">)</span>
 
         <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">trainer_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;Backup/elektronn-train&quot;</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;Backup/elektronn-train&quot;</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;Backup/elektronn-train&quot;</span><span class="p">,</span> <span class="mi">0755</span><span class="p">)</span>
 
         <span class="c1">#        import training</span>
         <span class="c1">#        trainer_dir = os.path.abspath(training.__file__)</span>
@@ -549,9 +547,9 @@
         <span class="c1">#        net_dir = &#39;/&#39;.join(net_dir.split(&#39;/&#39;)[:-1])+&#39;/&#39;</span>
         <span class="c1">#        shutil.copytree(net_dir, self.save_path+&#39;Backup/net/&#39;)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;Backup/config.py&quot;</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;Backup/config.py&quot;</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span></div>
+            <span class="n">os</span><span class="o">.</span><span class="n">chmod</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_path</span> <span class="o">+</span> <span class="s2">&quot;Backup/config.py&quot;</span><span class="p">,</span> <span class="mi">0755</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Config.levenshtein"><a class="viewcode-back" href="../../../elektronn.training.html#elektronn.training.config.Config.levenshtein">[docs]</a>    <span class="k">def</span> <span class="nf">levenshtein</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -575,7 +573,7 @@
         <span class="k">return</span> <span class="n">previous_row</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div></div>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="s1">&#39;/docs/devel/ELEKTRONN/config_files/I-z.py&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;/docs/devel/ELEKTRONN/config_files/I-z.py&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -593,13 +591,13 @@
         <li class="right" >
           <a href="../../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &raquo;</li>
-          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../../index.html">ELEKTRONN</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >Module code</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.5.
+        &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
     </div>
   </body>
 </html>
