@@ -1,26 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Lazy Labels &#8212; ELEKTRONN</title>
-    
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1rc',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -29,8 +18,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Making Predictions" href="Prediction.html" />
     <link rel="prev" title="Using the Training Pipeline" href="Pipeline.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
@@ -82,12 +70,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -102,25 +92,25 @@
 <span id="id1"></span><h1>Lazy Labels<a class="headerlink" href="#lazy-labels" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="motivation">
 <h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h2>
-<p>For <em>img-img</em> training tasks (e.g. segmentation or pixel-wise object detection) one factor limiting the quality of CNN predictions is the demand for large expensive ground truth: a volume equally large as the raw image has to be annotated pixel-wise by human expert. Naturally, this can only be done for a small number of image cubes and is therefore not likely to cover the full variety of possible input data. Many benchmarks are performed with respect to such data sets but for actual applications this might not be sufficient to solve the task. For example EM images of large brain sections, as encountered in connectomics, exhibit a diversity of distinct regions, some of which are so large and rather &#8220;monotonic&#8221; that they are usually not considered for training data, because labelling them would be expensive. Such areas are e.g. myelinated axons or cell nuclei. But it may happen that CNN predictions go wrong in particular those areas, because they were never presented to the CNN during training and certain structures resemble target objects (e.g. vesicle clouds) and give rise to false positives. Therefore, in real applications, it is important to include those &#8220;monotonic&#8221; areas into the training set and make sure the CNNs is familiar with them.</p>
+<p>For <em>img-img</em> training tasks (e.g. segmentation or pixel-wise object detection) one factor limiting the quality of CNN predictions is the demand for large expensive ground truth: a volume equally large as the raw image has to be annotated pixel-wise by human expert. Naturally, this can only be done for a small number of image cubes and is therefore not likely to cover the full variety of possible input data. Many benchmarks are performed with respect to such data sets but for actual applications this might not be sufficient to solve the task. For example EM images of large brain sections, as encountered in connectomics, exhibit a diversity of distinct regions, some of which are so large and rather “monotonic” that they are usually not considered for training data, because labelling them would be expensive. Such areas are e.g. myelinated axons or cell nuclei. But it may happen that CNN predictions go wrong in particular those areas, because they were never presented to the CNN during training and certain structures resemble target objects (e.g. vesicle clouds) and give rise to false positives. Therefore, in real applications, it is important to include those “monotonic” areas into the training set and make sure the CNNs is familiar with them.</p>
 </div>
 <div class="section" id="solution">
 <h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
 <p>Lazy Labels refers to ground truth that can be generated with very little effort and gives the possibility to include monotonic image examples into the training set.</p>
-<p>An example use case is a EM volume of a cell nucleus (say background class <code class="docutils literal"><span class="pre">0</span></code>), but the patch contains also mitochondria (class <code class="docutils literal"><span class="pre">1</span></code>), or more categories of other objects. But <strong>certainly no</strong> vesicle clouds(class <code class="docutils literal"><span class="pre">2</span></code>). The cheapest option is to label nothing at all in this cube and instead specify a <em>mask</em> that indicates all classes that have not been labelled and <em>another mask</em> that indicates that there are no instances of class <code class="docutils literal"><span class="pre">2</span></code> in this whole patch. During training this patch can act to drive the predicted probability of class <code class="docutils literal"><span class="pre">2</span></code> on this patch towards zero, i.e. the CNN gets &#8220;punished&#8221; for predicting <code class="docutils literal"><span class="pre">2</span></code> on this patch, but predictions for other classes are ignored because we don&#8217;t know them.</p>
-<p>This provides of course much less training information and therefore it would be sensible give this patch less weigh by presenting it fewer times than other patches during training. We can give it a lower value in the <code class="docutils literal"><span class="pre">cube_prios</span></code> list than the densely labelled cubes.
-The other option is to label the cell nucleus manually as background (because it is a large contiguous object that is relatively cheap to label) and set a mask that the background was labelled (but no other classes). For the remaining pixels around the nucleus the labels are all set to <code class="docutils literal"><span class="pre">-1</span></code> to be <strong>ignored</strong> (this area would be more expensive to label because there might be many small objects of different classes e.g. mitochondria). Thus the information content is slightly higher than for the first option, but it&#8217;s also more work.</p>
+<p>An example use case is a EM volume of a cell nucleus (say background class <code class="docutils literal notranslate"><span class="pre">0</span></code>), but the patch contains also mitochondria (class <code class="docutils literal notranslate"><span class="pre">1</span></code>), or more categories of other objects. But <strong>certainly no</strong> vesicle clouds(class <code class="docutils literal notranslate"><span class="pre">2</span></code>). The cheapest option is to label nothing at all in this cube and instead specify a <em>mask</em> that indicates all classes that have not been labelled and <em>another mask</em> that indicates that there are no instances of class <code class="docutils literal notranslate"><span class="pre">2</span></code> in this whole patch. During training this patch can act to drive the predicted probability of class <code class="docutils literal notranslate"><span class="pre">2</span></code> on this patch towards zero, i.e. the CNN gets “punished” for predicting <code class="docutils literal notranslate"><span class="pre">2</span></code> on this patch, but predictions for other classes are ignored because we don’t know them.</p>
+<p>This provides of course much less training information and therefore it would be sensible give this patch less weigh by presenting it fewer times than other patches during training. We can give it a lower value in the <code class="docutils literal notranslate"><span class="pre">cube_prios</span></code> list than the densely labelled cubes.
+The other option is to label the cell nucleus manually as background (because it is a large contiguous object that is relatively cheap to label) and set a mask that the background was labelled (but no other classes). For the remaining pixels around the nucleus the labels are all set to <code class="docutils literal notranslate"><span class="pre">-1</span></code> to be <strong>ignored</strong> (this area would be more expensive to label because there might be many small objects of different classes e.g. mitochondria). Thus the information content is slightly higher than for the first option, but it’s also more work.</p>
 <p>Lazy labelled training images should only be used to supplement densely labelled data.</p>
 </div>
 <div class="section" id="application">
 <h2>Application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h2>
-<p>The exact effect of the masks is precisely described in the API documentation of the loss function (<a class="reference internal" href="elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.NLL" title="elektronn.net.convlayer2d.ConvLayer2d.NLL"><code class="xref py py-meth docutils literal"><span class="pre">elektronn.net.convlayer2d.ConvLayer2d.NLL()</span></code></a> or <a class="reference internal" href="elektronn.net.html#elektronn.net.convlayer3d.ConvLayer3d.NLL" title="elektronn.net.convlayer3d.ConvLayer3d.NLL"><code class="xref py py-meth docutils literal"><span class="pre">elektronn.net.convlayer3d.ConvLayer3d.NLL()</span></code></a>).</p>
+<p>The exact effect of the masks is precisely described in the API documentation of the loss function (<a class="reference internal" href="elektronn.net.html#elektronn.net.convlayer2d.ConvLayer2d.NLL" title="elektronn.net.convlayer2d.ConvLayer2d.NLL"><code class="xref py py-meth docutils literal notranslate"><span class="pre">elektronn.net.convlayer2d.ConvLayer2d.NLL()</span></code></a> or <a class="reference internal" href="elektronn.net.html#elektronn.net.convlayer3d.ConvLayer3d.NLL" title="elektronn.net.convlayer3d.ConvLayer3d.NLL"><code class="xref py py-meth docutils literal notranslate"><span class="pre">elektronn.net.convlayer3d.ConvLayer3d.NLL()</span></code></a>).</p>
 <dl class="docutils">
 <dt>To use lazy labels 2 things must be done:</dt>
 <dd><ol class="first last arabic simple">
-<li>Turn the option <code class="docutils literal"><span class="pre">lazy_labels</span></code> in the configuration</li>
-<li>For every image/label cube pair: add another h5 dataset in the <strong>same</strong> h5 file of the labels by the data set name &#8220;info&#8221;. This data set must be a tuple containing two arrays of length <code class="docutils literal"><span class="pre">n_lab</span></code> with entries 0 or 1. The first array gives <code class="docutils literal"><span class="pre">mask_class_labeled</span></code> corresponding to this volume, the second <code class="docutils literal"><span class="pre">mask_class_not_present</span></code>.</li>
-<li>(optionally) set lower <code class="docutils literal"><span class="pre">cube_prios</span></code> for the cubes with less label information content.</li>
+<li>Turn the option <code class="docutils literal notranslate"><span class="pre">lazy_labels</span></code> in the configuration</li>
+<li>For every image/label cube pair: add another h5 dataset in the <strong>same</strong> h5 file of the labels by the data set name “info”. This data set must be a tuple containing two arrays of length <code class="docutils literal notranslate"><span class="pre">n_lab</span></code> with entries 0 or 1. The first array gives <code class="docutils literal notranslate"><span class="pre">mask_class_labeled</span></code> corresponding to this volume, the second <code class="docutils literal notranslate"><span class="pre">mask_class_not_present</span></code>.</li>
+<li>(optionally) set lower <code class="docutils literal notranslate"><span class="pre">cube_prios</span></code> for the cubes with less label information content.</li>
 </ol>
 </dd>
 </dl>
@@ -153,7 +143,7 @@ The other option is to label the cell nucleus manually as background (because it
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

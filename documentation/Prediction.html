@@ -1,26 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>Making Predictions &#8212; ELEKTRONN</title>
-    
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1rc',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -29,8 +18,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Tips for Adaptation and Extending" href="NetCore.html" />
     <link rel="prev" title="Lazy Labels" href="Lazy.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
@@ -81,12 +69,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -101,19 +91,19 @@
 <h1>Making Predictions<a class="headerlink" href="#making-predictions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="general">
 <h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
-<p>Prediction speed benefits greatly from larger input patch sizes and MFP (see below). Therefore it is recommended to create a new CNN after training with larger patch size. For the purpose there is the function <a class="reference internal" href="elektronn.training.html#elektronn.training.predictor.create_predncnn" title="elektronn.training.predictor.create_predncnn"><code class="xref py py-func docutils literal"><span class="pre">elektronn.training.predictor.create_predncnn()</span></code></a> where the patch size from training can be overridden and the parameters are loaded from the <code class="docutils literal"><span class="pre">*-LAST.param</span></code>-file in the save directory. The same config file as for the training can be used.</p>
+<p>Prediction speed benefits greatly from larger input patch sizes and MFP (see below). Therefore it is recommended to create a new CNN after training with larger patch size. For the purpose there is the function <a class="reference internal" href="elektronn.training.html#elektronn.training.predictor.create_predncnn" title="elektronn.training.predictor.create_predncnn"><code class="xref py py-func docutils literal notranslate"><span class="pre">elektronn.training.predictor.create_predncnn()</span></code></a> where the patch size from training can be overridden and the parameters are loaded from the <code class="docutils literal notranslate"><span class="pre">*-LAST.param</span></code>-file in the save directory. The same config file as for the training can be used.</p>
 <p>The returned CNN can be used in your own prediction script, which just has to provide your data in the correct format:</p>
 <blockquote>
 <div><ul class="simple">
-<li>For images the convenience method <a class="reference internal" href="elektronn.net.html#elektronn.net.convnet.MixedConvNN.predictDense" title="elektronn.net.convnet.MixedConvNN.predictDense"><code class="xref py py-meth docutils literal"><span class="pre">elektronn.net.convnet.MixedConvNN.predictDense()</span></code></a> is available which creates <em>dense</em> predictions for images/volumes of arbitrary sizes (the input image must however be larger than the input patch size). Normally predictions  on onbly be made with some offset w.r.t to the input image extent (due to the convolutions) but this method provides option to mirror the raw data such that the returned prediction covers the full extent of the input image (this might however introduce some artifacts because mirroring is not a natural continuation of the image).</li>
-<li>For non-image data predictions can be made using <code class="xref py py-attr docutils literal"><span class="pre">elektronn.net.convnet.MixedConvNN.class_probabilities</span></code> (make sure to prepare your test data in the required input <code class="docutils literal"><span class="pre">(batch</span> <span class="pre">size,</span> <span class="pre">features)</span></code> ).</li>
+<li>For images the convenience method <a class="reference internal" href="elektronn.net.html#elektronn.net.convnet.MixedConvNN.predictDense" title="elektronn.net.convnet.MixedConvNN.predictDense"><code class="xref py py-meth docutils literal notranslate"><span class="pre">elektronn.net.convnet.MixedConvNN.predictDense()</span></code></a> is available which creates <em>dense</em> predictions for images/volumes of arbitrary sizes (the input image must however be larger than the input patch size). Normally predictions  on onbly be made with some offset w.r.t to the input image extent (due to the convolutions) but this method provides option to mirror the raw data such that the returned prediction covers the full extent of the input image (this might however introduce some artifacts because mirroring is not a natural continuation of the image).</li>
+<li>For non-image data predictions can be made using <code class="xref py py-attr docutils literal notranslate"><span class="pre">elektronn.net.convnet.MixedConvNN.class_probabilities</span></code> (make sure to prepare your test data in the required input <code class="docutils literal notranslate"><span class="pre">(batch</span> <span class="pre">size,</span> <span class="pre">features)</span></code> ).</li>
 </ul>
 </div></blockquote>
 <p>Theoretically predicting the whole image in a single patch, instead of several tiles, would be fastest. For each tile some calculations have to be repeated and the larger the tiles, the more intermediate results can be shared. But this is obviously impossible due to limited GPU-RAM.</p>
-<p>There is a script similar to <code class="docutils literal"><span class="pre">elektronn-train</span></code> called <code class="docutils literal"><span class="pre">elektronn-profile</span></code> which varies the input size until the RAM limit is reached: pass a configuration file as commandline argument. The script creates a <code class="docutils literal"><span class="pre">csv</span></code>-table of the respective speeds. You can find the fastest input size, that just fits in your RAM in that table and use it to create a prediction CNN.</p>
+<p>There is a script similar to <code class="docutils literal notranslate"><span class="pre">elektronn-train</span></code> called <code class="docutils literal notranslate"><span class="pre">elektronn-profile</span></code> which varies the input size until the RAM limit is reached: pass a configuration file as commandline argument. The script creates a <code class="docutils literal notranslate"><span class="pre">csv</span></code>-table of the respective speeds. You can find the fastest input size, that just fits in your RAM in that table and use it to create a prediction CNN.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">GPU-RAM usage can be lowered by enabling garbage collection (set <code class="docutils literal"><span class="pre">linker</span> <span class="pre">=</span> <span class="pre">cvm</span></code> in the <code class="docutils literal"><span class="pre">[global]</span></code> section of <code class="docutils literal"><span class="pre">.theanorc</span></code>) and by using cuDNN.</p>
+<p class="last">GPU-RAM usage can be lowered by enabling garbage collection (set <code class="docutils literal notranslate"><span class="pre">linker</span> <span class="pre">=</span> <span class="pre">cvm</span></code> in the <code class="docutils literal notranslate"><span class="pre">[global]</span></code> section of <code class="docutils literal notranslate"><span class="pre">.theanorc</span></code>) and by using cuDNN.</p>
 </div>
 </div>
 <div class="section" id="max-fragment-pooling-mfp">
@@ -150,7 +140,7 @@ Compilation time is significantly longer.</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

@@ -1,26 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>elektronn.training package &#8212; ELEKTRONN</title>
-    
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1rc',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -28,8 +17,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="elektronn.net package" href="elektronn.net.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
@@ -82,12 +70,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -111,18 +101,17 @@ Raw data is also shown overlaid with labels</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: 2d array</strong></p>
-<blockquote>
-<div><p>raw image from batch</p>
-</div></blockquote>
-<p><strong>lab: 2d array</strong></p>
-<blockquote>
-<div><p>labels</p>
-</div></blockquote>
-<p><strong>stride: int</strong></p>
-<blockquote class="last">
-<div><p>stride of labels</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>img: 2d array</strong></dt>
+<dd><p class="first last">raw image from batch</p>
+</dd>
+<dt><strong>lab: 2d array</strong></dt>
+<dd><p class="first last">labels</p>
+</dd>
+<dt><strong>stride: int</strong></dt>
+<dd><p class="first last">stride of labels</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -132,65 +121,55 @@ Raw data is also shown overlaid with labels</p>
 <dl class="class">
 <dt id="elektronn.training.CNNData.CNNData">
 <em class="property">class </em><code class="descclassname">elektronn.training.CNNData.</code><code class="descname">CNNData</code><span class="sig-paren">(</span><em>patch_size=None</em>, <em>stride=None</em>, <em>offset=None</em>, <em>n_dim=2</em>, <em>n_lab=None</em>, <em>anistropic_data=False</em>, <em>mode='img-img'</em>, <em>zchxy_order=False</em>, <em>border_mode='crop'</em>, <em>pre_process=None</em>, <em>upright_x=False</em>, <em>float_label=False</em>, <em>affinity=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/CNNData.html#CNNData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.CNNData.CNNData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Patch creation and data handling interface for image like training data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>patch_size: 2/3-tuple</strong></p>
-<blockquote>
-<div><p>Specifying CNN input shape of a single example, <strong>without</strong> channels: (x,y)/(z,x,y)</p>
-</div></blockquote>
-<p><strong>stride: 2/3-tuple</strong></p>
-<blockquote>
-<div><p>Specifying CNN output stride. May be <code class="docutils literal"><span class="pre">None</span></code> for scalar labels</p>
-</div></blockquote>
-<p><strong>offset: 2/3-tuple</strong></p>
-<blockquote>
-<div><p>Specifying overall CNN convolution border. May be <code class="docutils literal"><span class="pre">None</span></code> for scalar labels</p>
-</div></blockquote>
-<p><strong>n_dim: int</strong></p>
-<blockquote>
-<div><p>2 or 3, CNN dimension</p>
-</div></blockquote>
-<p><strong>n_lab: int</strong></p>
-<blockquote>
-<div><p>Number of distinct classes/labels, if not provided (-&gt;None) this is automatically inferred (slow!)</p>
-</div></blockquote>
-<p><strong>anistropic_data: Bool</strong></p>
-<blockquote>
-<div><p>If True 2d slices are only cut and rotated along z-axis, otherwise all 3 alignments are used</p>
-</div></blockquote>
-<p><strong>mode: str</strong></p>
-<blockquote>
-<div><p>Mode that describes the kind of data and labels: img-img or img-scalar. If the labels are
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>patch_size: 2/3-tuple</strong></dt>
+<dd><p class="first last">Specifying CNN input shape of a single example, <strong>without</strong> channels: (x,y)/(z,x,y)</p>
+</dd>
+<dt><strong>stride: 2/3-tuple</strong></dt>
+<dd><p class="first last">Specifying CNN output stride. May be <code class="docutils literal notranslate"><span class="pre">None</span></code> for scalar labels</p>
+</dd>
+<dt><strong>offset: 2/3-tuple</strong></dt>
+<dd><p class="first last">Specifying overall CNN convolution border. May be <code class="docutils literal notranslate"><span class="pre">None</span></code> for scalar labels</p>
+</dd>
+<dt><strong>n_dim: int</strong></dt>
+<dd><p class="first last">2 or 3, CNN dimension</p>
+</dd>
+<dt><strong>n_lab: int</strong></dt>
+<dd><p class="first last">Number of distinct classes/labels, if not provided (-&gt;None) this is automatically inferred (slow!)</p>
+</dd>
+<dt><strong>anistropic_data: Bool</strong></dt>
+<dd><p class="first last">If True 2d slices are only cut and rotated along z-axis, otherwise all 3 alignments are used</p>
+</dd>
+<dt><strong>mode: str</strong></dt>
+<dd><p class="first last">Mode that describes the kind of data and labels: img-img or img-scalar. If the labels are
 scalar but the data is a stack (along z-axis) of many examples, the many scalar labels should be
-stacked to a vector. For vect-scalar training use the <code class="docutils literal"><span class="pre">TrainData</span></code>-class instead.</p>
-</div></blockquote>
-<p><strong>zchxy_order: Bool</strong></p>
-<blockquote>
-<div><p>If the data files are already in memory layout (z,ch,x,y)/(z,x,y), this option must be set to True,
+stacked to a vector. For vect-scalar training use the <code class="docutils literal notranslate"><span class="pre">TrainData</span></code>-class instead.</p>
+</dd>
+<dt><strong>zchxy_order: Bool</strong></dt>
+<dd><p class="first last">If the data files are already in memory layout (z,ch,x,y)/(z,x,y), this option must be set to True,
 which makes data loading faster.</p>
-</div></blockquote>
-<p><strong>border_mode: string</strong></p>
-<blockquote>
-<div><p>For img-scalar training: specifies how to treat images that don&#8217;t match a valid CNN input size</p>
-</div></blockquote>
-<p><strong>upright_x: Bool</strong></p>
-<blockquote>
-<div><p>If <code class="docutils literal"><span class="pre">True</span></code>, image augmentation leaves the upright position of natural images intact, e.g. they are
-only mirrored horizontally, not vertically. Note: the horizontal direction corresponds to &#8216;y&#8217; (because the
-&#8216;x&#8217; comes before &#8216;y&#8217; and the vertical comes before horizontal in numpy)!</p>
-</div></blockquote>
-<p><strong>float_label: Bool</strong></p>
-<blockquote>
-<div><p>Whether to return labels as float32 (for regression) or int16 (for classification)</p>
-</div></blockquote>
-<p><strong>affinity: str/False</strong></p>
-<blockquote class="last">
-<div><p>False/&#8217;affinity&#8217;/&#8217;malis&#8217;: malis returs additionally the segmentation IDs</p>
-</div></blockquote>
+</dd>
+<dt><strong>border_mode: string</strong></dt>
+<dd><p class="first last">For img-scalar training: specifies how to treat images that don’t match a valid CNN input size</p>
+</dd>
+<dt><strong>upright_x: Bool</strong></dt>
+<dd><p class="first last">If <code class="docutils literal notranslate"><span class="pre">True</span></code>, image augmentation leaves the upright position of natural images intact, e.g. they are
+only mirrored horizontally, not vertically. Note: the horizontal direction corresponds to ‘y’ (because the
+‘x’ comes before ‘y’ and the vertical comes before horizontal in numpy)!</p>
+</dd>
+<dt><strong>float_label: Bool</strong></dt>
+<dd><p class="first last">Whether to return labels as float32 (for regression) or int16 (for classification)</p>
+</dd>
+<dt><strong>affinity: str/False</strong></dt>
+<dd><p class="first last">False/’affinity’/’malis’: malis returs additionally the segmentation IDs</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -202,25 +181,24 @@ only mirrored horizontally, not vertically. Note: the horizontal direction corre
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>d_path/l_path: string</strong></p>
-<blockquote>
-<div><p>Directories to load data from</p>
-</div></blockquote>
-<p><strong>d_files/l_files: list</strong></p>
-<blockquote>
-<div><p>List of data/label files in &lt;path&gt; directory (must be in the same order!). Each list</p>
-</div></blockquote>
-<p><strong>element is a tuple in the form **(&lt;Name of h5-file&gt;, &lt;Key of h5-dataset&gt;)**</strong></p>
-<p><strong>cube_prios: list</strong></p>
-<blockquote>
-<div><p>(not normalised) list of sampling weights to draw examples from the respective cubes.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>d_path/l_path: string</strong></dt>
+<dd><p class="first last">Directories to load data from</p>
+</dd>
+<dt><strong>d_files/l_files: list</strong></dt>
+<dd><p class="first last">List of data/label files in &lt;path&gt; directory (must be in the same order!). Each list</p>
+</dd>
+<dt><strong>element is a tuple in the form **(&lt;Name of h5-file&gt;, &lt;Key of h5-dataset&gt;)**</strong></dt>
+<dd></dd>
+<dt><strong>cube_prios: list</strong></dt>
+<dd><p class="first last">(not normalised) list of sampling weights to draw examples from the respective cubes.
 If None the cube sizes are taken as priorities.</p>
-</div></blockquote>
-<p><strong>valid_cubes: list</strong></p>
-<blockquote class="last">
-<div><p>List of indices for cubes (from the file-lists) to use as validation data and exclude from training,
+</dd>
+<dt><strong>valid_cubes: list</strong></dt>
+<dd><p class="first last">List of indices for cubes (from the file-lists) to use as validation data and exclude from training,
 may be empty list to skip performance estimation on validation data.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -234,26 +212,23 @@ may be empty list to skip performance estimation on validation data.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>d_train: list of numpy arrays</strong></p>
-<blockquote>
-<div><p>the input data for Training</p>
-</div></blockquote>
-<p><strong>l_train: list of numpy arrays</strong></p>
-<blockquote>
-<div><p>the labels     for Training</p>
-</div></blockquote>
-<p><strong>d_valid: list of numpy arrays</strong></p>
-<blockquote>
-<div><p>the input data for validation [OPTIONAL]</p>
-</div></blockquote>
-<p><strong>l_valid: list of numpy arrays</strong></p>
-<blockquote>
-<div><p>the labels     for validation [OPTIONAL]</p>
-</div></blockquote>
-<p><strong>cube_prios: list of floats</strong></p>
-<blockquote class="last">
-<div><p>Default: None &#8211;&gt; probability of sampling Training data from a cube is proportional to its size</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>d_train: list of numpy arrays</strong></dt>
+<dd><p class="first last">the input data for Training</p>
+</dd>
+<dt><strong>l_train: list of numpy arrays</strong></dt>
+<dd><p class="first last">the labels     for Training</p>
+</dd>
+<dt><strong>d_valid: list of numpy arrays</strong></dt>
+<dd><p class="first last">the input data for validation [OPTIONAL]</p>
+</dd>
+<dt><strong>l_valid: list of numpy arrays</strong></dt>
+<dd><p class="first last">the labels     for validation [OPTIONAL]</p>
+</dd>
+<dt><strong>cube_prios: list of floats</strong></dt>
+<dd><p class="first last">Default: None –&gt; probability of sampling Training data from a cube is proportional to its size</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -268,60 +243,52 @@ may be empty list to skip performance estimation on validation data.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>batch_size: int</strong></p>
-<blockquote>
-<div><p>Number of examples in batch (for CNNs often just 1)</p>
-</div></blockquote>
-<p><strong>source: string</strong></p>
-<blockquote>
-<div><p>Data set to draw data from: &#8216;train&#8217;/&#8217;valid&#8217;</p>
-</div></blockquote>
-<p><strong>strided: Bool</strong></p>
-<blockquote>
-<div><p>If True the labels are sub-sampled according to the CNN output stride.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>batch_size: int</strong></dt>
+<dd><p class="first last">Number of examples in batch (for CNNs often just 1)</p>
+</dd>
+<dt><strong>source: string</strong></dt>
+<dd><p class="first last">Data set to draw data from: ‘train’/’valid’</p>
+</dd>
+<dt><strong>strided: Bool</strong></dt>
+<dd><p class="first last">If True the labels are sub-sampled according to the CNN output stride.
 Non-strided labels requires MFP in the CNN!</p>
-</div></blockquote>
-<p><strong>flip: Bool</strong></p>
-<blockquote>
-<div><p>If True examples are mirrored and rotated by 90 deg randomly</p>
-</div></blockquote>
-<p><strong>grey_augment_channels: list</strong></p>
-<blockquote>
-<div><p>List of channel indices to apply grey-value augmentation to</p>
-</div></blockquote>
-<p><strong>ret_info: Bool</strong></p>
-<blockquote>
-<div><p>If True additional information for reach batch example is returned. Currently implemented are two info
+</dd>
+<dt><strong>flip: Bool</strong></dt>
+<dd><p class="first last">If True examples are mirrored and rotated by 90 deg randomly</p>
+</dd>
+<dt><strong>grey_augment_channels: list</strong></dt>
+<dd><p class="first last">List of channel indices to apply grey-value augmentation to</p>
+</dd>
+<dt><strong>ret_info: Bool</strong></dt>
+<dd><p class="first last">If True additional information for reach batch example is returned. Currently implemented are two info
 arrays to indicate the labelling mode. The first dimension of those arrays is the batch_size!</p>
-</div></blockquote>
-<p><strong>warp_on: Bool/Float(0,1)</strong></p>
-<blockquote>
-<div><p>Whether warping/distortion augmentations are applied to examples (slow &#8211;&gt; use multiprocessing)
-If this is a float number, warping is applied to this fraction of examples e.g. 0.5 &#8211;&gt; every other example</p>
-</div></blockquote>
-<p><strong>ignore_thresh: float</strong></p>
-<blockquote>
-<div><p>If the fraction of negative labels in an example patch exceeds this threshold, this example is discarded
+</dd>
+<dt><strong>warp_on: Bool/Float(0,1)</strong></dt>
+<dd><p class="first last">Whether warping/distortion augmentations are applied to examples (slow –&gt; use multiprocessing)
+If this is a float number, warping is applied to this fraction of examples e.g. 0.5 –&gt; every other example</p>
+</dd>
+<dt><strong>ignore_thresh: float</strong></dt>
+<dd><p class="first last">If the fraction of negative labels in an example patch exceeds this threshold, this example is discarded
 (Negative labels are ignored for training [but could be used for unsupervised label propagation]).</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data:</p>
-<blockquote>
-<div><p>[bs, ch, x, y] or [bs, z, ch, x, y] for 2d and 3d CNNS</p>
-</div></blockquote>
-<p>label:</p>
-<blockquote>
-<div><p>[bs, x, y] or [bs, z, x, y]</p>
-</div></blockquote>
-<p>info1:</p>
-<blockquote>
-<div><p>(optional) [bs, n_lab]</p>
-</div></blockquote>
-<p>info2:</p>
-<blockquote class="last">
-<div><p>(optional) [bs, n_lab]</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data:</strong></dt>
+<dd><p class="first last">[bs, ch, x, y] or [bs, z, ch, x, y] for 2d and 3d CNNS</p>
+</dd>
+<dt><strong>label:</strong></dt>
+<dd><p class="first last">[bs, x, y] or [bs, z, x, y]</p>
+</dd>
+<dt><strong>info1:</strong></dt>
+<dd><p class="first last">(optional) [bs, n_lab]</p>
+</dd>
+<dt><strong>info2:</strong></dt>
+<dd><p class="first last">(optional) [bs, n_lab]</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -341,58 +308,54 @@ If this is a float number, warping is applied to this fraction of examples e.g. 
 <dl class="class">
 <dt id="elektronn.training.config.MasterConfig">
 <em class="property">class </em><code class="descclassname">elektronn.training.config.</code><code class="descname">MasterConfig</code><a class="reference internal" href="_modules/elektronn/training/config.html#MasterConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.MasterConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="elektronn.training.config.DefaultConfig">
 <em class="property">class </em><code class="descclassname">elektronn.training.config.</code><code class="descname">DefaultConfig</code><a class="reference internal" href="_modules/elektronn/training/config.html#DefaultConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.DefaultConfig" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.config.MasterConfig" title="elektronn.training.config.MasterConfig"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.config.MasterConfig</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.config.MasterConfig" title="elektronn.training.config.MasterConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.config.MasterConfig</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="elektronn.training.config.Config">
 <em class="property">class </em><code class="descclassname">elektronn.training.config.</code><code class="descname">Config</code><span class="sig-paren">(</span><em>config_file</em>, <em>gpu</em>, <em>trainer_file</em>, <em>use_existing_dir=False</em>, <em>override_MFP_to_active=False</em>, <em>imposed_input_size=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Configuration object to manage the parameters of <code class="docutils literal"><span class="pre">trainingInstance</span></code></p>
-<p>The <code class="docutils literal"><span class="pre">monitor_batch_size</span></code> is automatically fixed to a multiple of the <code class="docutils literal"><span class="pre">batch_size</span></code>.
-An attribute <code class="docutils literal"><span class="pre">dimensions</span></code> of type <code class="docutils literal"><span class="pre">Net.netutils.CNNCalcquotesulator</span></code> is created that checks if the CNN
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Configuration object to manage the parameters of <code class="docutils literal notranslate"><span class="pre">trainingInstance</span></code></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">monitor_batch_size</span></code> is automatically fixed to a multiple of the <code class="docutils literal notranslate"><span class="pre">batch_size</span></code>.
+An attribute <code class="docutils literal notranslate"><span class="pre">dimensions</span></code> of type <code class="docutils literal notranslate"><span class="pre">Net.netutils.CNNCalcquotesulator</span></code> is created that checks if the CNN
 architecture (combination of filter sizes and poolings) is valid and determines the input shape closest
-to the <code class="docutils literal"><span class="pre">desired_input</span></code>
-The top level script (<code class="docutils literal"><span class="pre">trainer_file</span></code>), the config, the <code class="docutils literal"><span class="pre">Net</span></code> module and the <code class="docutils literal"><span class="pre">Training</span></code> module
+to the <code class="docutils literal notranslate"><span class="pre">desired_input</span></code>
+The top level script (<code class="docutils literal notranslate"><span class="pre">trainer_file</span></code>), the config, the <code class="docutils literal notranslate"><span class="pre">Net</span></code> module and the <code class="docutils literal notranslate"><span class="pre">Training</span></code> module
 are backed up into the CNN directory automatically. The Backup is intended to contain all code to
 reproduce the CNN Training</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file: string</strong></p>
-<blockquote>
-<div><p>Path to a CNN config file</p>
-</div></blockquote>
-<p><strong>gpu: int</strong></p>
-<blockquote>
-<div><p>Specifying id of GPU to initialise for usage. E.g. 1 &#8211;&gt; &#8220;gpu1&#8221;, None will initialise gpu0,      False will not initialise any GPU. This only works if &#8220;device&#8221; is not set in <code class="docutils literal"><span class="pre">.theanorc</span></code> or if theano
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>config_file: string</strong></dt>
+<dd><p class="first last">Path to a CNN config file</p>
+</dd>
+<dt><strong>gpu: int</strong></dt>
+<dd><p class="first last">Specifying id of GPU to initialise for usage. E.g. 1 –&gt; “gpu1”, None will initialise gpu0,      False will not initialise any GPU. This only works if “device” is not set in <code class="docutils literal notranslate"><span class="pre">.theanorc</span></code> or if theano
 has not been imported up to now. If the initialisation fails an error will be printed but the script
 will not crash.</p>
-</div></blockquote>
-<p><strong>trainer_file: string</strong></p>
-<blockquote>
-<div><p>Path to the <code class="docutils literal"><span class="pre">NetTrainer</span></code>-script (or any other top level script that drives the Training).      The path is needed to backup the script in the CNN directory</p>
-</div></blockquote>
-<p><strong>use_existing_dir: Bool</strong></p>
-<blockquote>
-<div><p>Do not create a new directory for the CNN if True</p>
-</div></blockquote>
-<p><strong>override_MFP_to_active: Bool</strong></p>
-<blockquote>
-<div><p>If true, activates MFP in all layers where possible, ignoring the configuration in the config file.
+</dd>
+<dt><strong>trainer_file: string</strong></dt>
+<dd><p class="first last">Path to the <code class="docutils literal notranslate"><span class="pre">NetTrainer</span></code>-script (or any other top level script that drives the Training).      The path is needed to backup the script in the CNN directory</p>
+</dd>
+<dt><strong>use_existing_dir: Bool</strong></dt>
+<dd><p class="first last">Do not create a new directory for the CNN if True</p>
+</dd>
+<dt><strong>override_MFP_to_active: Bool</strong></dt>
+<dd><p class="first last">If true, activates MFP in all layers where possible, ignoring the configuration in the config file.
 This is useful for prediction using a config file from training. (only for CNN)</p>
-</div></blockquote>
-<p><strong>override_input_size_with: tuple or None</strong></p>
-<blockquote class="last">
-<div><p>Similar as above, this can be used to impose another input size than specified in the config file. (only for CNN)</p>
-</div></blockquote>
+</dd>
+<dt><strong>override_input_size_with: tuple or None</strong></dt>
+<dd><p class="first last">Similar as above, this can be used to impose another input size than specified in the config file. (only for CNN)</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -440,14 +403,14 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="method">
 <dt id="elektronn.training.config.Config.backupScripts">
 <code class="descname">backupScripts</code><span class="sig-paren">(</span><em>trainer_file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.backupScripts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.backupScripts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves all python files into the folder specified by <code class="docutils literal"><span class="pre">self.save_path</span></code>
-Also changes working directory to the <code class="docutils literal"><span class="pre">save_path</span></code> directory</p>
+<dd><p>Saves all python files into the folder specified by <code class="docutils literal notranslate"><span class="pre">self.save_path</span></code>
+Also changes working directory to the <code class="docutils literal notranslate"><span class="pre">save_path</span></code> directory</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elektronn.training.config.Config.levenshtein">
 <code class="descname">levenshtein</code><span class="sig-paren">(</span><em>s1</em>, <em>s2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/config.html#Config.levenshtein"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.config.Config.levenshtein" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes Levenshtein-distance between <code class="docutils literal"><span class="pre">s1</span></code> and <code class="docutils literal"><span class="pre">s2</span></code> strings
+<dd><p>Computes Levenshtein-distance between <code class="docutils literal notranslate"><span class="pre">s1</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span></code> strings
 Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python">http://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python</a></p>
 </dd></dl>
 
@@ -459,7 +422,7 @@ Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Alg
 <dl class="class">
 <dt id="elektronn.training.parallelisation.SharedMem">
 <em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">SharedMem</code><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedMem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedMem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Utilities to share np.arrays between processes</p>
 <dl class="staticmethod">
 <dt id="elektronn.training.parallelisation.SharedMem.shm2ndarray">
@@ -468,15 +431,21 @@ Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Alg
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>mp_array: a mp.Array</strong></p>
-<p><strong>shape:    (optional) the returned np.ndarray is reshaped to this shape, flat otherwise</strong></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>mp_array: a mp.Array</strong></dt>
+<dd></dd>
+<dt><strong>shape:    (optional) the returned np.ndarray is reshaped to this shape, flat otherwise</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">array: np.ndarray</p>
-<blockquote>
-<div><p>That can be normally used but changes are reflected in shared mem</p>
-</div></blockquote>
-<p class="last">Note: the returned array is still pointing to the sharedmem, data might be changed by another process!</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>array: np.ndarray</strong></dt>
+<dd><p class="first last">That can be normally used but changes are reflected in shared mem</p>
+</dd>
+<dt><strong>Note: the returned array is still pointing to the sharedmem, data might be changed by another process!</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -490,20 +459,21 @@ Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Alg
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>np_array: np.ndarray</strong></p>
-<blockquote>
-<div><p>array of arbitrary shape</p>
-</div></blockquote>
-<p><strong>lock: Bool</strong></p>
-<blockquote>
-<div><p>Whether to create a multiprocessing.Lock</p>
-</div></blockquote>
-<p><strong>Returns</strong></p>
-<p><strong>&#8212;&#8212;-</strong></p>
-<p><strong>handle: mp.Array:</strong></p>
-<blockquote class="last">
-<div><p>flat with data from ndarray copied to it</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>np_array: np.ndarray</strong></dt>
+<dd><p class="first last">array of arbitrary shape</p>
+</dd>
+<dt><strong>lock: Bool</strong></dt>
+<dd><p class="first last">Whether to create a multiprocessing.Lock</p>
+</dd>
+<dt><strong>Returns</strong></dt>
+<dd></dd>
+<dt><strong>——-</strong></dt>
+<dd></dd>
+<dt><strong>handle: mp.Array:</strong></dt>
+<dd><p class="first last">flat with data from ndarray copied to it</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -518,25 +488,26 @@ Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Alg
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dtype: np.dtype</strong></p>
-<blockquote>
-<div><p>Type of data to store in array</p>
-</div></blockquote>
-<p><strong>shape: tuple</strong></p>
-<blockquote>
-<div><p>Properties of shared mem to be created</p>
-</div></blockquote>
-<p><strong>data: np.ndarray</strong></p>
-<blockquote>
-<div><p>(optional) values to fill shared array with</p>
-</div></blockquote>
-<p><strong>lock: Bool</strong></p>
-<blockquote>
-<div><p>Whether to create a multiprocessing.Lock on the shared variable</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>dtype: np.dtype</strong></dt>
+<dd><p class="first last">Type of data to store in array</p>
+</dd>
+<dt><strong>shape: tuple</strong></dt>
+<dd><p class="first last">Properties of shared mem to be created</p>
+</dd>
+<dt><strong>data: np.ndarray</strong></dt>
+<dd><p class="first last">(optional) values to fill shared array with</p>
+</dd>
+<dt><strong>lock: Bool</strong></dt>
+<dd><p class="first last">Whether to create a multiprocessing.Lock on the shared variable</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">sharedmem handle: mp.array</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>sharedmem handle: mp.array</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -548,20 +519,21 @@ Taken from: <a class="reference external" href="http://en.wikibooks.org/wiki/Alg
 <dl class="class">
 <dt id="elektronn.training.parallelisation.Proc">
 <em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">Proc</code><span class="sig-paren">(</span><em>mp_arrays</em>, <em>shapes</em>, <em>events</em>, <em>target</em>, <em>target_args</em>, <em>target_kwargs</em>, <em>profile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#Proc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.Proc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">multiprocessing.process.Process</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.process.Process</span></code></p>
 <p>A <em>reusable</em> and <em>configurable</em> background process, that does the same job every time
-<code class="docutils literal"><span class="pre">events['new']</span></code> is set and signals that is has finished one iteration by setting <code class="docutils literal"><span class="pre">events['ready']</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">events['new']</span></code> is set and signals that is has finished one iteration by setting <code class="docutils literal notranslate"><span class="pre">events['ready']</span></code></p>
 <dl class="method">
 <dt id="elektronn.training.parallelisation.Proc.run">
 <code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#Proc.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.Proc.run" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Method to be run in sub-process; can be overridden in sub-class</p>
+</dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="elektronn.training.parallelisation.BackgroundProc">
 <em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">BackgroundProc</code><span class="sig-paren">(</span><em>target</em>, <em>dtypes=None</em>, <em>shapes=None</em>, <em>n_proc=1</em>, <em>target_args=()</em>, <em>target_kwargs={}</em>, <em>profile=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#BackgroundProc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.BackgroundProc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.training.parallelisation.BackgroundProc.get">
 <code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#BackgroundProc.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.BackgroundProc.get" title="Permalink to this definition">¶</a></dt>
@@ -586,10 +558,10 @@ has finished.</p>
 <dl class="class">
 <dt id="elektronn.training.parallelisation.SharedQ">
 <em class="property">class </em><code class="descclassname">elektronn.training.parallelisation.</code><code class="descname">SharedQ</code><span class="sig-paren">(</span><em>n_proc=0</em>, <em>default_target=None</em>, <em>default_args=()</em>, <em>default_kwargs={}</em>, <em>profile=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.parallelisation.SharedMem" title="elektronn.training.parallelisation.SharedMem"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.parallelisation.SharedMem</span></code></a></p>
 <p>FIFO Queue to process np.ndarrays in the background (also pre-loading of data from disk)</p>
-<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,    for this the shapes are required as too. The target requires the signature:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<p>procs must accept list of <code class="docutils literal notranslate"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code> using <code class="docutils literal notranslate"><span class="pre">SharedQ.shm2ndarray</span></code>,    for this the shapes are required as too. The target requires the signature:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Whereas mp_array and shape are <em>automatically</em> added internally</p>
@@ -598,33 +570,30 @@ has finished.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_proc: int</strong></p>
-<blockquote>
-<div><p>If larger than 0, a message is printed if to few processes are running</p>
-</div></blockquote>
-<p><strong>default_target: callable</strong></p>
-<blockquote>
-<div><p>Default background proc callable</p>
-</div></blockquote>
-<p><strong>default_args: tuple</strong></p>
-<blockquote>
-<div><p>Default background proc and their parameters</p>
-</div></blockquote>
-<p><strong>default_kwargs: dict</strong></p>
-<blockquote>
-<div><p>Default background proc kwargs</p>
-</div></blockquote>
-<p><strong>profile: Bool</strong></p>
-<blockquote class="last">
-<div><p>Whether to print timing results in terminal</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>n_proc: int</strong></dt>
+<dd><p class="first last">If larger than 0, a message is printed if to few processes are running</p>
+</dd>
+<dt><strong>default_target: callable</strong></dt>
+<dd><p class="first last">Default background proc callable</p>
+</dd>
+<dt><strong>default_args: tuple</strong></dt>
+<dd><p class="first last">Default background proc and their parameters</p>
+</dd>
+<dt><strong>default_kwargs: dict</strong></dt>
+<dd><p class="first last">Default background proc kwargs</p>
+</dd>
+<dt><strong>profile: Bool</strong></dt>
+<dd><p class="first last">Whether to print timing results in terminal</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
 <p>Automatic use:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span> <span class="o">=</span> <span class="n">SharedQ</span><span class="p">(</span><span class="n">n_proc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span> <span class="o">=</span> <span class="n">SharedQ</span><span class="p">(</span><span class="n">n_proc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Q</span><span class="o">.</span><span class="n">startproc</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span> <span class="n">args</span><span class="o">=</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
@@ -637,8 +606,8 @@ has finished.</p>
 <dt id="elektronn.training.parallelisation.SharedQ.startproc">
 <code class="descname">startproc</code><span class="sig-paren">(</span><em>dtypes</em>, <em>shapes</em>, <em>target=None</em>, <em>target_args=()</em>, <em>target_kwargs={}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/parallelisation.html#SharedQ.startproc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.parallelisation.SharedQ.startproc" title="Permalink to this definition">¶</a></dt>
 <dd><p>Starts a new process</p>
-<p>procs must accept list of <code class="docutils literal"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal"><span class="pre">np.ndarray</span></code> using <code class="docutils literal"><span class="pre">SharedQ.shm2ndarray</span></code>,        for this the shapes are required as too. The target requires the signature:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<p>procs must accept list of <code class="docutils literal notranslate"><span class="pre">mp.Array</span></code> and make items <code class="docutils literal notranslate"><span class="pre">np.ndarray</span></code> using <code class="docutils literal notranslate"><span class="pre">SharedQ.shm2ndarray</span></code>,        for this the shapes are required as too. The target requires the signature:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">target</span><span class="p">(</span><span class="n">mp_arrays</span><span class="p">,</span> <span class="n">shapes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Whereas mp_array  and shape are <em>automatically</em> added internally</p>
@@ -667,39 +636,34 @@ Loads the last parameters from the training directory.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file: string</strong></p>
-<blockquote>
-<div><p>Path to a CNN config file</p>
-</div></blockquote>
-<p><strong>n_ch: int</strong></p>
-<blockquote>
-<div><p>Number of input channels, for a MLP this is the dimensionality of the input vectors, for CNNs this is the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>config_file: string</strong></dt>
+<dd><p class="first last">Path to a CNN config file</p>
+</dd>
+<dt><strong>n_ch: int</strong></dt>
+<dd><p class="first last">Number of input channels, for a MLP this is the dimensionality of the input vectors, for CNNs this is the
 number of channels in an image/volume (e.g. 1 for plain gray value images)</p>
-</div></blockquote>
-<p><strong>n_lab: int</strong></p>
-<blockquote>
-<div><p>Number of distinct labels/classes</p>
-</div></blockquote>
-<p><strong>gpu: int</strong></p>
-<blockquote>
-<div><p>Specifying id of GPU to initialise for usage. E.g. 1 &#8211;&gt; &#8220;gpu1&#8221;, None will initialise gpu0,      False will not initialise any GPU. This only works if &#8220;device&#8221; is not set in <code class="docutils literal"><span class="pre">.theanorc</span></code> or if theano
+</dd>
+<dt><strong>n_lab: int</strong></dt>
+<dd><p class="first last">Number of distinct labels/classes</p>
+</dd>
+<dt><strong>gpu: int</strong></dt>
+<dd><p class="first last">Specifying id of GPU to initialise for usage. E.g. 1 –&gt; “gpu1”, None will initialise gpu0,      False will not initialise any GPU. This only works if “device” is not set in <code class="docutils literal notranslate"><span class="pre">.theanorc</span></code> or if theano
 has not been imported up to now. If the initialisation fails an error will be printed but the script
 will not crash.</p>
-</div></blockquote>
-<p><strong>override_MFP_to_active: Bool</strong></p>
-<blockquote>
-<div><p>If true, activates MFP in all layers where possible, ignoring the configuration in the config file.
+</dd>
+<dt><strong>override_MFP_to_active: Bool</strong></dt>
+<dd><p class="first last">If true, activates MFP in all layers where possible, ignoring the configuration in the config file.
 This is useful for prediction using a config file from training. (only for CNN)</p>
-</div></blockquote>
-<p><strong>imposed_input_size: tuple or None</strong></p>
-<blockquote>
-<div><p>Similar as above, this can be used to impose another input size than specified in the config file.
+</dd>
+<dt><strong>imposed_input_size: tuple or None</strong></dt>
+<dd><p class="first last">Similar as above, this can be used to impose another input size than specified in the config file.
 (z,x,y)!!! (only for CNN)</p>
-</div></blockquote>
-<p><strong>param_file: string/None</strong></p>
-<blockquote class="last">
-<div><p>If other parameters than &#8220;<a href="#id1"><span class="problematic" id="id2">*</span></a>-Last.param&#8221; should be loaded, this can specify the param file.</p>
-</div></blockquote>
+</dd>
+<dt><strong>param_file: string/None</strong></dt>
+<dd><p class="first last">If other parameters than “<a href="#id1"><span class="problematic" id="id2">*</span></a>-Last.param” should be loaded, this can specify the param file.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -718,7 +682,7 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.traindata.Data">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">Data</code><span class="sig-paren">(</span><em>n_lab=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#Data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.Data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Load and prepare data, Base-Obj</p>
 <dl class="method">
 <dt id="elektronn.training.traindata.Data.getbatch">
@@ -755,7 +719,7 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.traindata.BalancedData">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">BalancedData</code><a class="reference internal" href="_modules/elektronn/training/traindata.html#BalancedData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BalancedData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.training.traindata.BalancedData.getbatch">
 <code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em>, <em>balanced=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#BalancedData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BalancedData.getbatch" title="Permalink to this definition">¶</a></dt>
@@ -771,7 +735,7 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.traindata.QueueData">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">QueueData</code><a class="reference internal" href="_modules/elektronn/training/traindata.html#QueueData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.QueueData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.training.traindata.QueueData.queueget">
 <code class="descname">queueget</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#QueueData.queueget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.QueueData.queueget" title="Permalink to this definition">¶</a></dt>
@@ -797,13 +761,13 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.traindata.AdultData">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">AdultData</code><span class="sig-paren">(</span><em>path='~/devel/data/adult.pkl'</em>, <em>create=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#AdultData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.AdultData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="elektronn.training.traindata.MNISTData">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">MNISTData</code><span class="sig-paren">(</span><em>path=None</em>, <em>convert2image=True</em>, <em>warp_on=False</em>, <em>shift_augment=True</em>, <em>center=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#MNISTData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.MNISTData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.training.traindata.MNISTData.download">
 <code class="descname">download</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#MNISTData.download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.MNISTData.download" title="Permalink to this definition">¶</a></dt>
@@ -825,7 +789,7 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.traindata.BuzzData">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">BuzzData</code><span class="sig-paren">(</span><em>path='~/devel/data/Buzz/Twitter/twitter.pkl'</em>, <em>norm_targets=True</em>, <em>target_scale=9999</em>, <em>fold_no=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#BuzzData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BuzzData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.training.traindata.BuzzData.getbatch">
 <code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#BuzzData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.BuzzData.getbatch" title="Permalink to this definition">¶</a></dt>
@@ -836,7 +800,7 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.traindata.PianoData">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">PianoData</code><span class="sig-paren">(</span><em>path='~/devel/data/PianoRoll/Nottingham_enc.pkl'</em>, <em>n_tap=20</em>, <em>n_lab=58</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#PianoData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.PianoData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.training.traindata.PianoData.getbatch">
 <code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#PianoData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.PianoData.getbatch" title="Permalink to this definition">¶</a></dt>
@@ -847,7 +811,7 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.traindata.GeneData">
 <em class="property">class </em><code class="descclassname">elektronn.training.traindata.</code><code class="descname">GeneData</code><span class="sig-paren">(</span><em>path='~/devel/data/GEMLeR_GeneExpression/Breast_Colon.pkl'</em>, <em>fold_no=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#GeneData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.GeneData" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.training.traindata.Data" title="elektronn.training.traindata.Data"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.training.traindata.Data</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.training.traindata.GeneData.getbatch">
 <code class="descname">getbatch</code><span class="sig-paren">(</span><em>batch_size</em>, <em>source='train'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/traindata.html#GeneData.getbatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.traindata.GeneData.getbatch" title="Permalink to this definition">¶</a></dt>
@@ -861,30 +825,34 @@ This is useful for prediction using a config file from training. (only for CNN)<
 <dl class="class">
 <dt id="elektronn.training.trainer.Trainer">
 <em class="property">class </em><code class="descclassname">elektronn.training.trainer.</code><code class="descname">Trainer</code><span class="sig-paren">(</span><em>config=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Object that manages Training of a CNN.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config: trainutils.ConfigObj</strong></p>
-<p class="last"><strong>Container for all configurations</strong></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>config: trainutils.ConfigObj</strong></dt>
+<dd></dd>
+<dt><strong>Container for all configurations</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
 <p>All necessary configuration information is contained in cofig:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">T</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">loadData</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">createNet</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="o">.</span><span class="n">run</span><span class="p">()</span> <span class="c1"># The Training loop</span>
 </pre></div>
 </div>
-<p>If the config options <code class="docutils literal"><span class="pre">print_status</span></code> and <code class="docutils literal"><span class="pre">plot_on</span></code> are set the CNN progress can be supervised.</p>
+<p>If the config options <code class="docutils literal notranslate"><span class="pre">print_status</span></code> and <code class="docutils literal notranslate"><span class="pre">plot_on</span></code> are set the CNN progress can be supervised.</p>
 <p>Control during iteration can be exercised by ctrl+c which evokes a commandline.
 There are various shortcuts displayed but in principle all attributes of the CNN can be accessed:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
 <span class="go">&gt;&gt; Debug_Run &lt;&lt;</span>
 <span class="go">Shortcuts:</span>
 <span class="go">&#39;q&#39; (leave interface),          &#39;abort&#39; (saving params),</span>
@@ -924,7 +892,7 @@ evokes a commandline. There are various shortcuts displayed but in principle all
 CNN can be accessed:</p>
 <p class="rubric">Examples</p>
 <p>Using the command line</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">CNN</span> <span class="n">MENU</span>
 <span class="go">&gt;&gt; Debug_Run &lt;&lt;</span>
 <span class="go">Shortcuts:</span>
 <span class="go">&#39;q&#39; (leave interface),            &#39;abort&#39; (saving params),</span>
@@ -965,25 +933,29 @@ CNN can be accessed:</p>
 <dl class="method">
 <dt id="elektronn.training.trainer.Trainer.debugGetCNNBatch">
 <code class="descname">debugGetCNNBatch</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.debugGetCNNBatch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.debugGetCNNBatch" title="Permalink to this definition">¶</a></dt>
-<dd><p>Executes <code class="docutils literal"><span class="pre">getbatch</span></code> but with un-strided labels and always returning info. The first batch example
+<dd><p>Executes <code class="docutils literal notranslate"><span class="pre">getbatch</span></code> but with un-strided labels and always returning info. The first batch example
 is plotted and the whole batch is returned for inspection.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elektronn.training.trainer.Trainer.testModel">
 <code class="descname">testModel</code><span class="sig-paren">(</span><em>data_source</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainer.html#Trainer.testModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainer.Trainer.testModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Computes NLL and error/accuracy on batch with <code class="docutils literal"><span class="pre">monitor_batch_size</span></code></p>
+<dd><p>Computes NLL and error/accuracy on batch with <code class="docutils literal notranslate"><span class="pre">monitor_batch_size</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_source: string</strong></p>
-<blockquote>
-<div><p>&#8216;train&#8217; or &#8216;valid&#8217;</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>data_source: string</strong></dt>
+<dd><p class="first last">‘train’ or ‘valid’</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">NLL, error:</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>NLL, error:</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -998,22 +970,20 @@ is plotted and the whole batch is returned for inspection.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>raw_img</strong> : np.ndarray</p>
-<blockquote>
-<div><p>raw data in the format (ch, x, y, z)</p>
-</div></blockquote>
-<p><strong>number: int/float</strong></p>
-<blockquote>
-<div><p>consecutive number for the save name (i.e. hours, iterations etc.)</p>
-</div></blockquote>
-<p><strong>export_class: str or int</strong></p>
-<blockquote>
-<div><p>&#8216;all&#8217; writes images of all classes, otherwise only the class with index <code class="docutils literal"><span class="pre">export_class</span></code> (int) is saved.</p>
-</div></blockquote>
-<p><strong>block_name: str</strong></p>
-<blockquote class="last">
-<div><p>Name/number to distinguish different raw_imges</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>raw_img</strong> <span class="classifier-delimiter">:</span> <span class="classifier">np.ndarray</span></dt>
+<dd><p class="first last">raw data in the format (ch, x, y, z)</p>
+</dd>
+<dt><strong>number: int/float</strong></dt>
+<dd><p class="first last">consecutive number for the save name (i.e. hours, iterations etc.)</p>
+</dd>
+<dt><strong>export_class: str or int</strong></dt>
+<dd><p class="first last">‘all’ writes images of all classes, otherwise only the class with index <code class="docutils literal notranslate"><span class="pre">export_class</span></code> (int) is saved.</p>
+</dd>
+<dt><strong>block_name: str</strong></dt>
+<dd><p class="first last">Name/number to distinguish different raw_imges</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1028,26 +998,23 @@ is plotted and the whole batch is returned for inspection.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cube_i: int</strong></p>
-<blockquote>
-<div><p>index of source cube in CNNData</p>
-</div></blockquote>
-<p><strong>off: 3-tuple of int</strong></p>
-<blockquote>
-<div><p>start index of slice to cut from cube (z,x,y)</p>
-</div></blockquote>
-<p><strong>sh: 3-tuple of int</strong></p>
-<blockquote>
-<div><p>shape of cube to cut (z,x,y)</p>
-</div></blockquote>
-<p><strong>number: int</strong></p>
-<blockquote>
-<div><p>consecutive number for the save name (i.e. hours, iterations etc.)</p>
-</div></blockquote>
-<p><strong>export_class: str or int</strong></p>
-<blockquote class="last">
-<div><p>&#8216;all&#8217; writes images of all classes, otherwise only the class with index <code class="docutils literal"><span class="pre">export_class</span></code> (int) is saved.</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>cube_i: int</strong></dt>
+<dd><p class="first last">index of source cube in CNNData</p>
+</dd>
+<dt><strong>off: 3-tuple of int</strong></dt>
+<dd><p class="first last">start index of slice to cut from cube (z,x,y)</p>
+</dd>
+<dt><strong>sh: 3-tuple of int</strong></dt>
+<dd><p class="first last">shape of cube to cut (z,x,y)</p>
+</dd>
+<dt><strong>number: int</strong></dt>
+<dd><p class="first last">consecutive number for the save name (i.e. hours, iterations etc.)</p>
+</dd>
+<dt><strong>export_class: str or int</strong></dt>
+<dd><p class="first last">‘all’ writes images of all classes, otherwise only the class with index <code class="docutils literal notranslate"><span class="pre">export_class</span></code> (int) is saved.</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1062,18 +1029,17 @@ is plotted and the whole batch is returned for inspection.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>number: int/float</strong></p>
-<blockquote>
-<div><p>consecutive number for the save name (i.e. hours, iterations etc.)</p>
-</div></blockquote>
-<p><strong>export_class: str or int</strong></p>
-<blockquote>
-<div><p>&#8216;all&#8217; writes images of all classes, otherwise only the class with index <code class="docutils literal"><span class="pre">export_class</span></code> (int) is saved.</p>
-</div></blockquote>
-<p><strong>max_z_pred: int</strong></p>
-<blockquote class="last">
-<div><p>approximate maximal number of z-slices to produce (depends on CNN architecture)</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>number: int/float</strong></dt>
+<dd><p class="first last">consecutive number for the save name (i.e. hours, iterations etc.)</p>
+</dd>
+<dt><strong>export_class: str or int</strong></dt>
+<dd><p class="first last">‘all’ writes images of all classes, otherwise only the class with index <code class="docutils literal notranslate"><span class="pre">export_class</span></code> (int) is saved.</p>
+</dd>
+<dt><strong>max_z_pred: int</strong></dt>
+<dd><p class="first last">approximate maximal number of z-slices to produce (depends on CNN architecture)</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1103,8 +1069,8 @@ is plotted and the whole batch is returned for inspection.</p>
 <dl class="function">
 <dt id="elektronn.training.trainutils.parseargs_dev">
 <code class="descclassname">elektronn.training.trainutils.</code><code class="descname">parseargs_dev</code><span class="sig-paren">(</span><em>args</em>, <em>config_file</em>, <em>gpu</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/training/trainutils.html#parseargs_dev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.training.trainutils.parseargs_dev" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parses the commandline arguments if <code class="docutils literal"><span class="pre">elektronn-train</span></code> is called as:</p>
-<p>&#8220;elektronn-train [config=&lt;/path/to_file&gt;] [ gpu={auto|false|&lt;int&gt;}]&#8221;</p>
+<dd><p>Parses the commandline arguments if <code class="docutils literal notranslate"><span class="pre">elektronn-train</span></code> is called as:</p>
+<p>“elektronn-train [config=&lt;/path/to_file&gt;] [ gpu={auto|false|&lt;int&gt;}]”</p>
 </dd></dl>
 
 <dl class="function">
@@ -1133,18 +1099,17 @@ The plots are generated as pngs in the current working directory and will not sh
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>path: string</strong></p>
-<blockquote>
-<div><p>Path to CNN-folder</p>
-</div></blockquote>
-<p><strong>save_name: string</strong></p>
-<blockquote>
-<div><p>name of cnn / file prefix</p>
-</div></blockquote>
-<p><strong>autoscale: Bool</strong></p>
-<blockquote class="last">
-<div><p>If true axis are optimised for value read-off, if false, mpl default scaling is used</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>path: string</strong></dt>
+<dd><p class="first last">Path to CNN-folder</p>
+</dd>
+<dt><strong>save_name: string</strong></dt>
+<dd><p class="first last">name of cnn / file prefix</p>
+</dd>
+<dt><strong>autoscale: Bool</strong></dt>
+<dd><p class="first last">If true axis are optimised for value read-off, if false, mpl default scaling is used</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1171,18 +1136,17 @@ It is assumed that</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>names: list of str</strong></p>
-<blockquote>
-<div><p>Folder/Save names of the CNNs</p>
-</div></blockquote>
-<p><strong>root_dir: str</strong></p>
-<blockquote>
-<div><p>path in which the CNN folders are located</p>
-</div></blockquote>
-<p><strong>block_name: int/str</strong></p>
-<blockquote class="last">
-<div><p>Number/Name of the prediction preview example (&#8221;...pred_&lt;i&gt;_c..&#8221;)</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>names: list of str</strong></dt>
+<dd><p class="first last">Folder/Save names of the CNNs</p>
+</dd>
+<dt><strong>root_dir: str</strong></dt>
+<dd><p class="first last">path in which the CNN folders are located</p>
+</dd>
+<dt><strong>block_name: int/str</strong></dt>
+<dd><p class="first last">Number/Name of the prediction preview example (“…pred_&lt;i&gt;_c..”)</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1233,9 +1197,9 @@ For iterable all arrays are written to the file.</dd>
 <dt>keys: string / list thereof</dt>
 <dd>For single arrays this is a single string which is used as a name for the data set.
 For multiple arrays each dataset is named by the corresponding key.
-If keys is <code class="docutils literal"><span class="pre">None</span></code>, the dataset names created by enumeration: <code class="docutils literal"><span class="pre">data%i</span></code></dd>
+If keys is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the dataset names created by enumeration: <code class="docutils literal notranslate"><span class="pre">data%i</span></code></dd>
 <dt>compress: Bool</dt>
-<dd>Whether to use lzf compression, defaults to <code class="docutils literal"><span class="pre">True</span></code>. Most useful for label arrays.</dd>
+<dd>Whether to use lzf compression, defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>. Most useful for label arrays.</dd>
 </dl>
 </dd></dl>
 
@@ -1247,9 +1211,9 @@ If keys is <code class="docutils literal"><span class="pre">None</span></code>, 
 <dt>file_name: string</dt>
 <dd>destination file</dd>
 <dt>keys: string / list thereof</dt>
-<dd>Load only data sets specified in keys and return as list in the order of <code class="docutils literal"><span class="pre">keys</span></code>
+<dd>Load only data sets specified in keys and return as list in the order of <code class="docutils literal notranslate"><span class="pre">keys</span></code>
 For a single key the data is returned directly - not as list
-If keys is <code class="docutils literal"><span class="pre">None</span></code> all datasets that are listed in the keys-attribute of the h5 file are loaded.</dd>
+If keys is <code class="docutils literal notranslate"><span class="pre">None</span></code> all datasets that are listed in the keys-attribute of the h5 file are loaded.</dd>
 </dl>
 </dd></dl>
 
@@ -1270,47 +1234,43 @@ If keys is <code class="docutils literal"><span class="pre">None</span></code> a
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
-<blockquote>
-<div><p>Image data
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>img: array</strong></dt>
+<dd><p class="first last">Image data
 The array must be 3-dimensional (ch,x,y) and larger/equal the patch size</p>
-</div></blockquote>
-<p><strong>lab: array</strong></p>
-<blockquote>
-<div><p>Label data (with offsets subtracted)</p>
-</div></blockquote>
-<p><strong>patch_size: 2-tuple</strong></p>
-<blockquote>
-<div><p>Patch size <em>excluding</em> channel for the image: (px, py).
+</dd>
+<dt><strong>lab: array</strong></dt>
+<dd><p class="first last">Label data (with offsets subtracted)</p>
+</dd>
+<dt><strong>patch_size: 2-tuple</strong></dt>
+<dd><p class="first last">Patch size <em>excluding</em> channel for the image: (px, py).
 The warping result of the input image is cropped to this size</p>
-</div></blockquote>
-<p><strong>rot: float</strong></p>
-<blockquote>
-<div><p>Rotation angle in deg for rotation around z-axis</p>
-</div></blockquote>
-<p><strong>shear: float</strong></p>
-<blockquote>
-<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
-</div></blockquote>
-<p><strong>scale: 3-tuple of float</strong></p>
-<blockquote>
-<div><p>Scale per axis</p>
-</div></blockquote>
-<p><strong>stretch: 4-tuple of float</strong></p>
-<blockquote>
-<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
+</dd>
+<dt><strong>rot: float</strong></dt>
+<dd><p class="first last">Rotation angle in deg for rotation around z-axis</p>
+</dd>
+<dt><strong>shear: float</strong></dt>
+<dd><p class="first last">Shear angle in deg for shear w.r.t xy-diagonal</p>
+</dd>
+<dt><strong>scale: 3-tuple of float</strong></dt>
+<dd><p class="first last">Scale per axis</p>
+</dd>
+<dt><strong>stretch: 4-tuple of float</strong></dt>
+<dd><p class="first">Fraction of perspective stretching from the center (where stretching is always 1)
 to the outer border of image per axis. The 4 entry correspond to:</p>
-<ul class="simple">
+<ul class="last simple">
 <li>X stretching depending on Y</li>
 <li>Y stretching depending on X</li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img, lab: np.ndarrays</p>
-<blockquote class="last">
-<div><p>Warped image and labels (cropped to patch_size)</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>img, lab: np.ndarrays</strong></dt>
+<dd><p class="first last">Warped image and labels (cropped to patch_size)</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1325,53 +1285,48 @@ to the outer border of image per axis. The 4 entry correspond to:</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>img: array</strong></p>
-<blockquote>
-<div><p>Image data
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>img: array</strong></dt>
+<dd><p class="first last">Image data
 The array must be 4-dimensional (z,ch,x,y) and larger/equal the patch size</p>
-</div></blockquote>
-<p><strong>lab: array</strong></p>
-<blockquote>
-<div><p>Label data (with offsets subtracted)</p>
-</div></blockquote>
-<p><strong>patch_size: 3-tuple</strong></p>
-<blockquote>
-<div><p>Patch size <em>excluding</em> channel for the image: (pz, px, py).
+</dd>
+<dt><strong>lab: array</strong></dt>
+<dd><p class="first last">Label data (with offsets subtracted)</p>
+</dd>
+<dt><strong>patch_size: 3-tuple</strong></dt>
+<dd><p class="first last">Patch size <em>excluding</em> channel for the image: (pz, px, py).
 The warping result of the input image is cropped to this size</p>
-</div></blockquote>
-<p><strong>rot: float</strong></p>
-<blockquote>
-<div><p>Rotation angle in deg for rotation around z-axis</p>
-</div></blockquote>
-<p><strong>shear: float</strong></p>
-<blockquote>
-<div><p>Shear angle in deg for shear w.r.t xy-diagonal</p>
-</div></blockquote>
-<p><strong>scale: 3-tuple of float</strong></p>
-<blockquote>
-<div><p>Scale per axis</p>
-</div></blockquote>
-<p><strong>stretch: 4-tuple of float</strong></p>
-<blockquote>
-<div><p>Fraction of perspective stretching from the center (where stretching is always 1)
+</dd>
+<dt><strong>rot: float</strong></dt>
+<dd><p class="first last">Rotation angle in deg for rotation around z-axis</p>
+</dd>
+<dt><strong>shear: float</strong></dt>
+<dd><p class="first last">Shear angle in deg for shear w.r.t xy-diagonal</p>
+</dd>
+<dt><strong>scale: 3-tuple of float</strong></dt>
+<dd><p class="first last">Scale per axis</p>
+</dd>
+<dt><strong>stretch: 4-tuple of float</strong></dt>
+<dd><p class="first">Fraction of perspective stretching from the center (where stretching is always 1)
 to the outer border of image per axis. The 4 entry correspond to:</p>
-<ul class="simple">
+<ul class="last simple">
 <li>X stretching depending on Y</li>
 <li>Y stretching depending on X</li>
 <li>X stretching depending on Z</li>
 <li>Y stretching depending on Z</li>
 </ul>
-</div></blockquote>
-<p><strong>twist: float</strong></p>
-<blockquote>
-<div><p>Dependence of the rotation angle on z in deg from center to outer border</p>
-</div></blockquote>
+</dd>
+<dt><strong>twist: float</strong></dt>
+<dd><p class="first last">Dependence of the rotation angle on z in deg from center to outer border</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">img, lab: np.ndarrays</p>
-<blockquote class="last">
-<div><p>Warped image and labels (cropped to patch_size)</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>img, lab: np.ndarrays</strong></dt>
+<dd><p class="first last">Warped image and labels (cropped to patch_size)</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1437,7 +1392,7 @@ return required size for warping input patch</p>
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>

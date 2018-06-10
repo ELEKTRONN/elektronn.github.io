@@ -1,26 +1,15 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
     <title>elektronn.net package &#8212; ELEKTRONN</title>
-    
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '0.1rc',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
-      };
-    </script>
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -29,8 +18,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="elektronn.training package" href="elektronn.training.html" />
     <link rel="prev" title="ELEKTRONN API Documentation" href="modules.html" /> 
-  </head>
-  <body role="document">
+  </head><body>
 
 <div style="background-color: white; text-align: left; padding: 10px 10px 15px 15px">
 <a href="index.html"><img src="_static/elektronn.png" border="0" alt="sampledoc"/></a>
@@ -91,12 +79,14 @@
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -126,34 +116,34 @@
 <dl class="class">
 <dt id="elektronn.net.convlayer2d.ConvLayer2d">
 <em class="property">class </em><code class="descclassname">elektronn.net.convlayer2d.</code><code class="descname">ConvLayer2d</code><span class="sig-paren">(</span><em>input</em>, <em>input_shape</em>, <em>filter_shape</em>, <em>pool</em>, <em>activation_func</em>, <em>enable_dropout</em>, <em>use_fragment_pooling</em>, <em>reshape_output</em>, <em>mfp_offsets</em>, <em>mfp_strides</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer2d.html#ConvLayer2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer2d.ConvLayer2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Conv-Pool Layer of a CNN</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>theano.tensor.dtensor4</em><em> (</em><em>'batch'</em><em>, </em><em>'channel'</em><em>, </em><em>x</em><em>, </em><em>y</em><em>)</em><em></em>) &#8211; symbolic image tensor, of shape input_shape</li>
-<li><strong>input_shape</strong> (<em>tuple</em><em> or </em><em>list of length 4</em>) &#8211; (batch size, num input feature maps, image height, image width)</li>
-<li><strong>filter_shape</strong> (<em>tuple</em><em> or </em><em>list of length 4</em>) &#8211; (number of filters, input_channels, filter height,filter width)</li>
-<li><strong>pool</strong> (<em>int 2-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
-<li><strong>activation_func</strong> (<em>string</em>) &#8211; Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
-<li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
+<li><strong>input</strong> (<em>theano.tensor.dtensor4</em><em> (</em><em>'batch'</em><em>, </em><em>'channel'</em><em>, </em><em>x</em><em>, </em><em>y</em><em>)</em>) – symbolic image tensor, of shape input_shape</li>
+<li><strong>input_shape</strong> (<em>tuple</em><em> or </em><em>list of length 4</em>) – (batch size, num input feature maps, image height, image width)</li>
+<li><strong>filter_shape</strong> (<em>tuple</em><em> or </em><em>list of length 4</em>) – (number of filters, input_channels, filter height,filter width)</li>
+<li><strong>pool</strong> (<em>int 2-tuple</em>) – the down-sampling (max-pooling) factor</li>
+<li><strong>activation_func</strong> (<em>string</em>) – Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
+<li><strong>enable_dropout</strong> (<em>Bool</em>) – whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
 self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</li>
-<li><strong>use_fragment_pooling</strong> (<em>Bool</em>) &#8211; whether to use max fragment pooling in this layer (MFP)</li>
-<li><strong>reshape_output</strong> (<em>Bool</em>) &#8211; whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments
+<li><strong>use_fragment_pooling</strong> (<em>Bool</em>) – whether to use max fragment pooling in this layer (MFP)</li>
+<li><strong>reshape_output</strong> (<em>Bool</em>) – whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments
 to dense images if MFP was enabled. Use this in for the last layer.</li>
-<li><strong>mfp_offsets</strong> (<em>list of list of ints</em>) &#8211; this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.
+<li><strong>mfp_offsets</strong> (<em>list of list of ints</em>) – this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.
 Only needed if MFP is enabled.</li>
-<li><strong>mfp_strides</strong> (<em>list of int</em>) &#8211; the strides of the output in each dimension</li>
-<li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
-<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>mfp_strides</strong> (<em>list of int</em>) – the strides of the output in each dimension</li>
+<li><strong>input_layer</strong> (<em>layer object</em>) – just for keeping track of un-usual input layers</li>
+<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) – weight matrix. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) – bias vector. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>pooling_mode</strong> (<em>str</em>) &#8211; &#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains
+<li><strong>pooling_mode</strong> (<em>str</em>) – ‘max’ or ‘maxabs’ where the first is normal maxpooling and the second also retains
 sign of large negative values</li>
 </ul>
 </td>
@@ -195,8 +185,8 @@ of this model under a given target distribution.</p>
 <dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
 be used for label propagation)</dd>
 <dt>class_weights: theano.tensor.TensorType</dt>
-<dd>weight vector of float32 of length  <code class="docutils literal"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal"><span class="pre">1.0</span></code> (default), <code class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
-<code class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
+<dd>weight vector of float32 of length  <code class="docutils literal notranslate"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal notranslate"><span class="pre">1.0</span></code> (default), <code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
+<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
 </dl>
 <p>The following refers to lazy labels, the masks are always on a per patch basis, depending on the
 origin cube of the patch. The masks are properties of the individual image cubes and must be loaded
@@ -204,19 +194,19 @@ into CNNData.</p>
 <dl class="docutils">
 <dt>mask_class_labeled: theano.tensor.TensorType</dt>
 <dd>shape = (batchsize, num_classes).
-Binary masks indicating whether a class is properly labeled in <code class="docutils literal"><span class="pre">y</span></code>. If a class <code class="docutils literal"><span class="pre">k</span></code>
-is (in general) present in the image patches <strong>and</strong> <code class="docutils literal"><span class="pre">mask_class_labeled[k]==1</span></code>, then
-the labels  <strong>must</strong> obey <code class="docutils literal"><span class="pre">y==k</span></code> for all pixels where the class is present.
-If a class <code class="docutils literal"><span class="pre">k</span></code> is present in the image, but was not labeled (-&gt; cheaper labels), set
-<code class="docutils literal"><span class="pre">mask_class_labeled[k]=0</span></code>. Then all pixels for which the <code class="docutils literal"><span class="pre">y==k</span></code> will be ignored.
-Alternative: set <code class="docutils literal"><span class="pre">y=-1</span></code> to ignore those pixels.
-Limit case: <code class="docutils literal"><span class="pre">mask_class_labeled[:]==1</span></code> will result in the ordinary NLL.</dd>
+Binary masks indicating whether a class is properly labeled in <code class="docutils literal notranslate"><span class="pre">y</span></code>. If a class <code class="docutils literal notranslate"><span class="pre">k</span></code>
+is (in general) present in the image patches <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[k]==1</span></code>, then
+the labels  <strong>must</strong> obey <code class="docutils literal notranslate"><span class="pre">y==k</span></code> for all pixels where the class is present.
+If a class <code class="docutils literal notranslate"><span class="pre">k</span></code> is present in the image, but was not labeled (-&gt; cheaper labels), set
+<code class="docutils literal notranslate"><span class="pre">mask_class_labeled[k]=0</span></code>. Then all pixels for which the <code class="docutils literal notranslate"><span class="pre">y==k</span></code> will be ignored.
+Alternative: set <code class="docutils literal notranslate"><span class="pre">y=-1</span></code> to ignore those pixels.
+Limit case: <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[:]==1</span></code> will result in the ordinary NLL.</dd>
 <dt>mask_class_not_present: theano.tensor.TensorType</dt>
 <dd>shape = (batchsize, num_classes).
 Binary mask indicating whether a class is present in the image patches.
-<code class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></code> means that the image does <strong>not</strong> contain examples of class <code class="docutils literal"><span class="pre">k</span></code>.
-Then for all pixels in the patch, class <code class="docutils literal"><span class="pre">k</span></code> predictive probabilities are trained towards <code class="docutils literal"><span class="pre">0</span></code>.
-Limit case: <code class="docutils literal"><span class="pre">mask_class_not_present[:]==0</span></code> will result in the ordinary NLL.</dd>
+<code class="docutils literal notranslate"><span class="pre">mask_class_not_present[k]==1</span></code> means that the image does <strong>not</strong> contain examples of class <code class="docutils literal notranslate"><span class="pre">k</span></code>.
+Then for all pixels in the patch, class <code class="docutils literal notranslate"><span class="pre">k</span></code> predictive probabilities are trained towards <code class="docutils literal notranslate"><span class="pre">0</span></code>.
+Limit case: <code class="docutils literal notranslate"><span class="pre">mask_class_not_present[:]==0</span></code> will result in the ordinary NLL.</dd>
 <dt>label_prop_thresh: float (0.5,1)</dt>
 <dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
 If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
@@ -225,20 +215,20 @@ Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled
 </dl>
 <p>Examples:</p>
 <ul class="simple">
-<li>A cube contains no class <code class="docutils literal"><span class="pre">k</span></code>. Instead of labelling the remaining classes they can be
-marked as unlabelled by the first mask (<code class="docutils literal"><span class="pre">mask_class_labeled[:]==0</span></code>, whether <code class="docutils literal"><span class="pre">mask_class_labeled[k]</span></code>
-is <code class="docutils literal"><span class="pre">0</span></code> or <code class="docutils literal"><span class="pre">1</span></code> is actually indifferent because the labels should not be <code class="docutils literal"><span class="pre">y==k</span></code> anyway in this case).
-Additionally <code class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></code> (otherwise <code class="docutils literal"><span class="pre">0</span></code>) to suppress predictions of <code class="docutils literal"><span class="pre">k</span></code> in
-in this patch. The actual value of the labels is indifferent, it can either be <code class="docutils literal"><span class="pre">-1</span></code> or it could be the
+<li>A cube contains no class <code class="docutils literal notranslate"><span class="pre">k</span></code>. Instead of labelling the remaining classes they can be
+marked as unlabelled by the first mask (<code class="docutils literal notranslate"><span class="pre">mask_class_labeled[:]==0</span></code>, whether <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[k]</span></code>
+is <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> is actually indifferent because the labels should not be <code class="docutils literal notranslate"><span class="pre">y==k</span></code> anyway in this case).
+Additionally <code class="docutils literal notranslate"><span class="pre">mask_class_not_present[k]==1</span></code> (otherwise <code class="docutils literal notranslate"><span class="pre">0</span></code>) to suppress predictions of <code class="docutils literal notranslate"><span class="pre">k</span></code> in
+in this patch. The actual value of the labels is indifferent, it can either be <code class="docutils literal notranslate"><span class="pre">-1</span></code> or it could be the
 background class, if the background is marked as unlabelled (i.e. then those labels are ignored).</li>
-<li>Only part of the cube is densely labelled. Set <code class="docutils literal"><span class="pre">mask_class_labeled[:]=1</span></code> for all classes, but set the
-label values in the un-labelled part to <code class="docutils literal"><span class="pre">-1</span></code> to ignore this part.</li>
-<li>Only a particular class <code class="docutils literal"><span class="pre">k</span></code> is labelled in the cube. Either set all other label pixels to <code class="docutils literal"><span class="pre">-1</span></code> or the
-corresponding flags in <code class="docutils literal"><span class="pre">mask_class_labeled</span></code> for the unlabelled classes.</li>
+<li>Only part of the cube is densely labelled. Set <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[:]=1</span></code> for all classes, but set the
+label values in the un-labelled part to <code class="docutils literal notranslate"><span class="pre">-1</span></code> to ignore this part.</li>
+<li>Only a particular class <code class="docutils literal notranslate"><span class="pre">k</span></code> is labelled in the cube. Either set all other label pixels to <code class="docutils literal notranslate"><span class="pre">-1</span></code> or the
+corresponding flags in <code class="docutils literal notranslate"><span class="pre">mask_class_labeled</span></code> for the unlabelled classes.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Using <code class="docutils literal"><span class="pre">-1</span></code> labels or telling that a class is not labelled, is somewhat redundant and just
+<p class="last">Using <code class="docutils literal notranslate"><span class="pre">-1</span></code> labels or telling that a class is not labelled, is somewhat redundant and just
 supported for convenience.</p>
 </div>
 </dd></dl>
@@ -252,12 +242,12 @@ supported for convenience.</p>
 <dl class="method">
 <dt id="elektronn.net.convlayer2d.ConvLayer2d.squared_distance">
 <code class="descname">squared_distance</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer2d.html#ConvLayer2d.squared_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer2d.ConvLayer2d.squared_distance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns squared distance between prediction and <code class="docutils literal"><span class="pre">y</span></code></p>
+<dd><p>Returns squared distance between prediction and <code class="docutils literal notranslate"><span class="pre">y</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) – corresponds to a vector that gives for each example the
 correct label</td>
 </tr>
 </tbody>
@@ -272,7 +262,7 @@ correct label</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) – corresponds to a vector that gives for each example the
 correct label</td>
 </tr>
 </tbody>
@@ -299,34 +289,34 @@ correct label</td>
 <dl class="class">
 <dt id="elektronn.net.convlayer3d.ConvLayer3d">
 <em class="property">class </em><code class="descclassname">elektronn.net.convlayer3d.</code><code class="descname">ConvLayer3d</code><span class="sig-paren">(</span><em>input</em>, <em>input_shape</em>, <em>filter_shape</em>, <em>pool</em>, <em>activation_func</em>, <em>enable_dropout</em>, <em>use_fragment_pooling</em>, <em>reshape_output</em>, <em>mfp_offsets</em>, <em>mfp_strides</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em>, <em>affinity=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer3d.html#ConvLayer3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer3d.ConvLayer3d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Conv-Pool Layer of a CNN</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>theano.tensor.dtensor5</em><em> (</em><em>'batch'</em><em>, </em><em>z</em><em>, </em><em>'channel'</em><em>, </em><em>x</em><em>, </em><em>y</em><em>)</em><em></em>) &#8211; symbolic image tensor, of shape input_shape</li>
-<li><strong>input_shape</strong> (<em>tuple</em><em> or </em><em>list of length 5</em>) &#8211; (batch size, z, num input feature maps,  y, x)</li>
-<li><strong>filter_shape</strong> (<em>tuple</em><em> or </em><em>list of length 5</em>) &#8211; (number of filters, filter z, num input feature maps, filter y,filter x)</li>
-<li><strong>pool</strong> (<em>int 3-tuple</em>) &#8211; the down-sampling (max-pooling) factor</li>
-<li><strong>activation_func</strong> (<em>string</em>) &#8211; Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
-<li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
+<li><strong>input</strong> (<em>theano.tensor.dtensor5</em><em> (</em><em>'batch'</em><em>, </em><em>z</em><em>, </em><em>'channel'</em><em>, </em><em>x</em><em>, </em><em>y</em><em>)</em>) – symbolic image tensor, of shape input_shape</li>
+<li><strong>input_shape</strong> (<em>tuple</em><em> or </em><em>list of length 5</em>) – (batch size, z, num input feature maps,  y, x)</li>
+<li><strong>filter_shape</strong> (<em>tuple</em><em> or </em><em>list of length 5</em>) – (number of filters, filter z, num input feature maps, filter y,filter x)</li>
+<li><strong>pool</strong> (<em>int 3-tuple</em>) – the down-sampling (max-pooling) factor</li>
+<li><strong>activation_func</strong> (<em>string</em>) – Options: tanh, relu, sig, abs, linear, maxout &lt;i&gt;</li>
+<li><strong>enable_dropout</strong> (<em>Bool</em>) – whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
 self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</li>
-<li><strong>use_fragment_pooling</strong> (<em>Bool</em>) &#8211; whether to use max fragment pooling in this layer (MFP)</li>
-<li><strong>reshape_output</strong> (<em>Bool</em>) &#8211; whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments
+<li><strong>use_fragment_pooling</strong> (<em>Bool</em>) – whether to use max fragment pooling in this layer (MFP)</li>
+<li><strong>reshape_output</strong> (<em>Bool</em>) – whether to reshape class_probabilities to (bs, cls, x, y) and re-assemble fragments
 to dense images if MFP was enabled. Use this in for the last layer.</li>
-<li><strong>mfp_offsets</strong> (<em>list of list of ints</em>) &#8211; this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.
+<li><strong>mfp_offsets</strong> (<em>list of list of ints</em>) – this lists specifies the offsets that the MFP-fragments have w.r.t to the original patch.
 Only needed if MFP is enabled.</li>
-<li><strong>mfp_strides</strong> (<em>list of int</em>) &#8211; the strides of the output in each dimension</li>
-<li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
-<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>mfp_strides</strong> (<em>list of int</em>) – the strides of the output in each dimension</li>
+<li><strong>input_layer</strong> (<em>layer object</em>) – just for keeping track of un-usual input layers</li>
+<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) – weight matrix. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) – bias vector. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>pooling_mode</strong> (<em>str</em>) &#8211; &#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains
+<li><strong>pooling_mode</strong> (<em>str</em>) – ‘max’ or ‘maxabs’ where the first is normal maxpooling and the second also retains
 sign of large negative values</li>
 </ul>
 </td>
@@ -363,12 +353,12 @@ of this model under a given target distribution.</p>
 <dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
 be used for label propagation)</dd>
 <dt>class_weights: theano.tensor.TensorType</dt>
-<dd>weight vector of float32 of length  <code class="docutils literal"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal"><span class="pre">1.0</span></code> (default), <code class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
-<code class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
+<dd>weight vector of float32 of length  <code class="docutils literal notranslate"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal notranslate"><span class="pre">1.0</span></code> (default), <code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
+<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
 <dt>example_weights: theano.tensor.TensorType</dt>
-<dd>weight vector of float32 of shape <code class="docutils literal"><span class="pre">(bs,</span> <span class="pre">z,</span> <span class="pre">x,</span> <span class="pre">y)</span> <span class="pre">that</span> <span class="pre">can</span> <span class="pre">give</span> <span class="pre">the</span> <span class="pre">individual</span> <span class="pre">examples</span> <span class="pre">(i.e.</span> <span class="pre">labels</span> <span class="pre">for</span>
-<span class="pre">output</span> <span class="pre">pixels)</span> <span class="pre">different</span> <span class="pre">weights.</span> <span class="pre">Values:</span> <span class="pre">``1.0</span></code> (default), <code class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
-<code class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important example). Note: if this is not normalised/bounded it may result in a
+<dd>weight vector of float32 of shape <code class="docutils literal notranslate"><span class="pre">(bs,</span> <span class="pre">z,</span> <span class="pre">x,</span> <span class="pre">y)</span> <span class="pre">that</span> <span class="pre">can</span> <span class="pre">give</span> <span class="pre">the</span> <span class="pre">individual</span> <span class="pre">examples</span> <span class="pre">(i.e.</span> <span class="pre">labels</span> <span class="pre">for</span>
+<span class="pre">output</span> <span class="pre">pixels)</span> <span class="pre">different</span> <span class="pre">weights.</span> <span class="pre">Values:</span> <span class="pre">``1.0</span></code> (default), <code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
+<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important example). Note: if this is not normalised/bounded it may result in a
 effectively modified learning rate!</dd>
 </dl>
 <p>The following refers to lazy labels, the masks are always on a per patch basis, depending on the
@@ -377,19 +367,19 @@ into CNNData.</p>
 <dl class="docutils">
 <dt>mask_class_labeled: theano.tensor.TensorType</dt>
 <dd>shape = (batchsize, num_classes).
-Binary masks indicating whether a class is properly labeled in <code class="docutils literal"><span class="pre">y</span></code>. If a class <code class="docutils literal"><span class="pre">k</span></code>
-is (in general) present in the image patches <strong>and</strong> <code class="docutils literal"><span class="pre">mask_class_labeled[k]==1</span></code>, then
-the labels  <strong>must</strong> obey <code class="docutils literal"><span class="pre">y==k</span></code> for all pixels where the class is present.
-If a class <code class="docutils literal"><span class="pre">k</span></code> is present in the image, but was not labeled (-&gt; cheaper labels), set
-<code class="docutils literal"><span class="pre">mask_class_labeled[k]=0</span></code>. Then all pixels for which the <code class="docutils literal"><span class="pre">y==k</span></code> will be ignored.
-Alternative: set <code class="docutils literal"><span class="pre">y=-1</span></code> to ignore those pixels.
-Limit case: <code class="docutils literal"><span class="pre">mask_class_labeled[:]==1</span></code> will result in the ordinary NLL.</dd>
+Binary masks indicating whether a class is properly labeled in <code class="docutils literal notranslate"><span class="pre">y</span></code>. If a class <code class="docutils literal notranslate"><span class="pre">k</span></code>
+is (in general) present in the image patches <strong>and</strong> <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[k]==1</span></code>, then
+the labels  <strong>must</strong> obey <code class="docutils literal notranslate"><span class="pre">y==k</span></code> for all pixels where the class is present.
+If a class <code class="docutils literal notranslate"><span class="pre">k</span></code> is present in the image, but was not labeled (-&gt; cheaper labels), set
+<code class="docutils literal notranslate"><span class="pre">mask_class_labeled[k]=0</span></code>. Then all pixels for which the <code class="docutils literal notranslate"><span class="pre">y==k</span></code> will be ignored.
+Alternative: set <code class="docutils literal notranslate"><span class="pre">y=-1</span></code> to ignore those pixels.
+Limit case: <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[:]==1</span></code> will result in the ordinary NLL.</dd>
 <dt>mask_class_not_present: theano.tensor.TensorType</dt>
 <dd>shape = (batchsize, num_classes).
 Binary mask indicating whether a class is present in the image patches.
-<code class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></code> means that the image does <strong>not</strong> contain examples of class <code class="docutils literal"><span class="pre">k</span></code>.
-Then for all pixels in the patch, class <code class="docutils literal"><span class="pre">k</span></code> predictive probabilities are trained towards <code class="docutils literal"><span class="pre">0</span></code>.
-Limit case: <code class="docutils literal"><span class="pre">mask_class_not_present[:]==0</span></code> will result in the ordinary NLL.</dd>
+<code class="docutils literal notranslate"><span class="pre">mask_class_not_present[k]==1</span></code> means that the image does <strong>not</strong> contain examples of class <code class="docutils literal notranslate"><span class="pre">k</span></code>.
+Then for all pixels in the patch, class <code class="docutils literal notranslate"><span class="pre">k</span></code> predictive probabilities are trained towards <code class="docutils literal notranslate"><span class="pre">0</span></code>.
+Limit case: <code class="docutils literal notranslate"><span class="pre">mask_class_not_present[:]==0</span></code> will result in the ordinary NLL.</dd>
 <dt>label_prop_thresh: float (0.5,1)</dt>
 <dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
 If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
@@ -398,20 +388,20 @@ Should only be used with pre-trained networks, and values &lt;= 0.5 are disabled
 </dl>
 <p>Examples:</p>
 <ul class="simple">
-<li>A cube contains no class <code class="docutils literal"><span class="pre">k</span></code>. Instead of labelling the remaining classes they can be
-marked as unlabelled by the first mask (<code class="docutils literal"><span class="pre">mask_class_labeled[:]==0</span></code>, whether <code class="docutils literal"><span class="pre">mask_class_labeled[k]</span></code>
-is <code class="docutils literal"><span class="pre">0</span></code> or <code class="docutils literal"><span class="pre">1</span></code> is actually indifferent because the labels should not be <code class="docutils literal"><span class="pre">y==k</span></code> anyway in this case).
-Additionally <code class="docutils literal"><span class="pre">mask_class_not_present[k]==1</span></code> (otherwise <code class="docutils literal"><span class="pre">0</span></code>) to suppress predictions of <code class="docutils literal"><span class="pre">k</span></code> in
-in this patch. The actual value of the labels is indifferent, it can either be <code class="docutils literal"><span class="pre">-1</span></code> or it could be the
+<li>A cube contains no class <code class="docutils literal notranslate"><span class="pre">k</span></code>. Instead of labelling the remaining classes they can be
+marked as unlabelled by the first mask (<code class="docutils literal notranslate"><span class="pre">mask_class_labeled[:]==0</span></code>, whether <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[k]</span></code>
+is <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> is actually indifferent because the labels should not be <code class="docutils literal notranslate"><span class="pre">y==k</span></code> anyway in this case).
+Additionally <code class="docutils literal notranslate"><span class="pre">mask_class_not_present[k]==1</span></code> (otherwise <code class="docutils literal notranslate"><span class="pre">0</span></code>) to suppress predictions of <code class="docutils literal notranslate"><span class="pre">k</span></code> in
+in this patch. The actual value of the labels is indifferent, it can either be <code class="docutils literal notranslate"><span class="pre">-1</span></code> or it could be the
 background class, if the background is marked as unlabelled (i.e. then those labels are ignored).</li>
-<li>Only part of the cube is densely labelled. Set <code class="docutils literal"><span class="pre">mask_class_labeled[:]=1</span></code> for all classes, but set the
-label values in the unlabelled part to <code class="docutils literal"><span class="pre">-1</span></code> to ignore this part.</li>
-<li>Only a particular class <code class="docutils literal"><span class="pre">k</span></code> is labelled in the cube. Either set all other label pixels to <code class="docutils literal"><span class="pre">-1</span></code> or the
-corresponding flags in <code class="docutils literal"><span class="pre">mask_class_labeled</span></code> for the unlabelled classes.</li>
+<li>Only part of the cube is densely labelled. Set <code class="docutils literal notranslate"><span class="pre">mask_class_labeled[:]=1</span></code> for all classes, but set the
+label values in the unlabelled part to <code class="docutils literal notranslate"><span class="pre">-1</span></code> to ignore this part.</li>
+<li>Only a particular class <code class="docutils literal notranslate"><span class="pre">k</span></code> is labelled in the cube. Either set all other label pixels to <code class="docutils literal notranslate"><span class="pre">-1</span></code> or the
+corresponding flags in <code class="docutils literal notranslate"><span class="pre">mask_class_labeled</span></code> for the unlabelled classes.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Using <code class="docutils literal"><span class="pre">-1</span></code> labels or telling that a class is not labelled, is somewhat redundant and just
+<p class="last">Using <code class="docutils literal notranslate"><span class="pre">-1</span></code> labels or telling that a class is not labelled, is somewhat redundant and just
 supported for convenience.</p>
 </div>
 </dd></dl>
@@ -431,12 +421,12 @@ supported for convenience.</p>
 <dl class="method">
 <dt id="elektronn.net.convlayer3d.ConvLayer3d.squared_distance">
 <code class="descname">squared_distance</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer3d.html#ConvLayer3d.squared_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer3d.ConvLayer3d.squared_distance" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns squared distance between prediction and <code class="docutils literal"><span class="pre">y</span></code></p>
+<dd><p>Returns squared distance between prediction and <code class="docutils literal notranslate"><span class="pre">y</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) – corresponds to a vector that gives for each example the
 correct label</td>
 </tr>
 </tbody>
@@ -451,7 +441,7 @@ correct label</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) – corresponds to a vector that gives for each example the
 correct label</td>
 </tr>
 </tbody>
@@ -463,7 +453,7 @@ correct label</td>
 <dl class="class">
 <dt id="elektronn.net.convlayer3d.AffinityLayer3d">
 <em class="property">class </em><code class="descclassname">elektronn.net.convlayer3d.</code><code class="descname">AffinityLayer3d</code><span class="sig-paren">(</span><em>input</em>, <em>input_shape</em>, <em>filter_shape</em>, <em>pool</em>, <em>activation_func</em>, <em>enable_dropout</em>, <em>use_fragment_pooling</em>, <em>reshape_output</em>, <em>mfp_offsets</em>, <em>mfp_strides</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer3d.html#AffinityLayer3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer3d.AffinityLayer3d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="elektronn.net.convlayer3d.AffinityLayer3d.NLL_affinity">
 <code class="descname">NLL_affinity</code><span class="sig-paren">(</span><em>y</em>, <em>class_weights=None</em>, <em>example_weights=None</em>, <em>mask_class_labeled=None</em>, <em>mask_class_not_present=None</em>, <em>label_prop_thresh=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer3d.html#AffinityLayer3d.NLL_affinity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer3d.AffinityLayer3d.NLL_affinity" title="Permalink to this definition">¶</a></dt>
@@ -479,7 +469,7 @@ correct label</td>
 <dl class="class">
 <dt id="elektronn.net.convlayer3d.MalisLayer">
 <em class="property">class </em><code class="descclassname">elektronn.net.convlayer3d.</code><code class="descname">MalisLayer</code><span class="sig-paren">(</span><em>input</em>, <em>input_shape</em>, <em>filter_shape</em>, <em>pool</em>, <em>activation_func</em>, <em>enable_dropout</em>, <em>use_fragment_pooling</em>, <em>reshape_output</em>, <em>mfp_offsets</em>, <em>mfp_strides</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer3d.html#MalisLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer3d.MalisLayer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.net.convlayer3d.AffinityLayer3d" title="elektronn.net.convlayer3d.AffinityLayer3d"><code class="xref py py-class docutils literal"><span class="pre">elektronn.net.convlayer3d.AffinityLayer3d</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.net.convlayer3d.AffinityLayer3d" title="elektronn.net.convlayer3d.AffinityLayer3d"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.net.convlayer3d.AffinityLayer3d</span></code></a></p>
 <dl class="method">
 <dt id="elektronn.net.convlayer3d.MalisLayer.NLL_Malis">
 <code class="descname">NLL_Malis</code><span class="sig-paren">(</span><em>aff_gt</em>, <em>seg_gt</em>, <em>unrestrict_neg=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convlayer3d.html#MalisLayer.NLL_Malis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convlayer3d.MalisLayer.NLL_Malis" title="Permalink to this definition">¶</a></dt>
@@ -487,27 +477,30 @@ correct label</td>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>aff_gt: 4d, (bs, #edges, x, y, z) int16</strong></p>
-<p><strong>seg_gt: (bs, x, y, z) int16</strong></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>aff_gt: 4d, (bs, #edges, x, y, z) int16</strong></dt>
+<dd></dd>
+<dt><strong>seg_gt: (bs, x, y, z) int16</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">pos_count: for every edge number of pixel-pairs that should be connected by this edge</p>
-<blockquote>
-<div><p>(excluding background/ECS pixels and only edges considered within the same object,
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>pos_count: for every edge number of pixel-pairs that should be connected by this edge</strong></dt>
+<dd><p class="first last">(excluding background/ECS pixels and only edges considered within the same object,
 such that paths that go out from an object and back to the same object are irgnored)</p>
-</div></blockquote>
-<p>neg_count: for every edge number of pixel-pairs that should be separated by this edge</p>
-<blockquote>
-<div><p>(excluding background/ECS pixels and only edges considered between objects,
+</dd>
+<dt><strong>neg_count: for every edge number of pixel-pairs that should be separated by this edge</strong></dt>
+<dd><p class="first last">(excluding background/ECS pixels and only edges considered between objects,
 such that minimal edges inside an object are not consideres to play a role for separating objects)</p>
-</div></blockquote>
-<p>unrestrict_neg: Bool</p>
-<blockquote class="last">
-<div><p>Use this to relax the restriction on neg_counts. The restriction
+</dd>
+<dt><strong>unrestrict_neg: Bool</strong></dt>
+<dd><p class="first last">Use this to relax the restriction on neg_counts. The restriction
 modifies the edge weights for before calculating the negative counts
-as: <code class="docutils literal"><span class="pre">edge_weights_neg</span> <span class="pre">=</span> <span class="pre">np.maximum(affinity_pred,</span> <span class="pre">affinity_gt)</span></code>
+as: <code class="docutils literal notranslate"><span class="pre">edge_weights_neg</span> <span class="pre">=</span> <span class="pre">np.maximum(affinity_pred,</span> <span class="pre">affinity_gt)</span></code>
 If unrestricted the predictions are used directly.</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -522,22 +515,35 @@ If unrestricted the predictions are used directly.</p>
 <dl class="class">
 <dt id="elektronn.net.convnet.MixedConvNN">
 <em class="property">class </em><code class="descclassname">elektronn.net.convnet.</code><code class="descname">MixedConvNN</code><span class="sig-paren">(</span><em>input_size=None</em>, <em>input_depth=None</em>, <em>batch_size=None</em>, <em>enable_dropout=False</em>, <em>recurrent=False</em>, <em>dimension_calc=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>input_size: tuple</strong></p>
-<p><strong>Data shapes, excluding batch and channel (used to infer the dimensionality)</strong></p>
-<p><strong>input_depth: int/None</strong></p>
-<p><strong>Is None by default this means non-image data (no conv layers allowed). Change to 1 for b/w, 3 for RGB and    4 for RGB-D images etc. For RNN this is the length of the time series.</strong></p>
-<p><strong>batch_size: int/None</strong></p>
-<p><strong>None for variable batch size</strong></p>
-<p><strong>enable_dropout:  Bool</strong></p>
-<p><strong>Turn on or off dropout</strong></p>
-<p><strong>recurrent:       Bool</strong></p>
-<p><strong>Support recurrent iterations along input depth/time</strong></p>
-<p class="last"><strong>dimension_calc: dimension calculator object</strong></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>input_size: tuple</strong></dt>
+<dd></dd>
+<dt><strong>Data shapes, excluding batch and channel (used to infer the dimensionality)</strong></dt>
+<dd></dd>
+<dt><strong>input_depth: int/None</strong></dt>
+<dd></dd>
+<dt><strong>Is None by default this means non-image data (no conv layers allowed). Change to 1 for b/w, 3 for RGB and    4 for RGB-D images etc. For RNN this is the length of the time series.</strong></dt>
+<dd></dd>
+<dt><strong>batch_size: int/None</strong></dt>
+<dd></dd>
+<dt><strong>None for variable batch size</strong></dt>
+<dd></dd>
+<dt><strong>enable_dropout:  Bool</strong></dt>
+<dd></dd>
+<dt><strong>Turn on or off dropout</strong></dt>
+<dd></dd>
+<dt><strong>recurrent:       Bool</strong></dt>
+<dd></dd>
+<dt><strong>Support recurrent iterations along input depth/time</strong></dt>
+<dd></dd>
+<dt><strong>dimension_calc: dimension calculator object</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -545,11 +551,11 @@ If unrestricted the predictions are used directly.</p>
 <p class="rubric">Examples</p>
 <p>Note that image data must have at least 1 channel, e.g. a 2d image (1,x,y). 3d requires data in the
 format (z,ch,x,y). E.g. to create an isotropic 3d CNN with 5 channels (total input shape is (1,30,5,30,30)):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span> <span class="n">input_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">30</span><span class="p">),</span> <span class="n">input_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>A non-convolutional MLP can be created as:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">100</span><span class="p">,),</span> <span class="n">input_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MixedConvNN</span><span class="p">((</span><span class="mi">100</span><span class="p">,),</span> <span class="n">input_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">2000</span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="method">
@@ -557,29 +563,27 @@ format (z,ch,x,y). E.g. to create an isotropic 3d CNN with 5 channels (total inp
 <code class="descname">addPerceptronLayer</code><span class="sig-paren">(</span><em>n_outputs=10</em>, <em>activation_func='tanh'</em>, <em>enable_input_noise=False</em>, <em>add_in_output_layers=False</em>, <em>force_no_dropout=False</em>, <em>W=None</em>, <em>b=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.addPerceptronLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.addPerceptronLayer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a Perceptron layer to the CNN.</p>
 <p>Normally the each layer creates its own set of randomly initialised neuron weights. To reuse the weights
-of another layer (weight sharing) use the arguments <code class="docutils literal"><span class="pre">W</span></code> and <code class="docutils literal"><span class="pre">b</span></code> an pass <code class="docutils literal"><span class="pre">T.TensorVariable</span></code>.
-If <code class="docutils literal"><span class="pre">W</span></code> and <code class="docutils literal"><span class="pre">b</span></code> are numpy arrays own weights are initialised with these values.</p>
+of another layer (weight sharing) use the arguments <code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> an pass <code class="docutils literal notranslate"><span class="pre">T.TensorVariable</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are numpy arrays own weights are initialised with these values.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_outputs: int</strong></p>
-<blockquote>
-<div><p>The size of this layer</p>
-</div></blockquote>
-<p><strong>activation_func: string</strong></p>
-<blockquote>
-<div><p>{tanh, relu, sigmoid, abs, linear, maxout &lt;i&gt;}
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>n_outputs: int</strong></dt>
+<dd><p class="first last">The size of this layer</p>
+</dd>
+<dt><strong>activation_func: string</strong></dt>
+<dd><p class="first last">{tanh, relu, sigmoid, abs, linear, maxout &lt;i&gt;}
 Activation function</p>
-</div></blockquote>
-<p><strong>enable_input_noise: Bool</strong></p>
-<blockquote>
-<div><p>If True set 20% of input to 0 randomly (similar to dropout)</p>
-</div></blockquote>
-<p><strong>force_no_dropout:   Bool</strong></p>
-<blockquote class="last">
-<div><p>Set True for last/output layer</p>
-</div></blockquote>
+</dd>
+<dt><strong>enable_input_noise: Bool</strong></dt>
+<dd><p class="first last">If True set 20% of input to 0 randomly (similar to dropout)</p>
+</dd>
+<dt><strong>force_no_dropout:   Bool</strong></dt>
+<dd><p class="first last">Set True for last/output layer</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -591,78 +595,67 @@ Activation function</p>
 <code class="descname">addConvLayer</code><span class="sig-paren">(</span><em>nof_filters=None</em>, <em>filter_size=None</em>, <em>pool_shape=2</em>, <em>activation_func='tanh'</em>, <em>add_in_output_layers=False</em>, <em>force_no_dropout=False</em>, <em>use_fragment_pooling=False</em>, <em>reshape=False</em>, <em>is_last_layer=False</em>, <em>layer_input_shape=None</em>, <em>layer_input=None</em>, <em>W=None</em>, <em>b=None</em>, <em>pooling_mode='max'</em>, <em>affinity=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.addConvLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.addConvLayer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a convolutional layer to the CNN. The dimensionality is <em>automatically</em> inferred.</p>
 <p>Normally the inputs are automatically connected the the outputs of the last added layer. To connect to a
-different layer use <code class="docutils literal"><span class="pre">layer_input_shape</span></code> and <code class="docutils literal"><span class="pre">layer_input</span></code> arguments.</p>
+different layer use <code class="docutils literal notranslate"><span class="pre">layer_input_shape</span></code> and <code class="docutils literal notranslate"><span class="pre">layer_input</span></code> arguments.</p>
 <p>Normally the each layer creates its own set of randomly initialised neuron weights. To reuse the weights
-of another layer (weight sharing) use the arguments <code class="docutils literal"><span class="pre">W</span></code> and <code class="docutils literal"><span class="pre">b</span></code> an pass <code class="docutils literal"><span class="pre">T.TensorVariable</span></code>.
-If <code class="docutils literal"><span class="pre">W</span></code> and <code class="docutils literal"><span class="pre">b</span></code> are numpy arrays own weights are initialised with these values.</p>
+of another layer (weight sharing) use the arguments <code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> an pass <code class="docutils literal notranslate"><span class="pre">T.TensorVariable</span></code>.
+If <code class="docutils literal notranslate"><span class="pre">W</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are numpy arrays own weights are initialised with these values.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>nof_filters:          int</strong></p>
-<blockquote>
-<div><p>Number of feature maps</p>
-</div></blockquote>
-<p><strong>filter_size:          int/tuple</strong></p>
-<blockquote>
-<div><p>Size/shape of convolutional filters, xy/zxy, (scalars are automatically extended to the 2d or 3d)</p>
-</div></blockquote>
-<p><strong>pool_shape:   int/tuple</strong></p>
-<blockquote>
-<div><p>Size/shape of pool, xy/zxy, (scalars are automatically extended to the 2d or 3d)</p>
-</div></blockquote>
-<p><strong>activation_func:      string</strong></p>
-<blockquote>
-<div><p>{tanh, relu, sigmoid, abs, linear, maxout &lt;i&gt;}
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>nof_filters:          int</strong></dt>
+<dd><p class="first last">Number of feature maps</p>
+</dd>
+<dt><strong>filter_size:          int/tuple</strong></dt>
+<dd><p class="first last">Size/shape of convolutional filters, xy/zxy, (scalars are automatically extended to the 2d or 3d)</p>
+</dd>
+<dt><strong>pool_shape:   int/tuple</strong></dt>
+<dd><p class="first last">Size/shape of pool, xy/zxy, (scalars are automatically extended to the 2d or 3d)</p>
+</dd>
+<dt><strong>activation_func:      string</strong></dt>
+<dd><p class="first last">{tanh, relu, sigmoid, abs, linear, maxout &lt;i&gt;}
 Activation function</p>
-</div></blockquote>
-<p><strong>force_no_dropout:     Bool</strong></p>
-<blockquote>
-<div><p>Set True for last/output layer</p>
-</div></blockquote>
-<p><strong>use_fragment_pooling: Bool</strong></p>
-<blockquote>
-<div><p>Set to True for predicting dense images efficiently. Requires batch_size==1.</p>
-</div></blockquote>
-<p><strong>reshape:              Bool</strong></p>
-<blockquote>
-<div><p>Set to True to get 2d/3d output instead of flattened class_probabilities in the last layer</p>
-</div></blockquote>
-<p><strong>is_last_layer:        Bool</strong></p>
-<blockquote>
-<div><p>Shorthand for reshape=True, force_no_dropout=True and reconstruction of pooling fragments (if mfp was active)</p>
-</div></blockquote>
-<p><strong>layer_input_shape: tuple of int</strong></p>
-<blockquote>
-<div><p>Only needed if layer_input is not not None</p>
-</div></blockquote>
-<p><strong>layer_input: T.TensorVariable</strong></p>
-<blockquote>
-<div><p>Symbolic input if you do <em>not</em> want to use the previous layer of the cnn. This requires specification of
-the shape of that input with <code class="docutils literal"><span class="pre">layer_input_shape</span></code>.</p>
-</div></blockquote>
-<p><strong>W: np.ndarray</strong></p>
-<blockquote>
-<div><dl class="docutils">
+</dd>
+<dt><strong>force_no_dropout:     Bool</strong></dt>
+<dd><p class="first last">Set True for last/output layer</p>
+</dd>
+<dt><strong>use_fragment_pooling: Bool</strong></dt>
+<dd><p class="first last">Set to True for predicting dense images efficiently. Requires batch_size==1.</p>
+</dd>
+<dt><strong>reshape:              Bool</strong></dt>
+<dd><p class="first last">Set to True to get 2d/3d output instead of flattened class_probabilities in the last layer</p>
+</dd>
+<dt><strong>is_last_layer:        Bool</strong></dt>
+<dd><p class="first last">Shorthand for reshape=True, force_no_dropout=True and reconstruction of pooling fragments (if mfp was active)</p>
+</dd>
+<dt><strong>layer_input_shape: tuple of int</strong></dt>
+<dd><p class="first last">Only needed if layer_input is not not None</p>
+</dd>
+<dt><strong>layer_input: T.TensorVariable</strong></dt>
+<dd><p class="first last">Symbolic input if you do <em>not</em> want to use the previous layer of the cnn. This requires specification of
+the shape of that input with <code class="docutils literal notranslate"><span class="pre">layer_input_shape</span></code>.</p>
+</dd>
+<dt><strong>W: np.ndarray</strong></dt>
+<dd><dl class="first last docutils">
 <dt>weight matrix. If array, the values are used to initialise a shared variable for this layer.</dt>
 <dd><p class="first last">If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</p>
 </dd>
 </dl>
-</div></blockquote>
-<p><strong>b: np.ndarray or T.TensorVariable</strong></p>
-<blockquote>
-<div><dl class="docutils">
+</dd>
+<dt><strong>b: np.ndarray or T.TensorVariable</strong></dt>
+<dd><dl class="first last docutils">
 <dt>bias vector. If array, the values are used to initialise a shared variable for this layer.</dt>
 <dd><p class="first last">If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</p>
 </dd>
 </dl>
-</div></blockquote>
-<p><strong>pooling_mode: str</strong></p>
-<blockquote class="last">
-<div><p>&#8216;max&#8217; or &#8216;maxabs&#8217; where the first is normal maxpooling and the second also retains sign of large negative values</p>
-</div></blockquote>
+</dd>
+<dt><strong>pooling_mode: str</strong></dt>
+<dd><p class="first last">‘max’ or ‘maxabs’ where the first is normal maxpooling and the second also retains sign of large negative values</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -677,19 +670,18 @@ layer from which this variable comes from)</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_hid: int</strong></p>
-<blockquote>
-<div><p>Number of hidden units</p>
-</div></blockquote>
-<p><strong>activation_func: string</strong></p>
-<blockquote>
-<div><p>{tanh, relu, sigmoid, abs, linear}</p>
-</div></blockquote>
-<p><strong>iterations: int</strong></p>
-<blockquote class="last">
-<div><p>If layer input is not time-like (iterable on axis 1) it can be broadcasted and
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>n_hid: int</strong></dt>
+<dd><p class="first last">Number of hidden units</p>
+</dd>
+<dt><strong>activation_func: string</strong></dt>
+<dd><p class="first last">{tanh, relu, sigmoid, abs, linear}</p>
+</dd>
+<dt><strong>iterations: int</strong></dt>
+<dd><p class="first last">If layer input is not time-like (iterable on axis 1) it can be broadcasted and
 iterated over for a fixed number of iterations</p>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -704,27 +696,24 @@ iterated over for a fixed number of iterations</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_layers: int</strong></p>
-<blockquote>
-<div><p>Number of layers that will be added/inverted, (input &lt; 0 means all)</p>
-</div></blockquote>
-<p><strong>activation_func:      string</strong></p>
-<blockquote>
-<div><p>{tanh, relu, sigmoid, abs, linear}
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>n_layers: int</strong></dt>
+<dd><p class="first last">Number of layers that will be added/inverted, (input &lt; 0 means all)</p>
+</dd>
+<dt><strong>activation_func:      string</strong></dt>
+<dd><p class="first last">{tanh, relu, sigmoid, abs, linear}
 Activation function</p>
-</div></blockquote>
-<p><strong>force_no_dropout:     Bool</strong></p>
-<blockquote>
-<div><p>set True for last/output layer</p>
-</div></blockquote>
-<p><strong>input_noise:         Bool</strong></p>
-<blockquote>
-<div><p>Noise rate that will be applied to the input of the first reconstructor</p>
-</div></blockquote>
-<p><strong>tie_W:                Bool</strong></p>
-<blockquote class="last">
-<div><p>Whether to share weight of dual layer pairs</p>
-</div></blockquote>
+</dd>
+<dt><strong>force_no_dropout:     Bool</strong></dt>
+<dd><p class="first last">set True for last/output layer</p>
+</dd>
+<dt><strong>input_noise:         Bool</strong></dt>
+<dd><p class="first last">Noise rate that will be applied to the input of the first reconstructor</p>
+</dd>
+<dt><strong>tie_W:                Bool</strong></dt>
+<dd><p class="first last">Whether to share weight of dual layer pairs</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -742,54 +731,49 @@ cnn.debug_gradients_function (if True).</p>
 <dl class="method">
 <dt id="elektronn.net.convnet.MixedConvNN.compileOutputFunctions">
 <code class="descname">compileOutputFunctions</code><span class="sig-paren">(</span><em>target='nll'</em>, <em>use_class_weights=False</em>, <em>use_example_weights=False</em>, <em>use_lazy_labels=False</em>, <em>use_label_prop=False</em>, <em>only_forward=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.compileOutputFunctions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.compileOutputFunctions" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compiles the output functions <code class="docutils literal"><span class="pre">get_loss</span></code>, <code class="docutils literal"><span class="pre">get_error</span></code>, <code class="docutils literal"><span class="pre">class_probabilities</span></code> and defines the
+<dd><p>Compiles the output functions <code class="docutils literal notranslate"><span class="pre">get_loss</span></code>, <code class="docutils literal notranslate"><span class="pre">get_error</span></code>, <code class="docutils literal notranslate"><span class="pre">class_probabilities</span></code> and defines the
 gradient (which is not compiled)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>target: string</strong></p>
-<blockquote>
-<div><dl class="docutils">
-<dt>&#8216;nll&#8217;/&#8217;regression&#8217;, regression has squared error and nll_masked allows training with</dt>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>target: string</strong></dt>
+<dd><dl class="first last docutils">
+<dt>‘nll’/’regression’, regression has squared error and nll_masked allows training with</dt>
 <dd><p class="first last">lazy labels; this requires the auxiliary (<a href="#id1"><span class="problematic" id="id2">*</span></a>aux) masks.</p>
 </dd>
 </dl>
-</div></blockquote>
-<p><strong>use_class_weights: Bool</strong></p>
-<blockquote>
-<div><p>whether to use class weights for the error</p>
-</div></blockquote>
-<p><strong>use_example_weights: Bool</strong></p>
-<blockquote>
-<div><p>whether to use example weights for the error</p>
-</div></blockquote>
-<p><strong>use_lazy_labels: Bool</strong></p>
-<blockquote>
-<div><p>whether to use lazy labels; this requires the auxiliary (<a href="#id3"><span class="problematic" id="id4">*</span></a>aux) masks</p>
-</div></blockquote>
-<p><strong>use_label_prop: Bool</strong></p>
-<blockquote>
-<div><p>whether to activate label propagation on unlabelled (-1) examples</p>
-</div></blockquote>
-<p><strong>only_forward: Bool</strong></p>
-<blockquote>
-<div><p>This exlcudes the building of the gradient (faster)</p>
-</div></blockquote>
-<p><strong>Defined functions:</strong></p>
-<p><strong>(They are accessible as methods of ``MixedConvNN``)</strong></p>
-<p><strong>get_loss: theano-function</strong></p>
-<blockquote>
-<div><p>[data, labels(, <a href="#id5"><span class="problematic" id="id6">*</span></a>aux)] &#8211;&gt; [loss, loss_instance]</p>
-</div></blockquote>
-<p><strong>get_error: theano-function</strong></p>
-<blockquote>
-<div><p>[data, labels(, <a href="#id7"><span class="problematic" id="id8">*</span></a>aux)] &#8211;&gt; [loss, (error,) prediction] no error for regression</p>
-</div></blockquote>
-<p><strong>class_probabilities: theano-function</strong></p>
-<blockquote class="last">
-<div><p>[data] &#8211;&gt; [prediction]</p>
-</div></blockquote>
+</dd>
+<dt><strong>use_class_weights: Bool</strong></dt>
+<dd><p class="first last">whether to use class weights for the error</p>
+</dd>
+<dt><strong>use_example_weights: Bool</strong></dt>
+<dd><p class="first last">whether to use example weights for the error</p>
+</dd>
+<dt><strong>use_lazy_labels: Bool</strong></dt>
+<dd><p class="first last">whether to use lazy labels; this requires the auxiliary (<a href="#id3"><span class="problematic" id="id4">*</span></a>aux) masks</p>
+</dd>
+<dt><strong>use_label_prop: Bool</strong></dt>
+<dd><p class="first last">whether to activate label propagation on unlabelled (-1) examples</p>
+</dd>
+<dt><strong>only_forward: Bool</strong></dt>
+<dd><p class="first last">This exlcudes the building of the gradient (faster)</p>
+</dd>
+<dt><strong>Defined functions:</strong></dt>
+<dd></dd>
+<dt><strong>(They are accessible as methods of ``MixedConvNN``)</strong></dt>
+<dd></dd>
+<dt><strong>get_loss: theano-function</strong></dt>
+<dd><p class="first last">[data, labels(, <a href="#id5"><span class="problematic" id="id6">*</span></a>aux)] –&gt; [loss, loss_instance]</p>
+</dd>
+<dt><strong>get_error: theano-function</strong></dt>
+<dd><p class="first last">[data, labels(, <a href="#id7"><span class="problematic" id="id8">*</span></a>aux)] –&gt; [loss, (error,) prediction] no error for regression</p>
+</dd>
+<dt><strong>class_probabilities: theano-function</strong></dt>
+<dd><p class="first last">[data] –&gt; [prediction]</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -812,63 +796,60 @@ gradient (which is not compiled)</p>
 <dt id="elektronn.net.convnet.MixedConvNN.trainingStep">
 <code class="descname">trainingStep</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.trainingStep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.trainingStep" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform one optimiser iteration.
-Optimizers can be chosen by the kwarg <code class="docutils literal"><span class="pre">mode</span></code>. They are complied on demand (which may take a while) and cached</p>
+Optimizers can be chosen by the kwarg <code class="docutils literal notranslate"><span class="pre">mode</span></code>. They are complied on demand (which may take a while) and cached</p>
 <p><strong>Signature</strong>: cnn.trainingStep(data, label(, <a href="#id9"><span class="problematic" id="id10">*</span></a>aux)(,**kwargs))</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data: float32 array</strong></p>
-<blockquote>
-<div><p>input [bs, ch (, x, y)] or [bs, z, ch, x, y]</p>
-</div></blockquote>
-<p><strong>labels: int16 array</strong></p>
-<blockquote>
-<div><p>[bs,((z,)y,x)] if output is not flattened</p>
-</div></blockquote>
-<p><strong>aux: int16 arrays</strong></p>
-<blockquote>
-<div><p>(optional) auxiliary weights/masks/etc. Should be unpacked list</p>
-</div></blockquote>
-<p><strong>kwargs:</strong></p>
-<blockquote>
-<div><ul>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>data: float32 array</strong></dt>
+<dd><p class="first last">input [bs, ch (, x, y)] or [bs, z, ch, x, y]</p>
+</dd>
+<dt><strong>labels: int16 array</strong></dt>
+<dd><p class="first last">[bs,((z,)y,x)] if output is not flattened</p>
+</dd>
+<dt><strong>aux: int16 arrays</strong></dt>
+<dd><p class="first last">(optional) auxiliary weights/masks/etc. Should be unpacked list</p>
+</dd>
+<dt><strong>kwargs:</strong></dt>
+<dd><ul class="first">
 <li><dl class="first docutils">
 <dt>mode: string</dt>
-<dd><p class="first">[&#8216;SGD&#8217;]: (default) Good if data set is big and redundant</p>
-<p>&#8216;RPROP&#8217;: which does neither uses a fix learning rate nor the momentum-value.
+<dd><p class="first">[‘SGD’]: (default) Good if data set is big and redundant</p>
+<p>‘RPROP’: which does neither uses a fix learning rate nor the momentum-value.
 It is faster than SGD if you do full-batch Training and use NO dropout.
 Any source of noise leads to failure of convergence (at all).</p>
-<p>&#8216;CG&#8217;: Good generalisation but requires large batches. Returns current loss always</p>
-<p class="last">&#8216;LBFGS&#8217;: <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html">http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html</a></p>
+<p>‘CG’: Good generalisation but requires large batches. Returns current loss always</p>
+<p class="last">‘LBFGS’: <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html">http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.fmin_l_bfgs_b.html</a></p>
 </dd>
 </dl>
 </li>
 </ul>
-<blockquote>
+<blockquote class="last">
 <div><ul class="simple">
 <li><dl class="first docutils">
 <dt>update_loss: Bool</dt>
-<dd>determine current loss <em>after</em> update step (e.g. needed for queue, but <code class="docutils literal"><span class="pre">get_loss</span></code> can also be               called explicitly)</dd>
+<dd>determine current loss <em>after</em> update step (e.g. needed for queue, but <code class="docutils literal notranslate"><span class="pre">get_loss</span></code> can also be               called explicitly)</dd>
 </dl>
 </li>
 </ul>
 </div></blockquote>
-</div></blockquote>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">loss: float32</p>
-<blockquote>
-<div><p>loss (nll or squared error)</p>
-</div></blockquote>
-<p>loss_instance: float32 array</p>
-<blockquote>
-<div><p>loss for individual batch examples/pixels</p>
-</div></blockquote>
-<p>time_per_step: float</p>
-<blockquote class="last">
-<div><p>Time spent on the GPU per step</p>
-</div></blockquote>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>loss: float32</strong></dt>
+<dd><p class="first last">loss (nll or squared error)</p>
+</dd>
+<dt><strong>loss_instance: float32 array</strong></dt>
+<dd><p class="first last">loss for individual batch examples/pixels</p>
+</dd>
+<dt><strong>time_per_step: float</strong></dt>
+<dd><p class="first last">Time spent on the GPU per step</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -880,8 +861,8 @@ Any source of noise leads to failure of convergence (at all).</p>
 <code class="descname">setOptimizerParams</code><span class="sig-paren">(</span><em>SGD={}</em>, <em>CG={}</em>, <em>RPROP={}</em>, <em>LBFGS={}</em>, <em>Adam={}</em>, <em>weight_decay=0.0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.setOptimizerParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.setOptimizerParams" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialise optimiser hyper-parameters prior to compilation. SGD, CG and LBFGS this can also be done during
 Training.</p>
-<p><code class="docutils literal"><span class="pre">weight_decay</span></code> is global to all optimisers and
-is identical to a L2-penalty on the weights with the coefficient given by <code class="docutils literal"><span class="pre">weight_decay</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">weight_decay</span></code> is global to all optimisers and
+is identical to a L2-penalty on the weights with the coefficient given by <code class="docutils literal notranslate"><span class="pre">weight_decay</span></code></p>
 </dd></dl>
 
 <dl class="method">
@@ -902,7 +883,7 @@ is identical to a L2-penalty on the weights with the coefficient given by <code 
 <dl class="method">
 <dt id="elektronn.net.convnet.MixedConvNN.setDropoutRates">
 <code class="descname">setDropoutRates</code><span class="sig-paren">(</span><em>rates</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.setDropoutRates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.setDropoutRates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Assumes a vector/list/array as input, first entry &lt;&#8211;&gt; first layer (etc.)</p>
+<dd><p>Assumes a vector/list/array as input, first entry &lt;–&gt; first layer (etc.)</p>
 </dd></dl>
 
 <dl class="method">
@@ -943,31 +924,30 @@ in order to get predictions on the full imgae domain.</dd>
 <dl class="method">
 <dt id="elektronn.net.convnet.MixedConvNN.saveParameters">
 <code class="descname">saveParameters</code><span class="sig-paren">(</span><em>path='CNN.save'</em>, <em>layers=None</em>, <em>show=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.saveParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.saveParameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves parameters to file, that can be loaded by <code class="docutils literal"><span class="pre">loadParameters</span></code></p>
+<dd><p>Saves parameters to file, that can be loaded by <code class="docutils literal notranslate"><span class="pre">loadParameters</span></code></p>
 </dd></dl>
 
 <dl class="method">
 <dt id="elektronn.net.convnet.MixedConvNN.loadParameters">
 <code class="descname">loadParameters</code><span class="sig-paren">(</span><em>myfile='CNN.save'</em>, <em>strict=False</em>, <em>n_layers_to_load=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/convnet.html#MixedConvNN.loadParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.convnet.MixedConvNN.loadParameters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads parameters from file created by <code class="docutils literal"><span class="pre">saveParameters</span></code>. The parameter shapes do not need to fit the CNN
-architecture, they &#8220;squeezed&#8221; or &#8220;padded&#8221; to fit.</p>
+<dd><p>Loads parameters from file created by <code class="docutils literal notranslate"><span class="pre">saveParameters</span></code>. The parameter shapes do not need to fit the CNN
+architecture, they “squeezed” or “padded” to fit.</p>
 <p>Additionally the momenta of the gradients are reset</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>myfile: string</strong></p>
-<blockquote>
-<div><p>Path to file</p>
-</div></blockquote>
-<p><strong>strict: bool</strong></p>
-<blockquote>
-<div><p>If true, parameter shapes must fit exactly, this the only way to load RNN parameters</p>
-</div></blockquote>
-<p><strong>n_layers_to_load: int</strong></p>
-<blockquote class="last">
-<div><p>Only the first x layers are initialised if this is not at its default value (-1)</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>myfile: string</strong></dt>
+<dd><p class="first last">Path to file</p>
+</dd>
+<dt><strong>strict: bool</strong></dt>
+<dd><p class="first last">If true, parameter shapes must fit exactly, this the only way to load RNN parameters</p>
+</dd>
+<dt><strong>n_layers_to_load: int</strong></dt>
+<dd><p class="first last">Only the first x layers are initialised if this is not at its default value (-1)</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1002,10 +982,16 @@ architecture, they &#8220;squeezed&#8221; or &#8220;padded&#8221; to fit.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filter_angle: in degree: 0 to 180</strong></p>
-<p><strong>n_modes = 1,2,3 etc.</strong></p>
-<p><strong>size: filter size</strong></p>
-<p class="last"><strong>offset: 0 to 180</strong></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filter_angle: in degree: 0 to 180</strong></dt>
+<dd></dd>
+<dt><strong>n_modes = 1,2,3 etc.</strong></dt>
+<dd></dd>
+<dt><strong>size: filter size</strong></dt>
+<dd></dd>
+<dt><strong>offset: 0 to 180</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1015,8 +1001,8 @@ architecture, they &#8220;squeezed&#8221; or &#8220;padded&#8221; to fit.</p>
 <dl class="function">
 <dt id="elektronn.net.gaborfilters.makeGaborFilters">
 <code class="descclassname">elektronn.net.gaborfilters.</code><code class="descname">makeGaborFilters</code><span class="sig-paren">(</span><em>size</em>, <em>number</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/gaborfilters.html#makeGaborFilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.gaborfilters.makeGaborFilters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use this to generate <code class="docutils literal"><span class="pre">number</span></code> first order
-and <code class="docutils literal"><span class="pre">number</span></code> second order filters</p>
+<dd><p>Use this to generate <code class="docutils literal notranslate"><span class="pre">number</span></code> first order
+and <code class="docutils literal notranslate"><span class="pre">number</span></code> second order filters</p>
 </dd></dl>
 
 <dl class="function">
@@ -1043,22 +1029,20 @@ that return the activations (i.e. cnn.compileDebugFunctions must have been calle
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cnn:</strong></p>
-<blockquote>
-<div><p>instance of MixedConvNN</p>
-</div></blockquote>
-<p><strong>data:</strong></p>
-<blockquote>
-<div><p>input to cnn for which activations should be shown</p>
-</div></blockquote>
-<p><strong>show_first_class_prob:</strong></p>
-<blockquote>
-<div><p>True/False whether to additionally show the probability map for the first class</p>
-</div></blockquote>
-<p><strong>no_show:</strong></p>
-<blockquote class="last">
-<div><p>True/False whether to pop up plots or silently return a list of image arrays</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>cnn:</strong></dt>
+<dd><p class="first last">instance of MixedConvNN</p>
+</dd>
+<dt><strong>data:</strong></dt>
+<dd><p class="first last">input to cnn for which activations should be shown</p>
+</dd>
+<dt><strong>show_first_class_prob:</strong></dt>
+<dd><p class="first last">True/False whether to additionally show the probability map for the first class</p>
+</dd>
+<dt><strong>no_show:</strong></dt>
+<dd><p class="first last">True/False whether to pop up plots or silently return a list of image arrays</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1073,19 +1057,19 @@ that return the activations (i.e. cnn.compileDebugFunctions must have been calle
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>:type no_show: object</strong></p>
-<p><strong>cnn:</strong></p>
-<blockquote>
-<div><p>instance of MixedConvNN</p>
-</div></blockquote>
-<p><strong>onlyW:</strong></p>
-<blockquote>
-<div><p>True/False whether to ignore the biases b</p>
-</div></blockquote>
-<p><strong>no_show:</strong></p>
-<blockquote class="last">
-<div><p>True/False whether to pop up plots or silently return a list of image arrays</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>:type no_show: object</strong></dt>
+<dd></dd>
+<dt><strong>cnn:</strong></dt>
+<dd><p class="first last">instance of MixedConvNN</p>
+</dd>
+<dt><strong>onlyW:</strong></dt>
+<dd><p class="first last">True/False whether to ignore the biases b</p>
+</dd>
+<dt><strong>no_show:</strong></dt>
+<dd><p class="first last">True/False whether to pop up plots or silently return a list of image arrays</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1101,18 +1085,17 @@ of functions that return the activations (i.e. cnn.compileDebugFunctions must ha
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cnn:</strong></p>
-<blockquote>
-<div><p>instance of MixedConvNN</p>
-</div></blockquote>
-<p><strong>data:</strong></p>
-<blockquote>
-<div><p>input to cnn for which activations should be shown</p>
-</div></blockquote>
-<p><strong>no_show:</strong></p>
-<blockquote class="last">
-<div><p>True/False whether to pop up plots or silently return a list of image arrays</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>cnn:</strong></dt>
+<dd><p class="first last">instance of MixedConvNN</p>
+</dd>
+<dt><strong>data:</strong></dt>
+<dd><p class="first last">input to cnn for which activations should be shown</p>
+</dd>
+<dt><strong>no_show:</strong></dt>
+<dd><p class="first last">True/False whether to pop up plots or silently return a list of image arrays</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1142,21 +1125,23 @@ of functions that return the activations (i.e. cnn.compileDebugFunctions must ha
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_ch: int</strong></p>
-<blockquote>
-<div><p>Number of input channels in data</p>
-</div></blockquote>
-<p><strong>n_lab: int</strong></p>
-<blockquote>
-<div><p>Number of labels/classes/output_neurons</p>
-</div></blockquote>
-<p><strong>param_file: string/path</strong></p>
-<blockquote>
-<div><p>Optional file to initialise parameters of CNN from</p>
-</div></blockquote>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>n_ch: int</strong></dt>
+<dd><p class="first last">Number of input channels in data</p>
+</dd>
+<dt><strong>n_lab: int</strong></dt>
+<dd><p class="first last">Number of labels/classes/output_neurons</p>
+</dd>
+<dt><strong>param_file: string/path</strong></dt>
+<dd><p class="first last">Optional file to initialise parameters of CNN from</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">CNN-Object</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>CNN-Object</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1166,45 +1151,43 @@ of functions that return the activations (i.e. cnn.compileDebugFunctions must ha
 <dl class="function">
 <dt id="elektronn.net.netcreation.createNetfromParams">
 <code class="descclassname">elektronn.net.netcreation.</code><code class="descname">createNetfromParams</code><span class="sig-paren">(</span><em>param_file</em>, <em>patch_size</em>, <em>batch_size=1</em>, <em>activation_func='tanh'</em>, <em>poolings=None</em>, <em>MFP=None</em>, <em>only_prediction=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/netcreation.html#createNetfromParams"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.netcreation.createNetfromParams" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convenience function to create CNN without <code class="docutils literal"><span class="pre">config</span></code> directly from a saved parameter file.
+<dd><p>Convenience function to create CNN without <code class="docutils literal notranslate"><span class="pre">config</span></code> directly from a saved parameter file.
 Therefore this function only allows restricted configuration and does not initialise the training optimisers.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>param_file: string/path</strong></p>
-<blockquote>
-<div><p>File to initialise parameters of CNN from. The file must contain a list of shapes of the W-parameters as
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>param_file: string/path</strong></dt>
+<dd><p class="first last">File to initialise parameters of CNN from. The file must contain a list of shapes of the W-parameters as
 first entry and should ideally contain a list of pooling factors as last entry, alternatively the can be
 given as optional argument</p>
-</div></blockquote>
-<p><strong>patch_size: tuple of int</strong></p>
-<blockquote>
-<div><p>Patch size for input data</p>
-</div></blockquote>
-<p><strong>batch_size: int</strong></p>
-<blockquote>
-<div><p>Number of input patches</p>
-</div></blockquote>
-<p><strong>activation_func: string</strong></p>
-<blockquote>
-<div><p>Activation function to use for all layers</p>
-</div></blockquote>
-<p><strong>poolings: list of int</strong></p>
-<blockquote>
-<div><p>Pooling factors per layer (if not included in the parameter file)</p>
-</div></blockquote>
-<p><strong>MFP: list of bool/{0,1}</strong></p>
-<blockquote>
-<div><p>Whether to use MFP in the respective layers</p>
-</div></blockquote>
-<p><strong>only_prediction: Bool</strong></p>
-<blockquote>
-<div><p>This excludes the building of the gradient (faster)</p>
-</div></blockquote>
+</dd>
+<dt><strong>patch_size: tuple of int</strong></dt>
+<dd><p class="first last">Patch size for input data</p>
+</dd>
+<dt><strong>batch_size: int</strong></dt>
+<dd><p class="first last">Number of input patches</p>
+</dd>
+<dt><strong>activation_func: string</strong></dt>
+<dd><p class="first last">Activation function to use for all layers</p>
+</dd>
+<dt><strong>poolings: list of int</strong></dt>
+<dd><p class="first last">Pooling factors per layer (if not included in the parameter file)</p>
+</dd>
+<dt><strong>MFP: list of bool/{0,1}</strong></dt>
+<dd><p class="first last">Whether to use MFP in the respective layers</p>
+</dd>
+<dt><strong>only_prediction: Bool</strong></dt>
+<dd><p class="first last">This excludes the building of the gradient (faster)</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">CNN-Object</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>CNN-Object</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1219,47 +1202,42 @@ given as optional argument</p>
 <code class="descclassname">elektronn.net.netutils.</code><code class="descname">CNNCalculator</code><span class="sig-paren">(</span><em>filters</em>, <em>poolings</em>, <em>desired_input=None</em>, <em>MFP=False</em>, <em>force_center=False</em>, <em>desired_output=None</em>, <em>n_dim=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/netutils.html#CNNCalculator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.netutils.CNNCalculator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper to calculate CNN architectures</p>
 <p>This is a <em>function</em>, but it returns an <em>object</em> that has various architecture values as attributes.
-Useful is also to simply print &#8216;d&#8217; as in the example.</p>
+Useful is also to simply print ‘d’ as in the example.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filters: list</strong></p>
-<blockquote>
-<div><p>Filter shapes (for anisotropic filters the shapes are again a list)</p>
-</div></blockquote>
-<p><strong>poolings: list</strong></p>
-<blockquote>
-<div><p>Pooling factors</p>
-</div></blockquote>
-<p><strong>desired_input: int or list of int</strong></p>
-<blockquote>
-<div><p>Desired input size(s). If <code class="docutils literal"><span class="pre">None</span></code> a range of suggestions can be found in the attribute <code class="docutils literal"><span class="pre">valid_inputs</span></code></p>
-</div></blockquote>
-<p><strong>MFP: list of int/{0,1}</strong></p>
-<blockquote>
-<div><p>Whether to apply Max-Fragment-Pooling in this layer and check compliance with max-fragment-pooling
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filters: list</strong></dt>
+<dd><p class="first last">Filter shapes (for anisotropic filters the shapes are again a list)</p>
+</dd>
+<dt><strong>poolings: list</strong></dt>
+<dd><p class="first last">Pooling factors</p>
+</dd>
+<dt><strong>desired_input: int or list of int</strong></dt>
+<dd><p class="first last">Desired input size(s). If <code class="docutils literal notranslate"><span class="pre">None</span></code> a range of suggestions can be found in the attribute <code class="docutils literal notranslate"><span class="pre">valid_inputs</span></code></p>
+</dd>
+<dt><strong>MFP: list of int/{0,1}</strong></dt>
+<dd><p class="first last">Whether to apply Max-Fragment-Pooling in this layer and check compliance with max-fragment-pooling
 (requires other input sizes than normal pooling)</p>
-</div></blockquote>
-<p><strong>force_center: Bool</strong></p>
-<blockquote>
-<div><p>Check if output neurons/pixel lie at center of input neurons/pixel (and not in between)</p>
-</div></blockquote>
-<p><strong>desired_output: int or list of int</strong></p>
-<blockquote>
-<div><p>Alternative to <code class="docutils literal"><span class="pre">desired_input</span></code></p>
-</div></blockquote>
-<p><strong>n_dim: int</strong></p>
-<blockquote class="last">
-<div><p>Dimensionality of CNN</p>
-</div></blockquote>
+</dd>
+<dt><strong>force_center: Bool</strong></dt>
+<dd><p class="first last">Check if output neurons/pixel lie at center of input neurons/pixel (and not in between)</p>
+</dd>
+<dt><strong>desired_output: int or list of int</strong></dt>
+<dd><p class="first last">Alternative to <code class="docutils literal notranslate"><span class="pre">desired_input</span></code></p>
+</dd>
+<dt><strong>n_dim: int</strong></dt>
+<dd><p class="first last">Dimensionality of CNN</p>
+</dd>
+</dl>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<p>Calculation for anisotropic &#8220;flat&#8221; 3d CNN with MFP in the first layers only:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<p>Calculation for anisotropic “flat” 3d CNN with MFP in the first layers only:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">desired_input</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">211</span><span class="p">,</span> <span class="mi">211</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span>         <span class="o">=</span> <span class="p">[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pool</span>            <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">MFP</span>             <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">,</span>   <span class="p">]</span>
@@ -1295,41 +1273,40 @@ Useful is also to simply print &#8216;d&#8217; as in the example.</p>
 <dl class="class">
 <dt id="elektronn.net.optimizer.Optimizer">
 <em class="property">class </em><code class="descclassname">elektronn.net.optimizer.</code><code class="descname">Optimizer</code><span class="sig-paren">(</span><em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/optimizer.html#Optimizer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.optimizer.Optimizer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Optimizer Base Object, initialises generic optimizer variables</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>model_obj: cnn-object</strong></p>
-<blockquote>
-<div><p>Encapsulation of theano model (instead of giving X,Y etc. manually), all other arguments are
-retrieved from this object if they are <code class="docutils literal"><span class="pre">None</span></code>. If an argument is not <code class="docutils literal"><span class="pre">None</span></code> it will override the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>model_obj: cnn-object</strong></dt>
+<dd><p class="first last">Encapsulation of theano model (instead of giving X,Y etc. manually), all other arguments are
+retrieved from this object if they are <code class="docutils literal notranslate"><span class="pre">None</span></code>. If an argument is not <code class="docutils literal notranslate"><span class="pre">None</span></code> it will override the
 value from the model</p>
-</div></blockquote>
-<p><strong>X:         symbolic input variable</strong></p>
-<blockquote>
-<div><p>Data</p>
-</div></blockquote>
-<p><strong>Y:         symbolic output variable</strong></p>
-<blockquote>
-<div><p>Target</p>
-</div></blockquote>
-<p><strong>Y_aux:     symbolic output variable</strong></p>
-<blockquote>
-<div><p>Auxiliary masks/weights/etc. for the loss, type: list!</p>
-</div></blockquote>
-<p><strong>top_loss:  symbolic loss function:</strong></p>
-<blockquote>
-<div><p>Requires (X, Y (,*Y_aux)) for compilation</p>
-</div></blockquote>
-<p><strong>params:    list of shared variables</strong></p>
-<blockquote>
-<div><p>List of parameter arrays against which the loss is optimised</p>
-</div></blockquote>
+</dd>
+<dt><strong>X:         symbolic input variable</strong></dt>
+<dd><p class="first last">Data</p>
+</dd>
+<dt><strong>Y:         symbolic output variable</strong></dt>
+<dd><p class="first last">Target</p>
+</dd>
+<dt><strong>Y_aux:     symbolic output variable</strong></dt>
+<dd><p class="first last">Auxiliary masks/weights/etc. for the loss, type: list!</p>
+</dd>
+<dt><strong>top_loss:  symbolic loss function:</strong></dt>
+<dd><p class="first last">Requires (X, Y (,*Y_aux)) for compilation</p>
+</dd>
+<dt><strong>params:    list of shared variables</strong></dt>
+<dd><p class="first last">List of parameter arrays against which the loss is optimised</p>
+</dd>
+</dl>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Callable optimizer object: loss = Optimizer(X, Y (,*Y_aux)) performs one iteration</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>Callable optimizer object: loss = Optimizer(X, Y (,*Y_aux)) performs one iteration</strong></dt>
+<dd></dd>
+</dl>
 </td>
 </tr>
 </tbody>
@@ -1343,7 +1320,7 @@ value from the model</p>
 <dl class="method">
 <dt id="elektronn.net.optimizer.Optimizer.get_loss">
 <code class="descname">get_loss</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/optimizer.html#Optimizer.get_loss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.optimizer.Optimizer.get_loss" title="Permalink to this definition">¶</a></dt>
-<dd><p>[data, labels(, <a href="#id11"><span class="problematic" id="id12">*</span></a>aux)] &#8211;&gt; [loss, loss_instance]
+<dd><p>[data, labels(, <a href="#id11"><span class="problematic" id="id12">*</span></a>aux)] –&gt; [loss, loss_instance]
 loss_instance is the loss per instance (e.g. batch-item or pixel)</p>
 </dd></dl>
 
@@ -1358,28 +1335,28 @@ loss_instance is the loss per instance (e.g. batch-item or pixel)</p>
 <dl class="class">
 <dt id="elektronn.net.optimizer.compileSGD">
 <em class="property">class </em><code class="descclassname">elektronn.net.optimizer.</code><code class="descname">compileSGD</code><span class="sig-paren">(</span><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/optimizer.html#compileSGD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.optimizer.compileSGD" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
 <p>Stochastic Gradient Descent</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="elektronn.net.optimizer.compileAdam">
 <em class="property">class </em><code class="descclassname">elektronn.net.optimizer.</code><code class="descname">compileAdam</code><span class="sig-paren">(</span><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/optimizer.html#compileAdam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.optimizer.compileAdam" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
 <p>Stochastic Gradient Descent</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="elektronn.net.optimizer.compileRPROP">
 <em class="property">class </em><code class="descclassname">elektronn.net.optimizer.</code><code class="descname">compileRPROP</code><span class="sig-paren">(</span><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/optimizer.html#compileRPROP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.optimizer.compileRPROP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
 <p>Resilient backPROPagation</p>
 </dd></dl>
 
 <dl class="class">
 <dt id="elektronn.net.optimizer.compileCG">
 <em class="property">class </em><code class="descclassname">elektronn.net.optimizer.</code><code class="descname">compileCG</code><span class="sig-paren">(</span><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/optimizer.html#compileCG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.optimizer.compileCG" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
 <p>Conjugate Gradient</p>
 <dl class="method">
 <dt id="elektronn.net.optimizer.compileCG.lineSearch">
@@ -1392,7 +1369,7 @@ loss_instance is the loss per instance (e.g. batch-item or pixel)</p>
 <dl class="class">
 <dt id="elektronn.net.optimizer.compileLBFGS">
 <em class="property">class </em><code class="descclassname">elektronn.net.optimizer.</code><code class="descname">compileLBFGS</code><span class="sig-paren">(</span><em>optimizer_params</em>, <em>model_obj=None</em>, <em>X=None</em>, <em>Y=None</em>, <em>Y_aux=[]</em>, <em>top_loss=None</em>, <em>params=None</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/optimizer.html#compileLBFGS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.optimizer.compileLBFGS" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elektronn.net.optimizer.Optimizer" title="elektronn.net.optimizer.Optimizer"><code class="xref py py-class docutils literal notranslate"><span class="pre">elektronn.net.optimizer.Optimizer</span></code></a></p>
 <p>L-BFGS (fast, full-batch method)</p>
 <dl class="docutils">
 <dt>References (cite one):</dt>
@@ -1428,7 +1405,7 @@ scale bound constrained optimization (2011), ACM Transactions on Mathematical So
 <dl class="class">
 <dt id="elektronn.net.perceptronlayer.PerceptronLayer">
 <em class="property">class </em><code class="descclassname">elektronn.net.perceptronlayer.</code><code class="descname">PerceptronLayer</code><span class="sig-paren">(</span><em>input</em>, <em>n_in</em>, <em>n_out</em>, <em>batch_size</em>, <em>enable_dropout</em>, <em>activation_func='tanh'</em>, <em>input_noise=None</em>, <em>input_layer=None</em>, <em>W=None</em>, <em>b=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/perceptronlayer.html#PerceptronLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.perceptronlayer.PerceptronLayer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Typical hidden layer of a MLP: units are fully-connected.
 Weight matrix W is of shape (n_in,n_out), the bias vector b is of shape (n_out,).</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1436,19 +1413,19 @@ Weight matrix W is of shape (n_in,n_out), the bias vector b is of shape (n_out,)
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>theano.tensor.dmatrix</em>) &#8211; a symbolic tensor of shape (n_examples, n_in)</li>
-<li><strong>n_in</strong> (<em>int</em>) &#8211; dimensionality of input</li>
-<li><strong>n_out</strong> (<em>int</em>) &#8211; number of hidden units</li>
-<li><strong>batch_size</strong> (<em>int</em>) &#8211; batch_size</li>
-<li><strong>enable_dropout</strong> (<em>Bool</em>) &#8211; whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
+<li><strong>input</strong> (<em>theano.tensor.dmatrix</em>) – a symbolic tensor of shape (n_examples, n_in)</li>
+<li><strong>n_in</strong> (<em>int</em>) – dimensionality of input</li>
+<li><strong>n_out</strong> (<em>int</em>) – number of hidden units</li>
+<li><strong>batch_size</strong> (<em>int</em>) – batch_size</li>
+<li><strong>enable_dropout</strong> (<em>Bool</em>) – whether to enable dropout in this layer. The default rate is 0.5 but it can be changed with
 self.activation_noise.set_value(set_value(np.float32(p)) or using cnn.setDropoutRates</li>
-<li><strong>activation_func</strong> (<em>string</em>) &#8211; {&#8216;relu&#8217;,&#8217;sigmoid&#8217;,&#8217;tanh&#8217;,&#8217;abs&#8217;, &#8216;maxout &lt;i&gt;&#8217;}</li>
-<li><strong>input_noise</strong> (<em>theano.shared float32</em>) &#8211; std of gaussian (centered) input noise. 0 or None &#8211;&gt; no noise</li>
-<li><strong>input_layer</strong> (<em>layer object</em>) &#8211; just for keeping track of un-usual input layers</li>
-<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; weight matrix. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>activation_func</strong> (<em>string</em>) – {‘relu’,’sigmoid’,’tanh’,’abs’, ‘maxout &lt;i&gt;’}</li>
+<li><strong>input_noise</strong> (<em>theano.shared float32</em>) – std of gaussian (centered) input noise. 0 or None –&gt; no noise</li>
+<li><strong>input_layer</strong> (<em>layer object</em>) – just for keeping track of un-usual input layers</li>
+<li><strong>W</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) – weight matrix. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
-<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) &#8211; bias vector. If array, the values are used to initialise a shared variable for this layer.
+<li><strong>b</strong> (<em>np.ndarray</em><em> or </em><em>T.TensorVariable</em>) – bias vector. If array, the values are used to initialise a shared variable for this layer.
 If TensorVariable, than this variable is directly used (weight sharing with the
 layer from which this variable comes from)</li>
 </ul>
@@ -1471,8 +1448,8 @@ of this model under a given target distribution.</p>
 <dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
 be used for label propagation)</dd>
 <dt>class_weights: theano.tensor.TensorType</dt>
-<dd>weight vector of float32 of length  <code class="docutils literal"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal"><span class="pre">1.0</span></code> (default), <code class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
-<code class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
+<dd>weight vector of float32 of length  <code class="docutils literal notranslate"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal notranslate"><span class="pre">1.0</span></code> (default), <code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
+<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
 <dt>label_prop_thresh: float (0.5,1)</dt>
 <dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
 If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
@@ -1491,8 +1468,8 @@ of this model under a given target distribution.</p>
 <dd>corresponds to a vector that gives for each example the correct label. Labels &lt; 0 are ignored (e.g. can
 be used for label propagation)</dd>
 <dt>class_weights: theano.tensor.TensorType</dt>
-<dd>weight vector of float32 of length  <code class="docutils literal"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal"><span class="pre">1.0</span></code> (default), <code class="docutils literal"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
-<code class="docutils literal"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
+<dd>weight vector of float32 of length  <code class="docutils literal notranslate"><span class="pre">n_lab</span></code>. Values: <code class="docutils literal notranslate"><span class="pre">1.0</span></code> (default), <code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&lt;</span> <span class="pre">1.0</span></code> (less important),
+<code class="docutils literal notranslate"><span class="pre">w</span> <span class="pre">&gt;</span> <span class="pre">1.0</span></code> (more important class)</dd>
 <dt>label_prop_thresh: float (0.5,1)</dt>
 <dd>This threshold allows unsupervised label propagation (only for examples with negative/ignore labels).
 If the predictive probability of the most likely class exceeds the threshold, this class is assumed to
@@ -1510,7 +1487,7 @@ of this model under a given target distribution.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) – corresponds to a vector that gives for each example the
 correct label</td>
 </tr>
 </tbody>
@@ -1537,7 +1514,7 @@ mask: vectorized, 1==hole, 0==no_hole (== DOES NOT TRAIN ON NON-HOLES)</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) &#8211; corresponds to a vector that gives for each example the
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>y</strong> (<em>theano.tensor.TensorType</em>) – corresponds to a vector that gives for each example the
 correct label</td>
 </tr>
 </tbody>
@@ -1567,16 +1544,16 @@ the output is of length: &lt;batchsize&gt;, Use cross_entropy() to get a scalar 
 <dl class="class">
 <dt id="elektronn.net.perceptronlayer.RecurrentLayer">
 <em class="property">class </em><code class="descclassname">elektronn.net.perceptronlayer.</code><code class="descname">RecurrentLayer</code><span class="sig-paren">(</span><em>input</em>, <em>n_in</em>, <em>n_hid</em>, <em>batch_size</em>, <em>activation_func='tanh'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/perceptronlayer.html#RecurrentLayer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.perceptronlayer.RecurrentLayer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>input</strong> (<em>symbolic input carrying</em><em> [</em><em>time</em><em>, </em><em>batch</em><em>, </em><em>feat</em><em>]</em><em></em>) &#8211; theano.tensor.ftensor3</li>
-<li><strong>n_in</strong> (<em>int</em>) &#8211; dimensionality of input</li>
-<li><strong>n_hid</strong> (<em>int</em>) &#8211; number of hidden units</li>
-<li><strong>activation_func</strong> (<em>string</em>) &#8211; {&#8216;relu&#8217;,&#8217;sigmoid&#8217;,&#8217;tanh&#8217;,&#8217;abs&#8217;}</li>
+<li><strong>input</strong> (<em>symbolic input carrying</em><em> [</em><em>time</em><em>, </em><em>batch</em><em>, </em><em>feat</em><em>]</em>) – theano.tensor.ftensor3</li>
+<li><strong>n_in</strong> (<em>int</em>) – dimensionality of input</li>
+<li><strong>n_hid</strong> (<em>int</em>) – number of hidden units</li>
+<li><strong>activation_func</strong> (<em>string</em>) – {‘relu’,’sigmoid’,’tanh’,’abs’}</li>
 </ul>
 </td>
 </tr>
@@ -1606,26 +1583,26 @@ the output is of length: &lt;batchsize&gt;, Use cross_entropy() to get a scalar 
 <dl class="function">
 <dt id="elektronn.net.pooling.maxout">
 <code class="descclassname">elektronn.net.pooling.</code><code class="descname">maxout</code><span class="sig-paren">(</span><em>conv_out</em>, <em>factor=2</em>, <em>mode='max'</em>, <em>axis=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/pooling.html#maxout"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.pooling.maxout" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pools axis 1 (the channels) of <code class="docutils literal"><span class="pre">conv_out</span></code> by <code class="docutils literal"><span class="pre">factor</span></code>.
+<dd><p>Pools axis 1 (the channels) of <code class="docutils literal notranslate"><span class="pre">conv_out</span></code> by <code class="docutils literal notranslate"><span class="pre">factor</span></code>.
 I.e. the number of channels is decreased by this factor.
-The pooling can either be done as <code class="docutils literal"><span class="pre">max</span></code> or <code class="docutils literal"><span class="pre">maxabs</span></code>.
+The pooling can either be done as <code class="docutils literal notranslate"><span class="pre">max</span></code> or <code class="docutils literal notranslate"><span class="pre">maxabs</span></code>.
 Spatial dimensions are unchanged</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="elektronn.net.pooling.pooling2d">
 <code class="descclassname">elektronn.net.pooling.</code><code class="descname">pooling2d</code><span class="sig-paren">(</span><em>conv_out</em>, <em>pool_shape=(2</em>, <em>2)</em>, <em>mode='max'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/pooling.html#pooling2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.pooling.pooling2d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pools axis 2,3 (x,y) of <code class="docutils literal"><span class="pre">conv_out</span></code> by respective <code class="docutils literal"><span class="pre">pool_shape</span></code>.
+<dd><p>Pools axis 2,3 (x,y) of <code class="docutils literal notranslate"><span class="pre">conv_out</span></code> by respective <code class="docutils literal notranslate"><span class="pre">pool_shape</span></code>.
 I.e. the spatial extent is decreased by this factor.
-The pooling can either be done as <code class="docutils literal"><span class="pre">max</span></code> or <code class="docutils literal"><span class="pre">maxabs</span></code>.</p>
+The pooling can either be done as <code class="docutils literal notranslate"><span class="pre">max</span></code> or <code class="docutils literal notranslate"><span class="pre">maxabs</span></code>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="elektronn.net.pooling.pooling3d">
 <code class="descclassname">elektronn.net.pooling.</code><code class="descname">pooling3d</code><span class="sig-paren">(</span><em>conv_out</em>, <em>pool_shape=(2</em>, <em>2</em>, <em>2)</em>, <em>mode='max'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elektronn/net/pooling.html#pooling3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elektronn.net.pooling.pooling3d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Pools axis 2,3 (x,y) of <code class="docutils literal"><span class="pre">conv_out</span></code> by respective <code class="docutils literal"><span class="pre">pool_shape</span></code>.
+<dd><p>Pools axis 2,3 (x,y) of <code class="docutils literal notranslate"><span class="pre">conv_out</span></code> by respective <code class="docutils literal notranslate"><span class="pre">pool_shape</span></code>.
 I.e. the spatial extent is decreased by this factor.
-The pooling can either be done as <code class="docutils literal"><span class="pre">max</span></code> or <code class="docutils literal"><span class="pre">maxabs</span></code>.</p>
+The pooling can either be done as <code class="docutils literal notranslate"><span class="pre">max</span></code> or <code class="docutils literal notranslate"><span class="pre">maxabs</span></code>.</p>
 </dd></dl>
 
 </div>
@@ -1661,7 +1638,7 @@ The pooling can either be done as <code class="docutils literal"><span class="pr
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright Marius F Killinger, Gregor Urban, 2015.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.5.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
     </div>
   </body>
 </html>
