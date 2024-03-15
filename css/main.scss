@@ -3,8 +3,21 @@
 ---
 @charset "utf-8";
 
-// Import partials from `sass_dir` (defaults to `_sass`)
-@import
-        "main"
-        //"syntax-highlighting"
-;
+$min-width:   320px;
+$on-mobile:   540px;
+$on-notebook: 960px;
+$on-desktop:  1200px;
+
+@mixin breakpoint($device) {
+	@media screen and (min-width: $device) {
+		@content;
+	}
+}
+
+@import "destyle";
+@import "page";
+@import "layouts";
+@import "helpers";
+
+@import "typography";
+@import "containers";

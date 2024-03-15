@@ -1,0 +1,16 @@
+.vgap > * + * {
+	margin-top: 1em;
+}
+.vgap-s > * + * {
+	margin-top: .5em;
+}
+.vgap-m > * + * {
+	margin-top: 2em;
+}
+.vgap-l > * + * {
+	margin-top: 4em;
+}
+
+.hgap > *:not(:last-child) {
+	margin-right: 1em;
+}

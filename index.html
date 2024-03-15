@@ -2,75 +2,64 @@
 layout: default
 ---
 
-<section class="banner">
+<header class="header container Px(25px) Mx(a)">
+	<img src="{{ '/images/Logo.png' | relative_url }}" width="208" height="60" alt="ELEKTRONN logo">
 
-	{% include header.html %}
+	<nav>
+		<ul class="hgap">
+			<li><a href="https://github.com/ELEKTRONN/elektronn3">GitHub</a></li>
+			<li><a href="https://elektronn3.readthedocs.io">Documentation</a></li>
+			<li><a href="#About">About</a></li>
+		</ul>
+	</nav>
+</header>
 
-	<div class="container -large _center row -wide">
-		<article class="col">
-			<header class="banner-header">
-				<img class="" width="64" height="64" src="{{ "images/Logo.svg" | prepend: site.baseurl }}" alt="ELEKTRONN Logo">
+<section class="container-sm Px(25px) Mx(a)">
+	<div class="vgap-m">
+		<div class="vgap">
+			<p>ELEKTRONN is a deep learning toolkit that makes powerful neural networks accessible to scientists outside of the machine learning community.</p>
+			<p>Our focus lies on high troughput analysis of large scale 2D and 3D images with convolutional neural networks (CNNs).</p>
 
-				<h1 class=""><img src="{{ "images/Title.png" | prepend: site.baseurl }}" alt="ELEKTRONN"></h1>
-			</header>
-
-			<p><strong>ELEKTRONN</strong> is a deep learning toolkit that makes powerful neural networks accessible to scientists outside of the machine learning community.</p>
-
-			<p>Our focus lies on high troughput analysis of large scale 2D and 3D images with <em>convolutional neural networks</em> (CNNs).</p>
-
-
-			<ul class="-horizontal -text-center">
-				<li><a href="{{ site.documentation-url }}" class="button"><i class="material-icons">book</i> Documentation</a></li>
-				<li><a href="{{ "getting-started/#Installation" | prepend: site.baseurl }}" class="button"><i class="material-icons">get_app</i> Install (v{{ site.data.elektronn.version }})</a></li>
-				<li><a href="{{ site.data.elektronn.github-url }}" class="button"><i class="material-icons">code</i> GitHub Repository</a></li>
-			</ul>
-
-			<div class="popover">
-				<h6>About Machine Learning</h6>
-
-				<p>Many data analysis and classification tasks can be formulated as a machine learning problem: without explicit expert knowledge or manual guidance artificial neural networks can be trained to map certain inputs (e.g. raw images) to outputs (e.g. probability maps for classes). This mapping is found by training on a set of exemplary “input-output pairs” — <em>training examples</em> — that must be provided initially. Once a good mapping has been found, it can be used to make predictions on new data.</p>
-			</div>
-		</article>
-
-		<aside class="col">
-			<div class="shadow">
-				<div class="comparison-card">
-
-					<div class="cocoen">
-
-						<img src="{{ "images/combined.jpg" | prepend: site.baseurl }}" alt="">
-						<img src="{{ "images/7000_2011_139_raw.jpg" | prepend: site.baseurl }}" alt="">
-					</div>
-
-					<div class="comparison-card__caption">
-						<p><strong>Membrane and mitochondria probability maps.</strong> Predicted with a CNN with recursive training.</p>
-
-						<p><strong>Data:</strong> zebra finch area X dataset j0126 by Jörgen Kornfeld.</p>
-					</div>
-				</div>
-			</div>
-		</aside>
-	</div>
-
-	<div class="banner-content">
-		<div class="container -large _center row">
-			<div class="col">
-				<h3>Flexible Training</h3>
-
-				<p><strong>ELEKTRONN</strong> can be used for machine learning tasks formulated on image data or flat feature vectors. We provide a <strong>ready-made, flexible training pipeline</strong> with helpful utility functions and a comprehensive <a href="http://elektronn.github.io/documentation">documentation</a>. See our <a href="http://elektronn.github.io/documentation">list of features</a> for more details.</p>
-			</div>
-
-			<div class="col">
-				<h3>Easy Usage & Optimized Runtimes</h3>
-
-				<p><strong>ELEKTRONN</strong> is written in <strong>Python</strong>	and based on the <a href="http://www.deeplearning.net/software/theano/index.html">Theano</a> framework. It can be accelerated with NVIDIA GPUs and delivers state-of-the art performance, including fast training and inference on massive image datasets.</p>
-			</div>
-
-			<div class="col">
-				<h3>Open Source</h3>
-
-				<p><strong>ELEKTRONN</strong> is a scientific open source project and licensed under the GPL. The code is available at our <a href="{{ site.data.elektronn.github-url }}">GitHub repository</a> or can be installed with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>.</p>
-			</div>
+			<p class="Fz(.9rem) colored-links">If you are not familiar with virtualenv and conda or are not sure about some of the required steps, you can find a more detailed setup guide <a href="https://github.com/ELEKTRONN/elektronn3/blob/master/setup.md">here</a>.</p>
 		</div>
+
+		<pre><code>git clone https://github.com/ELEKTRONN/elektronn3 elektronn3-dev
+pip install -e elektronn3-dev</code></pre>
 	</div>
 </section>
+
+<div id="Live">
+	<canvas id="Canvas"></canvas>
+</div>
+
+<section id="Features" class="container Px(25px) Mx(a) grid-3 colored-links">
+	<div class="vgap-s">
+		<h2>Flexible Training</h2>
+
+		<p>ELEKTRONN can be used for machine learning tasks formulated on image data or flat feature vectors. We provide a <strong>ready-made, flexible training pipeline</strong> with helpful utility functions and a comprehensive <a href="https://elektronn3.readthedocs.io">documentation</a>.</p>
+	</div>
+
+	<div class="vgap-s">
+		<h2>Easy Usage & Optimized Runtimes</h2>
+
+		<p>ELEKTRONN is <strong>written in Python</strong>	and based on the <a href="http://www.deeplearning.net/software/theano/index.html">Theano</a> framework. It can be accelerated with NVIDIA GPUs and delivers state-of-the art performance, including fast training and inference on massive image datasets.</p>
+	</div>
+
+	<div class="vgap-s">
+		<h2>Open Source</h2>
+
+		<p>ELEKTRONN is a scientific open-source project and licensed under the GPL. The code is available at our <a href="https://github.com/ELEKTRONN/elektronn3">GitHub repository</a> or can be installed with <a href="http://conda.pydata.org/docs/">conda</a> or <a href="https://pip.pypa.io/en/stable/">pip</a>.</p>
+	</div>
+</section>
+
+<section id="About" class="container Px(25px) Mx(a) vgap colored-links">
+	<h1>About</h1>
+
+	<p>This toolkit was created by Marius Killinger and Gregor Urban at the <a href="https://www.mr.mpg.de/en">Max Planck Institute For Medical Research For Medical Research</a> to solve connectomics tasks. Jörgen Kornfeld is academic advisor to this project.</p>
+
+	<p>The ELEKTRONN project is being developed by the <a href="https://github.com/orgs/ELEKTRONN/people">ELEKTRONN team.</a></p>
+</section>
+
+<footer class="container-xl Px(25px) Mx(a) footer">
+	<p>© 2024</p>
+</footer>
