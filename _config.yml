@@ -9,48 +9,25 @@
 title: >
   ELEKTRONN - Convolutional Neural Network Toolkit in Python. Fast GPU
   acceleration and easy usage.
-email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
-  A configurable toolkit for 3D/2D Convolutional Neural Networks (CNN). CNNs are
-  used in Machine Learning to solve difficult classification and regression
+  A configurable toolkit for 3D/2D Convolutional Neural Networks (CNN). CNNs
+  are used in Machine Learning to solve difficult classification and regression
   tasks. ELEKTRONN is based on Theano and benefits from fast GPU
-  implementations. This toolkit was created by Marius Killinger and Gregor Urban
-  at the Max Planck Institute For Medical Research For Medical Research to solve
-  connectomics tasks. We provide a ready-made flexible training pipeline and
+  implementations. We provide a ready-made flexible training pipeline and
   comprehensive documentation.
-baseurl: "/" # the subpath of your site, e.g. /blog
-url: "http://elektronn.org" # the base hostname & protocol for your site
-github_username: ELEKTRONN
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://elektronn.org" # the base hostname & protocol for your site
 
-github-url: https://github.com/ELEKTRONN/ELEKTRONN
-documentation-url: http://elektronn.github.io/documentation
+permalink: pretty
 
 # Build settings
 markdown: kramdown
 
 sass:
-  style: :compressed
+  style: compressed
 
-
-include:
- - _images
- - _modules
- - _sources
- - _static
-
-navigation:
- - text: Home
-   url: /
-   icon: home
- - text: Getting Started
-   url: /getting-started/
-   icon: explore
- - text: Development
-   url: /development/
-   icon: code
- - text: About
-   url: /about/
-   icon: people
- - text: Documentation
-   url: /documentation
-   icon: book
+exclude:
+  - package-lock.json
+  - package.json
+  - rollup.config.mjs
+  - js/_main.js
